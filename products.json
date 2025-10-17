@@ -1,0 +1,56 @@
+[
+  {
+    "id": "p1",
+    "name": "Vestido Floral Midi",
+    "category": "vestidos",
+    "price": 159.9,
+    "image": "assets/prod-vestido-floral.jpg",
+    "description": "Vestido midi leve com estampa floral e caimento fluido.",
+    "status": "esgotado"
+  },
+  {
+    "id": "p2",
+    "name": "Bolsa Rosa",
+    "category": "acessorios",
+    "price": 129.9,
+    "image": "assets/prod-bolsa-rosa.jpg",
+    "description": "Bolsa estruturada em tom rosa LS — charmosa e versátil.",
+    "status": "disponivel"
+  },
+  {
+    "id": "p3",
+    "name": "Camiseta Branca Feminina",
+    "category": "blusas",
+    "price": 59.9,
+    "image": "assets/prod-camiseta-branca.jpg",
+    "description": "Camiseta básica, algodão macio e corte feminino.",
+    "status": "disponivel"
+  },
+  {
+    "id": "p4",
+    "name": "Calça Jeans Cintura Alta",
+    "category": "calcas",
+    "price": 139.9,
+    "image": "assets/prod-calca-jeans.jpg",
+    "description": "Jeans com cintura alta e lavagem média, modelagem confortável.",
+    "status": "disponivel"
+  },
+  {
+    "id": "p5",
+    "name": "Sapato Rosa Comfort",
+    "category": "acessorios",
+    "price": 179.9,
+    "image": "assets/prod-sapato-rosa.jpg",
+    "description": "Sapato confortável em tom rosa para o dia a dia.",
+    "status": "disponivel"
+  },
+  {
+    "id": "p6",
+    "name": "Óculos de Sol LS",
+    "category": "acessorios",
+    "price": 89.9,
+    "image": "assets/prod-oculos.jpg",
+    "description": "Óculos de sol fashion com lente degradê.",
+    "status": "disponivel"
+  }
+]
