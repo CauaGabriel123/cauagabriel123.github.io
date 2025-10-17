@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>LS STORE — Moda Feminina</title>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+<div id="splash"><div class="splash-card"><img src="assets/logo.png" alt="LS STORE"><p>Bem-vinda à LS STORE 💖</p></div></div>
+<header class="topbar"><button id="menu-btn" class="icon-btn" aria-label="Abrir menu">☰</button><div class="brand"><img src="assets/logo.png" alt="LS STORE"></div><button id="cart-btn" class="cart-btn" aria-label="Abrir carrinho">🛒 <span id="cart-count">0</span></button></header>
+<nav id="drawer" class="drawer" aria-hidden="true"><div class="drawer-inner"><button id="close-drawer" class="icon-btn">✕</button><ul>
+<li><a href="#" data-section="inicio" class="active">Início</a></li>
+<li><a href="#" data-section="calcas">Calças</a></li>
+<li><a href="#" data-section="camisas">Camisas</a></li>
+<li><a href="#" data-section="vestidos">Vestidos</a></li>
+<li><a href="#" data-section="bolsas">Bolsas</a></li>
+<li><a href="#" data-section="acessorios">Acessórios</a></li>
+<li><a href="#" data-section="contato">Contato</a></li>
+</ul></div></nav>
+<main class="container">
+<section id="inicio" class="section visible">
+<div class="carousel"><div class="slides">
+<div class="slide"><img src="assets/banner1.jpg" alt="Nova coleção"></div>
+<div class="slide"><img src="assets/banner2.jpg" alt="Promoções"></div>
+<div class="slide"><img src="assets/banner3.jpg" alt="Exclusivos"></div>
+</div>
+<div class="dots"><button class="dot active" data-i="0"></button><button class="dot" data-i="1"></button><button class="dot" data-i="2"></button></div></div>
+<h2 class="section-title">Destaques da Semana</h2><div id="featured" class="grid"></div></section>
+<section id="calcas" class="section"><h2 class="section-title">Calças</h2><div class="grid" data-cat="calcas"></div></section>
+<section id="camisas" class="section"><h2 class="section-title">Camisas</h2><div class="grid" data-cat="camisas"></div></section>
+<section id="vestidos" class="section"><h2 class="section-title">Vestidos</h2><div class="grid" data-cat="vestidos"></div></section>
+<section id="bolsas" class="section"><h2 class="section-title">Bolsas</h2><div class="grid" data-cat="bolsas"></div></section>
+<section id="acessorios" class="section"><h2 class="section-title">Acessórios</h2><div class="grid" data-cat="acessorios"></div></section>
+<section id="contato" class="section"><h2 class="section-title">Contato</h2><p>WhatsApp: <a href="https://wa.me/5551989235482" target="_blank">+55 51 98923-5482</a></p></section>
+</main>
+<aside id="cart" class="cart" aria-hidden="true">
+<div class="cart-header"><h3>Seu Carrinho</h3><button id="close-cart" class="icon-btn">✕</button></div>
+<div id="cart-items" class="cart-items"></div>
+<div class="client-info">
+<h4>Finalizar Pedido</h4>
+<label>Nome completo*<input id="client-name" type="text" required></label>
+<label>Forma de pagamento*<select id="payment" required><option>Pix</option><option>Cartão de crédito</option><option>Cartão de débito</option><option>Dinheiro</option></select></label>
+<div id="cash-section" class="cash" style="display:none;"><p><strong>Precisa de troco?*</strong></p>
+<label class="inline"><input type="radio" name="cash-change" value="nao"> Não, tenho trocado</label>
+<label class="inline"><input type="radio" name="cash-change" value="sim"> Sim, para R$</label>
+<input id="cash-amount" type="number" min="0" step="0.01" placeholder="Ex: 100,00" style="display:none;"></div>
+<label>Entrega*<select id="delivery-type" required><option value="retirada">Retirada</option><option value="entrega">Entrega</option></select></label>
+<div id="address-fields" class="address" style="display:none;">
+<label>Rua*<input id="street" type="text"></label>
+<label>Número*<input id="number" type="text"></label>
+<label>Bairro*<select id="neighborhood">
+<option value="">Selecione...</option>
+<option value="Mathias Velho">Mathias Velho (R$5,00)</option>
+<option value="Harmonia">Harmonia (R$6,00)</option>
+<option value="Mato Grande">Mato Grande (R$7,00)</option>
+<option value="São Luís">São Luís (R$8,00)</option>
+<option value="Centro">Centro (R$8,00)</option>
+<option value="Fátima">Fátima (R$9,00)</option>
+<option value="Igara">Igara (R$10,00)</option>
+<option value="Rio Branco">Rio Branco (R$10,00)</option>
+<option value="Industrial">Industrial (R$10,00)</option>
+<option value="Marechal Rondon">Marechal Rondon (R$11,00)</option>
+<option value="Estância Velha">Estância Velha (R$12,00)</option>
+<option value="Guajuviras">Guajuviras (R$15,00)</option>
+<option value="Olaria">Olaria (R$16,00)</option>
+<option value="Outra Cidade">Outra Cidade (Consultar)</option>
+</select></label></div>
+<label>Observações (opcional)<textarea id="order-notes" rows="2" placeholder="Ex: entregar no portão lateral"></textarea></label>
+</div>
+<div class="cart-footer"><p>Total produtos: R$ <span id="cart-total">0,00</span></p><p id="delivery-fee" style="display:none;">Taxa entrega: R$ <span id="fee-value">0,00</span></p><h3>Total final: R$ <span id="final-total">0,00</span></h3><button id="checkout" class="checkout">Finalizar Compra (WhatsApp)</button></div>
+</aside>
+<div id="loading-overlay" class="overlay" style="display:none;"><div class="loading-card"><div class="spinner"></div><p>⏳ Processando pedido...</p></div></div>
+<div id="popup-overlay" class="popup-overlay" style="display:none;"><div class="popup"><h3>✅ Pedido enviado com sucesso!</h3><p>O WhatsApp será aberto em instantes.<br><strong>Lembre-se de clicar em ENVIAR no WhatsApp 💬</strong></p></div></div>
+<audio id="ping-sound" src="assets/ping.wav" preload="auto"></audio>
+<script src="script.js"></script>
+</body></html>
