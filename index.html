@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+  <title>LS Store — @ls_store.fc</title>
+
+  <!-- Ícone simples (pode trocar depois por um arquivo .ico ou png) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='64' height='64'><rect rx='12' width='64' height='64' fill='%23f6e9ff'/><text x='16' y='40' font-size='26' font-family='Arial' fill='%237a3bfd'>LS</text></svg>">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script defer src="script.js"></script>
+</head>
+<body>
+
+<!-- Splash -->
+<div id="splash">
+  <div class="splash-card">
+    <div class="splash-logo"><span class="ls">LS</span><span class="store">Store</span></div>
+    <p>Bem-vinda à LS Store 💖</p>
+  </div>
+</div>
+
+<header class="topbar">
+  <button id="menu-btn" class="icon-btn" aria-label="Abrir menu" title="Menu">☰</button>
+  <div class="brand"><div class="brand-logo"><span class="ls">LS</span><span class="store">Store</span></div></div>
+  <div class="right">
+    <button id="login-btn" class="text-btn">Entrar</button>
+    <button id="cart-btn" class="cart-btn" aria-label="Abrir carrinho">🛒 <span id="cart-count">0</span></button>
+  </div>
+</header>
+
+<!-- Busca -->
+<div class="search-wrap">
+  <input id="search-input" type="search" placeholder="Buscar por nome, cor ou categoria…" autocomplete="off">
+  <button id="search-clear" aria-label="Limpar">✕</button>
+  <div id="search-results" class="search-results" hidden></div>
+</div>
+
+<!-- Menu visual (com blur) -->
+<aside id="drawer" class="drawer" aria-hidden="true">
+  <div class="drawer-backdrop"></div>
+  <div class="drawer-inner">
+    <div class="drawer-header">
+      <h3>Categorias</h3><button id="close-drawer" class="icon-btn">✕</button>
+    </div>
+    <div id="drawer-grid" class="drawer-grid"></div>
+    <ul class="drawer-links">
+      <li><a href="#" data-section="inicio" class="active">Início</a></li>
+      <li><a href="#" data-section="contato">Contato</a></li>
+      <li><a href="#" data-section="minha-conta">Minha conta</a></li>
+    </ul>
+  </div>
+</aside>
+
+<main class="container">
+  <!-- Início -->
+  <section id="inicio" class="section visible">
+    <div class="carousel large" id="carousel">
+      <div class="slides">
+        <div class="slide"><img src="https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=1600&auto=format&fit=crop" alt="Nova coleção"></div>
+        <div class="slide"><img src="https://images.unsplash.com/photo-1539008835657-9e8e9680c956?q=80&w=1600&auto=format&fit=crop" alt="Promoções"></div>
+        <div class="slide"><img src="https://images.unsplash.com/photo-1514995428455-447d4443fa7f?q=80&w=1600&auto=format&fit=crop" alt="Exclusivos"></div>
+      </div>
+      <div class="dots"><button class="dot active" data-i="0"></button><button class="dot" data-i="1"></button><button class="dot" data-i="2"></button></div>
+    </div>
+    <h2 class="section-title">Destaques da Semana</h2>
+    <div id="featured" class="grid"></div>
+  </section>
+
+  <!-- Seções -->
+  <section id="blusas" class="section"><h2 class="section-title">Blusas</h2><div class="grid" data-cat="camisas"></div></section>
+  <section id="calcas" class="section"><h2 class="section-title">Calças</h2><div class="grid" data-cat="calcas"></div></section>
+  <section id="vestidos" class="section"><h2 class="section-title">Vestidos</h2><div class="grid" data-cat="vestidos"></div></section>
+  <section id="intimas" class="section"><h2 class="section-title">Roupas Íntimas</h2><div class="grid" data-cat="intimas"></div></section>
+  <section id="calcados" class="section"><h2 class="section-title">Calçados</h2><div class="grid" data-cat="calcados"></div></section>
+  <section id="oculos" class="section"><h2 class="section-title">Óculos</h2><div class="grid" data-cat="oculos"></div></section>
+  <section id="cosmeticos" class="section"><h2 class="section-title">Cosméticos</h2><div class="grid" data-cat="cosmeticos"></div></section>
+  <section id="beleza" class="section"><h2 class="section-title">Beleza</h2><div class="grid" data-cat="beleza"></div></section>
+
+  <!-- Contato -->
+  <section id="contato" class="section">
+    <h2 class="section-title">Contato</h2>
+    <p>Instagram: <a id="insta-link" href="#" target="_blank" rel="noopener">@ls_store.fc</a></p>
+    <p>WhatsApp: <a href="https://wa.me/5551989235482" target="_blank" rel="noopener">+55 51 98923-5482</a></p>
+  </section>
+
+  <!-- Minha conta -->
+  <section id="minha-conta" class="section">
+    <h2 class="section-title">Minha conta</h2>
+    <div id="account-area" class="account-area"></div>
+  </section>
+</main>
+
+<!-- Rodapé -->
+<footer class="footer">
+  <nav class="social">
+    <a id="footer-insta" href="#" aria-label="Instagram">@ls_store.fc</a>
+    <a href="https://wa.me/5551989235482" aria-label="WhatsApp">WhatsApp</a>
+    <a href="#contato" aria-label="Fale conosco">Fale conosco</a>
+  </nav>
+  <p>© 2025 LS Store — @ls_store.fc 💖</p>
+</footer>
+
+<!-- Modal Produto -->
+<div id="product-modal" class="modal" aria-hidden="true">
+  <div class="modal-card">
+    <button class="modal-close icon-btn" id="modal-close">✕</button>
+    <div class="modal-body">
+      <img id="modal-img" alt="">
+      <div class="modal-info">
+        <h3 id="modal-name"></h3>
+        <p class="modal-price" id="modal-price"></p>
+        <p class="modal-desc" id="modal-desc"></p>
+        <div class="modal-opts">
+          <label>Tamanho</label><div id="size-options" class="chips"></div>
+          <label>Cor</label><div id="color-options" class="chips"></div>
+        </div>
+        <button id="modal-add" class="add-btn">Adicionar ao carrinho</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Carrinho -->
+<aside id="cart" class="cart" aria-hidden="true">
+  <div class="cart-header"><h3>Seu Carrinho</h3><button id="close-cart" class="icon-btn">✕</button></div>
+  <div id="cart-items" class="cart-items"></div>
+
+  <div class="client-info">
+    <h4>Finalizar Pedido</h4>
+    <small class="hint">Preencha seus dados para entrega ou retirada.</small>
+
+    <label>Nome completo*<input id="client-name" type="text" required></label>
+    <label>Forma de pagamento*<select id="payment">
+      <option>Pix</option><option>Cartão de crédito</option><option>Cartão de débito</option><option>Dinheiro</option>
+    </select></label>
+
+    <div id="cash-section" class="cash" style="display:none;">
+      <p><strong>Precisa de troco?*</strong></p>
+      <label class="inline"><input type="radio" name="cash-change" value="nao"> Não</label>
+      <label class="inline"><input type="radio" name="cash-change" value="sim"> Sim, para R$</label>
+      <input id="cash-amount" inputmode="decimal" type="number" min="0" step="0.01" placeholder="Ex: 100,00" style="display:none;">
+    </div>
+
+    <label>Entrega*<select id="delivery-type"><option value="retirada">Retirada</option><option value="entrega">Entrega</option></select></label>
+
+    <div id="address-fields" class="address" style="display:none;">
+      <label>Rua*<input id="street" type="text"></label>
+      <label>Número*<input id="number" type="text"></label>
+      <label>Bairro*<select id="neighborhood">
+        <option value="">Selecione...</option>
+        <option value="Mathias Velho">Mathias Velho</option>
+        <option value="Harmonia">Harmonia</option>
+        <option value="Mato Grande">Mato Grande</option>
+        <option value="São Luís">São Luís</option>
+        <option value="Centro">Centro</option>
+        <option value="Fátima">Fátima</option>
+        <option value="Igara">Igara</option>
+        <option value="Rio Branco">Rio Branco</option>
+        <option value="Industrial">Industrial</option>
+        <option value="Marechal Rondon">Marechal Rondon</option>
+        <option value="Estância Velha">Estância Velha</option>
+        <option value="Guajuviras">Guajuviras</option>
+        <option value="Olaria">Olaria</option>
+        <option value="Outra Cidade">Outra Cidade</option>
+      </select></label>
+    </div>
+
+    <label>Observações (opcional)<textarea id="order-notes" rows="2" placeholder="Ex: entregar no portão lateral"></textarea></label>
+  </div>
+
+  <div class="cart-footer">
+    <p>Total produtos: R$ <span id="cart-total">0,00</span></p>
+    <p id="delivery-fee" style="display:none;">Taxa entrega: R$ <span id="fee-value">0,00</span></p>
+    <h3>Total final: R$ <span id="final-total">0,00</span></h3>
+    <button id="checkout" class="checkout">Finalizar Compra (WhatsApp)</button>
+  </div>
+</aside>
+
+<!-- Popup sucesso (fica escondido até finalizar compra) -->
+<div id="popup-overlay" class="popup-overlay" hidden>
+  <div class="popup">
+    <h3>✅ Pedido enviado com sucesso!</h3>
+    <p>O WhatsApp será aberto em instantes.<br><strong>Lembre-se de tocar em ENVIAR no WhatsApp 💬</strong></p>
+  </div>
+</div>
+
+<!-- Voltar ao topo -->
+<button id="backToTop" class="back-to-top" aria-label="Voltar ao topo">↑</button>
+
+</body>
+</html>
