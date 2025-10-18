@@ -84,7 +84,7 @@ function animateToCart(fromImg){
   setTimeout(()=>clone.remove(),600);
 }
 
-// Checkout corrigido
+// Checkout 100% corrigido (só ativa ao clicar no botão)
 document.getElementById('checkout').onclick = () => {
   if (!cart.length) return alert('Seu carrinho está vazio.');
 
@@ -107,7 +107,16 @@ document.getElementById('checkout').onclick = () => {
   if (taxa) msg+=`%0A🚚 *Taxa de entrega:* R$ ${taxa.toFixed(2)}`;
   msg+=`%0A💰 *Total final:* R$ ${totalFinal.toFixed(2)}%0A---------------------------------%0A✨ *Obrigada por comprar na LS Store!* 💖`;
 
-  const pop=document.getElementById('popup-overlay');
-  pop.hidden=false; playChime();
-  setTimeout(()=>{pop.hidden=true;location.href=`https://wa.me/${WHATSAPP}?text=${msg}`;},1600);
+  // Mostra o pop-up só após clicar
+  const pop = document.getElementById('popup-overlay');
+  pop.hidden = false;
+  playChime();
+
+  // Some antes de abrir o WhatsApp
+  setTimeout(() => {
+    pop.hidden = true;
+    setTimeout(() => {
+      window.open(`https://wa.me/${WHATSAPP}?text=${msg}`, '_blank');
+    }, 400);
+  }, 1500);
 };
