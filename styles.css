@@ -707,3 +707,29 @@ img { max-width:100%; display:block; }
   display: block;
   align-self: center;
 }
+
+/* ============================
+   v11.4.5.7 — Centralização perfeita do logo no splash
+   ============================ */
+
+#splash {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.splash-logo-img {
+  display: block;
+  margin: 0 auto;
+  align-self: center;
+  transform: none;
+  width: 150px;
+  max-width: none; /* evita distorção horizontal */
+  image-rendering: auto;
+  object-fit: contain;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
