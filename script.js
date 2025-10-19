@@ -199,6 +199,7 @@ fetch('products.json')
     // Renderiza tudo normalmente
     renderAll();
     initCarousel();
+    renderFooterProducts(featured.length ? featured : null);
   })
   .catch(err => {
     console.warn('Aviso leve: atraso no carregamento dos produtos', err);
@@ -235,6 +236,39 @@ function renderAll() {
   document.querySelectorAll('[data-cat]').forEach(g => {
     const cat = g.getAttribute('data-cat');
     renderGrid(g, catalog[cat] || []);
+  });
+}
+
+// ===== Rodapé: vitrine horizontal com produtos reais =====
+function renderFooterProducts(listFromData) {
+  const box = document.getElementById('footer-products');
+  if (!box) return;
+
+  // Usa lista enviada ou junta todos do catálogo
+  let pool = listFromData;
+  if (!pool || !pool.length) {
+    pool = [];
+    for (const cat in catalog) {
+      (catalog[cat] || []).forEach(p => { if (p.stock > 0) pool.push(p); });
+    }
+  }
+
+  // Limita para não pesar
+  const slice = pool.slice(0, 12);
+
+  box.innerHTML = slice.map(p => `
+    <div class="footer-card" data-id="${p.id}" role="button" aria-label="${p.name}">
+      <img src="${(p.imgs ? p.imgs[0] : p.img)}" alt="${p.name}">
+      <div class="fc-info">
+        <div class="fc-name">${p.name}</div>
+        <div class="fc-price">R$ ${p.price.toFixed(2).replace('.', ',')}</div>
+      </div>
+    </div>
+  `).join('');
+
+  // Clique abre modal de produto
+  box.querySelectorAll('.footer-card').forEach(card => {
+    card.addEventListener('click', () => openModal(card.getAttribute('data-id')));
   });
 }
 
