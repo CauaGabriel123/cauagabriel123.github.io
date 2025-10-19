@@ -193,6 +193,7 @@ fetch('products.json')
 
     // Renderiza tudo normalmente
     renderAll();
+    initCarousel();
   })
   .catch(err => {
     console.error('Erro ao carregar products.json:', err);
@@ -231,7 +232,6 @@ function renderAll() {
     renderGrid(g, catalog[cat] || []);
   });
 }
-renderAll();
 
 // =============================
 // MODAL DE PRODUTO (corrigido)
