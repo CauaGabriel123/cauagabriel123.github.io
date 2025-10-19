@@ -98,10 +98,10 @@ closeDrawer.onclick = () => {
 };
 drawer.querySelector('.drawer-backdrop').onclick = () => drawer.setAttribute('aria-hidden', 'true');
 
-// Accordion Femininos
+// Accordion Produtos (atualizado v11.4.7)
 (function initDrawerAccordion(){
   const btn = document.querySelector('.drawer-accordion');
-  const sub = document.getElementById('sub-femininos');
+  const sub = document.getElementById('sub-produtos');
   if (!btn || !sub) return;
   btn.addEventListener('click', ()=>{
     const open = btn.getAttribute('aria-expanded') === 'true';
