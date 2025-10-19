@@ -326,3 +326,106 @@ img { max-width:100%; display:block; }
 /* Pulse carrinho */
 .cart-btn.pulse{ animation:pulse .5s ease; }
 @keyframes pulse{ 50%{ transform:scale(1.05); } }
+
+/* ================================
+   Estilo aprimorado - Login (LS STORE v11.2.3)
+   ================================ */
+.account-area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 380px;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 12px 36px rgba(122,59,253,.15);
+  border: 1px solid #efe8ff;
+  padding: 22px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  animation: fadeInUp .3s ease;
+}
+
+@keyframes fadeInUp {
+  from {opacity: 0; transform: translateY(10px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+
+.auth-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.auth-title h3 {
+  font-size: 20px;
+  color: var(--lilac);
+  margin: 0;
+  font-weight: 700;
+}
+
+.auth-card label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+  color: #4b3f60;
+}
+
+.auth-card input {
+  margin-top: 6px;
+  padding: 10px 12px;
+  font-size: 15px;
+  border: 1px solid #e0d3f5;
+  border-radius: 10px;
+  outline: none;
+  transition: 0.2s;
+  background: #fff;
+}
+
+.auth-card input:focus {
+  border-color: #b799ff;
+  box-shadow: 0 0 0 3px rgba(122,59,253,.1);
+}
+
+.auth-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.auth-actions .add-btn {
+  flex: 1;
+  background: linear-gradient(90deg, var(--pink), var(--lilac));
+  color: #fff;
+  font-weight: 700;
+  border-radius: 10px;
+  border: none;
+  padding: 12px 0;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(122,59,253,.25);
+  transition: transform .15s ease;
+}
+
+.auth-actions .add-btn:hover {
+  transform: scale(1.05);
+}
+
+.close-auth {
+  border: none;
+  background: transparent;
+  color: var(--lilac);
+  font-size: 22px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.close-auth:hover {
+  transform: scale(1.2);
+}
