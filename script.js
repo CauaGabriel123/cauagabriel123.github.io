@@ -781,3 +781,31 @@ if (ADMIN_MODE) {
     if (!resultsBox.contains(e.target) && e.target !== input) resultsBox.hidden = true;
   });
 })();
+
+// Efeito visual: produto "voando" até o carrinho 🛒
+function flyToCart(imgSrc, startX, startY) {
+  const cartBtn = document.getElementById('cart-btn');
+  const img = document.createElement('img');
+  img.src = imgSrc;
+  img.style.position = 'fixed';
+  img.style.width = '60px';
+  img.style.height = '60px';
+  img.style.borderRadius = '12px';
+  img.style.objectFit = 'cover';
+  img.style.zIndex = '9999';
+  img.style.left = startX + 'px';
+  img.style.top = startY + 'px';
+  img.style.transition = 'all 0.8s cubic-bezier(.4,.02,.3,1)';
+  document.body.appendChild(img);
+
+  const rect = cartBtn.getBoundingClientRect();
+  setTimeout(() => {
+    img.style.left = rect.left + rect.width / 2 + 'px';
+    img.style.top = rect.top + rect.height / 2 + 'px';
+    img.style.opacity = '0';
+    img.style.transform = 'scale(0.3)';
+  }, 50);
+
+  setTimeout(() => img.remove(), 800);
+}
+
