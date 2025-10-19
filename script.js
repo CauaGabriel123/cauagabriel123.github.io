@@ -456,9 +456,9 @@ cashRadios.forEach(r => r.onchange = () => {
 });
 deliveryType.onchange = () => {
   addressFields.style.display = (deliveryType.value === 'entrega') ? 'block' : 'none';
-  refreshTotalsUI();
+  refreshFinalTotals();
 };
-neighborhood.onchange = refreshTotalsUI;
+neighborhood.onchange = refreshFinalTotals;
 
 function calcFee() {
   if (deliveryType.value !== 'entrega') return 0;
@@ -466,7 +466,7 @@ function calcFee() {
   const fee = FEES[bairro];
   return (typeof fee === 'number') ? fee : 0;
 }
-function refreshTotalsUI() {
+function refreshFinalTotals() {
   const produtos = parseFloat(cartTotal.textContent.replace(',', '.')) || 0;
   const fee = calcFee();
 
