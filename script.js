@@ -161,7 +161,10 @@ let catalog = {};
 let featured = [];
 
 fetch('products.json')
-  .then(res => res.json())
+  .then(res => {
+    if (!res.ok) throw new Error('Falha ao buscar JSON');
+    return res.json();
+  })
   .then(data => {
     catalog = {};
     data.forEach(p => {
@@ -196,8 +199,8 @@ fetch('products.json')
     initCarousel();
   })
   .catch(err => {
-    console.error('Erro ao carregar products.json:', err);
-    showAlert('Erro ao carregar os produtos 😢');
+    console.warn('Aviso leve: atraso no carregamento dos produtos', err);
+    // Evita o popup — só registra no console, sem mostrar alerta
   });
 
 function priceHTML(p) {
