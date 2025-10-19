@@ -30,7 +30,7 @@
   </div>
 </div>
 
-<header class="topbar" style="touch-action: pan-x pan-y;">
+<header class="topbar">
   <button id="menu-btn" class="icon-btn" aria-label="Abrir menu" title="Menu">☰</button>
   <div class="brand">
     <div class="brand-logo"><span class="ls">LS</span><span class="store">Store</span></div>
@@ -53,16 +53,28 @@
   <div class="drawer-backdrop"></div>
   <div class="drawer-inner">
     <div class="drawer-header">
-      <h3>Categorias</h3>
+      <h3>Menu</h3>
       <button id="close-drawer" class="icon-btn">✕</button>
     </div>
 
-    <div id="drawer-grid" class="drawer-grid"></div>
-
-    <!-- NOVA ORDEM (Início → Femininos → Contato → Minha conta) -->
+    <!-- LINKS PRINCIPAIS + FEMININOS DROPDOWN -->
     <ul class="drawer-links">
       <li><a href="#" data-section="inicio" class="active">Início</a></li>
-      <li><a href="#" data-section="femininos">Femininos</a></li>
+
+      <li class="has-sub">
+        <button class="drawer-accordion" aria-expanded="false" aria-controls="sub-femininos">Femininos ▾</button>
+        <ul id="sub-femininos" class="drawer-sublinks" hidden>
+          <li><a href="#" data-section="blusas">Blusas</a></li>
+          <li><a href="#" data-section="calcas">Calças</a></li>
+          <li><a href="#" data-section="vestidos">Vestidos</a></li>
+          <li><a href="#" data-section="intimas">Roupas Íntimas</a></li>
+          <li><a href="#" data-section="calcados">Calçados</a></li>
+          <li><a href="#" data-section="oculos">Óculos</a></li>
+          <li><a href="#" data-section="cosmeticos">Cosméticos</a></li>
+          <li><a href="#" data-section="beleza">Beleza</a></li>
+        </ul>
+      </li>
+
       <li><a href="#" data-section="contato">Contato</a></li>
       <li><a href="#" data-section="minha-conta">Minha conta</a></li>
     </ul>
@@ -71,17 +83,10 @@
 
 <main class="container">
   <section id="inicio" class="section visible">
+    <!-- Carrossel agora será populado dinamicamente com produtos e arrastável -->
     <div class="carousel large" id="carousel">
-      <div class="slides">
-        <div class="slide"><img src="https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=1600&auto=format&fit=crop" alt="Nova coleção"></div>
-        <div class="slide"><img src="https://images.unsplash.com/photo-1539008835657-9e8e9680c956?q=80&w=1600&auto=format&fit=crop" alt="Promoções"></div>
-        <div class="slide"><img src="https://images.unsplash.com/photo-1514995428455-447d4443fa7f?q=80&w=1600&auto=format&fit=crop" alt="Exclusivos"></div>
-      </div>
-      <div class="dots">
-        <button class="dot active" data-i="0" aria-label="Slide 1"></button>
-        <button class="dot" data-i="1" aria-label="Slide 2"></button>
-        <button class="dot" data-i="2" aria-label="Slide 3"></button>
-      </div>
+      <div class="slides" id="carousel-slides"></div>
+      <div class="dots" id="carousel-dots"></div>
     </div>
 
     <h2 class="section-title">Destaques da Semana</h2>
@@ -116,7 +121,7 @@
   <nav class="social">
     <a id="footer-insta" href="#" aria-label="Instagram">@ls_store.fc</a>
     <a href="https://wa.me/5551989235482" aria-label="WhatsApp">WhatsApp</a>
-    <a href="#contato" aria-label="Fale conosco" data-section="contato">Fale conosco</a>
+    <a href="#contato" aria-label="Fale conosco">Fale conosco</a>
   </nav>
   <p>© 2025 LS Store — Moda & Acessórios Femininos 💖</p>
 </footer>
