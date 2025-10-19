@@ -433,14 +433,6 @@ function addToCart(prod, size, color) {
   if (el) el.textContent = items.length;
 }
 
-  // 💥 Efeito de animação (explosão) no ícone do carrinho
-  cartBtn.classList.add('pulse');
-  setTimeout(() => cartBtn.classList.remove('pulse'), 400);
-
-  renderCart();
-  refreshTotalsUI();
-}
-
 // Inicialização
 document.addEventListener('DOMContentLoaded', () => {
   renderCart();
