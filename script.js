@@ -156,47 +156,48 @@ function showSection(id) {
   });
 })();
 
-// --- Catálogo de produtos
-const catalog = {
-  blusas: [
-    {
-      id: 'b1', name: 'Blusa Cropped Renda', price: 89.9,
-      imgs: ['https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=1200&auto=format&fit=crop'],
-      sizes: ['P','M','G'], colors: ['Branco','Preto'], stock: 6,
-      desc: 'Cropped delicado com renda e ajuste confortável.'
-    }
-  ],
-  vestidos: [
-    {
-      id: 'v1', name: 'Vestido Floral Midi', price: 159.9,
-      imgs: [
-        'https://images.unsplash.com/photo-1614691812260-0b2152d5f83e?q=80&w=1200&auto=format&fit=crop',
-        'https://images.unsplash.com/photo-1614691812260-0b2152d5f83e?q=80&w=1200&auto=format&fit=crop'
-      ],
-      sizes: ['P', 'M', 'G'], colors: ['Rosa', 'Branco'], stock: 5, isNew: true,
-      desc: 'Vestido midi floral em tecido leve, caimento perfeito.'
-    },
-    {
-      id: 'v2', name: 'Vestido Longo Fenda', price: 179.9,
-      imgs: [
-        'https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=1200&auto=format&fit=crop',
-        'https://images.unsplash.com/photo-1539533018447-63fcce2678e3?q=80&w=1200&auto=format&fit=crop'
-      ],
-      sizes: ['M', 'G', 'GG'], colors: ['Preto', 'Bege'], stock: 3,
-      desc: 'Longo com fenda lateral e cintura marcada.'
-    }
-  ],
-  calcas: [
-    {
-      id: 'c1', name: 'Calça Jeans Cintura Alta', price: 139.9,
-      imgs: [
-        'https://images.unsplash.com/photo-1618354691438-25e01c74f8b1?q=80&w=1200&auto=format&fit=crop'
-      ],
-      sizes: ['P', 'M', 'G'], colors: ['Azul', 'Preto'], stock: 7,
-      desc: 'Jeans com stretch e cintura alta.'
-    }
-  ]
-};
+// --- Catálogo de produtos dinâmico via products.json
+let catalog = {};
+let featured = [];
+
+fetch('products.json')
+  .then(res => res.json())
+  .then(data => {
+    catalog = {};
+    data.forEach(p => {
+      const cat = p.category || 'outros';
+      if (!catalog[cat]) catalog[cat] = [];
+      catalog[cat].push({
+        id: p.id,
+        name: p.name,
+        price: p.price,
+        imgs: [p.image],
+        sizes: ['P', 'M', 'G'], // padrão
+        colors: ['Preto', 'Branco', 'Rosa'], // padrão
+        stock: p.status === 'disponivel' ? 5 : 0,
+        desc: p.description
+      });
+    });
+
+    // Cria destaques automáticos (5 primeiros disponíveis)
+    featured = data
+      .filter(p => p.status === 'disponivel')
+      .slice(0, 5)
+      .map(p => ({
+        id: p.id,
+        name: p.name,
+        price: p.price,
+        imgs: [p.image],
+        desc: p.description
+      }));
+
+    // Renderiza tudo normalmente
+    renderAll();
+  })
+  .catch(err => {
+    console.error('Erro ao carregar products.json:', err);
+    showAlert('Erro ao carregar os produtos 😢');
+  });
 
 // --- Destaques
 const featured = [catalog.vestidos[0], catalog.calcas[0], catalog.blusas[0]].filter(Boolean);
