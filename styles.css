@@ -701,3 +701,25 @@ img { max-width:100%; display:block; }
   animation: swingLogo 4.5s ease-in-out infinite;
   transform-origin: center bottom;
 }
+
+/* ============================
+   v11.4.6 — Balanço funcional do logo (versão final e garantida)
+   ============================ */
+
+@keyframes swingLogo {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(2deg);
+  }
+  75% {
+    transform: rotate(-2deg);
+  }
+}
+
+#splash .splash-logo-img {
+  animation: swingLogo 4.5s ease-in-out infinite;
+  transform-origin: center bottom;
+  will-change: transform;
+}
