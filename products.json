@@ -1,182 +1,30 @@
 [
-  {
-    "id": "p1",
-    "name": "Vestido Floral Midi",
-    "category": "vestidos",
-    "price": 159.9,
-    "image": "https://images.pexels.com/photos/1805416/pexels-photo-1805416.jpeg?auto=compress&cs=tinysrgb&w=600",
-    "description": "Vestido midi leve com estampa floral e caimento fluido, perfeito para dias ensolarados.",
-    "status": "disponivel"
-  },
-  {
-    "id": "p2",
-    "name": "Vestido Curto Preto Elegance",
-    "category": "vestidos",
-    "price": 189.9,
-    "image": "https://images.pexels.com/photos/7679720/pexels-photo-7679720.jpeg?auto=compress&cs=tinysrgb&w=600",
-    "description": "Vestido curto preto com toque sofisticado e caimento perfeito para festas e eventos.",
-    "status": "disponivel"
-  },
-  {
-    "id": "p3",
-    "name": "Vestido Longo Rosa Serenity",
-    "category": "vestidos",
-    "price": 229.9,
-    "image": "https://images.pexels.com/photos/2814806/pexels-photo-2814806.jpeg?auto=compress&cs=tinysrgb&w=600",
-    "description": "Longo com tom rosa suave, tecido leve e fenda discreta. Conforto e elegância.",
-    "status": "disponivel"
-  },
-  {
-    "id": "p4",
-    "name": "Camiseta Feminina Básica Branca",
-    "category": "blusas",
-    "price": 59.9,
-    "image": "https://images.pexels.com/photos/5704849/pexels-photo-5704849.jpeg?auto=compress&cs=tinysrgb&w=600",
-    "description": "Camiseta básica em algodão macio, ideal para compor looks casuais.",
-    "status": "disponivel"
-  },
-  {
-    "id": "p5",
-    "name": "Blusa Cropped Canelada",
-    "category": "blusas",
-    "price": 79.9,
-    "image": "https://images.pexels.com/photos/7749094/pexels-photo-7749094.jpeg?auto=compress&cs=tinysrgb&w=600",
-    "description": "Blusa cropped canelada com gola redonda e modelagem confortável.",
-    "status": "disponivel"
-  },
-  {
-    "id": "p6",
-    "name": "Blusa Off-Shoulder Bege",
-    "category": "blusas",
-    "price": 89.9,
-    "image": "https://images.pexels.com/photos/3762929/pexels-photo-3762929.jpeg?auto=compress&cs=tinysrgb&w=600",
-    "description": "Blusa ombro a ombro com tecido suave e elegante para qualquer ocasião.",
-    "status": "disponivel"
-  },
-  {
-    "id": "p7",
-    "name": "Calça Jeans Cintura Alta",
-    "category": "calcas",
-    "price": 139.9,
-    "image": "https://images.pexels.com/photos/1394881/pexels-photo-1394881.jpeg?auto=compress&cs=tinysrgb&w=600",
-    "description": "Jeans clássico de cintura alta e corte reto. Modela e valoriza o corpo.",
-    "status": "disponivel"
-  },
-  {
-    "id": "p8",
-    "name": "Calça Pantalona Rose",
-    "category": "calcas",
-    "price": 159.9,
-    "image": "https://images.pexels.com/photos/9963297/pexels-photo-9963297.jpeg?auto=compress&cs=tinysrgb&w=600",
-    "description": "Pantalona moderna com tecido fluido e cintura elástica confortável.",
-    "status": "disponivel"
-  },
-  {
-    "id": "p9",
-    "name": "Calça de Moletom Feminina",
-    "category": "calcas",
-    "price": 119.9,
-    "image": "https://images.pexels.com/photos/6311621/pexels-photo-6311621.jpeg?auto=compress&cs=tinysrgb&w=600",
-    "description": "Calça comfy de moletom macio, ideal para o dia a dia.",
-    "status": "disponivel"
-  },
-  {
-    "id": "p10",
-    "name": "Lingerie Conjunto Rosa Pastel",
-    "category": "intimas",
-    "price": 89.9,
-    "image": "https://images.pexels.com/photos/6311619/pexels-photo-6311619.jpeg?auto=compress&cs=tinysrgb&w=600",
-    "description": "Conjunto delicado de renda com modelagem confortável e toque suave.",
-    "status": "disponivel"
-  },
-  {
-    "id": "p11",
-    "name": "Sutiã Sem Bojo Confort Lace",
-    "category": "intimas",
-    "price": 59.9,
-    "image": "https://images.pexels.com/photos/6311620/pexels-photo-6311620.jpeg?auto=compress&cs=tinysrgb&w=600",
-    "description": "Sutiã em renda delicada sem bojo, ideal para o conforto do dia a dia.",
-    "status": "disponivel"
-  },
-  {
-    "id": "p12",
-    "name": "Sandália Rosa Comfort",
-    "category": "calcados",
-    "price": 169.9,
-    "image": "https://images.pexels.com/photos/8454345/pexels-photo-8454345.jpeg?auto=compress&cs=tinysrgb&w=600",
-    "description": "Sandália leve com tiras cruzadas e palmilha macia, em tom rosa LS.",
-    "status": "disponivel"
-  },
-  {
-    "id": "p13",
-    "name": "Tênis Branco Casual Feminino",
-    "category": "calcados",
-    "price": 199.9,
-    "image": "https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg?auto=compress&cs=tinysrgb&w=600",
-    "description": "Tênis branco clássico, combina com tudo. Estilo e conforto em um só modelo.",
-    "status": "disponivel"
-  },
-  {
-    "id": "p14",
-    "name": "Óculos de Sol LS Fashion",
-    "category": "oculos",
-    "price": 89.9,
-    "image": "https://images.pexels.com/photos/1841393/pexels-photo-1841393.jpeg?auto=compress&cs=tinysrgb&w=600",
-    "description": "Óculos fashion com lentes degradê e hastes douradas, estilo moderno LS.",
-    "status": "disponivel"
-  },
-  {
-    "id": "p15",
-    "name": "Óculos de Sol Redondo Vintage",
-    "category": "oculos",
-    "price": 99.9,
-    "image": "https://images.pexels.com/photos/1457911/pexels-photo-1457911.jpeg?auto=compress&cs=tinysrgb&w=600",
-    "description": "Óculos redondo retrô com lentes levemente rosadas, um charme.",
-    "status": "disponivel"
-  },
-  {
-    "id": "p16",
-    "name": "Batom Matte Rosa LS",
-    "category": "cosmeticos",
-    "price": 49.9,
-    "image": "https://images.pexels.com/photos/2533266/pexels-photo-2533266.jpeg?auto=compress&cs=tinysrgb&w=600",
-    "description": "Batom matte de longa duração, tom rosa LS perfeito para todos os tons de pele.",
-    "status": "disponivel"
-  },
-  {
-    "id": "p17",
-    "name": "Perfume LS Essence 50ml",
-    "category": "cosmeticos",
-    "price": 129.9,
-    "image": "https://images.pexels.com/photos/965989/pexels-photo-965989.jpeg?auto=compress&cs=tinysrgb&w=600",
-    "description": "Perfume feminino floral frutado, aroma leve e sofisticado LS.",
-    "status": "disponivel"
-  },
-  {
-    "id": "p18",
-    "name": "Creme Hidratante Corporal LS",
-    "category": "beleza",
-    "price": 69.9,
-    "image": "https://images.pexels.com/photos/3738379/pexels-photo-3738379.jpeg?auto=compress&cs=tinysrgb&w=600",
-    "description": "Hidratante corporal com fragrância suave e textura leve.",
-    "status": "disponivel"
-  },
-  {
-    "id": "p19",
-    "name": "Sérum Facial Iluminador",
-    "category": "beleza",
-    "price": 99.9,
-    "image": "https://images.pexels.com/photos/8460156/pexels-photo-8460156.jpeg?auto=compress&cs=tinysrgb&w=600",
-    "description": "Sérum facial com toque seco, ideal para pele radiante e nutrida.",
-    "status": "disponivel"
-  },
-  {
-    "id": "p20",
-    "name": "Bolsa Rosa Pastel LS",
-    "category": "acessorios",
-    "price": 149.9,
-    "image": "https://images.pexels.com/photos/1926769/pexels-photo-1926769.jpeg?auto=compress&cs=tinysrgb&w=600",
-    "description": "Bolsa estruturada tom rosa LS, moderna e prática para o dia a dia.",
-    "status": "disponivel"
-  }
+  { "id": "p1", "name": "Vestido Floral Midi", "category": "vestidos", "price": 159.9, "image": "assets/prod-vestido-floral.jpg", "description": "Vestido midi leve com estampa floral e caimento fluido, perfeito para dias ensolarados.", "status": "disponivel" },
+  { "id": "p2", "name": "Vestido Curto Preto Elegance", "category": "vestidos", "price": 189.9, "image": "assets/prod-vestido-preto.jpg", "description": "Vestido curto preto com toque sofisticado e caimento perfeito para festas e eventos.", "status": "disponivel" },
+  { "id": "p3", "name": "Vestido Longo Rosa Serenity", "category": "vestidos", "price": 229.9, "image": "assets/prod-vestido-longo.jpg", "description": "Longo com tom rosa suave, tecido leve e fenda discreta. Conforto e elegância.", "status": "disponivel" },
+
+  { "id": "p4", "name": "Camiseta Feminina Básica Branca", "category": "blusas", "price": 59.9, "image": "assets/prod-camiseta-branca.jpg", "description": "Camiseta básica em algodão macio, ideal para compor looks casuais.", "status": "disponivel" },
+  { "id": "p5", "name": "Blusa Cropped Canelada", "category": "blusas", "price": 79.9, "image": "assets/prod-blusa-cropped.jpg", "description": "Blusa cropped canelada com gola redonda e modelagem confortável.", "status": "disponivel" },
+  { "id": "p6", "name": "Blusa Off-Shoulder Bege", "category": "blusas", "price": 89.9, "image": "assets/prod-blusa-bege.jpg", "description": "Blusa ombro a ombro com tecido suave e elegante para qualquer ocasião.", "status": "disponivel" },
+
+  { "id": "p7", "name": "Calça Jeans Cintura Alta", "category": "calcas", "price": 139.9, "image": "assets/prod-calca-jeans.jpg", "description": "Jeans clássico de cintura alta e corte reto. Modela e valoriza o corpo.", "status": "disponivel" },
+  { "id": "p8", "name": "Calça Pantalona Rose", "category": "calcas", "price": 159.9, "image": "assets/prod-calca-pantalona.jpg", "description": "Pantalona moderna com tecido fluido e cintura elástica confortável.", "status": "disponivel" },
+  { "id": "p9", "name": "Calça de Moletom Feminina", "category": "calcas", "price": 119.9, "image": "assets/prod-calca-moletom.jpg", "description": "Calça comfy de moletom macio, ideal para o dia a dia.", "status": "disponivel" },
+
+  { "id": "p10", "name": "Lingerie Conjunto Rosa Pastel", "category": "intimas", "price": 89.9, "image": "assets/prod-lingerie-rosa.jpg", "description": "Conjunto delicado de renda com modelagem confortável e toque suave.", "status": "disponivel" },
+  { "id": "p11", "name": "Sutiã Sem Bojo Confort Lace", "category": "intimas", "price": 59.9, "image": "assets/prod-sutia-lace.jpg", "description": "Sutiã em renda delicada sem bojo, ideal para o conforto do dia a dia.", "status": "disponivel" },
+
+  { "id": "p12", "name": "Sandália Rosa Comfort", "category": "calcados", "price": 169.9, "image": "assets/prod-sandalia-rosa.jpg", "description": "Sandália leve com tiras cruzadas e palmilha macia, em tom rosa LS.", "status": "disponivel" },
+  { "id": "p13", "name": "Tênis Branco Casual Feminino", "category": "calcados", "price": 199.9, "image": "assets/prod-tenis-branco.jpg", "description": "Tênis branco clássico, combina com tudo. Estilo e conforto em um só modelo.", "status": "disponivel" },
+
+  { "id": "p14", "name": "Óculos de Sol LS Fashion", "category": "oculos", "price": 89.9, "image": "assets/prod-oculos-fashion.jpg", "description": "Óculos fashion com lentes degradê e hastes douradas, estilo moderno LS.", "status": "disponivel" },
+  { "id": "p15", "name": "Óculos de Sol Redondo Vintage", "category": "oculos", "price": 99.9, "image": "assets/prod-oculos-vintage.jpg", "description": "Óculos redondo retrô com lentes levemente rosadas, um charme.", "status": "disponivel" },
+
+  { "id": "p16", "name": "Batom Matte Rosa LS", "category": "cosmeticos", "price": 49.9, "image": "assets/prod-batom-rosa.jpg", "description": "Batom matte de longa duração, tom rosa LS perfeito para todos os tons de pele.", "status": "disponivel" },
+  { "id": "p17", "name": "Perfume LS Essence 50ml", "category": "cosmeticos", "price": 129.9, "image": "assets/prod-perfume-ls.jpg", "description": "Perfume feminino floral frutado, aroma leve e sofisticado LS.", "status": "disponivel" },
+
+  { "id": "p18", "name": "Creme Hidratante Corporal LS", "category": "beleza", "price": 69.9, "image": "assets/prod-hidratante.jpg", "description": "Hidratante corporal com fragrância suave e textura leve.", "status": "disponivel" },
+  { "id": "p19", "name": "Sérum Facial Iluminador", "category": "beleza", "price": 99.9, "image": "assets/prod-serum-facial.jpg", "description": "Sérum facial com toque seco, ideal para pele radiante e nutrida.", "status": "disponivel" },
+
+  { "id": "p20", "name": "Bolsa Rosa Pastel LS", "category": "acessorios", "price": 149.9, "image": "assets/prod-bolsa-rosa.jpg", "description": "Bolsa estruturada tom rosa LS, moderna e prática para o dia a dia.", "status": "disponivel" }
 ]
