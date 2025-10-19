@@ -27,8 +27,8 @@ if (footerInsta) footerInsta.href = instaWeb;
   });
 });
 
-// --- Splash (garante que desaparece após 2s)
-window.addEventListener('load',()=>{
+// --- Splash (garante que desaparece após 2s mesmo no Safari/GitHub Pages)
+document.addEventListener('DOMContentLoaded',()=>{
   setTimeout(()=>{
     const s = document.getElementById('splash');
     if (s) {
