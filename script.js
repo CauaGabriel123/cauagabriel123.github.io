@@ -561,14 +561,16 @@ ${
 ✨ *Obrigada por comprar na LS Store!* 💖`;
 
   const url = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
-
-  // >>> Garantia de abertura em iOS/Android/Desktop
-  window.location.href = url;
-
   const pop = document.getElementById('popup-overlay');
+
+  // ✅ Exibe popup e adiciona delay antes de abrir o WhatsApp
   pop.hidden = false;
   pop.classList.add('show');
-  setTimeout(() => { pop.hidden = true; }, 5000);
+
+  setTimeout(() => {
+    window.location.href = url;
+    pop.hidden = true;
+  }, 2000); // <-- Delay de 2 segundos
 };
 
 // =============================
