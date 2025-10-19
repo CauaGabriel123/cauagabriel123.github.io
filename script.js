@@ -1,10 +1,6 @@
 // =========================
-// LS STORE v11.2.5 — Cauã (Fixes + Upgrades sem alterar layout)
-// - Opção B aplicada: categoria "blusas" real
-// - Taxa/total em tempo real, validação endereço
-// - Áudio lazy (iOS), WhatsApp com rua/número, valor pago opcional
-// - Dots do carrossel, busca funcional
-// - Ajuste da linha do carrinho sem mexer no CSS (grid via JS)
+// LS STORE v11.2.6 — Upgrades e Fixes focados (menu, touch, popup/Whats, fly-to-cart)
+// Base: v11.2.5 do cliente (sem mudar o layout/estilo visual)
 // =========================
 
 const { jsPDF } = window.jspdf;
@@ -34,7 +30,7 @@ const footerInsta = document.getElementById('footer-insta');
   });
 });
 
-// --- Splash (corrigido para travamento)
+// --- Splash (robusto, sem travar)
 document.addEventListener('DOMContentLoaded', () => {
   const splash = document.getElementById('splash');
   if (splash) {
@@ -45,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// --- Áudio (lazy init para iOS)
+// --- Áudio (lazy init p/ iOS)
 let audioCtx;
 function getCtx() {
   if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -88,6 +84,8 @@ const drawer = document.getElementById('drawer');
 const menuBtn = document.getElementById('menu-btn');
 const closeDrawer = document.getElementById('close-drawer');
 const drawerGrid = document.getElementById('drawer-grid');
+const drawerLinks = document.querySelector('.drawer-links');
+
 const categories = [
   { key: 'blusas', name: 'Blusas', img: 'https://images.unsplash.com/photo-1624996379697-a7c8d6df7a70?q=80&w=1200&auto=format&fit=crop' },
   { key: 'calcas', name: 'Calças', img: 'https://images.unsplash.com/photo-1539533018447-63fcce2678e3?q=80&w=1200&auto=format&fit=crop' },
@@ -122,11 +120,17 @@ closeDrawer.onclick = () => {
 };
 drawer.querySelector('.drawer-backdrop').onclick = () => drawer.setAttribute('aria-hidden', 'true');
 
-// --- Navegação entre seções
+// --- Navegação entre seções (inclui "Femininos" → abre 'vestidos' por padrão)
 document.querySelectorAll('.drawer-links a[data-section], .footer a[data-section]').forEach(a => {
   a.onclick = e => {
     e.preventDefault();
-    showSection(a.getAttribute('data-section'));
+    const sec = a.getAttribute('data-section');
+    if (sec === 'femininos') {
+      // ponto único de entrada para as categorias femininas
+      showSection('vestidos');
+    } else {
+      showSection(sec);
+    }
     drawer.setAttribute('aria-hidden', 'true');
   };
 });
@@ -218,7 +222,7 @@ function renderAll() {
 renderAll();
 
 // =============================
-// MODAL DE PRODUTO (corrigido)
+// MODAL DE PRODUTO
 // =============================
 const modal = document.getElementById('product-modal');
 const modalImgs = document.getElementById('modal-imgs');
@@ -295,6 +299,9 @@ function openModal(id) {
           showAlert('Por favor, selecione o tamanho e a cor antes de adicionar ao carrinho!');
           return;
         }
+        // animação voando até o carrinho
+        const img = modalImgs.querySelector('img');
+        if (img) animateFlyToCart(img, document.getElementById('cart-btn'));
         addToCart(currentProduct, selectedSize, selectedColor);
         modal.setAttribute('aria-hidden', 'true');
         playChime();
@@ -330,7 +337,7 @@ function showAlert(msg) {
 }
 
 // =============================
-// CARRINHO (corrigido + UI total)
+// CARRINHO (com UI da taxa/total e explosão)
 // =============================
 const cart = document.getElementById('cart');
 const cartBtn = document.getElementById('cart-btn');
@@ -354,7 +361,7 @@ function updateCart() {
   items.forEach((it, i) => {
     const row = document.createElement('div');
     row.className = 'row';
-    // Ajuste da grade sem mexer no CSS (3 colunas)
+    // força 3 colunas sem alterar CSS global
     row.style.display = 'grid';
     row.style.gridTemplateColumns = '1fr auto auto';
     row.style.gap = '8px';
@@ -367,7 +374,6 @@ function updateCart() {
   });
   cartTotal.textContent = total.toFixed(2).replace('.', ',');
   cartCount.textContent = items.length;
-  // final será atualizado pelo refreshTotalsUI
   cartItems.querySelectorAll('button').forEach(b => {
     b.onclick = () => {
       items.splice(b.dataset.i, 1);
@@ -379,14 +385,16 @@ function updateCart() {
 
 function addToCart(prod, size, color) {
   items.push({ name: prod.name, size, color, price: prod.price });
+  // explosão/pulse no carrinho
   cartBtn.classList.add('pulse');
+  makeCartExplosion(cartBtn);
   setTimeout(() => cartBtn.classList.remove('pulse'), 400);
   updateCart();
   refreshTotalsUI();
 }
 
 // =============================
-// ENTREGA, PAGAMENTO E WHATSAPP
+// ENTREGA, PAGAMENTO E WHATSAPP (popup antes do WhatsApp)
 // =============================
 const nameInput = document.getElementById('client-name');
 const paymentSel = document.getElementById('payment');
@@ -421,7 +429,6 @@ function refreshTotalsUI() {
   const produtos = parseFloat(cartTotal.textContent.replace(',', '.')) || 0;
   const fee = calcFee();
 
-  // Mostra/oculta bloco da taxa
   if (deliveryType.value === 'entrega') {
     deliveryFee.style.display = 'block';
     const bairro = neighborhood.value;
@@ -432,12 +439,9 @@ function refreshTotalsUI() {
     feeValue.textContent = '0,00';
   }
 
-  // Atualiza total final
   const final = produtos + fee;
   finalTotal.textContent = final.toFixed(2).replace('.', ',');
 }
-
-// Chamada inicial
 refreshTotalsUI();
 
 checkout.onclick = () => {
@@ -509,11 +513,16 @@ ${
 ---------------------------------
 ✨ *Obrigada por comprar na LS Store!* 💖`;
 
-  const url = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
-  window.open(url, '_blank');
+  // Mostra popup primeiro, depois abre o WhatsApp
   const pop = document.getElementById('popup-overlay');
   pop.hidden = false;
   pop.classList.add('show');
+
+  setTimeout(() => {
+    const url = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
+    window.open(url, '_blank');
+  }, 1200);
+
   setTimeout(() => { pop.hidden = true; }, 5000);
 };
 
@@ -594,7 +603,6 @@ if (ADMIN_MODE) {
     dots[idx].classList.add('active');
   }
   dots.forEach(d => d.addEventListener('click', () => go(parseInt(d.dataset.i, 10))));
-  // auto-play leve (opcional, não invasivo)
   let timer = setInterval(()=>go(idx+1), 6000);
   wrap.addEventListener('mouseenter', ()=>clearInterval(timer));
   wrap.addEventListener('mouseleave', ()=>timer = setInterval(()=>go(idx+1), 6000));
@@ -666,3 +674,61 @@ if (ADMIN_MODE) {
     if (!resultsBox.contains(e.target) && e.target !== input) resultsBox.hidden = true;
   });
 })();
+
+// =============================
+// Animação: voar até o carrinho + explosão
+// =============================
+function animateFlyToCart(sourceImg, cartButton){
+  const rectStart = sourceImg.getBoundingClientRect();
+  const rectEnd = cartButton.getBoundingClientRect();
+
+  const clone = sourceImg.cloneNode(true);
+  clone.style.position = 'fixed';
+  clone.style.left = rectStart.left + 'px';
+  clone.style.top = rectStart.top + 'px';
+  clone.style.width = rectStart.width + 'px';
+  clone.style.height = rectStart.height + 'px';
+  clone.style.borderRadius = '12px';
+  clone.style.zIndex = 9999;
+  clone.style.transition = 'transform .6s ease, opacity .6s ease, left .6s ease, top .6s ease, width .6s ease, height .6s ease';
+  document.body.appendChild(clone);
+
+  // destino (encolhe e vai pro carrinho)
+  requestAnimationFrame(()=> {
+    clone.style.left = (rectEnd.left + rectEnd.width/2 - rectStart.width*0.2) + 'px';
+    clone.style.top = (rectEnd.top + rectEnd.height/2 - rectStart.height*0.2) + 'px';
+    clone.style.width = (rectStart.width * 0.4) + 'px';
+    clone.style.height = (rectStart.height * 0.4) + 'px';
+    clone.style.opacity = '0.6';
+  });
+
+  setTimeout(()=> {
+    clone.style.opacity = '0';
+    setTimeout(()=> clone.remove(), 200);
+    // pequena explosão no carrinho
+    makeCartExplosion(cartButton);
+  }, 620);
+}
+
+function makeCartExplosion(cartButton){
+  const spark = document.createElement('span');
+  spark.style.position = 'fixed';
+  const r = cartButton.getBoundingClientRect();
+  spark.style.left = (r.left + r.width/2) + 'px';
+  spark.style.top = (r.top + r.height/2) + 'px';
+  spark.style.width = '6px';
+  spark.style.height = '6px';
+  spark.style.borderRadius = '50%';
+  spark.style.background = 'radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(233,107,168,0.8) 60%, rgba(122,59,253,0.6) 100%)';
+  spark.style.boxShadow = '0 0 18px rgba(122,59,253,.6), 0 0 8px rgba(233,107,168,.6)';
+  spark.style.zIndex = 9999;
+  spark.style.transform = 'translate(-50%, -50%) scale(1)';
+  spark.style.transition = 'transform .35s ease, opacity .35s ease';
+  document.body.appendChild(spark);
+
+  requestAnimationFrame(()=> {
+    spark.style.transform = 'translate(-50%, -50%) scale(6)';
+    spark.style.opacity = '0';
+  });
+  setTimeout(()=> spark.remove(), 380);
+}
