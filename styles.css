@@ -693,24 +693,11 @@ img { max-width:100%; display:block; }
 }
 
 /* ============================
-   v11.4.5.9 — Animação sutil de balanço no logo do splash 🦄
+   v11.4.5.9-fix — Corrige animação de balanço no splash
    ============================ */
 
-@keyframes swingLogo {
-  0%, 100% {
-    transform: rotate(0deg);
-  }
-  25% {
-    transform: rotate(1.8deg);
-  }
-  75% {
-    transform: rotate(-1.8deg);
-  }
-}
-
-/* Animação suave de balanço apenas visual, sem alterar layout */
 .splash-logo-img {
+  transform: none; /* remove o !important que bloqueava a animação */
   animation: swingLogo 4.5s ease-in-out infinite;
-  transform-origin: center bottom; /* o eixo é na base, simulando o unicórnio se balançando */
-  will-change: transform;
+  transform-origin: center bottom;
 }
