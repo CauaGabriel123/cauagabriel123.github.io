@@ -227,6 +227,17 @@
     <p>O WhatsApp será aberto em instantes.<br><strong>Toque em ENVIAR no WhatsApp 💬</strong></p>
   </div>
 </div>
+  <script>
+  window.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+      const box = document.getElementById('footer-products');
+      if (box && !box.innerHTML.trim()) {
+        console.warn('⚠️ Rodapé vazio — renderizando manualmente com fallback');
+        if (typeof renderFooterProducts === 'function') renderFooterProducts(FALLBACK_PRODUCTS);
+      }
+    }, 1500);
+  });
+</script>
 
 <button id="backToTop" class="back-to-top" aria-label="Voltar ao topo">↑</button>
 
