@@ -7,10 +7,11 @@
 
   <!-- Ícones -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='64' height='64'><rect rx='12' width='64' height='64' fill='%23f6e9ff'/><text x='16' y='40' font-size='26' font-family='Arial' fill='%237a3bfd'>LS</text></svg>">
-  <link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAQAAABo7GoNAAA..."> <!-- opcional: pode trocar depois -->
+  <link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAQAAABo7GoNAAA...">
 
   <!-- Fonts + CSS + jsPDF -->
-  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -18,10 +19,10 @@
 </head>
 <body>
 
-<!-- Splash com logo LS Store -->
+<!-- Splash -->
 <div id="splash">
   <div class="splash-card">
-    <div class="splash-logo"> 
+    <div class="splash-logo">
       <span class="ls">LS</span>
       <span class="store">Store</span>
     </div>
@@ -35,19 +36,19 @@
     <div class="brand-logo"><span class="ls">LS</span><span class="store">Store</span></div>
   </div>
   <div class="right">
-    <button id="login-btn" class="text-btn" title="Entrar">Entrar</button>
+    <button id="login-btn" class="enter-btn" title="Entrar">👤 Entrar</button>
     <button id="cart-btn" class="cart-btn" aria-label="Abrir carrinho">🛒 <span id="cart-count">0</span></button>
   </div>
 </header>
 
-<!-- Barra de busca -->
+<!-- Busca -->
 <div class="search-wrap">
   <input id="search-input" type="search" placeholder="Buscar por nome, cor ou categoria…" autocomplete="off">
   <button id="search-clear" aria-label="Limpar">✕</button>
   <div id="search-results" class="search-results" hidden></div>
 </div>
 
-<!-- Drawer com categorias VISUAIS (cards com foto + blur no fundo) -->
+<!-- Drawer -->
 <aside id="drawer" class="drawer" aria-hidden="true">
   <div class="drawer-backdrop"></div>
   <div class="drawer-inner">
@@ -56,10 +57,7 @@
       <button id="close-drawer" class="icon-btn">✕</button>
     </div>
 
-    <div id="drawer-grid" class="drawer-grid">
-      <!-- Preenchido pelo script com cards:
-        { key:'blusas', name:'Blusas', img:'...' } etc. -->
-    </div>
+    <div id="drawer-grid" class="drawer-grid"></div>
 
     <ul class="drawer-links">
       <li><a href="#" data-section="inicio" class="active">Início</a></li>
@@ -70,7 +68,6 @@
 </aside>
 
 <main class="container">
-  <!-- INÍCIO: banner grande + destaques -->
   <section id="inicio" class="section visible">
     <div class="carousel large" id="carousel">
       <div class="slides">
@@ -89,7 +86,7 @@
     <div id="featured" class="grid"></div>
   </section>
 
-  <!-- Seções por categoria (mostradas quando clicar num card do menu ou link) -->
+  <!-- Categorias -->
   <section id="blusas" class="section"><h2 class="section-title">Blusas</h2><div class="grid" data-cat="camisas"></div></section>
   <section id="calcas" class="section"><h2 class="section-title">Calças</h2><div class="grid" data-cat="calcas"></div></section>
   <section id="vestidos" class="section"><h2 class="section-title">Vestidos</h2><div class="grid" data-cat="vestidos"></div></section>
@@ -109,13 +106,10 @@
   <!-- Minha conta -->
   <section id="minha-conta" class="section">
     <h2 class="section-title">Minha conta</h2>
-    <div id="account-area" class="account-area">
-      <!-- Preenchido pelo script (login/cadastro ou perfil) -->
-    </div>
+    <div id="account-area" class="account-area"></div>
   </section>
 </main>
 
-<!-- Rodapé -->
 <footer class="footer">
   <nav class="social">
     <a id="footer-insta" href="#" aria-label="Instagram">@ls_store.fc</a>
@@ -125,12 +119,12 @@
   <p>© 2025 LS Store — Moda & Acessórios Femininos 💖</p>
 </footer>
 
-<!-- Modal de Produto (detalhe ao clicar) -->
+<!-- Modal Produto (agora com até 5 imagens) -->
 <div id="product-modal" class="modal" aria-hidden="true">
   <div class="modal-card">
     <button class="modal-close icon-btn" id="modal-close">✕</button>
     <div class="modal-body">
-      <img id="modal-img" alt="">
+      <div class="modal-imgs" id="modal-imgs"></div>
       <div class="modal-info">
         <h3 id="modal-name"></h3>
         <p class="modal-price" id="modal-price"></p>
@@ -200,17 +194,15 @@
   </div>
 </aside>
 
-<!-- Popup de sucesso -->
+<!-- Popup -->
 <div id="popup-overlay" class="popup-overlay" hidden>
   <div class="popup">
     <h3>✅ Pedido enviado com sucesso!</h3>
-    <p>O WhatsApp será aberto em instantes.<br><strong>Lembre-se de tocar em ENVIAR no WhatsApp 💬</strong></p>
+    <p>O WhatsApp será aberto em instantes.<br><strong>Toque em ENVIAR no WhatsApp 💬</strong></p>
   </div>
 </div>
 
-<!-- Voltar ao topo -->
 <button id="backToTop" class="back-to-top" aria-label="Voltar ao topo">↑</button>
 
-<!-- Áudio via WebAudio (gerado por JS) -->
 </body>
 </html>
