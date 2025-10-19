@@ -431,3 +431,40 @@ img { max-width:100%; display:block; }
   from { opacity: 0; transform: scale(0.9); }
   to { opacity: 1; transform: scale(1); }
 }
+
+/* ============================
+   Contador do Carrinho 🛒
+   ============================ */
+#cart-btn {
+  position: relative;
+}
+
+/* bolinha rosa no canto superior direito */
+#cart-count {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: #E96BA8; /* rosa da LS Store */
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  box-shadow: 0 0 4px rgba(0,0,0,0.2);
+}
+
+/* animação "explosão" (pulse) */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+
+.pulse {
+  animation: pulse 0.4s ease;
+}
