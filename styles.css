@@ -723,3 +723,9 @@ img { max-width:100%; display:block; }
   transform-origin: center bottom;
   will-change: transform;
 }
+
+footer {
+  background: linear-gradient(180deg, #f7f4fa, #e8d8f3);
+  padding: 30px 0;
+  color: #4b3b63;
+}
