@@ -1,8 +1,10 @@
 // =========================
-// LS STORE v11.3.0 — Upgrades garantidos (sem alterar layout visual)
-// - Drawer: remove "Categorias" em cards e adiciona "Femininos" (dropdown) com subcategorias
+// LS STORE v11.4.0 — Upgrades garantidos (sem alterar layout funcional)
+// - Drawer: mantém "Femininos" (dropdown) com subcategorias
 // - Carrossel Início: arrastável com o dedo + itens reais do catálogo (clica e abre modal)
 // - WhatsApp: abertura garantida com window.location.href
+// - NOVO: campo Número só aceita números (bloqueio de letras)
+// - NOVO: link "Sobre Nós" no menu abre a seção correspondente
 // =========================
 
 const { jsPDF } = window.jspdf;
@@ -123,6 +125,36 @@ function showSection(id) {
   if (sec) sec.classList.add('visible');
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
+// --- NOVO: link "Sobre Nós" no menu abre a seção correspondente
+(function sobreNosNav(){
+  const link = document.getElementById('sobre-nos-link');
+  if (!link) return;
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    showSection('sobre-nos');
+    drawer.setAttribute('aria-hidden', 'true');
+  });
+})();
+
+// =============================
+// BLOQUEIO DE LETRAS NO CAMPO "NÚMERO" (somente dígitos 0-9)
+// =============================
+(function onlyNumericNumberField() {
+  const numberInput = document.getElementById('number');
+  if (!numberInput) return;
+
+  // Ao digitar/colar, remove tudo que não for dígito
+  numberInput.addEventListener('input', () => {
+    numberInput.value = numberInput.value.replace(/\D+/g, '');
+  });
+
+  // Bloqueia caracteres não-numéricos no keypress
+  numberInput.addEventListener('keypress', e => {
+    const char = String.fromCharCode(e.which || e.keyCode);
+    if (!/[0-9]/.test(char)) e.preventDefault();
+  });
+})();
 
 // --- Catálogo de produtos
 const catalog = {
