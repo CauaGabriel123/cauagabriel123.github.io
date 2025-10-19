@@ -30,7 +30,7 @@
   </div>
 </div>
 
-<header class="topbar">
+<header class="topbar" style="touch-action: pan-x pan-y;">
   <button id="menu-btn" class="icon-btn" aria-label="Abrir menu" title="Menu">☰</button>
   <div class="brand">
     <div class="brand-logo"><span class="ls">LS</span><span class="store">Store</span></div>
@@ -59,8 +59,10 @@
 
     <div id="drawer-grid" class="drawer-grid"></div>
 
+    <!-- NOVA ORDEM (Início → Femininos → Contato → Minha conta) -->
     <ul class="drawer-links">
       <li><a href="#" data-section="inicio" class="active">Início</a></li>
+      <li><a href="#" data-section="femininos">Femininos</a></li>
       <li><a href="#" data-section="contato">Contato</a></li>
       <li><a href="#" data-section="minha-conta">Minha conta</a></li>
     </ul>
@@ -114,7 +116,7 @@
   <nav class="social">
     <a id="footer-insta" href="#" aria-label="Instagram">@ls_store.fc</a>
     <a href="https://wa.me/5551989235482" aria-label="WhatsApp">WhatsApp</a>
-    <a href="#contato" aria-label="Fale conosco">Fale conosco</a>
+    <a href="#contato" aria-label="Fale conosco" data-section="contato">Fale conosco</a>
   </nav>
   <p>© 2025 LS Store — Moda & Acessórios Femininos 💖</p>
 </footer>
