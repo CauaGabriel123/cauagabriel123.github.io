@@ -602,4 +602,34 @@ img { max-width:100%; display:block; }
   #contato h2.section-title {
     font-size: 1.5rem;
   }
+
+   /* ============================
+   v11.4.5.1 — Correção de tamanhos e proporções (logo + splash)
+   ============================ */
+
+/* Restaura o tamanho original do logo no topo */
+.logo-header {
+  height: 48px; /* antes estava 58px */
+  margin: 0 auto;
+}
+
+/* Splash (tela inicial) - tamanho do logo e proporção ajustados */
+.splash-logo-img {
+  width: 150px; /* antes estava 200px */
+  max-width: 80%;
+  margin-bottom: 10px;
+  border-radius: 16px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+/* Texto do splash volta ao tamanho anterior */
+#splash p {
+  font-size: 1rem;
+  margin-top: 10px;
+}
+
+/* Mantém centralização e transições */
+#splash {
+  align-items: center;
+  justify-content: center;
 }
