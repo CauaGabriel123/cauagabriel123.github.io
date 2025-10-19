@@ -678,3 +678,32 @@ img { max-width:100%; display:block; }
   transform: translateX(0);
   align-self: center;
 }
+
+/* ============================
+   v11.4.5.6 — Centralização exata do texto e do logo no splash
+   ============================ */
+
+#splash {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.splash-logo-img {
+  display: block;
+  margin: 0 auto 10px auto;
+  align-self: center;
+  transform: none;
+}
+
+#splash p {
+  text-align: center;
+  width: 100%;
+  max-width: 90%;
+  margin: 10px auto 0 auto;
+  line-height: 1.4;
+  display: block;
+  align-self: center;
+}
