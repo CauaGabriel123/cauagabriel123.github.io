@@ -406,6 +406,7 @@ function renderCart() {
 
 // Adiciona item ao carrinho
 function addToCart(prod, size, color) {
+  // Adiciona item ao carrinho e salva
   items.push({ name: prod.name, size, color, price: prod.price });
   localStorage.setItem('cartItems', JSON.stringify(items));
 
@@ -418,6 +419,19 @@ function addToCart(prod, size, color) {
       flyToCart(firstImg, rect.x, rect.y);
     }
   }
+
+  // 💥 Efeito de explosão no botão do carrinho
+  cartBtn.classList.add('pulse');
+  setTimeout(() => cartBtn.classList.remove('pulse'), 400);
+
+  // 🔄 Atualiza interface do carrinho
+  renderCart();
+  refreshTotalsUI();
+
+  // 🧮 Corrige o número no carrinho (atualiza imediatamente)
+  const el = document.getElementById('cart-count');
+  if (el) el.textContent = items.length;
+}
 
   // 💥 Efeito de animação (explosão) no ícone do carrinho
   cartBtn.classList.add('pulse');
