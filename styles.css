@@ -466,33 +466,89 @@ img { max-width:100%; display:block; }
 }
 
 /* ============================
-   v11.4.4 - Estilo Moderno da seção CONTATO
+   v11.4.5 — Contato moderno e chamativo
    ============================ */
 
 #contato {
-  background: linear-gradient(180deg,#ffffff,#f9f6ff);
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0,0,0,.06);
-  padding: 20px;
-  margin: 20px 0;
+  position: relative;
+  background: linear-gradient(180deg, #fff, #f8edff);
+  border-radius: 20px;
+  box-shadow: 0 12px 35px rgba(122, 59, 253, 0.15);
+  padding: 30px 20px;
+  margin: 40px 0;
   text-align: center;
+  overflow: hidden;
   animation: fadeIn 1s ease;
 }
 
+/* Efeito suave no fundo (glow animado) */
+#contato::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top right, rgba(233,107,168,0.12), transparent 60%),
+              radial-gradient(circle at bottom left, rgba(122,59,253,0.12), transparent 60%);
+  z-index: 0;
+  animation: floatGlow 6s ease-in-out infinite alternate;
+}
+@keyframes floatGlow {
+  0% { transform: translateY(0px); opacity: 1; }
+  100% { transform: translateY(-10px); opacity: 0.9; }
+}
+
+#contato h2.section-title {
+  position: relative;
+  font-size: 1.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background: linear-gradient(90deg, var(--pink), var(--lilac));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 3px 10px rgba(122,59,253,0.2);
+  margin-bottom: 18px;
+  z-index: 1;
+}
+
 #contato p {
-  font-size: 1rem;
-  line-height: 1.6;
-  color: #4b3f60;
-  font-weight: 500;
+  position: relative;
+  font-size: 1.05rem;
+  color: #3d3156;
+  margin: 8px 0;
+  z-index: 1;
 }
 
 #contato a {
+  position: relative;
   color: var(--lilac);
   font-weight: 700;
   text-decoration: none;
+  display: inline-block;
+  margin: 4px 0;
+  transition: all 0.25s ease;
+  z-index: 1;
+  text-shadow: 0 2px 6px rgba(122,59,253,0.25);
 }
 
 #contato a:hover {
-  text-decoration: underline;
+  color: var(--pink);
+  transform: scale(1.08);
+  text-shadow: 0 3px 10px rgba(233,107,168,0.35);
 }
 
+/* Ícones personalizados nos links */
+#contato a[href*="instagram"]::before {
+  content: "📸 ";
+}
+#contato a[href*="wa.me"]::before {
+  content: "💬 ";
+}
+
+@media (max-width: 600px) {
+  #contato {
+    padding: 24px 16px;
+  }
+  #contato h2.section-title {
+    font-size: 1.5rem;
+  }
+}
