@@ -190,31 +190,57 @@ function showSection(id) {
   });
 })();
 
-// --- Catálogo de produtos dinâmico via products.json
+// --- Catálogo de produtos dinâmico via products.json (com fallback robusto)
 let catalog = {};
 let featured = [];
 
-fetch('products.json')
-  .then(res => {
-    if (!res.ok) throw new Error('Falha ao buscar JSON');
-    return res.json();
-  })
-  .then(data => {
-    catalog = {};
-    data.forEach(p => {
-      const cat = p.category || 'outros';
-      if (!catalog[cat]) catalog[cat] = [];
-      catalog[cat].push({
-        id: p.id,
-        name: p.name,
-        price: p.price,
-        imgs: [p.image],
-        sizes: ['P', 'M', 'G'], // padrão
-        colors: ['Preto', 'Branco', 'Rosa'], // padrão
-        stock: p.status === 'disponivel' ? 5 : 0,
-        desc: p.description
-      });
+function buildCatalogAndRender(data) {
+  catalog = {};
+  data.forEach(p => {
+    const cat = p.category || 'outros';
+    if (!catalog[cat]) catalog[cat] = [];
+    catalog[cat].push({
+      id: p.id,
+      name: p.name,
+      price: p.price,
+      imgs: [p.image],
+      sizes: ['P', 'M', 'G'],
+      colors: ['Preto', 'Branco', 'Rosa'],
+      stock: p.status === 'disponivel' ? 5 : 0,
+      desc: p.description
     });
+  });
+
+  featured = data
+    .filter(p => p.status === 'disponivel')
+    .slice(0, 5)
+    .map(p => ({
+      id: p.id,
+      name: p.name,
+      price: p.price,
+      imgs: [p.image],
+      desc: p.description
+    }));
+
+  renderAll();
+  initCarousel();
+  renderFooterProducts(featured.length ? featured : null);
+}
+
+(function loadProducts() {
+  fetch('products.json')
+    .then(res => {
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return res.json();
+    })
+    .then(data => {
+      buildCatalogAndRender(data);
+    })
+    .catch(err => {
+      console.warn('Falha ao buscar products.json -> usando FALLBACK_PRODUCTS', err);
+      buildCatalogAndRender(FALLBACK_PRODUCTS);
+    });
+})();
 
     // Cria destaques automáticos (5 primeiros disponíveis)
     featured = data
