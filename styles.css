@@ -634,3 +634,28 @@ img { max-width:100%; display:block; }
   align-items: center;
   justify-content: center;
 }
+
+/* ============================
+   v11.4.5.2 — Realce suave no splash (logo e texto)
+   ============================ */
+
+/* Suaviza e destaca o logo da splash */
+.splash-logo-img {
+  filter: drop-shadow(0 4px 10px rgba(122,59,253,0.25))
+          drop-shadow(0 2px 6px rgba(233,107,168,0.25));
+  transition: filter 0.3s ease;
+}
+
+/* Efeito leve de “respiração” no splash */
+#splash .splash-logo-img:hover {
+  filter: drop-shadow(0 6px 14px rgba(122,59,253,0.3))
+          drop-shadow(0 3px 8px rgba(233,107,168,0.3));
+  transform: scale(1.02);
+}
+
+/* Texto "Bem-vindo(a)" mais vivo e com sombra difusa */
+#splash p {
+  text-shadow: 0 2px 8px rgba(122,59,253,0.3),
+               0 4px 14px rgba(233,107,168,0.25);
+}
+
