@@ -116,7 +116,22 @@ img{max-width:100%;display:block}
 .back-to-top.show{display:block}
 
 /* Popup sucesso */
-.popup-overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.35);z-index:500}
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  display: none; /* fica invisível por padrão */
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,.35);
+  z-index: 500;
+}
+.popup-overlay[hidden] {
+  display: none !important; /* força o hidden a prevalecer */
+}
+.popup-overlay.show {
+  display: flex; /* classe "show" será usada pra exibir */
+}
+
 .popup{background:#fff;border-radius:16px;padding:16px 18px;box-shadow:0 20px 60px rgba(0,0,0,.35);text-align:center}
 
 /* Util */
