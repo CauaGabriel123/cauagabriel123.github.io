@@ -330,7 +330,7 @@ function showAlert(msg) {
 }
 
 // =============================
-// CARRINHO (corrigido + UI total)
+// CARRINHO (v11.4.1 — correção estável, sem mudar o visual)
 // =============================
 const cart = document.getElementById('cart');
 const cartBtn = document.getElementById('cart-btn');
@@ -343,14 +343,39 @@ const deliveryFee = document.getElementById('delivery-fee');
 const closeCart = document.getElementById('close-cart');
 const checkout = document.getElementById('checkout');
 
-let items = [];
+let items = JSON.parse(localStorage.getItem('cartItems') || '[]');
 
-cartBtn.onclick = () => cart.setAttribute('aria-hidden', 'false');
+// Abrir e fechar carrinho
+cartBtn.onclick = () => {
+  cart.setAttribute('aria-hidden', 'false');
+  renderCart();
+};
 closeCart.onclick = () => cart.setAttribute('aria-hidden', 'true');
 
-function updateCart() {
+// Atualiza contador no botão 🛒
+function updateCartCount() {
+  cartCount.textContent = items.length;
+  localStorage.setItem('cartItems', JSON.stringify(items));
+}
+
+// Atualiza totais visuais
+function refreshTotalsUI() {
+  const total = items.reduce((acc, it) => acc + it.price, 0);
+  cartTotal.textContent = total.toFixed(2).replace('.', ',');
+  finalTotal.textContent = total.toFixed(2).replace('.', ',');
+  feeValue.textContent = '0,00';
+  updateCartCount();
+}
+
+// Renderiza o carrinho com itens e botões de remover
+function renderCart() {
   cartItems.innerHTML = '';
-  let total = 0;
+  if (items.length === 0) {
+    cartItems.innerHTML = '<p class="empty">Seu carrinho está vazio 💕</p>';
+    refreshTotalsUI();
+    return;
+  }
+
   items.forEach((it, i) => {
     const row = document.createElement('div');
     row.className = 'row';
@@ -360,28 +385,43 @@ function updateCart() {
     row.innerHTML = `
       <small>${it.name} (${it.size}/${it.color})</small>
       <small>R$ ${it.price.toFixed(2).replace('.', ',')}</small>
-      <button data-i="${i}" style="border:0;background:transparent;color:#E96BA8;font-weight:700;cursor:pointer;">✕</button>`;
+      <button data-i="${i}" style="border:0;background:transparent;color:#E96BA8;font-weight:700;cursor:pointer;">✕</button>
+    `;
     cartItems.appendChild(row);
-    total += it.price;
   });
-  cartTotal.textContent = total.toFixed(2).replace('.', ',');
-  cartCount.textContent = items.length;
+
+  // Liga eventos de remover corretamente
   cartItems.querySelectorAll('button').forEach(b => {
     b.onclick = () => {
-      items.splice(b.dataset.i, 1);
-      updateCart();
+      const idx = parseInt(b.dataset.i);
+      items.splice(idx, 1);
+      localStorage.setItem('cartItems', JSON.stringify(items));
+      renderCart();
       refreshTotalsUI();
     };
   });
-}
 
-function addToCart(prod, size, color) {
-  items.push({ name: prod.name, size, color, price: prod.price });
-  cartBtn.classList.add('pulse');
-  setTimeout(() => cartBtn.classList.remove('pulse'), 400);
-  updateCart();
   refreshTotalsUI();
 }
+
+// Adiciona item ao carrinho
+function addToCart(prod, size, color) {
+  items.push({ name: prod.name, size, color, price: prod.price });
+  localStorage.setItem('cartItems', JSON.stringify(items));
+
+  // Efeito de animação no botão 🛒
+  cartBtn.classList.add('pulse');
+  setTimeout(() => cartBtn.classList.remove('pulse'), 400);
+
+  renderCart();
+  refreshTotalsUI();
+}
+
+// Inicialização
+document.addEventListener('DOMContentLoaded', () => {
+  renderCart();
+  refreshTotalsUI();
+});
 
 // =============================
 // ENTREGA, PAGAMENTO E WHATSAPP
