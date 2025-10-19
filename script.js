@@ -258,7 +258,7 @@ function badgeHTML(p) {
 function cardHTML(p) {
   return `<div class="card" data-id="${p.id}">
     ${badgeHTML(p)}
-    <img src="${(p.imgs ? p.imgs[0] : p.img)}" alt="${p.name}"/>
+    <img src="${(p.imgs ? p.imgs[0] : p.img || p.image)}" alt="${p.name}"/>
     <div class="info"><p class="name">${p.name}</p><p class="price">${priceHTML(p)}</p></div>
   </div>`;
 }
@@ -293,7 +293,7 @@ function renderFooterProducts(listFromData) {
 
   box.innerHTML = slice.map(p => `
     <div class="footer-card" data-id="${p.id}" role="button" aria-label="${p.name}">
-      <img src="${(p.imgs ? p.imgs[0] : p.img)}" alt="${p.name}">
+          <img src="${(p.imgs ? p.imgs[0] : p.img || p.image)}" alt="${p.name}">
       <div class="fc-info">
         <div class="fc-name">${p.name}</div>
         <div class="fc-price">R$ ${p.price.toFixed(2).replace('.', ',')}</div>
