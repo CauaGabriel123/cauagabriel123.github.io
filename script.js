@@ -428,9 +428,13 @@ function addToCart(prod, size, color) {
 }
 
 // Inicialização
+// Inicialização
 document.addEventListener('DOMContentLoaded', () => {
   renderCart();
   refreshTotalsUI();
+  updateCartCount();
+});
+
 });
 
 // =============================
@@ -818,4 +822,3 @@ function flyToCart(imgSrc, startX, startY) {
 
   setTimeout(() => img.remove(), 800);
 }
-
