@@ -347,10 +347,6 @@ img { max-width:100%; display:block; }
 .account-area .auth-actions{ display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
 .account-area .auth-actions .add-btn{ flex:1; }
 
-/* Pulse carrinho */
-.cart-btn.pulse{ animation:pulse .5s ease; }
-@keyframes pulse{ 50%{ transform:scale(1.05); } }
-
 /* ========== NOVOS ESTILOS (v11.4.0) ========== */
 
 /* Carrinho mais bonito (somente visual) */
