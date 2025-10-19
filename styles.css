@@ -382,50 +382,101 @@ img { max-width:100%; display:block; }
   font-weight: 700;
   color: var(--lilac);
 }
+/* ============================
+   v11.4.5 — Sobre Nós premium e moderno
+   ============================ */
 
-/* Seção Sobre Nós */
 #sobre-nos {
-  background: linear-gradient(180deg,#ffffff,#f9f6ff);
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0,0,0,.06);
-  padding: 20px;
-  margin: 20px 0;
+  position: relative;
+  background: linear-gradient(180deg, #ffffff, #f8edff);
+  border-radius: 20px;
+  box-shadow: 0 12px 35px rgba(122, 59, 253, 0.15);
+  padding: 40px 24px;
+  margin: 40px 0;
   text-align: center;
+  overflow: hidden;
+  animation: fadeIn 1s ease;
 }
+
+/* fundo animado com brilho sutil */
+#sobre-nos::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top left, rgba(233,107,168,0.12), transparent 60%),
+              radial-gradient(circle at bottom right, rgba(122,59,253,0.12), transparent 60%);
+  z-index: 0;
+  animation: floatGlow 6s ease-in-out infinite alternate;
+}
+
+/* título com degradê e sombra suave */
+#sobre-nos h2.section-title {
+  position: relative;
+  font-size: 1.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background: linear-gradient(90deg, var(--pink), var(--lilac));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 3px 10px rgba(122,59,253,0.25);
+  margin-bottom: 20px;
+  z-index: 1;
+}
+
+/* texto com destaque sutil e ícone flutuante */
+.sobre-nos-content {
+  position: relative;
+  z-index: 1;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 10px 8px;
+}
+
 .sobre-nos-content p {
-  font-size: 1rem;
-  line-height: 1.6;
-  color: #4b3f60;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #3d3156;
   font-weight: 500;
+  text-shadow: 0 1px 4px rgba(233,107,168,0.1);
 }
+
 .sobre-nos-content strong {
   color: var(--lilac);
+  font-weight: 700;
+  text-shadow: 0 2px 8px rgba(122,59,253,0.25);
 }
 
-.splash-logo-img {
-  width: 200px;
-  max-width: 90%;
-  display: block;
-  margin: 0 auto 10px;
-  border-radius: 20px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, .08);
-  animation: fadeIn 1.4s ease;
+/* coração animado 💖 */
+.sobre-nos-content::before {
+  content: "💖";
+  font-size: 2rem;
+  position: absolute;
+  left: 50%;
+  top: -25px;
+  transform: translateX(-50%);
+  animation: pulseHeart 2.5s infinite ease-in-out;
+  z-index: 1;
 }
 
-.logo-header {
-  height: 58px;
-  display: block;
-  margin: 0 auto;
-  transition: transform .2s ease;
+@keyframes pulseHeart {
+  0%, 100% { transform: translateX(-50%) scale(1); opacity: 1; }
+  50% { transform: translateX(-50%) scale(1.2); opacity: 0.9; }
 }
 
-.logo-header:hover {
-  transform: scale(1.05);
+/* glow animado compartilhado com a seção contato */
+@keyframes floatGlow {
+  0% { transform: translateY(0px); opacity: 1; }
+  100% { transform: translateY(-10px); opacity: 0.9; }
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.9); }
-  to { opacity: 1; transform: scale(1); }
+@media (max-width: 600px) {
+  #sobre-nos {
+    padding: 28px 16px;
+  }
+  #sobre-nos h2.section-title {
+    font-size: 1.5rem;
+  }
 }
 
 /* ============================
