@@ -98,17 +98,19 @@ closeDrawer.onclick = () => {
 };
 drawer.querySelector('.drawer-backdrop').onclick = () => drawer.setAttribute('aria-hidden', 'true');
 
-// Accordion Produtos (atualizado v11.4.7)
-(function initDrawerAccordion(){
+// Accordion Produtos (100% funcional em desktop e mobile)
+document.addEventListener('DOMContentLoaded', () => {
   const btn = document.querySelector('.drawer-accordion');
   const sub = document.getElementById('sub-produtos');
   if (!btn || !sub) return;
-  btn.addEventListener('click', ()=>{
-    const open = btn.getAttribute('aria-expanded') === 'true';
-    btn.setAttribute('aria-expanded', String(!open));
-    sub.hidden = open;
+
+  btn.addEventListener('click', () => {
+    const expanded = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', String(!expanded));
+    sub.hidden = expanded;
+    clickSoft(); // som suave no clique
   });
-})();
+});
 
 // --- Navegação entre seções
 document.querySelectorAll('.drawer-links a[data-section], .footer a[data-section]').forEach(a => {
