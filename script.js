@@ -428,13 +428,10 @@ function addToCart(prod, size, color) {
 }
 
 // Inicialização
-// Inicialização
 document.addEventListener('DOMContentLoaded', () => {
   renderCart();
   refreshTotalsUI();
   updateCartCount();
-});
-
 });
 
 // =============================
