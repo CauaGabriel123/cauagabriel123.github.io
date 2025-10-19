@@ -464,3 +464,35 @@ img { max-width:100%; display:block; }
 .pulse {
   animation: pulse 0.4s ease;
 }
+
+/* ============================
+   v11.4.4 - Estilo Moderno da seção CONTATO
+   ============================ */
+
+#contato {
+  background: linear-gradient(180deg,#ffffff,#f9f6ff);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.06);
+  padding: 20px;
+  margin: 20px 0;
+  text-align: center;
+  animation: fadeIn 1s ease;
+}
+
+#contato p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #4b3f60;
+  font-weight: 500;
+}
+
+#contato a {
+  color: var(--lilac);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+#contato a:hover {
+  text-decoration: underline;
+}
+
