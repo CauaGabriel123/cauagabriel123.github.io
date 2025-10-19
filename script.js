@@ -409,7 +409,17 @@ function addToCart(prod, size, color) {
   items.push({ name: prod.name, size, color, price: prod.price });
   localStorage.setItem('cartItems', JSON.stringify(items));
 
-  // Efeito de animação no botão 🛒
+  // 🛍️ Efeito visual do produto "voando" até o carrinho
+  const firstImg = (prod.imgs && prod.imgs[0]) || prod.img || '';
+  if (firstImg) {
+    const btn = document.getElementById('modal-add');
+    if (btn) {
+      const rect = btn.getBoundingClientRect();
+      flyToCart(firstImg, rect.x, rect.y);
+    }
+  }
+
+  // 💥 Efeito de animação (explosão) no ícone do carrinho
   cartBtn.classList.add('pulse');
   setTimeout(() => cartBtn.classList.remove('pulse'), 400);
 
