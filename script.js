@@ -199,9 +199,6 @@ fetch('products.json')
     showAlert('Erro ao carregar os produtos 😢');
   });
 
-// --- Destaques
-const featured = [catalog.vestidos[0], catalog.calcas[0], catalog.blusas[0]].filter(Boolean);
-
 function priceHTML(p) {
   const v = p.discount ? (p.price * (1 - p.discount)) : p.price;
   let s = `R$ ${v.toFixed(2).replace('.', ',')}`;
