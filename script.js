@@ -352,7 +352,10 @@ document.getElementById('checkout').onclick=()=>{
   msg+=`%0A💰 *Total final:* R$ ${final.toFixed(2)}%0A---------------------------------%0A✨ *Obrigada por comprar na LS Store!* 💖`;
 
   playChime();
-  const pop=document.getElementById('popup-overlay'); pop.hidden=false; setTimeout(()=>{ pop.hidden=true; },1600);
+  const pop = document.getElementById('popup-overlay');
+pop.classList.add('show');
+setTimeout(() => { pop.classList.remove('show'); }, 1600);
+
   location.href=`https://wa.me/${WHATSAPP}?text=${msg}`;
 };
 
