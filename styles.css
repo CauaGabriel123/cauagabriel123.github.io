@@ -1,5 +1,5 @@
 /* ================================
-   LS STORE v11.2 — Cauã Gabriel
+   LS STORE v11.4.0 — Cauã Gabriel
    ================================ */
 
 * { box-sizing: border-box; }
@@ -143,7 +143,7 @@ img { max-width:100%; display:block; }
 .carousel { position:relative; margin-top:6px;
   border-radius:14px; overflow:hidden;
   box-shadow:0 10px 30px rgba(0,0,0,.06); z-index:1;
-  touch-action:pan-y; /* permite arrastar no eixo X sem travar o scroll vertical */
+  touch-action:pan-y;
 }
 .carousel.large { height:48vh; min-height:260px; }
 .slides { display:flex; transition:transform .45s ease; }
@@ -331,105 +331,57 @@ img { max-width:100%; display:block; }
 .cart-btn.pulse{ animation:pulse .5s ease; }
 @keyframes pulse{ 50%{ transform:scale(1.05); } }
 
-/* ================================
-   Estilo aprimorado - Login (LS STORE v11.2.3)
-   ================================ */
-.account-area {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-}
+/* ========== NOVOS ESTILOS (v11.4.0) ========== */
 
-.auth-card {
-  width: 100%;
-  max-width: 380px;
+/* Carrinho mais bonito (somente visual) */
+.cart-items .row {
   background: #fff;
-  border-radius: 18px;
-  box-shadow: 0 12px 36px rgba(122,59,253,.15);
-  border: 1px solid #efe8ff;
-  padding: 22px 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  animation: fadeInUp .3s ease;
-}
-
-@keyframes fadeInUp {
-  from {opacity: 0; transform: translateY(10px);}
-  to {opacity: 1; transform: translateY(0);}
-}
-
-.auth-title {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 4px;
-}
-
-.auth-title h3 {
-  font-size: 20px;
-  color: var(--lilac);
-  margin: 0;
-  font-weight: 700;
-}
-
-.auth-card label {
-  display: flex;
-  flex-direction: column;
-  font-weight: 600;
-  color: #4b3f60;
-}
-
-.auth-card input {
-  margin-top: 6px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,.05);
   padding: 10px 12px;
-  font-size: 15px;
-  border: 1px solid #e0d3f5;
-  border-radius: 10px;
-  outline: none;
-  transition: 0.2s;
-  background: #fff;
 }
-
-.auth-card input:focus {
-  border-color: #b799ff;
-  box-shadow: 0 0 0 3px rgba(122,59,253,.1);
-}
-
-.auth-actions {
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.auth-actions .add-btn {
-  flex: 1;
-  background: linear-gradient(90deg, var(--pink), var(--lilac));
-  color: #fff;
+.cart-header h3 {
   font-weight: 700;
-  border-radius: 10px;
-  border: none;
-  padding: 12px 0;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(122,59,253,.25);
-  transition: transform .15s ease;
-}
-
-.auth-actions .add-btn:hover {
-  transform: scale(1.05);
-}
-
-.close-auth {
-  border: none;
-  background: transparent;
   color: var(--lilac);
-  font-size: 22px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: .2s;
+}
+.cart-footer {
+  background: linear-gradient(180deg,#fff,#fdf9ff);
+  border-top: 1px solid #f2e6f0;
+  padding: 14px;
+  border-radius: 0 0 16px 16px;
 }
 
-.close-auth:hover {
-  transform: scale(1.2);
+/* Menu organizado */
+.drawer-links a { font-weight: 700; }
+.drawer-sublinks a {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #555;
+  margin-left: 12px;
+}
+
+/* Categoria Femininos padronizada */
+.drawer-accordion {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--lilac);
+}
+
+/* Seção Sobre Nós */
+#sobre-nos {
+  background: linear-gradient(180deg,#ffffff,#f9f6ff);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.06);
+  padding: 20px;
+  margin: 20px 0;
+  text-align: center;
+}
+.sobre-nos-content p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #4b3f60;
+  font-weight: 500;
+}
+.sobre-nos-content strong {
+  color: var(--lilac);
 }
