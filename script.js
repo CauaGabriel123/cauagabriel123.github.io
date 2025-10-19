@@ -1,5 +1,10 @@
 // =========================
-// LS STORE v11.2.4 — Cauã (Correções de travamento + modal + carrinho)
+// LS STORE v11.2.5 — Cauã (Fixes + Upgrades sem alterar layout)
+// - Opção B aplicada: categoria "blusas" real
+// - Taxa/total em tempo real, validação endereço
+// - Áudio lazy (iOS), WhatsApp com rua/número, valor pago opcional
+// - Dots do carrossel, busca funcional
+// - Ajuste da linha do carrinho sem mexer no CSS (grid via JS)
 // =========================
 
 const { jsPDF } = window.jspdf;
@@ -40,33 +45,40 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// --- Áudio (efeitos)
-const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+// --- Áudio (lazy init para iOS)
+let audioCtx;
+function getCtx() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  return audioCtx;
+}
 function playChime() {
-  const t = audioCtx.currentTime;
-  const o = audioCtx.createOscillator();
-  const g = audioCtx.createGain();
+  const ctx = getCtx();
+  const t = ctx.currentTime;
+  const o = ctx.createOscillator();
+  const g = ctx.createGain();
   o.type = 'sine';
   o.frequency.setValueAtTime(880, t);
   o.frequency.exponentialRampToValueAtTime(1318, t + 0.35);
   g.gain.setValueAtTime(0.0001, t);
   g.gain.exponentialRampToValueAtTime(0.2, t + 0.02);
   g.gain.exponentialRampToValueAtTime(0.0001, t + 0.7);
-  o.connect(g).connect(audioCtx.destination);
+  o.connect(g).connect(ctx.destination);
   o.start(t);
   o.stop(t + 0.75);
 }
 function clickSoft() {
-  const t = audioCtx.currentTime;
-  const o = audioCtx.createOscillator();
-  const g = audioCtx.createGain();
+  const ctx = getCtx();
+  const t = ctx.currentTime;
+  const o = ctx.createOscillator();
+  const g = ctx.createGain();
   o.type = 'triangle';
   o.frequency.setValueAtTime(600, t);
   o.frequency.exponentialRampToValueAtTime(900, t + 0.08);
   g.gain.setValueAtTime(0.0001, t);
   g.gain.exponentialRampToValueAtTime(0.12, t + 0.01);
   g.gain.exponentialRampToValueAtTime(0.0001, t + 0.15);
-  o.connect(g).connect(audioCtx.destination);
+  o.connect(g).connect(ctx.destination);
   o.start(t);
   o.stop(t + 0.18);
 }
@@ -121,12 +133,21 @@ document.querySelectorAll('.drawer-links a[data-section], .footer a[data-section
 
 function showSection(id) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('visible'));
-  document.getElementById(id).classList.add('visible');
+  const sec = document.getElementById(id);
+  if (sec) sec.classList.add('visible');
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 // --- Catálogo de produtos
 const catalog = {
+  blusas: [
+    {
+      id: 'b1', name: 'Blusa Cropped Renda', price: 89.9,
+      imgs: ['https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=1200&auto=format&fit=crop'],
+      sizes: ['P','M','G'], colors: ['Branco','Preto'], stock: 6,
+      desc: 'Cropped delicado com renda e ajuste confortável.'
+    }
+  ],
   vestidos: [
     {
       id: 'v1', name: 'Vestido Floral Midi', price: 159.9,
@@ -197,7 +218,7 @@ function renderAll() {
 renderAll();
 
 // =============================
-// MODAL DE PRODUTO (corrigido v11.2.4)
+// MODAL DE PRODUTO (corrigido)
 // =============================
 const modal = document.getElementById('product-modal');
 const modalImgs = document.getElementById('modal-imgs');
@@ -206,7 +227,6 @@ const modalPrice = document.getElementById('modal-price');
 const modalDesc = document.getElementById('modal-desc');
 const sizeOpt = document.getElementById('size-options');
 const colorOpt = document.getElementById('color-options');
-const modalAdd = document.getElementById('modal-add');
 const modalClose = document.getElementById('modal-close');
 
 let currentProduct = null;
@@ -240,7 +260,7 @@ function openModal(id) {
   modalImgs.innerHTML = imgsHTML;
 
   // tamanhos
-  sizeOpt.innerHTML = currentProduct.sizes
+  sizeOpt.innerHTML = (currentProduct.sizes || [])
     .map(s => `<button>${s}</button>`)
     .join('');
   sizeOpt.querySelectorAll('button').forEach(b => {
@@ -252,7 +272,7 @@ function openModal(id) {
   });
 
   // cores
-  colorOpt.innerHTML = currentProduct.colors
+  colorOpt.innerHTML = (currentProduct.colors || [])
     .map(c => `<button>${c}</button>`)
     .join('');
   colorOpt.querySelectorAll('button').forEach(b => {
@@ -266,7 +286,7 @@ function openModal(id) {
   // exibe modal
   modal.setAttribute('aria-hidden', 'false');
 
-  // adiciona evento do botão após montar as opções
+  // evento do botão após montar as opções
   setTimeout(() => {
     const addBtn = document.getElementById('modal-add');
     if (addBtn) {
@@ -310,7 +330,7 @@ function showAlert(msg) {
 }
 
 // =============================
-// CARRINHO (corrigido v11.2.4)
+// CARRINHO (corrigido + UI total)
 // =============================
 const cart = document.getElementById('cart');
 const cartBtn = document.getElementById('cart-btn');
@@ -334,6 +354,10 @@ function updateCart() {
   items.forEach((it, i) => {
     const row = document.createElement('div');
     row.className = 'row';
+    // Ajuste da grade sem mexer no CSS (3 colunas)
+    row.style.display = 'grid';
+    row.style.gridTemplateColumns = '1fr auto auto';
+    row.style.gap = '8px';
     row.innerHTML = `
       <small>${it.name} (${it.size}/${it.color})</small>
       <small>R$ ${it.price.toFixed(2).replace('.', ',')}</small>
@@ -343,11 +367,12 @@ function updateCart() {
   });
   cartTotal.textContent = total.toFixed(2).replace('.', ',');
   cartCount.textContent = items.length;
-  finalTotal.textContent = total.toFixed(2).replace('.', ',');
+  // final será atualizado pelo refreshTotalsUI
   cartItems.querySelectorAll('button').forEach(b => {
     b.onclick = () => {
       items.splice(b.dataset.i, 1);
       updateCart();
+      refreshTotalsUI();
     };
   });
 }
@@ -357,6 +382,7 @@ function addToCart(prod, size, color) {
   cartBtn.classList.add('pulse');
   setTimeout(() => cartBtn.classList.remove('pulse'), 400);
   updateCart();
+  refreshTotalsUI();
 }
 
 // =============================
@@ -381,7 +407,38 @@ cashRadios.forEach(r => r.onchange = () => {
 });
 deliveryType.onchange = () => {
   addressFields.style.display = (deliveryType.value === 'entrega') ? 'block' : 'none';
+  refreshTotalsUI();
 };
+neighborhood.onchange = refreshTotalsUI;
+
+function calcFee() {
+  if (deliveryType.value !== 'entrega') return 0;
+  const bairro = neighborhood.value;
+  const fee = FEES[bairro];
+  return (typeof fee === 'number') ? fee : 0;
+}
+function refreshTotalsUI() {
+  const produtos = parseFloat(cartTotal.textContent.replace(',', '.')) || 0;
+  const fee = calcFee();
+
+  // Mostra/oculta bloco da taxa
+  if (deliveryType.value === 'entrega') {
+    deliveryFee.style.display = 'block';
+    const bairro = neighborhood.value;
+    const val = FEES[bairro];
+    feeValue.textContent = (typeof val === 'number' ? val : 0).toFixed(2).replace('.', ',');
+  } else {
+    deliveryFee.style.display = 'none';
+    feeValue.textContent = '0,00';
+  }
+
+  // Atualiza total final
+  const final = produtos + fee;
+  finalTotal.textContent = final.toFixed(2).replace('.', ',');
+}
+
+// Chamada inicial
+refreshTotalsUI();
 
 checkout.onclick = () => {
   if (items.length === 0) { showAlert('Seu carrinho está vazio.'); return; }
@@ -390,18 +447,28 @@ checkout.onclick = () => {
   const client = nameInput.value.trim();
   const payment = paymentSel.value;
   const entrega = deliveryType.value;
-  const bairro = neighborhood.value;
+
+  let rua = '', numero = '', bairro = neighborhood.value;
+  if (entrega === 'entrega') {
+    rua = document.getElementById('street').value.trim();
+    numero = document.getElementById('number').value.trim();
+    if (!rua || !numero || !bairro) {
+      showAlert('Para entrega, preencha Rua, Número e Bairro.');
+      return;
+    }
+  }
+
   const obs = orderNotes.value.trim() || 'Nenhuma';
-  const fee = entrega === 'entrega' ? FEES[bairro] || 'consultar' : 0;
+  const feeRaw = entrega === 'entrega' ? FEES[bairro] || 'consultar' : 0;
   let total = parseFloat(cartTotal.textContent.replace(',', '.'));
-  if (typeof fee === 'number') total += fee;
+  if (typeof feeRaw === 'number') total += feeRaw;
 
   let valorPago = '', troco = '';
   if (payment === 'Dinheiro') {
     const trocoOp = [...cashRadios].find(r => r.checked)?.value || 'nao';
     if (trocoOp === 'sim' && cashAmount.value) {
-      valorPago = parseFloat(cashAmount.value.replace(',', '.'));
-      troco = (valorPago - total).toFixed(2).replace('.', ',');
+      valorPago = parseFloat(cashAmount.value.replace(',', '.')).toFixed(2).replace('.', ',');
+      troco = (parseFloat(valorPago.replace(',', '.')) - total).toFixed(2).replace('.', ',');
     } else troco = 'Não precisa';
   }
 
@@ -413,28 +480,41 @@ checkout.onclick = () => {
 💰 *Preço:* R$ ${it.price.toFixed(2).replace('.', ',')}
 ---------------------------------`).join('');
 
+  const enderecoTxt = entrega === 'entrega'
+    ? `${rua}, ${numero} - ${bairro}`
+    : 'Retirada na loja';
+
+  const taxaTxt = (typeof feeRaw === 'number')
+    ? `R$ ${feeRaw.toFixed(2).replace('.', ',')}`
+    : feeRaw;
+
   const msg = `🛍️ *NOVO PEDIDO - LS STORE*
 ---------------------------------
 👩‍💖 *Cliente:* ${client}
 📦 *Entrega:* ${entrega}
-🏡 *Endereço:* ${entrega === 'entrega' ? bairro : 'Retirada na loja'}
+🏡 *Endereço:* ${enderecoTxt}
 💬 *Observações:* ${obs}
 
 🧺 *Itens do pedido:*
 ${itensTxt}
 
 💳 *Pagamento:* ${payment}
-🚚 *Taxa de entrega:* ${typeof fee === 'number' ? `R$ ${fee.toFixed(2).replace('.', ',')}` : fee}
+🚚 *Taxa de entrega:* ${taxaTxt}
 💰 *Total final:* R$ ${total.toFixed(2).replace('.', ',')}
-${payment === 'Dinheiro' ? `\n💵 *Valor pago:* R$ ${valorPago}\n🔁 *Troco:* ${troco}` : ''}
+${
+  payment === 'Dinheiro'
+    ? `${valorPago ? `\n💵 *Valor pago:* R$ ${valorPago}` : ''}\n🔁 *Troco:* ${troco}`
+    : ''
+}
 ---------------------------------
 ✨ *Obrigada por comprar na LS Store!* 💖`;
 
   const url = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
   window.open(url, '_blank');
-  document.getElementById('popup-overlay').hidden = false;
-  document.getElementById('popup-overlay').classList.add('show');
-  setTimeout(() => { document.getElementById('popup-overlay').hidden = true; }, 5000);
+  const pop = document.getElementById('popup-overlay');
+  pop.hidden = false;
+  pop.classList.add('show');
+  setTimeout(() => { pop.hidden = true; }, 5000);
 };
 
 // =============================
@@ -496,3 +576,93 @@ if (ADMIN_MODE) {
     doc.save('pedido-lsstore.pdf');
   };
 }
+
+// =============================
+// CARROSSEL (dots clicáveis)
+// =============================
+(function initCarousel(){
+  const wrap = document.getElementById('carousel');
+  if (!wrap) return;
+  const slides = wrap.querySelector('.slides');
+  const dots = [...wrap.querySelectorAll('.dot')];
+  let idx = 0;
+
+  function go(i){
+    idx = (i + dots.length) % dots.length;
+    slides.style.transform = `translateX(-${idx * 100}%)`;
+    dots.forEach(d => d.classList.remove('active'));
+    dots[idx].classList.add('active');
+  }
+  dots.forEach(d => d.addEventListener('click', () => go(parseInt(d.dataset.i, 10))));
+  // auto-play leve (opcional, não invasivo)
+  let timer = setInterval(()=>go(idx+1), 6000);
+  wrap.addEventListener('mouseenter', ()=>clearInterval(timer));
+  wrap.addEventListener('mouseleave', ()=>timer = setInterval(()=>go(idx+1), 6000));
+})();
+
+// =============================
+// BUSCA funcional (nome/cor/categoria)
+// =============================
+(function initSearch(){
+  const input = document.getElementById('search-input');
+  const clearBtn = document.getElementById('search-clear');
+  const resultsBox = document.getElementById('search-results');
+
+  function allProducts(){
+    const arr = [];
+    for (const cat in catalog) {
+      (catalog[cat]||[]).forEach(p => arr.push({...p, _cat: cat}));
+    }
+    return arr;
+  }
+
+  function renderResults(list){
+    if (!list.length){
+      resultsBox.innerHTML = '<div class="search-item" style="grid-template-columns:1fr"><small>Nenhum resultado</small></div>';
+      resultsBox.hidden = false;
+      return;
+    }
+    resultsBox.innerHTML = list.map(p => `
+      <div class="search-item" data-id="${p.id}">
+        <img src="${(p.imgs ? p.imgs[0] : p.img)}" alt="${p.name}">
+        <div>
+          <div style="font-weight:700">${p.name}</div>
+          <small>${p._cat}</small>
+        </div>
+        <div style="font-weight:700">R$ ${p.price.toFixed(2).replace('.', ',')}</div>
+      </div>`).join('');
+    resultsBox.hidden = false;
+
+    resultsBox.querySelectorAll('.search-item').forEach(it=>{
+      it.onclick = ()=>{
+        const id = it.getAttribute('data-id');
+        openModal(id);
+        resultsBox.hidden = true;
+      };
+    });
+  }
+
+  function doSearch(q){
+    const txt = q.trim().toLowerCase();
+    if (!txt){ resultsBox.hidden = true; return; }
+    const pool = allProducts();
+    const matches = pool.filter(p=>{
+      const inName = p.name.toLowerCase().includes(txt);
+      const inColors = (p.colors||[]).some(c=>c.toLowerCase().includes(txt));
+      const inCat = (p._cat||'').toLowerCase().includes(txt);
+      return inName || inColors || inCat;
+    }).slice(0, 8);
+    renderResults(matches);
+  }
+
+  input.addEventListener('input', ()=>doSearch(input.value));
+  input.addEventListener('focus', ()=>{ if (input.value.trim()) doSearch(input.value); });
+  clearBtn.addEventListener('click', ()=>{
+    input.value = '';
+    resultsBox.hidden = true;
+    input.focus();
+  });
+  document.addEventListener('click', (e)=>{
+    if (!resultsBox.contains(e.target) && e.target !== input) resultsBox.hidden = true;
+  });
+})();
