@@ -1,0 +1,143 @@
+*{box-sizing:border-box}
+:root{
+  --pink:#E96BA8; --lilac:#7A3BFD; --ink:#2E2336; --bg:#FFFFFF;
+  --soft:#F8F4FF; --muted:#EFEAFD; --shadow:0 10px 30px rgba(0,0,0,.08);
+}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,Arial}
+img{max-width:100%;display:block}
+
+/* Splash */
+#splash{position:fixed;inset:0;background:linear-gradient(145deg,#f7ecff,#ffeaf6);display:flex;align-items:center;justify-content:center;z-index:9999;opacity:1;transition:opacity .6s}
+#splash.hidden{opacity:0;pointer-events:none}
+.splash-card{text-align:center}
+.splash-logo{display:inline-grid;justify-items:center;gap:2px;background:linear-gradient(160deg,#fde6ff,#efe6ff);padding:16px 22px;border-radius:18px;box-shadow:var(--shadow)}
+.splash-logo .ls{font-weight:700;font-size:44px;color:#7A3BFD;line-height:1}
+.splash-logo .store{font-weight:700;font-size:20px;color:#E96BA8;line-height:1}
+.splash-card p{margin:8px 0 0;font-weight:600;color:#6b3ea8}
+
+/* Topbar */
+.topbar{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:white;box-shadow:0 4px 16px rgba(0,0,0,.06)}
+.icon-btn{border:0;background:transparent;font-size:26px;line-height:1;padding:6px 10px;color:var(--ink);cursor:pointer}
+.text-btn{border:0;background:transparent;color:#7A3BFD;font-weight:700;cursor:pointer}
+.brand .brand-logo{display:flex;gap:6px;align-items:flex-end}
+.brand .ls{color:#7A3BFD;font-weight:700}
+.brand .store{color:#E96BA8;font-weight:700}
+.cart-btn{background:linear-gradient(90deg,var(--pink),var(--lilac));color:#fff;border:0;border-radius:10px;padding:8px 12px;font-weight:700;cursor:pointer}
+
+/* Busca */
+.search-wrap{position:sticky;top:56px;z-index:90;background:linear-gradient(180deg,#ffffff,#fffafd);display:flex;gap:8px;align-items:center;padding:10px 12px;border-bottom:1px solid #f1e8ff}
+#search-input{flex:1;font-size:16px;padding:10px 12px;border:1px solid #e8d7e6;border-radius:12px}
+#search-input:focus{outline:none;border-color:#d6b0e6;box-shadow:0 0 0 3px rgba(155,48,255,.12)}
+#search-clear{border:0;background:#fff;border:1px solid #eee;border-radius:10px;padding:8px;cursor:pointer}
+.search-results{position:absolute;left:12px;right:12px;top:100%;background:#fff;border:1px solid #eee;border-radius:12px;box-shadow:var(--shadow);padding:8px}
+.search-item{display:grid;grid-template-columns:56px 1fr auto;gap:8px;align-items:center;padding:6px;border-radius:10px;cursor:pointer}
+.search-item:hover{background:#faf7ff}
+
+/* Drawer (menu) */
+.drawer{position:fixed;inset:0;display:none;z-index:120}
+.drawer[aria-hidden="false"]{display:block}
+.drawer-backdrop{position:absolute;inset:0;background:rgba(255,255,255,.35);backdrop-filter:blur(10px)}
+.drawer-inner{position:absolute;left:0;top:0;height:100%;width:86%;max-width:380px;background:white;box-shadow:10px 0 40px rgba(0,0,0,.18);animation:slide .25s ease;display:flex;flex-direction:column;overflow-y:auto;-webkit-overflow-scrolling:touch}
+@keyframes slide{from{transform:translateX(-30px);opacity:.6}to{transform:translateX(0);opacity:1}}
+.drawer-header{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-bottom:1px solid #f1e8ff}
+.drawer-grid{padding:12px;display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.cat-card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:var(--shadow);cursor:pointer;transition:transform .15s,border .15s}
+.cat-card:hover{transform:translateY(-1px)}
+.cat-card img{width:100%;height:100px;object-fit:cover}
+.cat-card .label{padding:8px 10px;font-weight:700;text-align:center}
+.drawer-links{list-style:none;margin:6px 0 12px;padding:0;border-top:1px solid #f6efff}
+.drawer-links a{display:block;padding:12px 14px;text-decoration:none;color:var(--ink);font-weight:600}
+.drawer-links a.active{color:var(--pink)}
+
+/* Container */
+.container{padding:12px}
+
+/* Carousel */
+.carousel{position:relative;margin-top:6px;border-radius:14px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.06);z-index:1}
+.carousel.large{height:48vh;min-height:260px}
+.carousel.large .slide img{width:100%;height:48vh;object-fit:cover}
+.slides{display:flex;transition:transform .45s ease}
+.slide{min-width:100%}
+.dots{position:absolute;left:0;right:0;bottom:10px;display:flex;gap:6px;justify-content:center;z-index:2}
+.dot{width:8px;height:8px;border-radius:50%;border:0;background:#fff;opacity:.6}
+.dot.active{opacity:1}
+
+/* Seções & Grids */
+.section{display:none;padding:10px 2px}
+.section.visible{display:block}
+.section-title{margin:14px 4px 10px;font-size:18px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.card{background:white;border-radius:14px;overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,.06);display:flex;flex-direction:column;position:relative;cursor:pointer}
+.card .info{padding:10px}
+.card .name{font-weight:600;margin:0 0 6px}
+.card .price{color:var(--lilac);font-weight:700}
+.badge{position:absolute;top:10px;left:10px;background:var(--pink);color:#fff;font-weight:700;padding:6px 10px;border-radius:999px;font-size:12px;box-shadow:0 4px 10px rgba(0,0,0,.12)}
+
+/* Animação carrinho */
+.flying{position:fixed;z-index:200;pointer-events:none;will-change:transform,opacity;box-shadow:0 6px 18px rgba(0,0,0,.2);border-radius:10px;overflow:hidden}
+
+/* Modal Produto */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:300;opacity:0;transition:opacity .25s}
+.modal[aria-hidden="false"]{display:flex;opacity:1}
+.modal-card{background:#fff;border-radius:16px;max-width:780px;width:94%;box-shadow:0 20px 60px rgba(0,0,0,.35);position:relative}
+.modal-close{position:absolute;right:8px;top:8px}
+.modal-body{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:14px}
+.modal-body img{width:100%;border-radius:12px}
+.modal-info h3{margin:6px 0}
+.modal-price{color:var(--lilac);font-weight:700}
+.modal-desc{color:#6b5a70;font-size:14px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 12px}
+.chips button{border:1px solid var(--muted);background:#fff;border-radius:999px;padding:8px 12px;font-weight:600;cursor:pointer}
+.chips button.active{background:linear-gradient(90deg,var(--pink),var(--lilac));color:#fff;border-color:transparent}
+.add-btn{background:linear-gradient(90deg,var(--pink),var(--lilac));color:#fff;border:0;border-radius:12px;padding:12px;font-weight:700;cursor:pointer}
+
+/* Carrinho */
+.cart{position:fixed;right:10px;left:10px;bottom:10px;background:white;border:1px solid #eee;border-radius:14px;box-shadow:0 16px 40px rgba(0,0,0,.2);display:none;flex-direction:column;z-index:250;max-height:80vh;overflow:auto}
+.cart[aria-hidden="false"]{display:flex}
+.cart-header{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-bottom:1px solid #f2e6f0}
+.cart-items{padding:10px 12px;display:flex;flex-direction:column;gap:8px}
+.row{display:grid;grid-template-columns:1fr auto auto auto;gap:8px;align-items:center;border-bottom:1px solid #f7f0f6;padding:6px 0}
+.row small{color:#6b5a70}
+
+/* Form carrinho */
+.client-info{padding:12px;display:grid;gap:10px;border-top:1px solid #f2e6f0;background:var(--soft);border-radius:12px;margin:10px}
+.client-info label{display:grid;gap:6px;font-size:14px}
+.client-info input,.client-info select,.client-info textarea{font-size:16px;padding:10px 12px;border:1px solid #e8d7e6;border-radius:10px;background:#fff;outline:none}
+.client-info input:focus,.client-info select:focus,.client-info textarea:focus{border-color:#d6b0e6;box-shadow:0 0 0 3px rgba(155,48,255,.12)}
+.inline{display:inline-flex;align-items:center;gap:6px;margin-right:8px}
+.address label{display:block;margin:6px 0}
+.checkout{background:linear-gradient(90deg,var(--pink),var(--lilac));color:#fff;border:0;border-radius:12px;padding:12px;font-weight:700;margin:10px;cursor:pointer}
+
+/* Rodapé & voltar topo */
+.footer{margin-top:20px;padding:16px;background:#faf9ff;border-top:1px solid var(--muted);text-align:center}
+.footer .social{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-bottom:8px}
+.footer a{text-decoration:none;color:#5a4c88;font-weight:700}
+.back-to-top{position:fixed;right:12px;bottom:72px;background:#fff;border:1px solid var(--muted);border-radius:999px;padding:10px 12px;box-shadow:0 8px 20px rgba(0,0,0,.1);display:none;cursor:pointer}
+.back-to-top.show{display:block}
+
+/* Popup sucesso */
+.popup-overlay{
+  position:fixed;inset:0;
+  display:none;
+  align-items:center;justify-content:center;
+  background:rgba(0,0,0,.35);
+  z-index:500;
+}
+.popup-overlay.show{display:flex;}
+.popup-overlay[hidden]{display:none !important;}
+.popup{background:#fff;border-radius:16px;padding:16px 18px;box-shadow:0 20px 60px rgba(0,0,0,.35);text-align:center}
+
+/* Login bonito */
+.account-area .auth-card{
+  background:#fff;border-radius:16px;box-shadow:0 12px 36px rgba(122,59,253,.18);
+  border:1px solid #efe8ff;padding:16px;margin:8px 0;
+}
+.account-area .auth-title{display:flex;align-items:center;justify-content:space-between;}
+.account-area .auth-title h3{margin:0;}
+.account-area .close-auth{border:0;background:transparent;font-size:22px;cursor:pointer;color:#7A3BFD;}
+.account-area .auth-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
+.account-area .auth-actions .add-btn{flex:1;}
+
+/* Util */
+.cart-btn.pulse{animation:pulse .5s ease}
+@keyframes pulse{50%{transform:scale(1.05)}}
