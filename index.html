@@ -77,13 +77,15 @@
 
       <li><a href="#" data-section="contato">Contato</a></li>
       <li><a href="#" data-section="minha-conta">Minha conta</a></li>
+
+      <!-- NOVA CATEGORIA - SOBRE NÓS -->
+      <li><a href="#" id="sobre-nos-link">Sobre Nós</a></li>
     </ul>
   </div>
 </aside>
 
 <main class="container">
   <section id="inicio" class="section visible">
-    <!-- Carrossel agora será populado dinamicamente com produtos e arrastável -->
     <div class="carousel large" id="carousel">
       <div class="slides" id="carousel-slides"></div>
       <div class="dots" id="carousel-dots"></div>
@@ -115,6 +117,14 @@
     <h2 class="section-title">Minha conta</h2>
     <div id="account-area" class="account-area"></div>
   </section>
+
+  <!-- SOBRE NÓS -->
+  <section id="sobre-nos" class="section">
+    <h2 class="section-title">Sobre Nós</h2>
+    <div class="sobre-nos-content">
+      <p>💕 A LS STORE é uma loja feita com amor pra quem ama moda feminina! Aqui você encontra peças modernas, estilosas e com aquele toque único que só a LS tem. 🚚 Entregamos rapidinho em <strong>toda Canoas!</strong></p>
+    </div>
+  </section>
 </main>
 
 <footer class="footer">
@@ -126,7 +136,7 @@
   <p>© 2025 LS Store — Moda & Acessórios Femininos 💖</p>
 </footer>
 
-<!-- Modal Produto (agora com até 5 imagens) -->
+<!-- Modal Produto -->
 <div id="product-modal" class="modal" aria-hidden="true">
   <div class="modal-card">
     <button class="modal-close icon-btn" id="modal-close">✕</button>
@@ -170,7 +180,7 @@
 
     <div id="address-fields" class="address" style="display:none;">
       <label>Rua*<input id="street" type="text"></label>
-      <label>Número*<input id="number" type="text"></label>
+      <label>Número*<input id="number" type="text" inputmode="numeric" pattern="[0-9]*"></label>
       <label>Bairro*<select id="neighborhood">
         <option value="">Selecione...</option>
         <option value="Mathias Velho">Mathias Velho</option>
