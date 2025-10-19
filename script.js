@@ -241,29 +241,6 @@ function buildCatalogAndRender(data) {
       buildCatalogAndRender(FALLBACK_PRODUCTS);
     });
 })();
-
-    // Cria destaques automáticos (5 primeiros disponíveis)
-    featured = data
-      .filter(p => p.status === 'disponivel')
-      .slice(0, 5)
-      .map(p => ({
-        id: p.id,
-        name: p.name,
-        price: p.price,
-        imgs: [p.image],
-        desc: p.description
-      }));
-
-    // Renderiza tudo normalmente
-    renderAll();
-    initCarousel();
-    renderFooterProducts(featured.length ? featured : null);
-  })
-  .catch(err => {
-    console.warn('Aviso leve: atraso no carregamento dos produtos', err);
-    // Evita o popup — só registra no console, sem mostrar alerta
-  });
-
 function priceHTML(p) {
   const v = p.discount ? (p.price * (1 - p.discount)) : p.price;
   let s = `R$ ${v.toFixed(2).replace('.', ',')}`;
