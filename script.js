@@ -228,7 +228,7 @@ function buildCatalogAndRender(data) {
 }
 
 (function loadProducts() {
-  fetch('./products_v2.json?nocache=' + Date.now())
+  fetch('https://cauagabriel123.github.io/products_v2.json?nocache=' + Date.now())
     .then(res => {
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       return res.json();
