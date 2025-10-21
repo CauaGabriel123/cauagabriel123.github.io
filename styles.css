@@ -803,7 +803,7 @@ footer {
 }
 
 /* ===============================
-   v13.0.7 — ESGOTADO (versão final estável)
+   v13.0.8 — Efeito ESGOTADO apenas na imagem
    =============================== */
 
 /* Estrutura base */
@@ -815,56 +815,57 @@ footer {
   pointer-events: none;
 }
 
-/* Efeito visual do produto esgotado */
+/* A imagem é borrada e escurecida */
 .card.soldout img,
 .slide.soldout img,
 .footer-card.soldout img {
   filter: blur(3px) brightness(0.65);
   transform: scale(1.03);
   transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
 }
 
-/* Selo “ESGOTADO” centralizado */
-.card.soldout::after,
-.slide.soldout::after,
-.footer-card.soldout::after {
+/* Selo “ESGOTADO” aparece apenas sobre a imagem */
+.card.soldout img::after,
+.slide.soldout img::after,
+.footer-card.soldout img::after {
   content: "ESGOTADO";
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 90%;
-  height: 90%;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   font-weight: 800;
   font-size: 1.1rem;
-  letter-spacing: 1px;
   color: #fff;
+  letter-spacing: 1px;
+  text-transform: uppercase;
   background: linear-gradient(135deg, rgba(233,107,168,0.9), rgba(122,59,253,0.9));
+  padding: 10px 20px;
+  border-radius: 10px;
   text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-  border-radius: 12px;
-  z-index: 3;
-  box-sizing: border-box;
+  z-index: 2;
+  pointer-events: none;
 }
 
-/* Efeito hover sutil */
+/* Garante que o texto e preço fiquem visíveis abaixo */
+.card.soldout .info,
+.slide.soldout .info,
+.footer-card.soldout .fc-info {
+  position: relative;
+  z-index: 3;
+  opacity: 1;
+  filter: none;
+}
+
+/* Hover leve na imagem */
 .card.soldout:hover img,
 .slide.soldout:hover img,
 .footer-card.soldout:hover img {
   filter: blur(4px) brightness(0.6);
   transform: scale(1.04);
-}
-
-/* Versão mobile (texto ajustado para telas menores) */
-@media (max-width: 500px) {
-  .card.soldout::after,
-  .slide.soldout::after,
-  .footer-card.soldout::after {
-    font-size: 0.9rem;
-    width: 92%;
-    height: 92%;
-  }
 }
