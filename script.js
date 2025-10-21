@@ -269,8 +269,8 @@ function buildCatalogAndRender(data) {
     }));
 
   renderAll();
-  initCarousel();
-  renderFooterProducts(featured.length ? featured : null);
+if (typeof window.initCarousel === 'function') window.initCarousel();
+renderFooterProducts(featured.length ? featured : null);
 }
 
 // === Carregamento aprimorado do catálogo (corrigido — ignora falsos negativos do fetch) ===
@@ -283,14 +283,16 @@ function buildCatalogAndRender(data) {
       if (!res.ok) throw new Error(`Erro HTTP ${res.status}`);
       return res.json();
     })
-    .then(data => {
-      console.log('✅ Catálogo carregado do arquivo externo:', url);
-      buildCatalogAndRender(data);
-      console.log('🟢 Renderização iniciada...');
-    })
-    .catch(err => {
-      console.warn('⚠️ Erro leve ao buscar catálogo:', err.message);
-
+ .then(data => {
+  console.log('✅ Catálogo carregado do arquivo externo:', url);
+  try {
+    buildCatalogAndRender(data);
+    console.log('🟢 Renderização iniciada...');
+  } catch (e) {
+    console.error('Erro ao montar catálogo:', e);
+    showAlert('Opa! Tivemos um erro ao montar o catálogo. Recarregue a página em alguns segundos.');
+  }
+})
       // Espera um pouco e verifica se os produtos foram renderizados
       setTimeout(() => {
         const produtos = document.querySelectorAll('.product-item, .card');
@@ -868,10 +870,8 @@ if (ADMIN_MODE) {
   };
 }
 
-// =============================
 // CARROSSEL (produtos + swipe)
-// =============================
-(function initCarousel(){
+window.initCarousel = function(){
   const wrap = document.getElementById('carousel');
   if (!wrap) return;
   const slides = document.getElementById('carousel-slides');
