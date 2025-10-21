@@ -871,16 +871,20 @@ footer {
 }
 
 /* ===============================
-   v13.0.8.1 — Selo “ESGOTADO” vermelho sem fundo
+   v13.0.8.2 — Selo “ESGOTADO” vermelho sem fundo (corrigido)
    =============================== */
-.card.soldout img::after,
-.slide.soldout img::after,
-.footer-card.soldout img::after {
+.card.soldout::after,
+.slide.soldout::after,
+.footer-card.soldout::after {
   content: "ESGOTADO";
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70%; /* cobre apenas a área da imagem */
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-weight: 800;
   font-size: 1.2rem;
   color: red;
