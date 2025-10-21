@@ -227,10 +227,11 @@ function buildCatalogAndRender(data) {
   renderFooterProducts(featured.length ? featured : null);
 }
 
-// === Carregamento aprimorado do catálogo (força JSON externo e ignora fallback em cache) ===
+// === Carregamento aprimorado do catálogo (corrigido — ignora falsos negativos do fetch) ===
 (function loadProducts() {
-  const url = 'products_v2.json?v=' + Date.now(); // garante versão sempre nova
+  const url = 'products_v2.json?v=' + Date.now(); // força sempre nova versão
 
+  // Carrega catálogo com fallback interno
   fetch(url, { cache: 'no-store' })
     .then(res => {
       if (!res.ok) throw new Error(`Erro HTTP ${res.status}`);
@@ -239,23 +240,22 @@ function buildCatalogAndRender(data) {
     .then(data => {
       console.log('✅ Catálogo carregado do arquivo externo:', url);
       buildCatalogAndRender(data);
+      console.log('🟢 Renderização iniciada...');
+    })
+    .catch(err => {
+      console.warn('⚠️ Erro leve ao buscar catálogo:', err.message);
 
-      // Espera 2 segundos e confirma visualmente que o catálogo foi renderizado
+      // Espera um pouco e verifica se os produtos foram renderizados
       setTimeout(() => {
         const produtos = document.querySelectorAll('.product-item, .card');
         if (produtos.length > 0) {
-          console.log('🟢 Catálogo renderizado com sucesso.');
-          // ✅ Remove qualquer alerta que ainda esteja visível
-          document.querySelectorAll('.alert-overlay, [style*="Atenção"]').forEach(el => el.remove());
-        } else {
-          console.warn('⚠️ Nenhum produto foi renderizado após o carregamento.');
-          showAlert('Não foi possível carregar os produtos atualizados. Recarregue a página em alguns segundos.');
+          console.log('🟢 Catálogo carregado com sucesso após verificação.');
+          return; // tudo certo, não mostra alerta
         }
-      }, 2000); // aguarda 2 segundos para garantir renderização completa
-    })
-    .catch(err => {
-      console.error('❌ Erro no carregamento do catálogo externo:', err);
-      showAlert('Não foi possível carregar os produtos atualizados. Recarregue a página em alguns segundos.');
+        // Só mostra o alerta se realmente não renderizou nada
+        showAlert('Não foi possível carregar os produtos atualizados. Recarregue a página em alguns segundos.');
+        console.error('❌ Nenhum produto renderizado após verificação.');
+      }, 2500); // 2,5 segundos de espera
     });
 })();
 
