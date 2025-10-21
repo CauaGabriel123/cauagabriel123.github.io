@@ -803,15 +803,18 @@ footer {
 }
 
 /* ============================
-   Produtos ESGOTADOS (v13.0.3)
+   Produtos ESGOTADOS (v13.0.5 — funcional)
    ============================ */
 .card.soldout {
   position: relative;
-  opacity: 0.85;
+  opacity: 0.9;
+  pointer-events: none; /* impede cliques */
+  overflow: hidden;
 }
 
 .card.soldout img {
   filter: blur(3px) brightness(0.7);
+  transition: filter 0.3s ease;
 }
 
 .card.soldout::after {
@@ -820,13 +823,16 @@ footer {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: rgba(122, 59, 253, 0.85);
+  background: rgba(122, 59, 253, 0.9);
   color: #fff;
   font-weight: 800;
-  padding: 10px 20px;
+  padding: 10px 24px;
   border-radius: 12px;
   font-size: 1rem;
   text-transform: uppercase;
   letter-spacing: 1px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  z-index: 5;
+  box-shadow: 0 6px 20px rgba(122, 59, 253, 0.3);
+  pointer-events: none;
 }
