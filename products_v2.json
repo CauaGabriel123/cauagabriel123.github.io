@@ -6,7 +6,9 @@
     "price": 590.99,
     "image": "https://cauagabriel123.github.io/assets/prod-vestido-floral.png",
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
-    "status": "esgotado"
+    "status": "esgotado",
+    "tamanhos": ["P", "M", "G"],
+    "cores": ["Verde", "Branco"]
   },
   {
     "id": "p2",
@@ -15,7 +17,9 @@
     "price": 1.99,
     "image": "https://cauagabriel123.github.io/assets/1ef5b408-ed40-4ccf-8cea-123bf0a98392.jpeg",
     "description": "Vestido cagador preto com toque sofisticado e caimento perfeito para festas e eventos.",
-    "status": "disponivel"
+    "status": "disponivel",
+    "tamanhos": ["P", "M"],
+    "cores": ["Preto"]
   },
   {
     "id": "p3",
@@ -24,7 +28,9 @@
     "price": 229.9,
     "image": "https://cauagabriel123.github.io/assets/prod-vestido-longo.png",
     "description": "Longo com tom rosa suave, tecido leve e fenda discreta. Conforto e elegância.",
-    "status": "disponivel"
+    "status": "disponivel",
+    "tamanhos": ["P", "M", "G"],
+    "cores": ["Rosa", "Bege"]
   },
   {
     "id": "p4",
@@ -33,7 +39,9 @@
     "price": 59.9,
     "image": "https://cauagabriel123.github.io/assets/prod-camiseta-branca.png",
     "description": "Camiseta básica em algodão macio, ideal para compor looks casuais.",
-    "status": "disponivel"
+    "status": "disponivel",
+    "tamanhos": ["P", "M", "G"],
+    "cores": ["Branco", "Preto"]
   },
   {
     "id": "p5",
@@ -42,7 +50,9 @@
     "price": 79.9,
     "image": "https://cauagabriel123.github.io/assets/prod-blusa-cropped.png",
     "description": "Blusa cropped canelada com gola redonda e modelagem confortável.",
-    "status": "disponivel"
+    "status": "disponivel",
+    "tamanhos": ["Único"],
+    "cores": ["Rosa", "Preto"]
   },
   {
     "id": "p6",
@@ -51,7 +61,9 @@
     "price": 89.9,
     "image": "https://cauagabriel123.github.io/assets/prod-blusa-bege.png",
     "description": "Blusa ombro a ombro com tecido suave e elegante para qualquer ocasião.",
-    "status": "disponivel"
+    "status": "disponivel",
+    "tamanhos": ["P", "M"],
+    "cores": ["Bege", "Branco"]
   },
   {
     "id": "p7",
@@ -60,7 +72,9 @@
     "price": 139.9,
     "image": "https://cauagabriel123.github.io/assets/prod-calca-jeans.png",
     "description": "Jeans clássico de cintura alta e corte reto. Modela e valoriza o corpo.",
-    "status": "disponivel"
+    "status": "disponivel",
+    "tamanhos": ["36", "38", "40", "42"],
+    "cores": ["Jeans Azul"]
   },
   {
     "id": "p8",
@@ -69,7 +83,9 @@
     "price": 159.9,
     "image": "https://cauagabriel123.github.io/assets/prod-calca-pantalona.png",
     "description": "Pantalona moderna com tecido fluido e cintura elástica confortável.",
-    "status": "disponivel"
+    "status": "disponivel",
+    "tamanhos": ["P", "M", "G"],
+    "cores": ["Rose", "Branco"]
   },
   {
     "id": "p9",
@@ -78,7 +94,9 @@
     "price": 119.9,
     "image": "https://cauagabriel123.github.io/assets/prod-calca-moletom.png",
     "description": "Calça comfy de moletom macio, ideal para o dia a dia.",
-    "status": "disponivel"
+    "status": "disponivel",
+    "tamanhos": ["P", "M", "G"],
+    "cores": ["Cinza", "Preto"]
   },
   {
     "id": "p10",
@@ -87,7 +105,9 @@
     "price": 89.9,
     "image": "https://cauagabriel123.github.io/assets/prod-lingerie-rosa.png",
     "description": "Conjunto delicado de renda com modelagem confortável e toque suave.",
-    "status": "disponivel"
+    "status": "disponivel",
+    "tamanhos": ["P", "M", "G"],
+    "cores": ["Rosa", "Branco"]
   },
   {
     "id": "p11",
@@ -96,7 +116,9 @@
     "price": 59.9,
     "image": "https://cauagabriel123.github.io/assets/prod-sutia-lace.png",
     "description": "Sutiã em renda delicada sem bojo, ideal para o conforto do dia a dia.",
-    "status": "disponivel"
+    "status": "disponivel",
+    "tamanhos": ["P", "M", "G"],
+    "cores": ["Preto", "Bege", "Branco"]
   },
   {
     "id": "p12",
@@ -105,7 +127,9 @@
     "price": 169.9,
     "image": "https://cauagabriel123.github.io/assets/prod-sandalia-rosa.png",
     "description": "Sandália leve com tiras cruzadas e palmilha macia, em tom rosa LS.",
-    "status": "disponivel"
+    "status": "disponivel",
+    "tamanhos": ["35", "36", "37", "38", "39"],
+    "cores": ["Rosa"]
   },
   {
     "id": "p13",
@@ -114,7 +138,9 @@
     "price": 199.9,
     "image": "https://cauagabriel123.github.io/assets/prod-tenis-branco.png",
     "description": "Tênis branco clássico, combina com tudo. Estilo e conforto em um só modelo.",
-    "status": "disponivel"
+    "status": "disponivel",
+    "tamanhos": ["35", "36", "37", "38", "39"],
+    "cores": ["Branco"]
   },
   {
     "id": "p14",
@@ -123,7 +149,9 @@
     "price": 89.9,
     "image": "https://cauagabriel123.github.io/assets/prod-oculos-fashion.png",
     "description": "Óculos fashion com lentes degradê e hastes douradas, estilo moderno LS.",
-    "status": "disponivel"
+    "status": "disponivel",
+    "tamanhos": ["Único"],
+    "cores": ["Dourado", "Rosa"]
   },
   {
     "id": "p15",
@@ -132,7 +160,9 @@
     "price": 99.9,
     "image": "https://cauagabriel123.github.io/assets/prod-oculos-vintage.png",
     "description": "Óculos redondo retrô com lentes levemente rosadas, um charme.",
-    "status": "disponivel"
+    "status": "disponivel",
+    "tamanhos": ["Único"],
+    "cores": ["Preto", "Rosa"]
   },
   {
     "id": "p16",
@@ -141,7 +171,9 @@
     "price": 49.9,
     "image": "https://cauagabriel123.github.io/assets/prod-batom-rosa.png",
     "description": "Batom matte de longa duração, tom rosa LS perfeito para todos os tons de pele.",
-    "status": "disponivel"
+    "status": "disponivel",
+    "tamanhos": ["Único"],
+    "cores": ["Rosa LS"]
   },
   {
     "id": "p17",
@@ -150,7 +182,9 @@
     "price": 129.9,
     "image": "https://cauagabriel123.github.io/assets/prod-perfume-ls.png",
     "description": "Perfume feminino floral frutado, aroma leve e sofisticado LS.",
-    "status": "disponivel"
+    "status": "disponivel",
+    "tamanhos": ["50ml"],
+    "cores": ["Transparente"]
   },
   {
     "id": "p18",
@@ -159,7 +193,9 @@
     "price": 69.9,
     "image": "https://cauagabriel123.github.io/assets/prod-hidratante.png",
     "description": "Hidratante corporal com fragrância suave e textura leve.",
-    "status": "disponivel"
+    "status": "disponivel",
+    "tamanhos": ["200ml"],
+    "cores": ["Branco"]
   },
   {
     "id": "p19",
@@ -168,7 +204,9 @@
     "price": 99.9,
     "image": "https://cauagabriel123.github.io/assets/prod-serum-facial.png",
     "description": "Sérum facial com toque seco, ideal para pele radiante e nutrida.",
-    "status": "disponivel"
+    "status": "disponivel",
+    "tamanhos": ["30ml"],
+    "cores": ["Transparente"]
   },
   {
     "id": "p20",
@@ -177,6 +215,8 @@
     "price": 149.9,
     "image": "https://cauagabriel123.github.io/assets/prod-bolsa-rosa.png",
     "description": "Bolsa estruturada tom rosa LS, moderna e prática para o dia a dia.",
-    "status": "disponivel"
+    "status": "disponivel",
+    "tamanhos": ["Único"],
+    "cores": ["Rosa", "Bege"]
   }
 ]
