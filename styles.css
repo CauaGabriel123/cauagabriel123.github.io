@@ -802,196 +802,11 @@ footer {
   color: var(--lilac);
 }
 
-/* ============================
-   Produtos ESGOTADOS (v13.0.5 — funcional)
-   ============================ */
-.card.soldout {
-  position: relative;
-  opacity: 0.9;
-  pointer-events: none; /* impede cliques */
-  overflow: hidden;
-}
-
-.card.soldout img {
-  filter: blur(3px) brightness(0.7);
-  transition: filter 0.3s ease;
-}
-
-.card.soldout::after {
-  content: "ESGOTADO";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: rgba(122, 59, 253, 0.9);
-  color: #fff;
-  font-weight: 800;
-  padding: 10px 24px;
-  border-radius: 12px;
-  font-size: 1rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
-  z-index: 5;
-  box-shadow: 0 6px 20px rgba(122, 59, 253, 0.3);
-  pointer-events: none;
-}
-
-/* ============================
-   v13.0.6 — Correção visual final do "ESGOTADO"
-   ============================ */
-.card.soldout {
-  position: relative;
-  overflow: hidden;
-}
-
-.card.soldout img {
-  filter: blur(3px) brightness(0.7);
-  transition: filter 0.3s ease;
-  position: relative;
-  z-index: 1; /* imagem fica abaixo do selo */
-}
-
-.card.soldout::after {
-  content: "ESGOTADO";
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 800;
-  font-size: 1.1rem;
-  color: #fff;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  background: rgba(122, 59, 253, 0.8);
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
-  z-index: 2; /* garante que o texto apareça acima da imagem */
-  pointer-events: none;
-}
-
-/* ============================
-   FIX visual do "ESGOTADO" (v13.0.7)
-   ============================ */
-.card.soldout {
-  position: relative;
-  overflow: hidden;
-}
-
-.card.soldout img {
-  filter: blur(3px) brightness(0.7);
-  transition: filter 0.3s ease;
-}
-
-.card.soldout::after {
-  content: "ESGOTADO";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 800;
-  font-size: 1.1rem;
-  color: #fff;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  background: rgba(122, 59, 253, 0.8);
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
-  z-index: 5;
-  pointer-events: none;
-}
-/* Efeito visual para produtos esgotados (centralizado + borrado) */
-.card.soldout,
-.slide.soldout,
-.footer-card.soldout {
-  filter: blur(2px);
-  opacity: 0.55;
-  pointer-events: none;
-  position: relative;
-}
-
-.card.soldout::after,
-.slide.soldout::after,
-.footer-card.soldout::after {
-  content: 'ESGOTADO';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: linear-gradient(90deg, #E96BA8, #7A3BFD);
-  color: #fff;
-  font-weight: 700;
-  padding: 8px 18px;
-  border-radius: 10px;
-  font-size: 1rem;
-  letter-spacing: 1px;
-  text-shadow: 0 2px 5px rgba(0, 0, 0, .3);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, .25);
-  white-space: nowrap;
-}
-/* VISUAL CORRIGIDO — produtos esgotados */
-.card,
-.slide,
-.footer-card {
-  position: relative;
-  display: block;
-  overflow: hidden;
-}
-
-/* Borrão apenas na imagem, não no selo */
-.card.soldout img,
-.slide.soldout img,
-.footer-card.soldout img {
-  filter: blur(3px) brightness(0.75);
-  transform: scale(1.05);
-  transition: 0.3s ease;
-}
-
-/* Texto "ESGOTADO" centralizado */
-.card.soldout::after,
-.slide.soldout::after,
-.footer-card.soldout::after {
-  content: 'ESGOTADO';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: linear-gradient(90deg, #E96BA8, #7A3BFD);
-  color: #fff;
-  font-weight: 700;
-  padding: 10px 20px;
-  border-radius: 10px;
-  font-size: 1rem;
-  letter-spacing: 1px;
-  text-shadow: 0 2px 5px rgba(0, 0, 0, .3);
-  box-shadow: 0 3px 12px rgba(0, 0, 0, .25);
-  z-index: 3;
-  white-space: nowrap;
-}
-
-/* Evita cliques em produtos esgotados */
-.card.soldout,
-.slide.soldout,
-.footer-card.soldout {
-  pointer-events: none;
-}
-
 /* ===============================
-   CORREÇÃO FINAL — SEL0 ESGOTADO
-   Centralização + borrão uniforme
+   v13.0.7 — ESGOTADO (versão final estável)
    =============================== */
 
-.card,
-.slide,
-.footer-card {
-  position: relative;
-  overflow: hidden;
-}
-
-/* 💜 Correção final — selo ESGOTADO centralizado e visual consistente */
+/* Estrutura base */
 .card.soldout,
 .slide.soldout,
 .footer-card.soldout {
@@ -1000,6 +815,7 @@ footer {
   pointer-events: none;
 }
 
+/* Efeito visual do produto esgotado */
 .card.soldout img,
 .slide.soldout img,
 .footer-card.soldout img {
@@ -1008,12 +824,17 @@ footer {
   transition: all 0.3s ease;
 }
 
+/* Selo “ESGOTADO” centralizado */
 .card.soldout::after,
 .slide.soldout::after,
 .footer-card.soldout::after {
   content: "ESGOTADO";
   position: absolute;
-  inset: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  height: 90%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1024,13 +845,26 @@ footer {
   color: #fff;
   background: linear-gradient(135deg, rgba(233,107,168,0.9), rgba(122,59,253,0.9));
   text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-  border-radius: 10px;
+  border-radius: 12px;
   z-index: 3;
+  box-sizing: border-box;
 }
 
-/* Ajuste suave no efeito de foco */
+/* Efeito hover sutil */
 .card.soldout:hover img,
-.slide.soldout:hover img {
+.slide.soldout:hover img,
+.footer-card.soldout:hover img {
   filter: blur(4px) brightness(0.6);
   transform: scale(1.04);
+}
+
+/* Versão mobile (texto ajustado para telas menores) */
+@media (max-width: 500px) {
+  .card.soldout::after,
+  .slide.soldout::after,
+  .footer-card.soldout::after {
+    font-size: 0.9rem;
+    width: 92%;
+    height: 92%;
+  }
 }
