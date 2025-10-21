@@ -268,7 +268,8 @@ function priceHTML(p) {
   return s;
 }
 function badgeHTML(p) {
-  if (p.stock <= 0) return '<span class="badge">Esgotado</span>';
+  if (p.status && p.status.toLowerCase() === 'esgotado')
+    return '<span class="badge">Esgotado</span>';
   if (p.discount) return '<span class="badge">-30%</span>';
   if (p.isNew) return '<span class="badge">Novo</span>';
   return '';
