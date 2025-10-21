@@ -309,6 +309,13 @@ function renderGrid(el, arr) {
 
 function renderAll() {
   const f = document.getElementById('featured'); if (f) renderGrid(f, featured);
+  // Força aplicação visual dos esgotados nos destaques
+if (f) {
+  f.querySelectorAll('.card').forEach(c => {
+    const isSold = c.textContent.toLowerCase().includes('esgotado');
+    if (isSold) c.classList.add('soldout');
+  });
+}
   document.querySelectorAll('[data-cat]').forEach(g => {
     const cat = g.getAttribute('data-cat');
     renderGrid(g, catalog[cat] || []);
