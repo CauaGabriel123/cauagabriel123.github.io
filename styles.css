@@ -871,15 +871,15 @@ footer {
 }
 
 /* ===============================
-   v13.0.8.4 — Selo “ESGOTADO” centralizado no meio (versão final)
+   v13.0.8.5 — Selo “ESGOTADO” 100% centralizado
    =============================== */
 .card.soldout::before,
 .slide.soldout::before,
 .footer-card.soldout::before {
   content: "ESGOTADO";
   position: absolute;
-  top: 50%; /* centraliza verticalmente */
-  left: 50%; /* centraliza horizontalmente */
+  top: 55%; /* desce levemente o texto (antes era 50%) */
+  left: 50%;
   transform: translate(-50%, -50%);
   color: red;
   font-weight: 800;
