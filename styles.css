@@ -932,7 +932,7 @@ footer {
   box-shadow: 0 2px 10px rgba(0, 0, 0, .25);
   white-space: nowrap;
 }
-/* Correção estrutural: garante que todos os cards e slides tenham base para o overlay */
+/* VISUAL CORRIGIDO — produtos esgotados */
 .card,
 .slide,
 .footer-card {
@@ -941,21 +941,40 @@ footer {
   overflow: hidden;
 }
 
-/* Garante que o selo "ESGOTADO" e o blur se alinhem no centro exato */
+/* Borrão apenas na imagem, não no selo */
 .card.soldout img,
 .slide.soldout img,
 .footer-card.soldout img {
-  filter: blur(3px) brightness(0.7);
-  transform: scale(1.02);
+  filter: blur(3px) brightness(0.75);
+  transform: scale(1.05);
+  transition: 0.3s ease;
 }
 
-/* Reajuste de centralização do selo */
+/* Texto "ESGOTADO" centralizado */
 .card.soldout::after,
 .slide.soldout::after,
 .footer-card.soldout::after {
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+  content: 'ESGOTADO';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(90deg, #E96BA8, #7A3BFD);
+  color: #fff;
+  font-weight: 700;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 1rem;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, .3);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, .25);
+  z-index: 3;
+  white-space: nowrap;
+}
+
+/* Evita cliques em produtos esgotados */
+.card.soldout,
+.slide.soldout,
+.footer-card.soldout {
+  pointer-events: none;
 }
