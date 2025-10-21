@@ -208,6 +208,7 @@ function buildCatalogAndRender(data) {
       colors: ['Preto', 'Branco', 'Rosa'],
       stock: 5, // mantém todos visíveis (o visual "esgotado" é tratado pelo CSS)
       desc: p.description
+      status: p.status
     });
   });
 
