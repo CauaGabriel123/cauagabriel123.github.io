@@ -801,26 +801,3 @@ footer {
   font-weight: 800;
   color: var(--lilac);
 }
-
-/* ============================
-   v13.0.1 — Visual de produto esgotado
-   ============================ */
-.card.soldout img {
-  filter: blur(3px) brightness(0.8);
-  pointer-events: none;
-}
-
-.card.soldout::after {
-  content: "ESGOTADO";
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 800;
-  font-size: 1.2rem;
-  color: #fff;
-  background: rgba(0, 0, 0, 0.5);
-  text-shadow: 0 2px 6px rgba(0,0,0,0.5);
-  border-radius: 14px;
-}
