@@ -558,6 +558,18 @@ document.addEventListener('DOMContentLoaded', () => {
   updateCartCount();
 });
 
+// 🔧 FIX — garante que produtos esgotados fiquem com o visual "ESGOTADO" em todas as seções
+document.addEventListener('DOMContentLoaded', () => {
+  const applySoldOutVisual = () => {
+    document.querySelectorAll('.card, .footer-card, .slide').forEach(card => {
+      const isSold = card.textContent.toLowerCase().includes('esgotado');
+      if (isSold) card.classList.add('soldout');
+    });
+  };
+  applySoldOutVisual();
+  setTimeout(applySoldOutVisual, 1500);
+});
+
 // =============================
 // ENTREGA, PAGAMENTO E WHATSAPP
 // =============================
