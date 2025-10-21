@@ -286,9 +286,23 @@ function cardHTML(p) {
 }
 
 function renderGrid(el, arr) {
-  el.innerHTML = arr.map(cardHTML).join('');
-  el.querySelectorAll('.card').forEach(c => c.onclick = () => openModal(c.getAttribute('data-id')));
+  el.innerHTML = arr.map(p => {
+    const sold = (p.status && p.status.toLowerCase() === 'esgotado') || p.stock <= 0;
+    return `<div class="card${sold ? ' soldout' : ''}" data-id="${p.id}">
+      ${badgeHTML(p)}
+      <img src="${(p.imgs ? p.imgs[0] : p.img || p.image)}" alt="${p.name}">
+      <div class="info">
+        <p class="name">${p.name}</p>
+        <p class="price">${priceHTML(p)}</p>
+      </div>
+    </div>`;
+  }).join('');
+
+  el.querySelectorAll('.card:not(.soldout)').forEach(c => 
+    c.onclick = () => openModal(c.getAttribute('data-id'))
+  );
 }
+
 function renderAll() {
   const f = document.getElementById('featured'); if (f) renderGrid(f, featured);
   document.querySelectorAll('[data-cat]').forEach(g => {
