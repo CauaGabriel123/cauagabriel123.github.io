@@ -803,30 +803,8 @@ footer {
 }
 
 /* ===============================
-   v13.0.8.7 — Selo “ESGOTADO” vermelho, centralizado na IMAGEM (versão final estável)
+   v13.0.8.8 — Selo “ESGOTADO” centralizado com precisão
    =============================== */
-
-/* Estrutura base */
-.card.soldout,
-.slide.soldout,
-.footer-card.soldout {
-  position: relative;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-/* A imagem é borrada e escurecida */
-.card.soldout img,
-.slide.soldout img,
-.footer-card.soldout img {
-  filter: blur(3px) brightness(0.65);
-  transform: scale(1.03);
-  transition: all 0.3s ease;
-  position: relative;
-  z-index: 1;
-}
-
-/* 🔴 Selo “ESGOTADO” perfeitamente centralizado */
 .card.soldout img::after,
 .slide.soldout img::after,
 .footer-card.soldout img::after {
@@ -843,5 +821,5 @@ footer {
   text-transform: uppercase;
   z-index: 2;
   pointer-events: none;
-  transform: translateY(-15%); /* 🔼 sobe um pouco mais (centralização perfeita) */
+  transform: translateY(-12%); /* ajuste perfeito — centraliza na maioria das proporções */
 }
