@@ -241,18 +241,6 @@ function buildCatalogAndRender(data) {
       status: p.status
     });
   });
-
-  featured = data
-    .slice(0, 5)
-    .map(p => ({
-      id: p.id,
-      name: p.name,
-      price: p.price,
-      imgs: [p.image],
-      desc: p.description,
-      status: p.status
-    }));
-
   renderAll();
   initCarousel();
   renderFooterProducts(featured.length ? featured : null);
