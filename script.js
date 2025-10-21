@@ -206,15 +206,14 @@ function buildCatalogAndRender(data) {
       imgs: [p.image],
       sizes: ['P', 'M', 'G'],
       colors: ['Preto', 'Branco', 'Rosa'],
-      stock: p.status === 'disponivel' ? 5 : 0,
+      stock: 5, // mantém todos visíveis (o visual "esgotado" é tratado pelo CSS)
       desc: p.description
     });
   });
 
   featured = data
-    .filter(p => p.status === 'disponivel')
-    .slice(0, 5)
-    .map(p => ({
+  .slice(0, 5)
+  .map(p => ({
       id: p.id,
       name: p.name,
       price: p.price,
