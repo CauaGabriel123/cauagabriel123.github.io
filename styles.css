@@ -893,3 +893,23 @@ footer {
   z-index: 3;
   pointer-events: none;
 }
+
+/* ===============================
+   v13.0.8.3 — Selo “ESGOTADO” vermelho (corrigido e garantido)
+   =============================== */
+.card.soldout::before,
+.slide.soldout::before,
+.footer-card.soldout::before {
+  content: "ESGOTADO";
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: red;
+  font-weight: 800;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  z-index: 5;
+  pointer-events: none;
+}
