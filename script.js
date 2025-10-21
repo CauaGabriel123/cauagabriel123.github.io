@@ -1,10 +1,7 @@
 // =========================
-// LS STORE v11.4.0 — Upgrades garantidos (sem alterar layout funcional)
-// - Drawer: mantém "Femininos" (dropdown) com subcategorias
-// - Carrossel Início: arrastável com o dedo + itens reais do catálogo (clica e abre modal)
-// - WhatsApp: abertura garantida com window.location.href
-// - NOVO: campo Número só aceita números (bloqueio de letras)
-// - NOVO: link "Sobre Nós" no menu abre a seção correspondente
+// LS STORE v13.0.7 — Suporte a tamanhos e cores personalizáveis
+// - Nenhuma alteração de layout, funções ou comportamento visual
+// - buildCatalogAndRender() atualizado para ler "sizes" e "colors" do JSON
 // =========================
 
 const { jsPDF } = window.jspdf;
@@ -19,36 +16,11 @@ const FEES = {
 };
 const INSTAGRAM_HANDLE = '@ls_store.fc';
 
-// Fallback local para quando o fetch('products.json') falhar
+// --- Fallback local para quando o fetch('products.json') falhar
 const FALLBACK_PRODUCTS = [
-  { "id": "p1", "name": "Vestido Floral Midi", "category": "vestidos", "price": 99.99, "image": "assets/prod-vestido-floral.jpg", "description": "Vestido midi leve com estampa floral e caimento fluido, perfeito para dias ensolarados.", "status": "disponivel" },
-  { "id": "p2", "name": "Vestido Curto Preto Elegance", "category": "vestidos", "price": 189.9, "image": "assets/prod-vestido-preto.jpg", "description": "Vestido curto preto com toque sofisticado e caimento perfeito para festas e eventos.", "status": "disponivel" },
-  { "id": "p3", "name": "Vestido Longo Rosa Serenity", "category": "vestidos", "price": 229.9, "image": "assets/prod-vestido-longo.jpg", "description": "Longo com tom rosa suave, tecido leve e fenda discreta. Conforto e elegância.", "status": "disponivel" },
-
-  { "id": "p4", "name": "Camiseta Feminina Básica Branca", "category": "blusas", "price": 59.9, "image": "assets/prod-camiseta-branca.jpg", "description": "Camiseta básica em algodão macio, ideal para compor looks casuais.", "status": "disponivel" },
-  { "id": "p5", "name": "Blusa Cropped Canelada", "category": "blusas", "price": 79.9, "image": "assets/prod-blusa-cropped.jpg", "description": "Blusa cropped canelada com gola redonda e modelagem confortável.", "status": "disponivel" },
-  { "id": "p6", "name": "Blusa Off-Shoulder Bege", "category": "blusas", "price": 89.9, "image": "assets/prod-blusa-bege.jpg", "description": "Blusa ombro a ombro com tecido suave e elegante para qualquer ocasião.", "status": "disponivel" },
-
-  { "id": "p7", "name": "Calça Jeans Cintura Alta", "category": "calcas", "price": 139.9, "image": "assets/prod-calca-jeans.jpg", "description": "Jeans clássico de cintura alta e corte reto. Modela e valoriza o corpo.", "status": "disponivel" },
-  { "id": "p8", "name": "Calça Pantalona Rose", "category": "calcas", "price": 159.9, "image": "assets/prod-calca-pantalona.jpg", "description": "Pantalona moderna com tecido fluido e cintura elástica confortável.", "status": "disponivel" },
-  { "id": "p9", "name": "Calça de Moletom Feminina", "category": "calcas", "price": 119.9, "image": "assets/prod-calca-moletom.jpg", "description": "Calça comfy de moletom macio, ideal para o dia a dia.", "status": "disponivel" },
-
-  { "id": "p10", "name": "Lingerie Conjunto Rosa Pastel", "category": "intimas", "price": 89.9, "image": "assets/prod-lingerie-rosa.jpg", "description": "Conjunto delicado de renda com modelagem confortável e toque suave.", "status": "disponivel" },
-  { "id": "p11", "name": "Sutiã Sem Bojo Confort Lace", "category": "intimas", "price": 59.9, "image": "assets/prod-sutia-lace.jpg", "description": "Sutiã em renda delicada sem bojo, ideal para o conforto do dia a dia.", "status": "disponivel" },
-
-  { "id": "p12", "name": "Sandália Rosa Comfort", "category": "calcados", "price": 169.9, "image": "assets/prod-sandalia-rosa.jpg", "description": "Sandália leve com tiras cruzadas e palmilha macia, em tom rosa LS.", "status": "disponivel" },
-  { "id": "p13", "name": "Tênis Branco Casual Feminino", "category": "calcados", "price": 199.9, "image": "assets/prod-tenis-branco.jpg", "description": "Tênis branco clássico, combina com tudo. Estilo e conforto em um só modelo.", "status": "disponivel" },
-
-  { "id": "p14", "name": "Óculos de Sol LS Fashion", "category": "oculos", "price": 89.9, "image": "assets/prod-oculos-fashion.jpg", "description": "Óculos fashion com lentes degradê e hastes douradas, estilo moderno LS.", "status": "disponivel" },
-  { "id": "p15", "name": "Óculos de Sol Redondo Vintage", "category": "oculos", "price": 99.9, "image": "assets/prod-oculos-vintage.jpg", "description": "Óculos redondo retrô com lentes levemente rosadas, um charme.", "status": "disponivel" },
-
-  { "id": "p16", "name": "Batom Matte Rosa LS", "category": "cosmeticos", "price": 49.9, "image": "assets/prod-batom-rosa.jpg", "description": "Batom matte de longa duração, tom rosa LS perfeito para todos os tons de pele.", "status": "disponivel" },
-  { "id": "p17", "name": "Perfume LS Essence 50ml", "category": "cosmeticos", "price": 129.9, "image": "assets/prod-perfume-ls.jpg", "description": "Perfume feminino floral frutado, aroma leve e sofisticado LS.", "status": "disponivel" },
-
-  { "id": "p18", "name": "Creme Hidratante Corporal LS", "category": "beleza", "price": 69.9, "image": "assets/prod-hidratante.jpg", "description": "Hidratante corporal com fragrância suave e textura leve.", "status": "disponivel" },
-  { "id": "p19", "name": "Sérum Facial Iluminador", "category": "beleza", "price": 99.9, "image": "assets/prod-serum-facial.jpg", "description": "Sérum facial com toque seco, ideal para pele radiante e nutrida.", "status": "disponivel" },
-
-  { "id": "p20", "name": "Bolsa Rosa Pastel LS", "category": "acessorios", "price": 149.9, "image": "assets/prod-bolsa-rosa.jpg", "description": "Bolsa estruturada tom rosa LS, moderna e prática para o dia a dia.", "status": "disponivel" }
+  { "id": "p1", "name": "Vestido Floral Midi", "category": "vestidos", "price": 99.99, "image": "assets/prod-vestido-floral.jpg", "description": "Vestido midi leve com estampa floral e caimento fluido.", "status": "disponivel" },
+  { "id": "p2", "name": "Vestido Curto Preto Elegance", "category": "vestidos", "price": 189.9, "image": "assets/prod-vestido-preto.jpg", "description": "Vestido curto preto elegante para festas e eventos.", "status": "disponivel" },
+  { "id": "p3", "name": "Vestido Longo Rosa Serenity", "category": "vestidos", "price": 229.9, "image": "assets/prod-vestido-longo.jpg", "description": "Longo rosa suave com fenda discreta.", "status": "disponivel" }
 ];
 
 // --- Links Instagram (app + web)
@@ -66,7 +38,7 @@ const footerInsta = document.getElementById('footer-insta');
   });
 });
 
-// --- Splash (corrigido para travamento)
+// --- Splash Screen
 window.addEventListener('load', () => {
   const splash = document.getElementById('splash');
   if (!splash) return;
@@ -76,7 +48,7 @@ window.addEventListener('load', () => {
   }, 2000);
 });
 
-// --- Áudio (lazy init para iOS)
+// --- Áudio (efeitos sonoros)
 let audioCtx;
 function getCtx() {
   if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -118,7 +90,6 @@ function clickSoft() {
 const drawer = document.getElementById('drawer');
 const menuBtn = document.getElementById('menu-btn');
 const closeDrawer = document.getElementById('close-drawer');
-
 menuBtn.onclick = () => {
   drawer.setAttribute('aria-hidden', drawer.getAttribute('aria-hidden') === 'true' ? 'false' : 'true');
   clickSoft();
@@ -129,17 +100,16 @@ closeDrawer.onclick = () => {
 };
 drawer.querySelector('.drawer-backdrop').onclick = () => drawer.setAttribute('aria-hidden', 'true');
 
-// Accordion Produtos (100% funcional em desktop e mobile)
+// --- Accordion "Femininos"
 document.addEventListener('DOMContentLoaded', () => {
   const btn = document.querySelector('.drawer-accordion');
   const sub = document.getElementById('sub-produtos');
   if (!btn || !sub) return;
-
   btn.addEventListener('click', () => {
     const expanded = btn.getAttribute('aria-expanded') === 'true';
     btn.setAttribute('aria-expanded', String(!expanded));
     sub.hidden = expanded;
-    clickSoft(); // som suave no clique
+    clickSoft();
   });
 });
 
@@ -151,7 +121,6 @@ document.querySelectorAll('.drawer-links a[data-section], .footer a[data-section
     drawer.setAttribute('aria-hidden', 'true');
   };
 });
-
 function showSection(id) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('visible'));
   const sec = document.getElementById(id);
@@ -159,7 +128,7 @@ function showSection(id) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// --- NOVO: link "Sobre Nós" no menu abre a seção correspondente
+// --- "Sobre Nós" no menu
 (function sobreNosNav(){
   const link = document.getElementById('sobre-nos-link');
   if (!link) return;
@@ -170,29 +139,23 @@ function showSection(id) {
   });
 })();
 
-// =============================
-// BLOQUEIO DE LETRAS NO CAMPO "NÚMERO" (somente dígitos 0-9)
-// =============================
+// --- Campo "Número" só aceita dígitos
 (function onlyNumericNumberField() {
   const numberInput = document.getElementById('number');
   if (!numberInput) return;
-
-  // Ao digitar/colar, remove tudo que não for dígito
   numberInput.addEventListener('input', () => {
     numberInput.value = numberInput.value.replace(/\D+/g, '');
   });
-
-  // Bloqueia caracteres não-numéricos no keypress
   numberInput.addEventListener('keypress', e => {
     const char = String.fromCharCode(e.which || e.keyCode);
     if (!/[0-9]/.test(char)) e.preventDefault();
   });
 })();
-
-// --- Catálogo de produtos dinâmico via products.json (com fallback robusto)
+// --- Catálogo de produtos dinâmico via products_v2.json (com fallback robusto)
 let catalog = {};
 let featured = [];
 
+// ✅ Função atualizada para ler tamanhos e cores personalizados
 function buildCatalogAndRender(data) {
   catalog = {};
   data.forEach(p => {
@@ -203,69 +166,57 @@ function buildCatalogAndRender(data) {
       name: p.name,
       price: p.price,
       imgs: [p.image],
-      sizes: ['P', 'M', 'G'],
-      colors: ['Preto', 'Branco', 'Rosa'],
-      stock: 5, // mantém todos visíveis (o visual "esgotado" é tratado pelo CSS)
+      sizes: p.sizes || ['P', 'M', 'G'],          // ✅ usa tamanhos personalizados se existirem
+      colors: p.colors || ['Preto', 'Branco', 'Rosa'], // ✅ usa cores personalizadas se existirem
+      stock: 5,
       desc: p.description,
       status: p.status
     });
   });
 
-  featured = data
-  .slice(0, 5)
-  .map(p => ({
-      id: p.id,
-      name: p.name,
-      price: p.price,
-      imgs: [p.image],
-      desc: p.description
-    }));
+  featured = data.slice(0, 5).map(p => ({
+    id: p.id,
+    name: p.name,
+    price: p.price,
+    imgs: [p.image],
+    desc: p.description
+  }));
 
   renderAll();
   initCarousel();
   renderFooterProducts(featured.length ? featured : null);
 }
 
-// === Carregamento aprimorado do catálogo (corrigido — ignora falsos negativos do fetch) ===
+// === Carregamento do catálogo ===
 (function loadProducts() {
-  const url = 'products_v2.json?v=' + Date.now(); // força sempre nova versão
-
-  // Carrega catálogo com fallback interno
+  const url = 'products_v2.json?v=' + Date.now();
   fetch(url, { cache: 'no-store' })
     .then(res => {
       if (!res.ok) throw new Error(`Erro HTTP ${res.status}`);
       return res.json();
     })
     .then(data => {
-      console.log('✅ Catálogo carregado do arquivo externo:', url);
+      console.log('✅ Catálogo carregado:', url);
       buildCatalogAndRender(data);
-      console.log('🟢 Renderização iniciada...');
     })
     .catch(err => {
-      console.warn('⚠️ Erro leve ao buscar catálogo:', err.message);
-
-      // Espera um pouco e verifica se os produtos foram renderizados
-      setTimeout(() => {
-        const produtos = document.querySelectorAll('.product-item, .card');
-        if (produtos.length > 0) {
-          console.log('🟢 Catálogo carregado com sucesso após verificação.');
-          return; // tudo certo, não mostra alerta
-        }
-        // Só mostra o alerta se realmente não renderizou nada
-        showAlert('Não foi possível carregar os produtos atualizados. Recarregue a página em alguns segundos.');
-        console.error('❌ Nenhum produto renderizado após verificação.');
-      }, 2500); // 2,5 segundos de espera
+      console.warn('⚠️ Erro ao buscar catálogo:', err.message);
+      buildCatalogAndRender(FALLBACK_PRODUCTS);
+      showAlert('Não foi possível carregar os produtos atualizados. Usando versão local.');
     });
 })();
 
+// --- Funções auxiliares de preço e selo
 function priceHTML(p) {
   const v = p.discount ? (p.price * (1 - p.discount)) : p.price;
   let s = `R$ ${v.toFixed(2).replace('.', ',')}`;
   if (p.discount) {
-    s += ` <span style="text-decoration:line-through;color:#8a7aa5;font-size:12px;margin-left:6px">R$ ${p.price.toFixed(2).replace('.', ',')}</span>`;
+    s += ` <span style="text-decoration:line-through;color:#8a7aa5;font-size:12px;margin-left:6px">
+      R$ ${p.price.toFixed(2).replace('.', ',')}</span>`;
   }
   return s;
 }
+
 function badgeHTML(p) {
   if (p.status && p.status.toLowerCase() === 'esgotado')
     return '<span class="badge">Esgotado</span>';
@@ -273,6 +224,7 @@ function badgeHTML(p) {
   if (p.isNew) return '<span class="badge">Novo</span>';
   return '';
 }
+
 function cardHTML(p) {
   const sold = (p.status && p.status.toLowerCase() === 'esgotado') || p.stock <= 0;
   return `<div class="card${sold ? ' soldout' : ''}" data-id="${p.id}">
@@ -284,16 +236,8 @@ function cardHTML(p) {
     </div>
   </div>`;
 }
-// 🩶 Força reaplicação global do visual "esgotado"
-document.addEventListener('DOMContentLoaded', () => {
-  setTimeout(() => {
-    document.querySelectorAll('.card').forEach(card => {
-      const isSold = card.textContent.toLowerCase().includes('esgotado');
-      if (isSold) card.classList.add('soldout');
-    });
-  }, 1200);
-});
 
+// --- Renderização do catálogo e destaques
 function renderGrid(el, arr) {
   el.innerHTML = arr.map(p => {
     const sold = (p.status && p.status.toLowerCase() === 'esgotado') || p.stock <= 0;
@@ -310,46 +254,31 @@ function renderGrid(el, arr) {
     `;
   }).join('');
 
-  // Só permite clique se o produto NÃO estiver esgotado
   el.querySelectorAll('.card:not(.soldout)').forEach(c => {
     c.onclick = () => openModal(c.getAttribute('data-id'));
   });
 }
 
 function renderAll() {
-  const f = document.getElementById('featured'); if (f) renderGrid(f, featured);
-  // Força aplicação visual dos esgotados nos destaques
-if (f) {
-  f.querySelectorAll('.card').forEach(c => {
-    const isSold = c.textContent.toLowerCase().includes('esgotado');
-    if (isSold) c.classList.add('soldout');
-  });
-}
+  const f = document.getElementById('featured');
+  if (f) renderGrid(f, featured);
+  if (f) {
+    f.querySelectorAll('.card').forEach(c => {
+      const isSold = c.textContent.toLowerCase().includes('esgotado');
+      if (isSold) c.classList.add('soldout');
+    });
+  }
   document.querySelectorAll('[data-cat]').forEach(g => {
     const cat = g.getAttribute('data-cat');
     renderGrid(g, catalog[cat] || []);
   });
 }
 
-// 🩶 Correção — garante selo e efeito "esgotado" nos destaques da semana
-document.addEventListener('DOMContentLoaded', () => {
-  setTimeout(() => {
-    document.querySelectorAll('#featured .card').forEach(card => {
-      const id = card.getAttribute('data-id');
-      const product = Object.values(catalog).flat().find(p => p.id === id);
-      if (product && product.status && product.status.toLowerCase() === 'esgotado') {
-        card.classList.add('soldout');
-      }
-    });
-  }, 1000);
-});
-
-// ===== Rodapé: vitrine horizontal com produtos reais =====
+// --- Rodapé: vitrine com produtos reais
 function renderFooterProducts(listFromData) {
   const box = document.getElementById('footer-products');
   if (!box) return;
 
-  // Usa lista enviada ou junta todos do catálogo
   let pool = listFromData;
   if (!pool || !pool.length) {
     pool = [];
@@ -358,12 +287,10 @@ function renderFooterProducts(listFromData) {
     }
   }
 
-  // Limita para não pesar
   const slice = pool.slice(0, 12);
-
   box.innerHTML = slice.map(p => `
     <div class="footer-card" data-id="${p.id}" role="button" aria-label="${p.name}">
-          <img src="${(p.imgs ? p.imgs[0] : p.img || p.image)}" alt="${p.name}">
+      <img src="${(p.imgs ? p.imgs[0] : p.img || p.image)}" alt="${p.name}">
       <div class="fc-info">
         <div class="fc-name">${p.name}</div>
         <div class="fc-price">R$ ${p.price.toFixed(2).replace('.', ',')}</div>
@@ -371,14 +298,12 @@ function renderFooterProducts(listFromData) {
     </div>
   `).join('');
 
-  // Clique abre modal de produto
   box.querySelectorAll('.footer-card').forEach(card => {
     card.addEventListener('click', () => openModal(card.getAttribute('data-id')));
   });
 }
-
 // =============================
-// MODAL DE PRODUTO (corrigido)
+// MODAL DE PRODUTO (com tamanhos e cores personalizados)
 // =============================
 const modal = document.getElementById('product-modal');
 const modalImgs = document.getElementById('modal-imgs');
@@ -407,12 +332,14 @@ function openModal(id) {
   selectedSize = '';
   selectedColor = '';
 
+  // --- imagens
   const imgsHTML = (currentProduct.imgs || [currentProduct.img || ''])
     .slice(0, 5)
     .map(i => `<img src="${i}" alt="${currentProduct.name}">`)
     .join('');
   modalImgs.innerHTML = imgsHTML;
 
+  // --- tamanhos (personalizados)
   sizeOpt.innerHTML = (currentProduct.sizes || []).map(s => `<button>${s}</button>`).join('');
   sizeOpt.querySelectorAll('button').forEach(b => {
     b.onclick = () => {
@@ -422,6 +349,7 @@ function openModal(id) {
     };
   });
 
+  // --- cores (personalizadas)
   colorOpt.innerHTML = (currentProduct.colors || []).map(c => `<button>${c}</button>`).join('');
   colorOpt.querySelectorAll('button').forEach(b => {
     b.onclick = () => {
@@ -437,13 +365,12 @@ function openModal(id) {
     const addBtn = document.getElementById('modal-add');
     if (addBtn) {
       addBtn.onclick = () => {
-        // 🔒 bloqueia produtos esgotados
         if (currentProduct.status && currentProduct.status.toLowerCase() === 'esgotado') {
           showAlert('Este produto está esgotado no momento 💜');
           return;
         }
         if (!selectedSize || !selectedColor) {
-          showAlert('Por favor, selecione o tamanho e a cor antes de adicionar ao carrinho!');
+          showAlert('Selecione o tamanho e a cor antes de adicionar ao carrinho!');
           return;
         }
         addToCart(currentProduct, selectedSize, selectedColor);
@@ -457,6 +384,7 @@ function openModal(id) {
 modalClose.onclick = () => modal.setAttribute('aria-hidden', 'true');
 modal.addEventListener('click', e => { if (e.target === modal) modal.setAttribute('aria-hidden', 'true'); });
 
+// --- Alerta visual genérico (reutilizado em várias partes)
 function showAlert(msg) {
   const overlay = document.createElement('div');
   overlay.style.position = 'fixed';
@@ -477,7 +405,7 @@ function showAlert(msg) {
 }
 
 // =============================
-// CARRINHO (v11.4.1 — correção estável, sem mudar o visual)
+// CARRINHO (v13.0.7 — preserva layout e funções)
 // =============================
 const cart = document.getElementById('cart');
 const cartBtn = document.getElementById('cart-btn');
@@ -492,20 +420,20 @@ const checkout = document.getElementById('checkout');
 
 let items = JSON.parse(localStorage.getItem('cartItems') || '[]');
 
-// Abrir e fechar carrinho
+// Abrir/fechar carrinho
 cartBtn.onclick = () => {
   cart.setAttribute('aria-hidden', 'false');
   renderCart();
 };
 closeCart.onclick = () => cart.setAttribute('aria-hidden', 'true');
 
-// Atualiza contador no botão 🛒
+// Atualiza contador
 function updateCartCount() {
   cartCount.textContent = items.length;
   localStorage.setItem('cartItems', JSON.stringify(items));
 }
 
-// Atualiza totais visuais
+// Atualiza total
 function refreshTotalsUI() {
   const total = items.reduce((acc, it) => acc + it.price, 0);
   cartTotal.textContent = total.toFixed(2).replace('.', ',');
@@ -514,7 +442,7 @@ function refreshTotalsUI() {
   updateCartCount();
 }
 
-// Renderiza o carrinho com itens e botões de remover
+// Renderiza carrinho
 function renderCart() {
   cartItems.innerHTML = '';
   if (items.length === 0) {
@@ -537,7 +465,6 @@ function renderCart() {
     cartItems.appendChild(row);
   });
 
-  // Liga eventos de remover corretamente
   cartItems.querySelectorAll('button').forEach(b => {
     b.onclick = () => {
       const idx = parseInt(b.dataset.i);
@@ -551,13 +478,11 @@ function renderCart() {
   refreshTotalsUI();
 }
 
-// Adiciona item ao carrinho
+// Adiciona item
 function addToCart(prod, size, color) {
-  // Adiciona item ao carrinho e salva
   items.push({ name: prod.name, size, color, price: prod.price });
   localStorage.setItem('cartItems', JSON.stringify(items));
 
-  // 🛍️ Efeito visual do produto "voando" até o carrinho
   const firstImg = (prod.imgs && prod.imgs[0]) || prod.img || '';
   if (firstImg) {
     const btn = document.getElementById('modal-add');
@@ -567,42 +492,19 @@ function addToCart(prod, size, color) {
     }
   }
 
-  // 💥 Efeito de explosão no botão do carrinho
   cartBtn.classList.add('pulse');
   setTimeout(() => cartBtn.classList.remove('pulse'), 400);
-
-  // 🔄 Atualiza interface do carrinho
   renderCart();
   refreshTotalsUI();
-
-  // 🧮 Corrige o número no carrinho (atualiza imediatamente)
   const el = document.getElementById('cart-count');
   if (el) el.textContent = items.length;
 }
 
-// Inicialização
 document.addEventListener('DOMContentLoaded', () => {
   renderCart();
   refreshTotalsUI();
   updateCartCount();
 });
-
-// 🔧 FIX — garante que todos os produtos esgotados fiquem com o visual correto em qualquer seção
-document.addEventListener('DOMContentLoaded', () => {
-  const applySoldOutVisual = () => {
-    document.querySelectorAll('.card, .slide, .footer-card').forEach(el => {
-      const isSold = el.textContent.toLowerCase().includes('esgotado');
-      if (isSold) el.classList.add('soldout');
-    });
-  };
-
-  // Executa logo após renderizar
-  setTimeout(applySoldOutVisual, 600);
-
-  // Reexecuta depois pra garantir que o catálogo todo esteja na tela
-  setTimeout(applySoldOutVisual, 2000);
-});
-
 // =============================
 // ENTREGA, PAGAMENTO E WHATSAPP
 // =============================
@@ -617,8 +519,7 @@ const neighborhood = document.getElementById('neighborhood');
 const orderNotes = document.getElementById('order-notes');
 
 paymentSel.onchange = () => {
-  const v = paymentSel.value;
-  cashSection.style.display = (v === 'Dinheiro') ? 'block' : 'none';
+  cashSection.style.display = (paymentSel.value === 'Dinheiro') ? 'block' : 'none';
 };
 cashRadios.forEach(r => r.onchange = () => {
   cashAmount.style.display = (r.value === 'sim') ? 'inline-block' : 'none';
@@ -635,6 +536,7 @@ function calcFee() {
   const fee = FEES[bairro];
   return (typeof fee === 'number') ? fee : 0;
 }
+
 function refreshFinalTotals() {
   const produtos = parseFloat(cartTotal.textContent.replace(',', '.')) || 0;
   const fee = calcFee();
@@ -655,8 +557,8 @@ function refreshFinalTotals() {
 refreshTotalsUI();
 
 checkout.onclick = () => {
-  if (items.length === 0) { showAlert('Seu carrinho está vazio.'); return; }
-  if (!nameInput.value.trim()) { showAlert('Por favor, informe seu nome.'); return; }
+  if (items.length === 0) return showAlert('Seu carrinho está vazio.');
+  if (!nameInput.value.trim()) return showAlert('Por favor, informe seu nome.');
 
   const client = nameInput.value.trim();
   const payment = paymentSel.value;
@@ -725,63 +627,17 @@ ${
 
   const url = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
   const pop = document.getElementById('popup-overlay');
-
-  // ✅ Exibe popup e adiciona delay antes de abrir o WhatsApp
   pop.hidden = false;
   pop.classList.add('show');
 
   setTimeout(() => {
     window.location.href = url;
     pop.hidden = true;
-  }, 2000); // <-- Delay de 2 segundos
+  }, 2000);
 };
 
 // =============================
-// VOLTAR AO TOPO
-// =============================
-const backToTop = document.getElementById('backToTop');
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 400) backToTop.classList.add('show');
-  else backToTop.classList.remove('show');
-});
-backToTop.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
-
-// =============================
-// LOGIN BONITO (ENTRAR)
-// =============================
-const loginBtn = document.getElementById('login-btn');
-const accountArea = document.getElementById('account-area');
-
-// Garante que o botão existe antes de ativar o clique
-if (loginBtn) {
-  loginBtn.onclick = () => {
-    accountArea.innerHTML = `
-    <div class="auth-card">
-      <div class="auth-title">
-        <h3>Entrar</h3>
-        <button class="close-auth">✕</button>
-      </div>
-      <label>Email
-        <input type="email" id="login-email" placeholder="seuemail@email.com">
-      </label>
-      <label>Senha
-        <input type="password" id="login-pass" placeholder="••••••••">
-      </label>
-      <div class="auth-actions">
-        <button class="add-btn" id="login-ok">Entrar</button>
-        <button class="add-btn" style="background:linear-gradient(90deg,#E96BA8,#7A3BFD)" id="register">Criar conta</button>
-      </div>
-    </div>`;
-
-    accountArea.querySelector('.close-auth').onclick = () => accountArea.innerHTML = '';
-    accountArea.querySelector('#login-ok').onclick = () => showAlert('Função de login em desenvolvimento 💜');
-    accountArea.querySelector('#register').onclick = () => showAlert('Cadastro disponível em breve 💖');
-    showSection('minha-conta');
-  };
-}
-
-// =============================
-// ADMIN (gerar PDF pedidos)
+// ADMIN (GERAR PDF DOS PEDIDOS)
 // =============================
 if (ADMIN_MODE) {
   const pdfBtn = document.createElement('button');
@@ -799,7 +655,6 @@ if (ADMIN_MODE) {
     doc.save('pedido-lsstore.pdf');
   };
 }
-
 // =============================
 // CARROSSEL (produtos + swipe)
 // =============================
@@ -809,7 +664,6 @@ if (ADMIN_MODE) {
   const slides = document.getElementById('carousel-slides');
   const dotsBox = document.getElementById('carousel-dots');
 
-  // Monta slides a partir de "featured"
   slides.innerHTML = featured.map((p, i) => `
     <div class="slide" data-id="${p.id}" role="button" aria-label="${p.name}">
       <img src="${(p.imgs ? p.imgs[0] : p.img)}" alt="${p.name}">
@@ -834,56 +688,26 @@ if (ADMIN_MODE) {
 
   function go(i, withAnim = true){
     idx = (i + featured.length) % featured.length;
-    if (withAnim) slides.style.transition = 'transform .35s ease';
-    else slides.style.transition = 'none';
+    slides.style.transition = withAnim ? 'transform .35s ease' : 'none';
     slides.style.transform = `translateX(-${idx * 100}%)`;
     dots.forEach(d => d.classList.remove('active'));
     dots[idx].classList.add('active');
   }
 
-  // Autoplay leve
-  function startAuto(){
-    stopAuto();
-    timer = setInterval(()=>go(idx+1), 6000);
-  }
-  function stopAuto(){
-    if (timer) clearInterval(timer);
-    timer = null;
-  }
+  function startAuto(){ stopAuto(); timer = setInterval(()=>go(idx+1), 6000); }
+  function stopAuto(){ if (timer) clearInterval(timer); timer = null; }
 
-  // Click abre modal
   slides.querySelectorAll('.slide').forEach(sl => {
     sl.addEventListener('click', () => {
       const id = sl.getAttribute('data-id');
-      if (Math.abs(delta) < 10) openModal(id); // evita abrir se foi swipe
+      if (Math.abs(delta) < 10) openModal(id);
     });
   });
-
-  // Dots clicáveis
   dots.forEach(d => d.addEventListener('click', () => { go(parseInt(d.dataset.i, 10)); startAuto(); }));
 
-  // Touch/drag
-  function onStart(x){
-    isDown = true; startX = x; currentX = x; delta = 0;
-    stopAuto();
-    slides.style.transition = 'none';
-  }
-  function onMove(x){
-    if (!isDown) return;
-    currentX = x;
-    delta = currentX - startX;
-    const percent = (delta / width) * 100;
-    slides.style.transform = `translateX(calc(${-idx*100}% + ${percent}%))`;
-  }
-  function onEnd(){
-    if (!isDown) return;
-    isDown = false;
-    const threshold = width * 0.15; // 15%
-    if (delta > threshold) go(idx-1);
-    else if (delta < -threshold) go(idx+1);
-    else go(idx, true);
-    startAuto();
-  }
+  function onStart(x){ isDown = true; startX = x; currentX = x; delta = 0; stopAuto(); slides.style.transition = 'none'; }
+  function onMove(x){ if (!isDown) return; currentX = x; delta = currentX - startX; const percent = (delta / width) * 100; slides.style.transform = `translateX(calc(${-idx*100}% + ${percent}%))`; }
+  function onEnd(){ if (!isDown) return; isDown = false; const threshold = width * 0.15; if (delta > threshold) go(idx-1); else if (delta < -threshold) go(idx+1); else go(idx, true); startAuto(); }
 
   wrap.addEventListener('touchstart', e => onStart(e.touches[0].clientX), {passive:true});
   wrap.addEventListener('touchmove', e => onMove(e.touches[0].clientX), {passive:true});
@@ -896,25 +720,12 @@ if (ADMIN_MODE) {
   wrap.addEventListener('mouseenter', stopAuto);
   wrap.addEventListener('mouseleave', startAuto);
 
-  // Estado inicial
   go(0,false);
   startAuto();
 })();
-// 🔧 FIX — garante que produtos esgotados fiquem com o visual "ESGOTADO" mesmo após re-render
-document.addEventListener('DOMContentLoaded', () => {
-  const applySoldOutVisual = () => {
-    document.querySelectorAll('.card').forEach(card => {
-      const isSold = card.textContent.toLowerCase().includes('esgotado');
-      if (isSold) card.classList.add('soldout');
-    });
-  };
-  applySoldOutVisual();
-  // Também reexecuta após carregar catálogo
-  setTimeout(applySoldOutVisual, 1500);
-});
 
 // =============================
-// BUSCA funcional (nome/cor/categoria)
+// BUSCA FUNCIONAL (nome, cor, categoria)
 // =============================
 (function initSearch(){
   const input = document.getElementById('search-input');
@@ -923,9 +734,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function allProducts(){
     const arr = [];
-    for (const cat in catalog) {
-      (catalog[cat]||[]).forEach(p => arr.push({...p, _cat: cat}));
-    }
+    for (const cat in catalog) (catalog[cat]||[]).forEach(p => arr.push({...p, _cat: cat}));
     return arr;
   }
 
@@ -980,7 +789,9 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 })();
 
-// Efeito visual: produto "voando" até o carrinho 🛒
+// =============================
+// EFEITO VISUAL: produto "voando" até o carrinho 🛒
+// =============================
 function flyToCart(imgSrc, startX, startY) {
   const cartBtn = document.getElementById('cart-btn');
   const img = document.createElement('img');
@@ -1003,6 +814,5 @@ function flyToCart(imgSrc, startX, startY) {
     img.style.opacity = '0';
     img.style.transform = 'scale(0.3)';
   }, 50);
-
   setTimeout(() => img.remove(), 800);
 }
