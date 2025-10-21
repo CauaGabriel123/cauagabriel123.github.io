@@ -803,7 +803,7 @@ footer {
 }
 
 /* ===============================
-   v13.0.8 — Efeito ESGOTADO apenas na imagem
+   v13.0.8.7 — Selo “ESGOTADO” vermelho, centralizado na IMAGEM (versão final estável)
    =============================== */
 
 /* Estrutura base */
@@ -826,63 +826,22 @@ footer {
   z-index: 1;
 }
 
-/* Selo “ESGOTADO” aparece apenas sobre a imagem */
+/* 🔴 Selo “ESGOTADO” centralizado exatamente no meio da IMAGEM */
+.card.soldout img::after,
+.slide.soldout img::after,
+.footer-card.soldout img::after {
   content: "ESGOTADO";
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  inset: 0; /* cobre só a área da imagem */
   display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+  align-items: center;  /* centraliza verticalmente */
+  justify-content: center;  /* centraliza horizontalmente */
+  color: red;  /* texto vermelho */
   font-weight: 800;
-  font-size: 1.1rem;
-  color: #fff;
+  font-size: 1.25rem;
   letter-spacing: 1px;
   text-transform: uppercase;
-  background: linear-gradient(135deg, rgba(233,107,168,0.9), rgba(122,59,253,0.9));
-  padding: 10px 20px;
-  border-radius: 10px;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
   z-index: 2;
   pointer-events: none;
 }
 
-/* Garante que o texto e preço fiquem visíveis abaixo */
-.card.soldout .info,
-.slide.soldout .info,
-.footer-card.soldout .fc-info {
-  position: relative;
-  z-index: 3;
-  opacity: 1;
-  filter: none;
-}
-
-/* Hover leve na imagem */
-.card.soldout:hover img,
-.slide.soldout:hover img,
-.footer-card.soldout:hover img {
-  filter: blur(4px) brightness(0.6);
-  transform: scale(1.04);
-}
-
-/* ===============================
-   v13.0.8.6 — Selo “ESGOTADO” centralizado e limpo (final)
-   =============================== */
-.card.soldout::after,
-.slide.soldout::after,
-.footer-card.soldout::after {
-  content: "ESGOTADO";
-  position: absolute;
-  top: 50%; /* exatamente no centro vertical */
-  left: 50%; /* exatamente no centro horizontal */
-  transform: translate(-50%, -50%);
-  color: red;
-  font-weight: 800;
-  font-size: 1.3rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  z-index: 5;
-  pointer-events: none;
-}
