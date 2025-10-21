@@ -67,14 +67,13 @@ const footerInsta = document.getElementById('footer-insta');
 });
 
 // --- Splash (corrigido para travamento)
-document.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('load', () => {
   const splash = document.getElementById('splash');
-  if (splash) {
-    setTimeout(() => {
-      splash.classList.add('hidden');
-      setTimeout(() => splash.remove(), 800);
-    }, 2000);
-  }
+  if (!splash) return;
+  setTimeout(() => {
+    splash.classList.add('hidden');
+    setTimeout(() => splash.remove(), 800);
+  }, 2000);
 });
 
 // --- Áudio (lazy init para iOS)
