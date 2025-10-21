@@ -859,7 +859,7 @@ if (ADMIN_MODE) {
 document.addEventListener('DOMContentLoaded', () => {
   const applySoldOutVisual = () => {
     document.querySelectorAll('.card').forEach(card => {
-      const isSold = card.querySelector('.badge')?.textContent?.toLowerCase().includes('esgotado');
+      const isSold = card.textContent.toLowerCase().includes('esgotado');
       if (isSold) card.classList.add('soldout');
     });
   };
