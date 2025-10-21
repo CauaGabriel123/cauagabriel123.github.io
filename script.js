@@ -284,6 +284,15 @@ function cardHTML(p) {
     </div>
   </div>`;
 }
+// 🩶 Força reaplicação global do visual "esgotado"
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => {
+    document.querySelectorAll('.card').forEach(card => {
+      const isSold = card.textContent.toLowerCase().includes('esgotado');
+      if (isSold) card.classList.add('soldout');
+    });
+  }, 1200);
+});
 
 function renderGrid(el, arr) {
   el.innerHTML = arr.map(p => {
