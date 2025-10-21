@@ -558,16 +558,20 @@ document.addEventListener('DOMContentLoaded', () => {
   updateCartCount();
 });
 
-// 🔧 FIX — garante que produtos esgotados fiquem com o visual "ESGOTADO" em todas as seções
+// 🔧 FIX — garante que todos os produtos esgotados fiquem com o visual correto em qualquer seção
 document.addEventListener('DOMContentLoaded', () => {
   const applySoldOutVisual = () => {
-    document.querySelectorAll('.card, .footer-card, .slide').forEach(card => {
-      const isSold = card.textContent.toLowerCase().includes('esgotado');
-      if (isSold) card.classList.add('soldout');
+    document.querySelectorAll('.card, .slide, .footer-card').forEach(el => {
+      const isSold = el.textContent.toLowerCase().includes('esgotado');
+      if (isSold) el.classList.add('soldout');
     });
   };
-  applySoldOutVisual();
-  setTimeout(applySoldOutVisual, 1500);
+
+  // Executa logo após renderizar
+  setTimeout(applySoldOutVisual, 600);
+
+  // Reexecuta depois pra garantir que o catálogo todo esteja na tela
+  setTimeout(applySoldOutVisual, 2000);
 });
 
 // =============================
