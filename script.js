@@ -331,6 +331,19 @@ if (f) {
   });
 }
 
+// 🩶 Correção — garante selo e efeito "esgotado" nos destaques da semana
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => {
+    document.querySelectorAll('#featured .card').forEach(card => {
+      const id = card.getAttribute('data-id');
+      const product = Object.values(catalog).flat().find(p => p.id === id);
+      if (product && product.status && product.status.toLowerCase() === 'esgotado') {
+        card.classList.add('soldout');
+      }
+    });
+  }, 1000);
+});
+
 // ===== Rodapé: vitrine horizontal com produtos reais =====
 function renderFooterProducts(listFromData) {
   const box = document.getElementById('footer-products');
