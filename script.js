@@ -194,22 +194,58 @@ let catalog = {};
 let featured = [];
 
 function buildCatalogAndRender(data) {
+  const normalizeSizes = (arr) => {
+    if (!Array.isArray(arr) || arr.length === 0) return ['Único'];
+    return arr.map(s => {
+      const t = String(s).trim();
+      if (t.toLowerCase() === 'único' || t.toLowerCase() === 'unico') return 'Único';
+      return t.toUpperCase();
+    });
+  };
+  const normalizeColors = (arr) => {
+    if (!Array.isArray(arr) || arr.length === 0) return ['Única'];
+    return arr.map(c => {
+      const txt = String(c).trim();
+      return txt.charAt(0).toUpperCase() + txt.slice(1);
+    });
+  };
+
   catalog = {};
   data.forEach(p => {
     const cat = p.category || 'outros';
     if (!catalog[cat]) catalog[cat] = [];
+
+    const sizes = normalizeSizes(p.sizes);
+    const colors = normalizeColors(p.colors);
+
     catalog[cat].push({
       id: p.id,
       name: p.name,
       price: p.price,
       imgs: [p.image],
-      sizes: ['P', 'M', 'G'],
-      colors: ['Preto', 'Branco', 'Rosa'],
-      stock: 5, // mantém todos visíveis (o visual "esgotado" é tratado pelo CSS)
+      sizes,
+      colors,
+      stock: 5,
       desc: p.description,
       status: p.status
     });
   });
+
+  featured = data
+    .slice(0, 5)
+    .map(p => ({
+      id: p.id,
+      name: p.name,
+      price: p.price,
+      imgs: [p.image],
+      desc: p.description,
+      status: p.status
+    }));
+
+  renderAll();
+  initCarousel();
+  renderFooterProducts(featured.length ? featured : null);
+}
 
   featured = data
   .slice(0, 5)
@@ -404,6 +440,7 @@ function openModal(id) {
   modalName.textContent = currentProduct.name;
   modalPrice.textContent = `R$ ${currentProduct.price.toFixed(2).replace('.', ',')}`;
   modalDesc.textContent = currentProduct.desc;
+
   selectedSize = '';
   selectedColor = '';
 
@@ -413,23 +450,41 @@ function openModal(id) {
     .join('');
   modalImgs.innerHTML = imgsHTML;
 
-  sizeOpt.innerHTML = (currentProduct.sizes || []).map(s => `<button>${s}</button>`).join('');
-  sizeOpt.querySelectorAll('button').forEach(b => {
-    b.onclick = () => {
-      selectedSize = b.textContent;
-      sizeOpt.querySelectorAll('button').forEach(x => x.classList.remove('active'));
-      b.classList.add('active');
-    };
-  });
+  // --- Tamanhos
+  const sizes = Array.isArray(currentProduct.sizes) && currentProduct.sizes.length
+    ? currentProduct.sizes
+    : ['Único'];
+  if (sizes.length === 1) {
+    selectedSize = sizes[0];
+    sizeOpt.innerHTML = `<button class="active">${selectedSize}</button>`;
+  } else {
+    sizeOpt.innerHTML = sizes.map(s => `<button>${s}</button>`).join('');
+    sizeOpt.querySelectorAll('button').forEach(b => {
+      b.onclick = () => {
+        selectedSize = b.textContent;
+        sizeOpt.querySelectorAll('button').forEach(x => x.classList.remove('active'));
+        b.classList.add('active');
+      };
+    });
+  }
 
-  colorOpt.innerHTML = (currentProduct.colors || []).map(c => `<button>${c}</button>`).join('');
-  colorOpt.querySelectorAll('button').forEach(b => {
-    b.onclick = () => {
-      selectedColor = b.textContent;
-      colorOpt.querySelectorAll('button').forEach(x => x.classList.remove('active'));
-      b.classList.add('active');
-    };
-  });
+  // --- Cores
+  const colors = Array.isArray(currentProduct.colors) && currentProduct.colors.length
+    ? currentProduct.colors
+    : ['Única'];
+  if (colors.length === 1) {
+    selectedColor = colors[0];
+    colorOpt.innerHTML = `<button class="active">${selectedColor}</button>`;
+  } else {
+    colorOpt.innerHTML = colors.map(c => `<button>${c}</button>`).join('');
+    colorOpt.querySelectorAll('button').forEach(b => {
+      b.onclick = () => {
+        selectedColor = b.textContent;
+        colorOpt.querySelectorAll('button').forEach(x => x.classList.remove('active'));
+        b.classList.add('active');
+      };
+    });
+  }
 
   modal.setAttribute('aria-hidden', 'false');
 
@@ -437,15 +492,17 @@ function openModal(id) {
     const addBtn = document.getElementById('modal-add');
     if (addBtn) {
       addBtn.onclick = () => {
-        // 🔒 bloqueia produtos esgotados
         if (currentProduct.status && currentProduct.status.toLowerCase() === 'esgotado') {
           showAlert('Este produto está esgotado no momento 💜');
           return;
         }
-        if (!selectedSize || !selectedColor) {
+        if ((sizes.length > 1 && !selectedSize) || (colors.length > 1 && !selectedColor)) {
           showAlert('Por favor, selecione o tamanho e a cor antes de adicionar ao carrinho!');
           return;
         }
+        if (!selectedSize && sizes.length === 1) selectedSize = sizes[0];
+        if (!selectedColor && colors.length === 1) selectedColor = colors[0];
+
         addToCart(currentProduct, selectedSize, selectedColor);
         modal.setAttribute('aria-hidden', 'true');
         playChime();
