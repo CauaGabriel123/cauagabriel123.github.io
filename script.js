@@ -243,14 +243,17 @@ function buildCatalogAndRender(data) {
 .catch(err => {
   console.error('⚠️ Falha ao carregar catálogo externo:', err);
 
-  // Só mostra o alerta se realmente nenhum produto foi carregado
-  const semProdutos = !document.querySelector('.product-item');
-  if (semProdutos) {
-    showAlert('Não foi possível carregar os produtos atualizados. Recarregue a página em alguns segundos.');
-    // buildCatalogAndRender(FALLBACK_PRODUCTS); // opcional, se quiser fallback
-  } else {
-    console.warn('⚠️ Alerta ignorado: catálogo já carregado com sucesso.');
-  }
+  // Aguarda um momento para garantir que os produtos renderizem
+  setTimeout(() => {
+    const semProdutos = document.querySelectorAll('.product-item').length === 0;
+
+    if (semProdutos) {
+      showAlert('Não foi possível carregar os produtos atualizados. Recarregue a página em alguns segundos.');
+      // buildCatalogAndRender(FALLBACK_PRODUCTS); // opcional, se quiser fallback
+    } else {
+      console.log('✅ Catálogo carregado com sucesso, alerta ignorado.');
+    }
+  }, 1000); // 1 segundo de espera
 });
 })();
 
