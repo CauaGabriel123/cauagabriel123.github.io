@@ -803,23 +803,68 @@ footer {
 }
 
 /* ===============================
-   v13.0.8.8 — Selo “ESGOTADO” centralizado com precisão
+   v13.0.7 — ESGOTADO (versão final estável)
    =============================== */
-.card.soldout img::after,
-.slide.soldout img::after,
-.footer-card.soldout img::after {
+
+/* Estrutura base */
+.card.soldout,
+.slide.soldout,
+.footer-card.soldout {
+  position: relative;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Efeito visual do produto esgotado */
+.card.soldout img,
+.slide.soldout img,
+.footer-card.soldout img {
+  filter: blur(3px) brightness(0.65);
+  transform: scale(1.03);
+  transition: all 0.3s ease;
+}
+
+/* Selo “ESGOTADO” centralizado */
+.card.soldout::after,
+.slide.soldout::after,
+.footer-card.soldout::after {
   content: "ESGOTADO";
   position: absolute;
-  inset: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  height: 90%;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: red;
+  text-align: center;
   font-weight: 800;
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   letter-spacing: 1px;
-  text-transform: uppercase;
-  z-index: 2;
-  pointer-events: none;
-  transform: translateY(-12%); /* ajuste perfeito — centraliza na maioria das proporções */
+  color: #fff;
+  background: linear-gradient(135deg, rgba(233,107,168,0.9), rgba(122,59,253,0.9));
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  border-radius: 12px;
+  z-index: 3;
+  box-sizing: border-box;
+}
+
+/* Efeito hover sutil */
+.card.soldout:hover img,
+.slide.soldout:hover img,
+.footer-card.soldout:hover img {
+  filter: blur(4px) brightness(0.6);
+  transform: scale(1.04);
+}
+
+/* Versão mobile (texto ajustado para telas menores) */
+@media (max-width: 500px) {
+  .card.soldout::after,
+  .slide.soldout::after,
+  .footer-card.soldout::after {
+    font-size: 0.9rem;
+    width: 92%;
+    height: 92%;
+  }
 }
