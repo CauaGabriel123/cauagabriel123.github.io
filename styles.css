@@ -878,7 +878,7 @@ footer {
 .footer-card.soldout::before {
   content: "ESGOTADO";
   position: absolute;
-  top: 40%; /* desce levemente o texto (antes era 50%) */
+  top: 65%; /* desce levemente o texto (antes era 50%) */
   left: 50%;
   transform: translate(-50%, -50%);
   color: red;
