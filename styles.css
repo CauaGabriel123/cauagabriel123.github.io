@@ -978,3 +978,53 @@ footer {
 .footer-card.soldout {
   pointer-events: none;
 }
+
+/* ===============================
+   CORREÇÃO FINAL — SEL0 ESGOTADO
+   Centralização + borrão uniforme
+   =============================== */
+
+.card,
+.slide,
+.footer-card {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Borrado e leve escurecimento */
+.card.soldout img,
+.slide.soldout img,
+.footer-card.soldout img {
+  filter: blur(3px) brightness(0.65);
+  transform: scale(1.03);
+  transition: all 0.3s ease;
+}
+
+/* Selo “ESGOTADO” centralizado */
+.card.soldout::after,
+.slide.soldout::after,
+.footer-card.soldout::after {
+  content: "ESGOTADO";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: 800;
+  letter-spacing: 1px;
+  font-size: 1.2rem;
+  color: white;
+  background: linear-gradient(135deg, rgba(233,107,168,0.9), rgba(122,59,253,0.9));
+  border-radius: 12px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  mix-blend-mode: normal;
+  pointer-events: none;
+}
+
+/* Ajuste suave no efeito de foco */
+.card.soldout:hover img,
+.slide.soldout:hover img {
+  filter: blur(4px) brightness(0.6);
+  transform: scale(1.04);
+}
