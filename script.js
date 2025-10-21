@@ -227,20 +227,27 @@ function buildCatalogAndRender(data) {
   renderFooterProducts(featured.length ? featured : null);
 }
 
+// === Carregamento aprimorado do catálogo (força JSON externo e ignora fallback em cache) ===
 (function loadProducts() {
-  fetch('products.json?nocache=' + Date.now())
+  const url = 'products_v2.json?v=' + Date.now(); // garante versão sempre nova
+
+  fetch(url, { cache: 'no-store' })
     .then(res => {
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      if (!res.ok) throw new Error(`Erro HTTP ${res.status}`);
       return res.json();
     })
     .then(data => {
+      console.log('✅ Catálogo carregado do arquivo externo:', url);
       buildCatalogAndRender(data);
     })
     .catch(err => {
-      console.warn('Falha ao buscar products.json -> usando FALLBACK_PRODUCTS', err);
-      buildCatalogAndRender(FALLBACK_PRODUCTS);
+      console.error('⚠️ Falha ao carregar catálogo externo:', err);
+      showAlert('Não foi possível carregar os produtos atualizados. Recarregue a página em alguns segundos.');
+      // Se quiser manter um backup temporário, descomente a linha abaixo:
+      // buildCatalogAndRender(FALLBACK_PRODUCTS);
     });
 })();
+
 function priceHTML(p) {
   const v = p.discount ? (p.price * (1 - p.discount)) : p.price;
   let s = `R$ ${v.toFixed(2).replace('.', ',')}`;
