@@ -390,6 +390,11 @@ function openModal(id) {
     const addBtn = document.getElementById('modal-add');
     if (addBtn) {
       addBtn.onclick = () => {
+        // 🔒 bloqueia produtos esgotados
+        if (currentProduct.status && currentProduct.status.toLowerCase() === 'esgotado') {
+          showAlert('Este produto está esgotado no momento 💜');
+          return;
+        }
         if (!selectedSize || !selectedColor) {
           showAlert('Por favor, selecione o tamanho e a cor antes de adicionar ao carrinho!');
           return;
