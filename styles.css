@@ -826,22 +826,22 @@ footer {
   z-index: 1;
 }
 
-/* 🔴 Selo “ESGOTADO” centralizado exatamente no meio da IMAGEM (ajuste fino vertical) */
+/* 🔴 Selo “ESGOTADO” perfeitamente centralizado */
 .card.soldout img::after,
 .slide.soldout img::after,
 .footer-card.soldout img::after {
   content: "ESGOTADO";
   position: absolute;
-  inset: 0; /* cobre só a área da imagem */
+  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: red; /* texto vermelho */
+  color: red;
   font-weight: 800;
   font-size: 1.25rem;
   letter-spacing: 1px;
   text-transform: uppercase;
   z-index: 2;
   pointer-events: none;
-  transform: translateY(-10%); /* 🔼 sobe levemente o selo */
+  transform: translateY(-15%); /* 🔼 sobe um pouco mais (centralização perfeita) */
 }
