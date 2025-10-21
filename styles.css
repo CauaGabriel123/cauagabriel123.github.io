@@ -869,3 +869,23 @@ footer {
   filter: blur(4px) brightness(0.6);
   transform: scale(1.04);
 }
+
+/* ===============================
+   v13.0.8.1 — Selo “ESGOTADO” vermelho sem fundo
+   =============================== */
+.card.soldout img::after,
+.slide.soldout img::after,
+.footer-card.soldout img::after {
+  content: "ESGOTADO";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: red;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  z-index: 3;
+  pointer-events: none;
+}
