@@ -239,22 +239,21 @@ function buildCatalogAndRender(data) {
     .then(data => {
       console.log('✅ Catálogo carregado do arquivo externo:', url);
       buildCatalogAndRender(data);
+
+      // Confirma visualmente que o catálogo foi renderizado
+      setTimeout(() => {
+        if (document.querySelectorAll('.product-item').length > 0) {
+          console.log('🟢 Catálogo renderizado com sucesso.');
+        } else {
+          console.warn('⚠️ Nenhum produto foi renderizado após o carregamento.');
+          showAlert('Não foi possível carregar os produtos atualizados. Recarregue a página em alguns segundos.');
+        }
+      }, 1200); // espera 1,2s para garantir renderização completa
     })
-.catch(err => {
-  console.error('⚠️ Falha ao carregar catálogo externo:', err);
-
-  // Aguarda um momento para garantir que os produtos renderizem
-  setTimeout(() => {
-    const semProdutos = document.querySelectorAll('.product-item').length === 0;
-
-    if (semProdutos) {
+    .catch(err => {
+      console.error('❌ Erro no carregamento do catálogo externo:', err);
       showAlert('Não foi possível carregar os produtos atualizados. Recarregue a página em alguns segundos.');
-      // buildCatalogAndRender(FALLBACK_PRODUCTS); // opcional, se quiser fallback
-    } else {
-      console.log('✅ Catálogo carregado com sucesso, alerta ignorado.');
-    }
-  }, 1000); // 1 segundo de espera
-});
+    });
 })();
 
 function priceHTML(p) {
