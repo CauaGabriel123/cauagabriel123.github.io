@@ -298,9 +298,9 @@ function renderGrid(el, arr) {
     </div>`;
   }).join('');
 
-  el.querySelectorAll('.card:not(.soldout)').forEach(c => 
-    c.onclick = () => openModal(c.getAttribute('data-id'))
-  );
+  el.querySelectorAll('.card:not(.soldout)').forEach(c => {
+    c.onclick = () => openModal(c.getAttribute('data-id'));
+  });
 }
 
 function renderAll() {
