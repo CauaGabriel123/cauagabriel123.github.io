@@ -855,6 +855,18 @@ if (ADMIN_MODE) {
   go(0,false);
   startAuto();
 })();
+// 🔧 FIX — garante que produtos esgotados fiquem com o visual "ESGOTADO" mesmo após re-render
+document.addEventListener('DOMContentLoaded', () => {
+  const applySoldOutVisual = () => {
+    document.querySelectorAll('.card').forEach(card => {
+      const isSold = card.querySelector('.badge')?.textContent?.toLowerCase().includes('esgotado');
+      if (isSold) card.classList.add('soldout');
+    });
+  };
+  applySoldOutVisual();
+  // Também reexecuta após carregar catálogo
+  setTimeout(applySoldOutVisual, 1500);
+});
 
 // =============================
 // BUSCA funcional (nome/cor/categoria)
