@@ -827,9 +827,6 @@ footer {
 }
 
 /* Selo “ESGOTADO” aparece apenas sobre a imagem */
-.card.soldout img::after,
-.slide.soldout img::after,
-.footer-card.soldout img::after {
   content: "ESGOTADO";
   position: absolute;
   top: 50%;
@@ -871,19 +868,19 @@ footer {
 }
 
 /* ===============================
-   v13.0.8.5 — Selo “ESGOTADO” 100% centralizado
+   v13.0.8.6 — Selo “ESGOTADO” centralizado e limpo (final)
    =============================== */
-.card.soldout::before,
-.slide.soldout::before,
-.footer-card.soldout::before {
+.card.soldout::after,
+.slide.soldout::after,
+.footer-card.soldout::after {
   content: "ESGOTADO";
   position: absolute;
-  top: 65%; /* desce levemente o texto (antes era 50%) */
-  left: 50%;
+  top: 50%; /* exatamente no centro vertical */
+  left: 50%; /* exatamente no centro horizontal */
   transform: translate(-50%, -50%);
   color: red;
   font-weight: 800;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   text-transform: uppercase;
   letter-spacing: 1px;
   z-index: 5;
