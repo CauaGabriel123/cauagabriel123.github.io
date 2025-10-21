@@ -991,7 +991,15 @@ footer {
   overflow: hidden;
 }
 
-/* Borrado e leve escurecimento */
+/* 💜 Correção final — selo ESGOTADO centralizado e visual consistente */
+.card.soldout,
+.slide.soldout,
+.footer-card.soldout {
+  position: relative;
+  overflow: hidden;
+  pointer-events: none;
+}
+
 .card.soldout img,
 .slide.soldout img,
 .footer-card.soldout img {
@@ -1000,7 +1008,6 @@ footer {
   transition: all 0.3s ease;
 }
 
-/* Selo “ESGOTADO” centralizado */
 .card.soldout::after,
 .slide.soldout::after,
 .footer-card.soldout::after {
@@ -1012,14 +1019,13 @@ footer {
   justify-content: center;
   text-align: center;
   font-weight: 800;
+  font-size: 1.1rem;
   letter-spacing: 1px;
-  font-size: 1.2rem;
-  color: white;
+  color: #fff;
   background: linear-gradient(135deg, rgba(233,107,168,0.9), rgba(122,59,253,0.9));
-  border-radius: 12px;
   text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-  mix-blend-mode: normal;
-  pointer-events: none;
+  border-radius: 10px;
+  z-index: 3;
 }
 
 /* Ajuste suave no efeito de foco */
