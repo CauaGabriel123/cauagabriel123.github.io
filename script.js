@@ -240,12 +240,18 @@ function buildCatalogAndRender(data) {
       console.log('✅ Catálogo carregado do arquivo externo:', url);
       buildCatalogAndRender(data);
     })
-    .catch(err => {
-      console.error('⚠️ Falha ao carregar catálogo externo:', err);
-      showAlert('Não foi possível carregar os produtos atualizados. Recarregue a página em alguns segundos.');
-      // Se quiser manter um backup temporário, descomente a linha abaixo:
-      // buildCatalogAndRender(FALLBACK_PRODUCTS);
-    });
+.catch(err => {
+  console.error('⚠️ Falha ao carregar catálogo externo:', err);
+
+  // Só mostra o alerta se realmente nenhum produto foi carregado
+  const semProdutos = !document.querySelector('.product-item');
+  if (semProdutos) {
+    showAlert('Não foi possível carregar os produtos atualizados. Recarregue a página em alguns segundos.');
+    // buildCatalogAndRender(FALLBACK_PRODUCTS); // opcional, se quiser fallback
+  } else {
+    console.warn('⚠️ Alerta ignorado: catálogo já carregado com sucesso.');
+  }
+});
 })();
 
 function priceHTML(p) {
