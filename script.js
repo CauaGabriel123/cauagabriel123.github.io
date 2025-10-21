@@ -274,12 +274,17 @@ function badgeHTML(p) {
   return '';
 }
 function cardHTML(p) {
-  return `<div class="card" data-id="${p.id}">
+  const sold = (p.status && p.status.toLowerCase() === 'esgotado');
+  return `<div class="card${sold ? ' soldout' : ''}" data-id="${p.id}">
     ${badgeHTML(p)}
     <img src="${(p.imgs ? p.imgs[0] : p.img || p.image)}" alt="${p.name}"/>
-    <div class="info"><p class="name">${p.name}</p><p class="price">${priceHTML(p)}</p></div>
+    <div class="info">
+      <p class="name">${p.name}</p>
+      <p class="price">${priceHTML(p)}</p>
+    </div>
   </div>`;
 }
+
 function renderGrid(el, arr) {
   el.innerHTML = arr.map(cardHTML).join('');
   el.querySelectorAll('.card').forEach(c => c.onclick = () => openModal(c.getAttribute('data-id')));
