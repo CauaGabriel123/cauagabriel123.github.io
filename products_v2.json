@@ -1,19 +1,19 @@
 [
   {
     "id": "p1",
-    "name": "Vestido Floral Midi",
+    "name": "Vestido Verde camiseta",
     "category": "vestidos",
-    "price": 10.99,
-    "image": "https://cauagabriel123.github.io/assets/1ef5b408-ed40-4ccf-8cea-123bf0a98392.jpeg",
-    "description": "Vestido leve com estampa floral e caimento fluido, perfeito para dias ensolarados.",
-    "status": "esgotado"
+    "price": 590.99,
+    "image": "https://cauagabriel123.github.io/assets/prod-vestido-floral.png",
+    "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
+    "status": "disponivel"
   },
   {
     "id": "p2",
     "name": "Vestido Cagatorio Preto Elegance",
     "category": "vestidos",
     "price": 1.99,
-    "image": "https://cauagabriel123.github.io/assets/prod-vestido-floral.png",
+    "image": "https://cauagabriel123.github.io/assets/1ef5b408-ed40-4ccf-8cea-123bf0a98392.jpeg",
     "description": "Vestido cagador preto com toque sofisticado e caimento perfeito para festas e eventos.",
     "status": "disponivel"
   },
