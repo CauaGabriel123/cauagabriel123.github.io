@@ -956,7 +956,7 @@ window.initCarousel = function(){
   // Estado inicial
   go(0,false);
   startAuto();
-})();
+};
 // 🔧 FIX — garante que produtos esgotados fiquem com o visual "ESGOTADO" mesmo após re-render
 document.addEventListener('DOMContentLoaded', () => {
   const applySoldOutVisual = () => {
