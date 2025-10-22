@@ -860,3 +860,23 @@ footer {
 
 /* Garante que nome e preço fiquem acima, sem interferir */
 .card .info { position: relative; z-index: 5; }
+
+/* ===============================
+   v13.0.8 — Fundo do título e preço igual ao cabeçalho
+   =============================== */
+
+.card .name,
+.card .price {
+  background: linear-gradient(90deg, #ffe6f3, #ffd6e8); /* mesmo degradê do cabeçalho */
+  color: #2E2336; /* cor do texto escuro */
+  text-align: center;
+  padding: 6px 0;
+  border-radius: 8px;
+  margin: 4px 0;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+}
+
+/* Ajuste para não “colar” no canto inferior do card */
+.card .info {
+  padding: 10px 10px 14px;
+}
