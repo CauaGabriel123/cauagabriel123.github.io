@@ -233,7 +233,9 @@ function buildCatalogAndRender(data) {
       id: p.id,
       name: p.name,
       price: p.price,
-      imgs: [p.image],
+      imgs: Array.isArray(p.images) && p.images.length
+    ? p.images.slice(0, 10)
+    : [p.image],
       sizes,
       colors,
       stock: 5,
