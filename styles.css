@@ -52,12 +52,16 @@ img { max-width:100%; display:block; }
 .splash-logo .store { font-weight:700; font-size:20px; color:#E96BA8; line-height:1; }
 .splash-card p { margin:8px 0 0; font-weight:600; color:#6b3ea8; }
 
-/* Topbar */
-.topbar {
-  position:sticky; top:0; z-index:100;
-  display:flex; align-items:center; justify-content:space-between;
-  padding:10px 12px; background:white;
-  box-shadow:0 4px 16px rgba(0,0,0,.06);
+/* Topbar */.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  background: linear-gradient(90deg, #E96BA8, #f2d3ff);
+  box-shadow: 0 4px 16px rgba(0,0,0,.06);
 }
 .icon-btn {
   border:0; background:transparent; font-size:26px; line-height:1;
