@@ -2,7 +2,7 @@
   {
     "id": "p1",
     "name": "Vestido vermelho",
-    "category": "vestidos",
+    "category": "Pijamas",
     "price": 199.99,
     "image": "https://cauagabriel123.github.io/assets/prod-vestido-floral.png",
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
@@ -13,7 +13,7 @@
   {
     "id": "p2",
     "name": "Vestido Cagatorio Preto Elegance",
-    "category": "vestidos",
+    "category": "Pijamas",
     "price": 1.99,
     "image": "https://cauagabriel123.github.io/assets/1ef5b408-ed40-4ccf-8cea-123bf0a98392.jpeg",
     "description": "Vestido cagador preto com toque sofisticado e caimento perfeito para festas e eventos.",
@@ -24,7 +24,7 @@
   {
     "id": "p3",
     "name": "Vestido Longo Rosa Serenity",
-    "category": "vestidos",
+    "category": "Pijamas",
     "price": 229.9,
     "image": "https://cauagabriel123.github.io/assets/prod-vestido-longo.png",
     "description": "Longo com tom rosa suave, tecido leve e fenda discreta. Conforto e elegância.",
@@ -35,7 +35,7 @@
   {
     "id": "p4",
     "name": "Camiseta Feminina Básica Branca",
-    "category": "blusas",
+    "category": "Meias",
     "price": 59.9,
     "image": "https://cauagabriel123.github.io/assets/prod-camiseta-branca.png",
     "description": "Camiseta básica em algodão macio, ideal para compor looks casuais.",
@@ -46,7 +46,7 @@
   {
     "id": "p5",
     "name": "Blusa Cropped Canelada",
-    "category": "blusas",
+    "category": "Meias",
     "price": 79.9,
     "image": "https://cauagabriel123.github.io/assets/prod-blusa-cropped.png",
     "description": "Blusa cropped canelada com gola redonda e modelagem confortável.",
@@ -57,7 +57,7 @@
   {
     "id": "p6",
     "name": "Blusa Off-Shoulder Bege",
-    "category": "blusas",
+    "category": "Leggings",
     "price": 89.9,
     "image": "https://cauagabriel123.github.io/assets/prod-blusa-bege.png",
     "description": "Blusa ombro a ombro com tecido suave e elegante para qualquer ocasião.",
@@ -68,7 +68,7 @@
   {
     "id": "p7",
     "name": "Calça Jeans Cintura Alta",
-    "category": "calcas",
+    "category": "Leggings",
     "price": 139.9,
     "image": "https://cauagabriel123.github.io/assets/prod-calca-jeans.png",
     "description": "Jeans clássico de cintura alta e corte reto. Modela e valoriza o corpo.",
@@ -79,7 +79,7 @@
   {
     "id": "p8",
     "name": "Calça Pantalona Rose",
-    "category": "calcas",
+    "category": "cuecas",
     "price": 159.9,
     "image": "https://cauagabriel123.github.io/assets/prod-calca-pantalona.png",
     "description": "Pantalona moderna com tecido fluido e cintura elástica confortável.",
@@ -90,7 +90,7 @@
   {
     "id": "p9",
     "name": "Calça de Moletom Feminina",
-    "category": "calcas",
+    "category": "cuecas",
     "price": 119.9,
     "image": "https://cauagabriel123.github.io/assets/prod-calca-moletom.png",
     "description": "Calça comfy de moletom macio, ideal para o dia a dia.",
@@ -101,7 +101,7 @@
   {
     "id": "p10",
     "name": "Lingerie Conjunto Rosa Pastel",
-    "category": "intimas",
+    "category": "Blusas",
     "price": 89.9,
     "image": "https://cauagabriel123.github.io/assets/prod-lingerie-rosa.png",
     "description": "Conjunto delicado de renda com modelagem confortável e toque suave.",
@@ -112,7 +112,7 @@
   {
     "id": "p11",
     "name": "Sutiã Sem Bojo Confort Lace",
-    "category": "intimas",
+    "category": "Blusas",
     "price": 59.9,
     "image": "https://cauagabriel123.github.io/assets/prod-sutia-lace.png",
     "description": "Sutiã em renda delicada sem bojo, ideal para o conforto do dia a dia.",
@@ -123,7 +123,7 @@
   {
     "id": "p12",
     "name": "Sandália Rosa Comfort",
-    "category": "calcados",
+    "category": "Belezas",
     "price": 169.9,
     "image": "https://cauagabriel123.github.io/assets/prod-sandalia-rosa.png",
     "description": "Sandália leve com tiras cruzadas e palmilha macia, em tom rosa LS.",
@@ -134,7 +134,7 @@
   {
     "id": "p13",
     "name": "Tênis Branco Casual Feminino",
-    "category": "calcados",
+    "category": "Belezas",
     "price": 199.9,
     "image": "https://cauagabriel123.github.io/assets/prod-tenis-branco.png",
     "description": "Tênis branco clássico, combina com tudo. Estilo e conforto em um só modelo.",
@@ -145,7 +145,7 @@
   {
     "id": "p14",
     "name": "Óculos de Sol LS Fashion",
-    "category": "oculos",
+    "category": "Belezas",
     "price": 89.9,
     "image": "https://cauagabriel123.github.io/assets/prod-oculos-fashion.png",
     "description": "Óculos fashion com lentes degradê e hastes douradas, estilo moderno LS.",
@@ -156,7 +156,7 @@
   {
     "id": "p15",
     "name": "Óculos de Sol Redondo Vintage",
-    "category": "oculos",
+    "category": "Belezas",
     "price": 99.9,
     "image": "https://cauagabriel123.github.io/assets/prod-oculos-vintage.png",
     "description": "Óculos redondo retrô com lentes levemente rosadas, um charme.",
@@ -167,7 +167,7 @@
   {
     "id": "p16",
     "name": "Batom Matte Rosa LS",
-    "category": "cosmeticos",
+    "category": "Belezas",
     "price": 49.9,
     "image": "https://cauagabriel123.github.io/assets/prod-batom-rosa.png",
     "description": "Batom matte de longa duração, tom rosa LS perfeito para todos os tons de pele.",
@@ -178,7 +178,7 @@
   {
     "id": "p17",
     "name": "Perfume LS Essence 50ml",
-    "category": "cosmeticos",
+    "category": "Belezas",
     "price": 129.9,
     "image": "https://cauagabriel123.github.io/assets/prod-perfume-ls.png",
     "description": "Perfume feminino floral frutado, aroma leve e sofisticado LS.",
@@ -189,7 +189,7 @@
   {
     "id": "p18",
     "name": "Creme Hidratante Corporal LS",
-    "category": "beleza",
+    "category": "belezas",
     "price": 69.9,
     "image": "https://cauagabriel123.github.io/assets/prod-hidratante.png",
     "description": "Hidratante corporal com fragrância suave e textura leve.",
@@ -200,7 +200,7 @@
   {
     "id": "p19",
     "name": "Sérum Facial Iluminador",
-    "category": "beleza",
+    "category": "belezas",
     "price": 99.9,
     "image": "https://cauagabriel123.github.io/assets/prod-serum-facial.png",
     "description": "Sérum facial com toque seco, ideal para pele radiante e nutrida.",
@@ -211,7 +211,7 @@
   {
     "id": "p20",
     "name": "Bolsa Rosa Pastel LS",
-    "category": "acessorios",
+    "category": "Belezas",
     "price": 149.9,
     "image": "https://cauagabriel123.github.io/assets/prod-bolsa-rosa.png",
     "description": "Bolsa estruturada tom rosa LS, moderna e prática para o dia a dia.",
@@ -222,7 +222,7 @@
   {
         "id": "p21",
     "name": "Vestido vermelho",
-    "category": "vestidos",
+    "category": "Belezas",
     "price": 199.99,
     "image": "https://cauagabriel123.github.io/assets/prod-vestido-floral.png",
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
@@ -233,7 +233,7 @@
   {
         "id": "p22",
     "name": "Vestido vermelho",
-    "category": "vestidos",
+    "category": "Belezas",
     "price": 199.99,
     "image": "https://cauagabriel123.github.io/assets/prod-vestido-floral.png",
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
@@ -244,7 +244,7 @@
   {
         "id": "p23",
     "name": "Vestido vermelho",
-    "category": "vestidos",
+    "category": "Belezas",
     "price": 199.99,
     "image": "https://cauagabriel123.github.io/assets/prod-vestido-floral.png",
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
@@ -255,7 +255,7 @@
   {
         "id": "p24",
     "name": "Vestido vermelho",
-    "category": "vestidos",
+    "category": "Belezas",
     "price": 199.99,
     "image": "https://cauagabriel123.github.io/assets/prod-vestido-floral.png",
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
@@ -266,7 +266,7 @@
   {
         "id": "p25",
     "name": "Vestido vermelho",
-    "category": "vestidos",
+    "category": "intimos",
     "price": 199.99,
     "image": "https://cauagabriel123.github.io/assets/prod-vestido-floral.png",
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
@@ -277,7 +277,7 @@
   {
         "id": "p26",
     "name": "Vestido vermelho",
-    "category": "vestidos",
+    "category": "intimos",
     "price": 199.99,
     "image": "https://cauagabriel123.github.io/assets/prod-vestido-floral.png",
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
@@ -288,7 +288,7 @@
   {
         "id": "p27",
     "name": "Vestido vermelho",
-    "category": "vestidos",
+    "category": "intimos",
     "price": 199.99,
     "image": "https://cauagabriel123.github.io/assets/prod-vestido-floral.png",
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
@@ -299,7 +299,7 @@
   {
         "id": "p28",
     "name": "Vestido vermelho",
-    "category": "vestidos",
+    "category": "intimos",
     "price": 199.99,
     "image": "https://cauagabriel123.github.io/assets/prod-vestido-floral.png",
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
@@ -310,7 +310,7 @@
   {
         "id": "p29",
     "name": "Vestido vermelho",
-    "category": "vestidos",
+    "category": "intimos",
     "price": 199.99,
     "image": "https://cauagabriel123.github.io/assets/prod-vestido-floral.png",
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
@@ -321,7 +321,7 @@
   {
         "id": "p30",
     "name": "Vestido vermelho",
-    "category": "vestidos",
+    "category": "intimos",
     "price": 199.99,
     "image": "https://cauagabriel123.github.io/assets/prod-vestido-floral.png",
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
@@ -332,7 +332,7 @@
   {
         "id": "p31",
     "name": "Vestido vermelho",
-    "category": "vestidos",
+    "category": "intimos",
     "price": 199.99,
     "image": "https://cauagabriel123.github.io/assets/prod-vestido-floral.png",
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
@@ -343,7 +343,7 @@
   {
         "id": "p32",
     "name": "Vestido vermelho",
-    "category": "vestidos",
+    "category": "intimos",
     "price": 199.99,
     "image": "https://cauagabriel123.github.io/assets/prod-vestido-floral.png",
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
@@ -354,7 +354,7 @@
   {
         "id": "p33",
     "name": "Vestido vermelho",
-    "category": "vestidos",
+    "category": "intimos",
     "price": 199.99,
     "image": "https://cauagabriel123.github.io/assets/prod-vestido-floral.png",
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
@@ -365,7 +365,7 @@
   {
         "id": "p34",
     "name": "Vestido vermelho",
-    "category": "vestidos",
+    "category": "intimos",
     "price": 199.99,
     "image": "https://cauagabriel123.github.io/assets/prod-vestido-floral.png",
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
@@ -376,7 +376,7 @@
   {
         "id": "p35",
     "name": "Vestido vermelho",
-    "category": "vestidos",
+    "category": "intimos",
     "price": 199.99,
     "image": "https://cauagabriel123.github.io/assets/prod-vestido-floral.png",
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
@@ -387,7 +387,7 @@
   {
         "id": "p36",
     "name": "Vestido vermelho",
-    "category": "vestidos",
+    "category": "intimos",
     "price": 199.99,
     "image": "https://cauagabriel123.github.io/assets/prod-vestido-floral.png",
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
@@ -398,7 +398,7 @@
   {
         "id": "p37",
     "name": "Vestido vermelho",
-    "category": "vestidos",
+    "category": "intimos",
     "price": 199.99,
     "image": "https://cauagabriel123.github.io/assets/prod-vestido-floral.png",
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
