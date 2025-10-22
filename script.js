@@ -449,7 +449,7 @@ function openModal(id) {
   selectedColor = '';
 
   const imgsHTML = (currentProduct.imgs || [currentProduct.img || ''])
-    .slice(0, 5)
+    .slice(0, 10)
     .map(i => `<img src="${i}" alt="${currentProduct.name}">`)
     .join('');
   modalImgs.innerHTML = imgsHTML;
