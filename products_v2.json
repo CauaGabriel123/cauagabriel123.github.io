@@ -1,124 +1,124 @@
 [
   {
     "id": "p1",
-    "name": "Vestido vermelho",
+    "name": "Pijama Virginia",
     "category": "pijamas",
-    "price": 199.99,
-    "image": "https://cauagabriel123.github.io/assets/prod-vestido-floral.png",
+    "price": 44.99,
+    "image": "https://cauagabriel123.github.io/assets/pijama1.jpg",
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
     "status": "disponivel",
-    "sizes": ["M", "G"],
-    "colors": ["Verde", "Azul"]
+    "sizes": ["GG"],
+    "colors": ["Verde"]
   },
   {
     "id": "p2",
-    "name": "Vestido Cagatorio Preto Elegance",
+    "name": "Pijama Virginia",
     "category": "pijamas",
-    "price": 1.99,
-    "image": "https://cauagabriel123.github.io/assets/1ef5b408-ed40-4ccf-8cea-123bf0a98392.jpeg",
+    "price": 44.99,
+    "image": "https://cauagabriel123.github.io/assets/pijama2.jpg",
     "description": "Vestido cagador preto com toque sofisticado e caimento perfeito para festas e eventos.",
     "status": "disponivel",
-    "sizes": ["P", "M"],
-    "colors": ["Preto"]
+    "sizes": ["GG"],
+    "colors": ["Rosa"]
   },
   {
     "id": "p3",
-    "name": "Vestido Longo Rosa Serenity",
+    "name": "Pijama Rebeca Romance",
     "category": "pijamas",
-    "price": 229.9,
-    "image": "https://cauagabriel123.github.io/assets/prod-vestido-longo.png",
+    "price": 79.99,
+    "image": "https://cauagabriel123.github.io/assets/pijama3.jpg",
     "description": "Longo com tom rosa suave, tecido leve e fenda discreta. Conforto e elegância.",
     "status": "disponivel",
-    "sizes": ["P", "M", "G"],
-    "colors": ["Rosa", "Bege"]
+    "sizes": ["M"],
+    "colors": ["Azul"]
   },
   {
     "id": "p4",
-    "name": "Camiseta Feminina Básica Branca",
+    "name": "3 Pares de meia Romance",
     "category": "meias",
-    "price": 59.9,
-    "image": "https://cauagabriel123.github.io/assets/prod-camiseta-branca.png",
+    "price": 34.99,
+    "image": "https://cauagabriel123.github.io/assets/meia1.jpg",
     "description": "Camiseta básica em algodão macio, ideal para compor looks casuais.",
     "status": "disponivel",
-    "sizes": ["P", "M", "G"],
-    "colors": ["Branco", "Preto"]
+    "sizes": ["Único"],
+    "colors": ["Branco, Preto e Cinza"]
   },
   {
     "id": "p5",
-    "name": "Blusa Cropped Canelada",
+    "name": "Par de Meias Romance",
     "category": "meias",
-    "price": 79.9,
-    "image": "https://cauagabriel123.github.io/assets/prod-blusa-cropped.png",
+    "price": 11.99,
+    "image": "https://cauagabriel123.github.io/assets/meia2.jpg",
     "description": "Blusa cropped canelada com gola redonda e modelagem confortável.",
     "status": "disponivel",
     "sizes": ["Único"],
-    "colors": ["Rosa", "Preto"]
+    "colors": [Branco"]
   },
   {
     "id": "p6",
-    "name": "Blusa Off-Shoulder Bege",
+    "name": "Legging",
     "category": "leggings",
-    "price": 89.9,
-    "image": "https://cauagabriel123.github.io/assets/prod-blusa-bege.png",
+    "price": 119.99,
+    "image": "https://cauagabriel123.github.io/assets/legging1.jpg",
     "description": "Blusa ombro a ombro com tecido suave e elegante para qualquer ocasião.",
     "status": "disponivel",
-    "sizes": ["P", "M"],
-    "colors": ["Bege", "Branco"]
+    "sizes": ["GG"],
+    "colors": ["Preto"]
   },
   {
     "id": "p7",
-    "name": "Calça Jeans Cintura Alta",
+    "name": "Legging Romance",
     "category": "leggings",
-    "price": 139.9,
-    "image": "https://cauagabriel123.github.io/assets/prod-calca-jeans.png",
+    "price": 139.99,
+    "image": "https://cauagabriel123.github.io/assets/legging2.jpg",
     "description": "Jeans clássico de cintura alta e corte reto. Modela e valoriza o corpo.",
     "status": "disponivel",
-    "sizes": ["36", "38", "40", "42"],
-    "colors": ["Jeans Azul"]
+    "sizes": ["G"],
+    "colors": ["Azul"]
   },
   {
     "id": "p8",
-    "name": "Calça Pantalona Rose",
+    "name": "Cueca Euro",
     "category": "cuecas",
-    "price": 159.9,
-    "image": "https://cauagabriel123.github.io/assets/prod-calca-pantalona.png",
+    "price": 34.99,
+    "image": "https://cauagabriel123.github.io/assets/cueca1.jpg",
     "description": "Pantalona moderna com tecido fluido e cintura elástica confortável.",
     "status": "disponivel",
-    "sizes": ["P", "M", "G"],
-    "colors": ["Rose", "Branco"]
+    "sizes": ["GG"],
+    "colors": ["Preto"]
   },
   {
     "id": "p9",
-    "name": "Calça de Moletom Feminina",
+    "name": "Cueca Euroo",
     "category": "cuecas",
-    "price": 119.9,
-    "image": "https://cauagabriel123.github.io/assets/prod-calca-moletom.png",
+    "price": 34.99,
+    "image": "https://cauagabriel123.github.io/assets/cueca2.jpg",
     "description": "Calça comfy de moletom macio, ideal para o dia a dia.",
     "status": "disponivel",
-    "sizes": ["P", "M", "G"],
-    "colors": ["Cinza", "Preto"]
+    "sizes": ["GG"],
+    "colors": ["Azul"]
   },
   {
     "id": "p10",
-    "name": "Lingerie Conjunto Rosa Pastel",
+    "name": "Blusa Romance",
     "category": "blusas",
-    "price": 89.9,
-    "image": "https://cauagabriel123.github.io/assets/prod-lingerie-rosa.png",
+    "price": 59.99,
+    "image": "https://cauagabriel123.github.io/assets/blusa1.jpg",
     "description": "Conjunto delicado de renda com modelagem confortável e toque suave.",
     "status": "disponivel",
-    "sizes": ["P", "M", "G"],
-    "colors": ["Rosa", "Branco"]
+    "sizes": ["G"],
+    "colors": ["Preto"]
   },
   {
     "id": "p11",
-    "name": "Sutiã Sem Bojo Confort Lace",
+    "name": "Regata Luri Romance",
     "category": "blusas",
-    "price": 59.9,
-    "image": "https://cauagabriel123.github.io/assets/prod-sutia-lace.png",
+    "price": 49.99,
+    "image": "https://cauagabriel123.github.io/assets/blusa2.jpg",
     "description": "Sutiã em renda delicada sem bojo, ideal para o conforto do dia a dia.",
     "status": "disponivel",
-    "sizes": ["P", "M", "G"],
-    "colors": ["Preto", "Bege", "Branco"]
+    "sizes": ["M"],
+    "colors": ["Lilás"]
   },
   {
     "id": "p12",
