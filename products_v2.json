@@ -4,9 +4,9 @@
     "name": "Pijama Virginia",
     "category": "pijamas",
     "price": 44.99,
-    "images": "https://cauagabriel123.github.io/assets/pijama1.JPG",
+    "images": [ "https://cauagabriel123.github.io/assets/pijama1.JPG",
     "https://cauagabriel123.github.io/assets/pijama1.2.JPG",
-    "https://cauagabriel123.github.io/assets/pijama1.3.JPG"
+    "https://cauagabriel123.github.io/assets/pijama1.3.JPG" ],
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
     "status": "disponivel",
     "sizes": ["GG"],
