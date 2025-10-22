@@ -233,8 +233,10 @@ function buildCatalogAndRender(data) {
       id: p.id,
       name: p.name,
       price: p.price,
-      imgs: Array.isArray(p.images) && p.images.length
-    ? p.images.slice(0, 10)
+      imgs: Array.isArray(p.images)
+  ? p.images.slice(0, 10)
+  : Array.isArray(p.image)
+    ? p.image.slice(0, 10)
     : [p.image],
       sizes,
       colors,
@@ -317,7 +319,11 @@ function cardHTML(p) {
   const sold = (p.status && p.status.toLowerCase() === 'esgotado') || p.stock <= 0;
   return `<div class="card${sold ? ' soldout' : ''}" data-id="${p.id}">
     ${badgeHTML(p)}
-    <img src="${(p.images && p.images.length ? p.images[0] : (p.imgs && p.imgs.length ? p.imgs[0] : p.img || p.image))}" alt="${p.name}">
+    <img src="${(Array.isArray(p.images) ? p.images[0]
+  : Array.isArray(p.image) ? p.image[0]
+  : (p.images && p.images.length ? p.images[0]
+  : (p.imgs && p.imgs.length ? p.imgs[0]
+  : p.img || p.image)))}" alt="${p.name}">
     <div class="info">
       <p class="name">${p.name}</p>
       <p class="price">${priceHTML(p)}</p>
@@ -450,6 +456,8 @@ function openModal(id) {
 
 // Normaliza imagens do produto (aceita images[], imgs[], image ou img)
 const imgsArr =
+  Array.isArray(currentProduct.images) ? currentProduct.images :
+  Array.isArray(currentProduct.image) ? currentProduct.image :
   (currentProduct.images && currentProduct.images.length) ? currentProduct.images :
   (currentProduct.imgs && currentProduct.imgs.length) ? currentProduct.imgs :
   (currentProduct.img ? [currentProduct.img] :
