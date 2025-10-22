@@ -122,14 +122,14 @@
   },
   {
     "id": "p12",
-    "name": "Sandália Rosa Comfort",
+    "name": "Sabonetr íntimo extrato de 17 ervas",
     "category": "belezas",
-    "price": 169.9,
-    "image": "https://cauagabriel123.github.io/assets/prod-sandalia-rosa.png",
+    "price": 14.99,
+    "image": "https://cauagabriel123.github.io/assets/beleza1.jpg",
     "description": "Sandália leve com tiras cruzadas e palmilha macia, em tom rosa LS.",
     "status": "disponivel",
-    "sizes": ["35", "36", "37", "38", "39"],
-    "colors": ["Rosa"]
+    "sizes":
+    "colors":
   },
   {
     "id": "p13",
