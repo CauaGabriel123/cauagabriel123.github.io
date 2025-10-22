@@ -1,14 +1,14 @@
 [
   {
     "id": "p1",
-    "name": "Vestido Verde camiseta",
+    "name": "Vestido vermelho",
     "category": "vestidos",
-    "price": 590.99,
+    "price": 199.99,
     "image": "https://cauagabriel123.github.io/assets/prod-vestido-floral.png",
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
-    "status": "esgotado",
-    "sizes": ["P", "M", "G"],
-    "colors": ["Verde", "Branco"]
+    "status": "disponivel",
+    "sizes": ["M", "G"],
+    "colors": ["Verde", "Azul"]
   },
   {
     "id": "p2",
