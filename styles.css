@@ -60,7 +60,7 @@ img { max-width:100%; display:block; }
   align-items: center;
   justify-content: space-between;
   padding: 10px 12px;
-  background: linear-gradient(90deg, #E96BA8, #f2d3ff);
+  background: #ffe6f3;
   box-shadow: 0 4px 16px rgba(0,0,0,.06);
 }
 .icon-btn {
