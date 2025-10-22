@@ -317,7 +317,7 @@ function cardHTML(p) {
   const sold = (p.status && p.status.toLowerCase() === 'esgotado') || p.stock <= 0;
   return `<div class="card${sold ? ' soldout' : ''}" data-id="${p.id}">
     ${badgeHTML(p)}
-    <img src="${(p.imgs ? p.imgs[0] : p.img || p.image)}" alt="${p.name}"/>
+    <img src="${(p.images && p.images.length ? p.images[0] : (p.imgs && p.imgs.length ? p.imgs[0] : p.img || p.image))}" alt="${p.name}">
     <div class="info">
       <p class="name">${p.name}</p>
       <p class="price">${priceHTML(p)}</p>
