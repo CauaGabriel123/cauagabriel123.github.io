@@ -448,10 +448,16 @@ function openModal(id) {
   selectedSize = '';
   selectedColor = '';
 
-  const imgsHTML = (currentProduct.imgs || [currentProduct.img || ''])
-    .slice(0, 10)
-    .map(i => `<img src="${i}" alt="${currentProduct.name}">`)
-    .join('');
+// Normaliza imagens do produto (aceita images[], imgs[], image ou img)
+const imgsArr =
+  (currentProduct.images && currentProduct.images.length) ? currentProduct.images :
+  (currentProduct.imgs && currentProduct.imgs.length) ? currentProduct.imgs :
+  (currentProduct.img ? [currentProduct.img] :
+  (currentProduct.image ? [currentProduct.image] : []));
+
+const imgsHTML = imgsArr.slice(0, 10)
+  .map(i => `<img src="${i}" alt="${currentProduct.name}">`)
+  .join('');
   modalImgs.innerHTML = imgsHTML;
 
   // --- Tamanhos
