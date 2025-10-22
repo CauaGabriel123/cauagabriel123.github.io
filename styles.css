@@ -883,22 +883,3 @@ footer {
   transform: scale(1.03);
   box-shadow: 0 6px 14px rgba(233, 107, 168, 0.25);
 }
-
-/* Remove fundo branco interno da .info para integrar com o degradê */
-.card .info {
-  background: transparent;
-  padding: 10px 10px 14px;
-}
-
-/* Nome e preço seguem o mesmo estilo, mas com leve destaque */
-.card .name,
-.card .price {
-  background: rgba(255, 255, 255, 0.4); /* leve transparência sobre o degradê */
-  color: #2E2336;
-  text-align: center;
-  padding: 6px 0;
-  border-radius: 8px;
-  margin: 4px 0;
-  font-weight: 700;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
-}
