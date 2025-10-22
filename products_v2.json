@@ -64,7 +64,7 @@
     "image": "https://cauagabriel123.github.io/assets/legging1.JPG",
     "description": "Blusa ombro a ombro com tecido suave e elegante para qualquer ocasião.",
     "status": "disponivel",
-    "sizes": ["M,G,GG"],
+    "sizes": ["M"],["G"],["GG"],
     "colors": ["Preto"]
   },
   {
