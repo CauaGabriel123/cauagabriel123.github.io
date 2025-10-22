@@ -246,21 +246,6 @@ function buildCatalogAndRender(data) {
   renderFooterProducts(featured.length ? featured : null);
 }
 
-  featured = data
-  .slice(0, 5)
-  .map(p => ({
-      id: p.id,
-      name: p.name,
-      price: p.price,
-      imgs: [p.image],
-      desc: p.description
-    }));
-
-  renderAll();
-if (typeof window.initCarousel === 'function') window.initCarousel();
-renderFooterProducts(featured.length ? featured : null);
-}
-
 // === Carregamento aprimorado do catálogo (corrigido — ignora falsos negativos do fetch) ===
 (function loadProducts() {
   const url = 'products_v2.json?v=' + Date.now(); // força sempre nova versão
