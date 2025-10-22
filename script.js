@@ -247,15 +247,19 @@ function buildCatalogAndRender(data) {
   });
     // Define os produtos em destaque (para o carrossel)
   featured = data
-    .slice(0, 5)
-    .map(p => ({
-      id: p.id,
-      name: p.name,
-      price: p.price,
-      imgs: [p.image],
-      desc: p.description,
-      status: p.status
-    }));
+  .slice(0, 5)
+  .map(p => ({
+    id: p.id,
+    name: p.name,
+    price: p.price,
+    imgs: Array.isArray(p.images)
+      ? p.images
+      : Array.isArray(p.image)
+        ? p.image
+        : [p.image],
+    desc: p.description,
+    status: p.status
+  }));
   renderAll();
   initCarousel();
   renderFooterProducts(featured.length ? featured : null);
