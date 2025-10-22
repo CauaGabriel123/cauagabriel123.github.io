@@ -792,7 +792,7 @@ ${
   // 💬 Mostra popup primeiro e abre o WhatsApp com leve atraso (1 s)
   setTimeout(() => {
     window.open(url, '_blank', 'noopener');
-  }, 2000);
+  }, 1200);
 
   // ⏳ Mantém o popup visível por 2,5 s antes de sumir
   setTimeout(() => {
