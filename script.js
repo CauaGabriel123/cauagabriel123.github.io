@@ -241,6 +241,17 @@ function buildCatalogAndRender(data) {
       status: p.status
     });
   });
+    // Define os produtos em destaque (para o carrossel)
+  featured = data
+    .slice(0, 5)
+    .map(p => ({
+      id: p.id,
+      name: p.name,
+      price: p.price,
+      imgs: [p.image],
+      desc: p.description,
+      status: p.status
+    }));
   renderAll();
   initCarousel();
   renderFooterProducts(featured.length ? featured : null);
@@ -256,17 +267,17 @@ function buildCatalogAndRender(data) {
       if (!res.ok) throw new Error(`Erro HTTP ${res.status}`);
       return res.json();
     })
- .then(data => {
-  console.log('✅ Catálogo carregado do arquivo externo:', url);
-  try {
-    buildCatalogAndRender(data);
-    console.log('🟢 Renderização iniciada...');
-  } catch (e) {
-    console.error('Erro ao montar catálogo:', e);
-    showAlert('Opa! Tivemos um erro ao montar o catálogo. Recarregue a página em alguns segundos.');
-  }
-})
-      // Espera um pouco e verifica se os produtos foram renderizados
+    .then(data => {
+      console.log('✅ Catálogo carregado do arquivo externo:', url);
+      try {
+        buildCatalogAndRender(data);
+        console.log('🟢 Renderização iniciada...');
+      } catch (e) {
+        console.error('Erro ao montar catálogo:', e);
+        showAlert('Opa! Tivemos um erro ao montar o catálogo. Recarregue a página em alguns segundos.');
+      }
+
+      // ✅ Este setTimeout precisa estar DENTRO do .then(data => { ... })
       setTimeout(() => {
         const produtos = document.querySelectorAll('.product-item, .card');
         if (produtos.length > 0) {
@@ -277,6 +288,11 @@ function buildCatalogAndRender(data) {
         showAlert('Não foi possível carregar os produtos atualizados. Recarregue a página em alguns segundos.');
         console.error('❌ Nenhum produto renderizado após verificação.');
       }, 2500); // 2,5 segundos de espera
+    })
+    .catch(err => {
+      console.error('❌ Erro ao carregar o catálogo:', err);
+      // Fallback: usa os produtos locais se der erro no fetch
+      buildCatalogAndRender(FALLBACK_PRODUCTS);
     });
 })();
 
