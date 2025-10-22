@@ -787,14 +787,16 @@ ${
   pop.hidden = false;
   pop.classList.add('show');
 
-  // ⚙️ Abre o WhatsApp imediatamente (evita bloqueio no iPhone)
-  window.open(url, '_blank', 'noopener');
+  // 💬 Mostra popup primeiro e abre o WhatsApp com leve atraso (1 s)
+  setTimeout(() => {
+    window.open(url, '_blank', 'noopener');
+  }, 1000);
 
-  // 💬 Mantém o popup visível por 2 segundos antes de sumir
+  // ⏳ Mantém o popup visível por 2,5 s antes de sumir
   setTimeout(() => {
     pop.classList.remove('show');
     pop.hidden = true;
-  }, 2000);
+  }, 2500);
 };
 
 // =============================
