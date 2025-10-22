@@ -783,16 +783,18 @@ ${
 ✨ *Obrigada por comprar na LS Store!* 💖`;
 
   const url = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
-  const pop = document.getElementById('popup-overlay');
-
-  // ✅ Exibe popup e adiciona delay antes de abrir o WhatsApp
+    const pop = document.getElementById('popup-overlay');
   pop.hidden = false;
   pop.classList.add('show');
 
+  // ⚙️ Abre o WhatsApp imediatamente (evita bloqueio no iPhone)
+  window.open(url, '_blank', 'noopener');
+
+  // 💬 Mantém o popup visível por 2 segundos antes de sumir
   setTimeout(() => {
-    window.location.href = url;
+    pop.classList.remove('show');
     pop.hidden = true;
-  }, 2000); // <-- Delay de 2 segundos
+  }, 2000);
 };
 
 // =============================
