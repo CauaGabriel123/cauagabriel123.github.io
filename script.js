@@ -311,9 +311,6 @@ function renderFooterVitrine() {
     footerVitrine.appendChild(card);
   });
 }
-
-// ---------- CARREGAMENTO AUTOMÁTICO ----------
-document.addEventListener('DOMContentLoaded', loadProducts);
 /* ================================
    LS STORE v14.0 — Parte 3/7
    Busca inteligente + Scroll suave
@@ -1099,3 +1096,6 @@ document.querySelectorAll('.fade-on-scroll').forEach(el => observer.observe(el))
   }
 })();
 document.addEventListener('DOMContentLoaded', renderRecent);
+// Corrige bug do splash travado
+document.addEventListener('DOMContentLoaded', loadProducts);
+
