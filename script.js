@@ -1095,7 +1095,8 @@ document.querySelectorAll('.fade-on-scroll').forEach(el => observer.observe(el))
     modal.addEventListener('click', (e) => { if (e.target === modal) modal.setAttribute('aria-hidden', 'true'); });
   }
 })();
-document.addEventListener('DOMContentLoaded', renderRecent);
-// Corrige bug do splash travado
-document.addEventListener('DOMContentLoaded', loadProducts);
-
+// === Inicialização final (garantida e sem duplicar eventos) ===
+window.addEventListener('load', () => {
+  renderRecent();
+  loadProducts();
+});
