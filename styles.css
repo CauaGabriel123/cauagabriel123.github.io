@@ -862,45 +862,48 @@ footer {
 .card .info { position: relative; z-index: 5; }
 
 /* ===============================
-   v13.1.2 — Fundo rosinha nos cards + balões brancos elegantes
+   v13.1.3 — Correção definitiva: balões brancos + fundo rosinha
    =============================== */
 
-/* Fundo suave rosinha (mantém igual ao anterior) */
+/* Fundo rosinha claro nos cards */
+.section .grid .card,
 .card {
   background: linear-gradient(90deg, #ffe6f3, #ffd6e8) !important;
-  border-radius: 14px;
-  overflow: hidden;
-  box-shadow: 0 8px 20px rgba(0,0,0,.06);
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-radius: 14px !important;
+  overflow: hidden !important;
+  box-shadow: 0 8px 20px rgba(0,0,0,.06) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  position: relative !important;
+  cursor: pointer !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
 }
 
-/* Balões agora brancos */
+/* Remove qualquer fundo interno */
+.card .info {
+  background: transparent !important;
+  padding: 10px 10px 14px !important;
+}
+
+/* Balões agora realmente brancos */
+.card .info .name,
+.card .info .price,
 .card .name,
 .card .price {
   background: #ffffff !important; /* branco puro */
-  color: #2E2336 !important; /* mantém o texto escuro */
-  text-align: center;
-  padding: 6px 0;
-  border-radius: 8px;
-  margin: 4px 0;
-  font-weight: 700;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); /* sombra leve pra destacar */
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  color: #2E2336 !important; /* texto escuro */
+  text-align: center !important;
+  padding: 6px 0 !important;
+  border-radius: 8px !important;
+  margin: 4px 0 !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08) !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
 }
 
-/* Efeito leve ao passar o mouse */
+/* Efeito leve no hover */
 .card .name:hover,
 .card .price:hover {
-  transform: scale(1.03);
-  box-shadow: 0 6px 14px rgba(233,107,168,0.25);
-}
-
-/* Garante que o fundo interno não cubra o degradê */
-.card .info {
-  background: transparent !important;
-  padding: 10px 10px 14px;
+  transform: scale(1.03) !important;
+  box-shadow: 0 6px 14px rgba(233,107,168,0.25) !important;
 }
