@@ -45,26 +45,72 @@ function playChime() {
   o.stop(t + 0.75);
 }
 
-// --- SPLASH SCREEN (v14.0 Premium corrigido) ---
+// --- SPLASH SCREEN (v14.0.1 Premium final - JSON na raiz) ---
 document.addEventListener('DOMContentLoaded', () => {
   const splash = document.getElementById('splash');
   if (!splash) return;
 
-  // Força remoção em até 4 segundos, mesmo se o load travar
-  const forceRemove = setTimeout(() => {
+  // Garante remoção suave e segura
+  let splashRemoved = false;
+  const removeSplash = () => {
+    if (splashRemoved) return;
+    splashRemoved = true;
     splash.classList.add('hidden');
     setTimeout(() => splash.remove(), 800);
-  }, 4000);
+  };
 
-  // Se o site carregar normalmente, remove antes disso
+  // Remoção forçada após 5s se algo travar
+  const forceRemove = setTimeout(removeSplash, 5000);
+
+  // Remove quando a página carregar
   window.addEventListener('load', () => {
     clearTimeout(forceRemove);
-    setTimeout(() => {
-      splash.classList.add('hidden');
-      setTimeout(() => splash.remove(), 800);
-    }, 2000);
+    setTimeout(removeSplash, 2000);
   });
+
+  // Também remove assim que os produtos forem carregados
+  document.addEventListener('productsLoaded', removeSplash);
 });
+
+// ---------- FUNÇÃO: carregar catálogo ----------
+async function loadProducts() {
+  try {
+    // 🔹 JSON está na mesma pasta do index.html
+    const res = await fetch('products_v2.json');
+    const data = await res.json();
+    PRODUCTS = data;
+  } catch (err) {
+    console.warn('Catálogo não encontrado. Usando fallback local.');
+    PRODUCTS = [
+      {
+        name: 'Vestido Floral Verão',
+        price: 129.90,
+        description: 'Vestido leve e elegante com estampa floral exclusiva LS Store.',
+        image: 'assets/vestido1.jpg',
+        images: ['assets/vestido1.jpg', 'assets/vestido1b.jpg'],
+        sizes: ['P', 'M', 'G'],
+        colors: ['Rosa', 'Branco'],
+        status: 'disponível'
+      },
+      {
+        name: 'Cropped Lilás Premium',
+        price: 89.90,
+        description: 'Cropped moderno com tecido confortável e toque suave.',
+        image: 'assets/cropped1.jpg',
+        images: ['assets/cropped1.jpg', 'assets/cropped1b.jpg'],
+        sizes: ['P', 'M'],
+        colors: ['Lilás', 'Preto'],
+        status: 'esgotado'
+      }
+    ];
+  }
+
+  renderProducts();
+  renderFooterVitrine();
+
+  // 🔹 Evento que avisa o splash pra desaparecer
+  document.dispatchEvent(new Event('productsLoaded'));
+}
 // --- BASE DO MODAL PREMIUM ---
 const modal = document.getElementById('product-modal');
 const modalImgs = document.getElementById('modal-imgs');
