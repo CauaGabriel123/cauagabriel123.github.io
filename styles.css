@@ -1012,4 +1012,45 @@ footer {
   border: none;
   font-size: 28px;
   width: 40px;
-  heigh
+  height: 40px; /* <- aqui estava cortado */
+  border-radius: 50%;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity .3s ease, background .3s ease;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal-imgs:hover .img-prev,
+.modal-imgs:hover .img-next {
+  opacity: 1;
+}
+.modal-imgs .img-prev:hover,
+.modal-imgs .img-next:hover {
+  background: rgba(255,255,255,0.6);
+}
+.modal-imgs .img-prev { left: 12px; }
+.modal-imgs .img-next { right: 12px; }
+
+/* Bolinhas (dots) no modal */
+.modal-imgs .img-dots {
+  position: absolute;
+  bottom: 12px;
+  left: 0; right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 7px;
+  z-index: 4;
+}
+.modal-imgs .img-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.6);
+  transition: transform .3s ease, background .3s ease;
+}
+.modal-imgs .img-dot.active {
+  background: #fff;
+  transform: scale(1.4);
+}
