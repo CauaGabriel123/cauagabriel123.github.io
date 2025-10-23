@@ -125,7 +125,7 @@
   {
     "id": "p12",
     "name": "Sabonete íntimo extrato de 17 ervas",
-    "category": "Beleza",
+    "category": "belezas",
     "price": 14.99,
     "image": "https://cauagabriel123.github.io/assets/beleza1.JPG",
     "description": "Sandália leve com tiras cruzadas e palmilha macia, em tom rosa LS.",
@@ -136,7 +136,7 @@
   {
     "id": "p13",
     "name": "Tênis Branco Casual Feminino",
-    "category": "beleza",
+    "category": "belezas",
     "price": 199.9,
     "image": "https://cauagabriel123.github.io/assets/prod-tenis-branco.png",
     "description": "Tênis branco clássico, combina com tudo. Estilo e conforto em um só modelo.",
@@ -147,7 +147,7 @@
   {
     "id": "p14",
     "name": "Óculos de Sol LS Fashion",
-    "category": "beleza",
+    "category": "belezas",
     "price": 89.9,
     "image": "https://cauagabriel123.github.io/assets/prod-oculos-fashion.png",
     "description": "Óculos fashion com lentes degradê e hastes douradas, estilo moderno LS.",
@@ -158,7 +158,7 @@
   {
     "id": "p15",
     "name": "Óculos de Sol Redondo Vintage",
-    "category": "beleza",
+    "category": "belezas",
     "price": 99.9,
     "image": "https://cauagabriel123.github.io/assets/prod-oculos-vintage.png",
     "description": "Óculos redondo retrô com lentes levemente rosadas, um charme.",
@@ -169,7 +169,7 @@
   {
     "id": "p16",
     "name": "Batom Matte Rosa LS",
-    "category": "beleza",
+    "category": "belezas",
     "price": 49.9,
     "image": "https://cauagabriel123.github.io/assets/prod-batom-rosa.png",
     "description": "Batom matte de longa duração, tom rosa LS perfeito para todos os tons de pele.",
@@ -180,7 +180,7 @@
   {
     "id": "p17",
     "name": "Perfume LS Essence 50ml",
-    "category": "beleza",
+    "category": "belezas",
     "price": 129.9,
     "image": "https://cauagabriel123.github.io/assets/prod-perfume-ls.png",
     "description": "Perfume feminino floral frutado, aroma leve e sofisticado LS.",
@@ -191,7 +191,7 @@
   {
     "id": "p18",
     "name": "Creme Hidratante Corporal LS",
-    "category": "beleza",
+    "category": "belezas",
     "price": 69.9,
     "image": "https://cauagabriel123.github.io/assets/prod-hidratante.png",
     "description": "Hidratante corporal com fragrância suave e textura leve.",
@@ -202,7 +202,7 @@
   {
     "id": "p19",
     "name": "Sérum Facial Iluminador",
-    "category": "beleza",
+    "category": "belezas",
     "price": 99.9,
     "image": "https://cauagabriel123.github.io/assets/prod-serum-facial.png",
     "description": "Sérum facial com toque seco, ideal para pele radiante e nutrida.",
@@ -213,7 +213,7 @@
   {
     "id": "p20",
     "name": "Bolsa Rosa Pastel LS",
-    "category": "beleza",
+    "category": "belezas",
     "price": 149.9,
     "image": "https://cauagabriel123.github.io/assets/prod-bolsa-rosa.png",
     "description": "Bolsa estruturada tom rosa LS, moderna e prática para o dia a dia.",
@@ -224,7 +224,7 @@
   {
         "id": "p21",
     "name": "Vestido vermelho",
-    "category": "beleza",
+    "category": "belezas",
     "price": 199.99,
     "image": "https://cauagabriel123.github.io/assets/prod-vestido-floral.png",
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
@@ -235,7 +235,7 @@
   {
         "id": "p22",
     "name": "Vestido vermelho",
-    "category": "beleza",
+    "category": "belezas",
     "price": 199.99,
     "image": "https://cauagabriel123.github.io/assets/prod-vestido-floral.png",
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
@@ -246,7 +246,7 @@
   {
         "id": "p23",
     "name": "Vestido vermelho",
-    "category": "beleza",
+    "category": "belezas",
     "price": 199.99,
     "image": "https://cauagabriel123.github.io/assets/prod-vestido-floral.png",
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
@@ -257,7 +257,7 @@
   {
         "id": "p24",
     "name": "Vestido vermelho",
-    "category": "beleza",
+    "category": "belezas",
     "price": 199.99,
     "image": "https://cauagabriel123.github.io/assets/prod-vestido-floral.png",
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
