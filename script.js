@@ -1087,3 +1087,134 @@ function flyToCart(imgSrc, startX, startY) {
 
   setTimeout(() => img.remove(), 800);
 }
+// =============================
+// v13.1.4 — Carrossel Universal (modo inteligente)
+// =============================
+document.addEventListener('DOMContentLoaded', () => {
+  function initImageCarousel(container) {
+    const imgs = [...container.querySelectorAll('img')];
+    if (imgs.length <= 1) return; // modo inteligente
+
+    imgs.forEach((img, i) => img.classList.toggle('active', i === 0));
+
+    const prev = document.createElement('button');
+    prev.className = 'img-prev';
+    prev.innerHTML = '⟨';
+    const next = document.createElement('button');
+    next.className = 'img-next';
+    next.innerHTML = '⟩';
+
+    const dotsWrap = document.createElement('div');
+    dotsWrap.className = 'img-dots';
+    imgs.forEach((_, i) => {
+      const dot = document.createElement('div');
+      dot.className = 'img-dot' + (i === 0 ? ' active' : '');
+      dot.addEventListener('click', () => showImg(i));
+      dotsWrap.appendChild(dot);
+    });
+
+    container.appendChild(prev);
+    container.appendChild(next);
+    container.appendChild(dotsWrap);
+
+    let index = 0;
+    function showImg(i) {
+      index = (i + imgs.length) % imgs.length;
+      imgs.forEach((img, n) => img.classList.toggle('active', n === index));
+      dotsWrap.querySelectorAll('.img-dot').forEach((d, n) => d.classList.toggle('active', n === index));
+    }
+    prev.onclick = () => showImg(index - 1);
+    next.onclick = () => showImg(index + 1);
+  }
+
+  // aplica nos cards (vitrine)
+  document.querySelectorAll('.card').forEach(card => {
+    const img = card.querySelector('img');
+    const prodId = card.getAttribute('data-id');
+    if (!img || !prodId) return;
+    const prod = Object.values(window.catalog || {}).flat().find(p => p.id === prodId);
+    if (!prod || !prod.images || prod.images.length <= 1) return;
+
+    const box = document.createElement('div');
+    box.className = 'img-carousel';
+    prod.images.forEach(src => {
+      const i = document.createElement('img');
+      i.src = src;
+      box.appendChild(i);
+    });
+    card.insertBefore(box, img);
+    img.remove();
+    initImageCarousel(box);
+  });
+
+  // aplica dentro do modal
+  const modalImgs = document.getElementById('modal-imgs');
+  const observer = new MutationObserver(() => {
+    if (!modalImgs) return;
+    const imgs = modalImgs.querySelectorAll('img');
+    if (imgs.length <= 1) return;
+    if (!modalImgs.querySelector('.img-prev')) initImageCarousel(modalImgs);
+  });
+  if (modalImgs) observer.observe(modalImgs, { childList: true });
+});
+// =============================
+// v13.1.5 — Suporte a Swipe (toque e arraste) no carrossel universal
+// =============================
+document.addEventListener('DOMContentLoaded', () => {
+  // Função para ativar o gesto de deslizar em qualquer container de imagens
+  function enableSwipe(container) {
+    let startX = 0;
+    let deltaX = 0;
+    let isDown = false;
+    const imgs = container.querySelectorAll('img');
+    if (imgs.length <= 1) return; // só ativa se tiver várias imagens
+
+    // Pega os botões (caso existam)
+    const prev = container.querySelector('.img-prev');
+    const next = container.querySelector('.img-next');
+
+    function startTouch(e) {
+      isDown = true;
+      startX = e.touches ? e.touches[0].clientX : e.clientX;
+      deltaX = 0;
+    }
+
+    function moveTouch(e) {
+      if (!isDown) return;
+      const x = e.touches ? e.touches[0].clientX : e.clientX;
+      deltaX = x - startX;
+    }
+
+    function endTouch() {
+      if (!isDown) return;
+      isDown = false;
+      const limit = 40; // quantos pixels precisa mover pra trocar
+      if (Math.abs(deltaX) > limit) {
+        if (deltaX > 0 && prev) prev.click();   // arrastou pra direita → imagem anterior
+        else if (deltaX < 0 && next) next.click(); // arrastou pra esquerda → próxima imagem
+      }
+      deltaX = 0;
+    }
+
+    // Eventos de toque (mobile) e mouse (desktop)
+    container.addEventListener('touchstart', startTouch, { passive: true });
+    container.addEventListener('touchmove', moveTouch, { passive: true });
+    container.addEventListener('touchend', endTouch);
+    container.addEventListener('mousedown', startTouch);
+    container.addEventListener('mousemove', moveTouch);
+    container.addEventListener('mouseup', endTouch);
+    container.addEventListener('mouseleave', () => isDown = false);
+  }
+
+  // Aplica o swipe a todos os carrosseis ativos (vitrine e modal)
+  const applySwipeToAll = () => {
+    document.querySelectorAll('.img-carousel, .modal-imgs').forEach(enableSwipe);
+  };
+
+  // Aplica ao carregar
+  setTimeout(applySwipeToAll, 1000);
+
+  // Observa mudanças (ex: quando modal é aberto)
+  const observer = new MutationObserver(applySwipeToAll);
+  observer.observe(document.body, { childList: true, subtree: true });
+});
