@@ -1088,7 +1088,7 @@ function flyToCart(imgSrc, startX, startY) {
   setTimeout(() => img.remove(), 800);
 }
 // =============================
-// v13.1.4 — Carrossel Universal (modo inteligente)
+// v13.1.4 — Carrossel Universal (modo inteligente, corrigido)
 // =============================
 document.addEventListener('DOMContentLoaded', () => {
   function initImageCarousel(container) {
@@ -1132,16 +1132,28 @@ document.addEventListener('DOMContentLoaded', () => {
     const img = card.querySelector('img');
     const prodId = card.getAttribute('data-id');
     if (!img || !prodId) return;
+
     const prod = Object.values(window.catalog || {}).flat().find(p => p.id === prodId);
-    if (!prod || !prod.images || prod.images.length <= 1) return;
+    if (!prod) return;
+
+    // pega qualquer tipo de campo de imagem
+    const imgsArr =
+      Array.isArray(prod.images) ? prod.images :
+      Array.isArray(prod.imgs) ? prod.imgs :
+      Array.isArray(prod.image) ? prod.image :
+      (prod.img ? [prod.img] :
+      (prod.image ? [prod.image] : []));
+
+    if (imgsArr.length <= 1) return; // modo inteligente
 
     const box = document.createElement('div');
     box.className = 'img-carousel';
-    prod.images.forEach(src => {
+    imgsArr.forEach(src => {
       const i = document.createElement('img');
       i.src = src;
       box.appendChild(i);
     });
+
     card.insertBefore(box, img);
     img.remove();
     initImageCarousel(box);
