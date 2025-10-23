@@ -908,149 +908,91 @@ footer {
   box-shadow: 0 6px 14px rgba(233,107,168,0.25) !important;
 }
 /* ===============================
-   v13.1.5 — Carrossel Universal Ajustado (centralização, setas redondas, dots visíveis)
+   v13.1.8 — Carrossel Estilo Instagram (centralizado, suave, dots visíveis)
    =============================== */
 
-/* ----- CARDS (vitrine) ----- */
-.card .img-carousel {
+/* Estrutura base */
+.img-carousel,
+.modal-imgs {
   position: relative;
   overflow: hidden;
   border-radius: 12px;
 }
-.card .img-carousel img {
-  width: 100%;
-  height: 230px;
-  object-fit: cover;
-  display: none;
-  transition: opacity .4s ease;
-}
-.card .img-carousel img.active {
-  display: block;
-  opacity: 1;
-}
 
-/* Setas laterais (mais centralizadas e arredondadas) */
-.card .img-prev,
-.card .img-next {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(255,255,255,0.4);
-  color: #fff;
-  border: none;
-  font-size: 22px;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  cursor: pointer;
-  opacity: 0;
-  transition: opacity .3s ease, background .3s ease;
-  z-index: 3;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  user-select: none;
-}
-.card:hover .img-prev,
-.card:hover .img-next {
-  opacity: 1;
-}
-.card .img-prev:hover,
-.card .img-next:hover {
-  background: rgba(255,255,255,0.6);
-}
-.card .img-prev { left: 8px; }
-.card .img-next { right: 8px; }
-
-/* Bolinhas (dots) visíveis e centralizadas */
-.card .img-dots {
-  position: absolute;
-  bottom: 10px;
-  left: 0; right: 0;
-  display: flex;
-  justify-content: center;
-  gap: 6px;
-  z-index: 4;
-}
-.card .img-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.6);
-  transition: transform .3s ease, background .3s ease;
-}
-.card .img-dot.active {
-  background: #fff;
-  transform: scale(1.4);
-}
-
-/* ----- MODAL ----- */
-.modal-imgs {
-  position: relative;
-}
+/* Imagens */
+.img-carousel img,
 .modal-imgs img {
-  display: none;
   width: 100%;
-  height: 270px;
+  height: auto;
+  max-height: 320px;
   object-fit: cover;
+  display: none;
   border-radius: 10px;
-  transition: opacity .4s ease;
+  opacity: 0;
+  transition: opacity 0.6s ease, transform 0.6s ease;
 }
+.img-carousel img.active,
 .modal-imgs img.active {
   display: block;
   opacity: 1;
+  transform: scale(1.02); /* leve zoom de transição */
 }
 
-/* Setas do modal (centralizadas e redondas) */
-.modal-imgs .img-prev,
-.modal-imgs .img-next {
+/* Setas (centralizadas e redondas) */
+.img-prev,
+.img-next {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(255,255,255,0.4);
+  background: rgba(0, 0, 0, 0.25);
   color: #fff;
   border: none;
-  font-size: 28px;
-  width: 40px;
-  height: 40px; /* <- aqui estava cortado */
+  font-size: 22px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
   cursor: pointer;
-  opacity: 0;
-  transition: opacity .3s ease, background .3s ease;
-  z-index: 3;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 3;
+  opacity: 0;
 }
+.img-carousel:hover .img-prev,
+.img-carousel:hover .img-next,
 .modal-imgs:hover .img-prev,
 .modal-imgs:hover .img-next {
   opacity: 1;
 }
-.modal-imgs .img-prev:hover,
-.modal-imgs .img-next:hover {
-  background: rgba(255,255,255,0.6);
+.img-prev:hover,
+.img-next:hover {
+  background: rgba(0, 0, 0, 0.45);
+  transform: translateY(-50%) scale(1.1); /* leve pulso */
 }
-.modal-imgs .img-prev { left: 12px; }
-.modal-imgs .img-next { right: 12px; }
+.img-prev { left: 10px; }
+.img-next { right: 10px; }
 
-/* Bolinhas (dots) no modal */
-.modal-imgs .img-dots {
+/* Bolinhas (dots) */
+.img-dots {
   position: absolute;
-  bottom: 12px;
-  left: 0; right: 0;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   justify-content: center;
-  gap: 7px;
-  z-index: 4;
+  align-items: center;
+  gap: 6px;
+  z-index: 5;
 }
-.modal-imgs .img-dot {
+.img-dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.6);
-  transition: transform .3s ease, background .3s ease;
+  background: rgba(255, 255, 255, 0.6);
+  transition: transform 0.3s ease, background 0.3s ease;
 }
-.modal-imgs .img-dot.active {
+.img-dot.active {
   background: #fff;
   transform: scale(1.4);
 }
