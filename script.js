@@ -1096,17 +1096,31 @@ document.querySelectorAll('.fade-on-scroll').forEach(el => observer.observe(el))
   }
 })();
 // ===========================
-// LS STORE v14.0.7 Premium — Splash Fix Final
+// LS STORE v14.0.8 Premium — Splash Fix Definitivo 🚀
 // ===========================
 
 window.addEventListener('load', async () => {
+  const splash = document.getElementById('splash');
+  let removed = false;
+
+  // Função segura de remoção
+  const removeSplash = () => {
+    if (removed || !splash) return;
+    removed = true;
+    splash.classList.add('hidden');
+    setTimeout(() => splash.remove(), 800);
+  };
+
   try {
     await loadProducts();
   } catch (e) {
     console.warn('Erro ao carregar produtos:', e);
   } finally {
     renderRecent();
-    const splash = document.getElementById('splash');
-    if (splash) splash.classList.add('hidden');
+    // Remove splash logo após renderizar
+    removeSplash();
   }
+
+  // Se algo travar, garante remoção forçada após 6s
+  setTimeout(removeSplash, 6000);
 });
