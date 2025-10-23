@@ -694,7 +694,7 @@ function renderRecent() {
 }
 
 // Renderiza o histórico ao carregar
-document.addEventListener('DOMContentLoaded', renderRecent);
+
 /* ================================
    LS STORE v14.0 — Parte 6/7
    Efeitos, sons e alertas Premium
@@ -1098,3 +1098,4 @@ document.querySelectorAll('.fade-on-scroll').forEach(el => observer.observe(el))
     modal.addEventListener('click', (e) => { if (e.target === modal) modal.setAttribute('aria-hidden', 'true'); });
   }
 })();
+document.addEventListener('DOMContentLoaded', renderRecent);
