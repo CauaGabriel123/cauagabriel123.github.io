@@ -253,42 +253,6 @@ const footerVitrine = document.querySelector('.footer-vitrine .h-scroller');
 
 let PRODUCTS = [];
 
-// ---------- FUNÇÃO: carregar catálogo ----------
-async function loadProducts() {
-  try {
-    const res = await fetch('products_v2.json');
-    const data = await res.json();
-    PRODUCTS = data;
-  } catch (err) {
-    console.warn('Catálogo não encontrado. Usando fallback local.');
-    PRODUCTS = [
-      {
-        name: 'Vestido Floral Verão',
-        price: 129.90,
-        description: 'Vestido leve e elegante com estampa floral exclusiva LS Store.',
-        image: 'assets/vestido1.jpg',
-        images: ['assets/vestido1.jpg', 'assets/vestido1b.jpg'],
-        sizes: ['P', 'M', 'G'],
-        colors: ['Rosa', 'Branco'],
-        status: 'disponível'
-      },
-      {
-        name: 'Cropped Lilás Premium',
-        price: 89.90,
-        description: 'Cropped moderno com tecido confortável e toque suave.',
-        image: 'assets/cropped1.jpg',
-        images: ['assets/cropped1.jpg', 'assets/cropped1b.jpg'],
-        sizes: ['P', 'M'],
-        colors: ['Lilás', 'Preto'],
-        status: 'esgotado'
-      }
-    ];
-  }
-
-  renderProducts();
-  renderFooterVitrine();
-}
-
 // ---------- FUNÇÃO: renderizar produtos ----------
 function renderProducts() {
   if (!productGrid) return;
