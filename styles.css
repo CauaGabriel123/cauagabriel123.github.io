@@ -862,10 +862,10 @@ footer {
 .card .info { position: relative; z-index: 5; }
 
 /* ===============================
-   v13.1.1 — Fundo rosinha nos cards + balões mais fortes
+   v13.1.2 — Fundo rosinha nos cards + balões brancos elegantes
    =============================== */
 
-/* Fundo suave rosinha no card */
+/* Fundo suave rosinha (mantém igual ao anterior) */
 .card {
   background: linear-gradient(90deg, #ffe6f3, #ffd6e8) !important;
   border-radius: 14px;
@@ -878,28 +878,28 @@ footer {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Balões com rosa mais forte */
+/* Balões agora brancos */
 .card .name,
 .card .price {
-  background: linear-gradient(90deg, #ffb6da, #ff8fc8) !important;
-  color: #2E2336 !important;
+  background: #ffffff !important; /* branco puro */
+  color: #2E2336 !important; /* mantém o texto escuro */
   text-align: center;
   padding: 6px 0;
   border-radius: 8px;
   margin: 4px 0;
   font-weight: 700;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); /* sombra leve pra destacar */
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Efeito de destaque ao tocar ou passar o mouse */
+/* Efeito leve ao passar o mouse */
 .card .name:hover,
 .card .price:hover {
   transform: scale(1.03);
   box-shadow: 0 6px 14px rgba(233,107,168,0.25);
 }
 
-/* Remove qualquer fundo interno que apague o degradê */
+/* Garante que o fundo interno não cubra o degradê */
 .card .info {
   background: transparent !important;
   padding: 10px 10px 14px;
