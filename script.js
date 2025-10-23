@@ -362,7 +362,7 @@ function renderGrid(el, arr) {
 
   // Só permite clique se o produto NÃO estiver esgotado
   el.querySelectorAll('.card:not(.soldout)').forEach(c => {
-    c.onclick = () => openModal(c.getAttribute('data-id'));
+    c.onclick = () => LSModal.open(c.getAttribute('data-id'));
   });
 }
 
@@ -423,7 +423,7 @@ function renderFooterProducts(listFromData) {
 
   // Clique abre modal de produto
   box.querySelectorAll('.footer-card').forEach(card => {
-    card.addEventListener('click', () => openModal(card.getAttribute('data-id')));
+    card.addEventListener('click', () => LSModal.open(card.getAttribute('data-id')));
   });
 }
 
@@ -443,7 +443,7 @@ let currentProduct = null;
 let selectedSize = '';
 let selectedColor = '';
 
-function openModal(id) {
+function LSModal.open(id) {
   currentProduct = null;
   for (const cat in catalog) {
     const prod = (catalog[cat]||[]).find(p => p.id === id);
@@ -936,7 +936,7 @@ window.initCarousel = function(){
   slides.querySelectorAll('.slide').forEach(sl => {
     sl.addEventListener('click', () => {
       const id = sl.getAttribute('data-id');
-      if (Math.abs(delta) < 10) openModal(id); // evita abrir se foi swipe
+      if (Math.abs(delta) < 10) LSModal.open(id); // evita abrir se foi swipe
     });
   });
 
@@ -1030,7 +1030,7 @@ document.addEventListener('DOMContentLoaded', () => {
     resultsBox.querySelectorAll('.search-item').forEach(it=>{
       it.onclick = ()=>{
         const id = it.getAttribute('data-id');
-        openModal(id);
+        LSModal.open(id);
         resultsBox.hidden = true;
       };
     });
@@ -1247,3 +1247,95 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }, 3000); // troca a cada 3 segundos
 });
+/* ===== LS STORE • Product Modal (Isolado) ===== */
+(function () {
+  const $ = (sel, ctx=document) => ctx.querySelector(sel);
+  const $$ = (sel, ctx=document) => Array.from(ctx.querySelectorAll(sel));
+
+  const els = {
+    root: $('#lsxModal'),
+    title: $('#lsxModalTitle'),
+    breadcrumb: $('#lsxBreadcrumb'),
+    imgMain: $('#lsxImageMain'),
+    thumbs: $('#lsxThumbs'),
+    price: $('#lsxPrice'),
+    installments: $('#lsxInstallments'),
+    sizes: $('#lsxSizes'),
+    stock: $('#lsxStock'),
+    buyBtn: $('#lsxBuyBtn'),
+    waBtn: $('#lsxWhatsappBtn'),
+    desc: $('#lsxDescription'),
+    shareWA: $('#shareWA'),
+    shareFB: $('#shareFB'),
+    shareX: $('#shareX'),
+    sharePin: $('#sharePin')
+  };
+
+  let PRODUCTS_CACHE = null;
+  let current = { product: null, selectedSize: null };
+
+  async function getProducts() {
+    if (Array.isArray(window.PRODUCTS_V2) && window.PRODUCTS_V2.length) return window.PRODUCTS_V2;
+    if (PRODUCTS_CACHE) return PRODUCTS_CACHE;
+    const res = await fetch('products_v2.json', { cache: 'no-store' });
+    PRODUCTS_CACHE = await res.json();
+    return PRODUCTS_CACHE;
+  }
+
+  function currency(v) { return Number(v).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }); }
+  function calcInstallments(v) { const n = 12; return `${n}x de ${currency(v/n)}`; }
+
+  function mountGallery(p) {
+    const imgs = p.images || p.imgs || [p.image];
+    els.imgMain.src = imgs[0];
+    els.thumbs.innerHTML = imgs.map((src,i)=>`<img src="${src}" class="${i===0?'is-active':''}" data-i="${i}">`).join('');
+    els.thumbs.onclick = e => {
+      const t = e.target.closest('img'); if (!t) return;
+      $$('.is-active', els.thumbs).forEach(x=>x.classList.remove('is-active'));
+      t.classList.add('is-active');
+      els.imgMain.src = t.src;
+    };
+  }
+
+  function mountSizes(p) {
+    const sizes = p.sizes || ['Único'];
+    els.sizes.innerHTML = sizes.map(s=>`<button class="lsx-size" data-size="${s}">${s}</button>`).join('');
+    els.sizes.onclick = e=>{
+      const b=e.target.closest('.lsx-size'); if(!b)return;
+      $$('.lsx-size', els.sizes).forEach(x=>x.classList.remove('is-selected'));
+      b.classList.add('is-selected');
+      current.selectedSize=b.dataset.size;
+    };
+  }
+
+  function fill(p){
+    current.product=p;
+    els.title.textContent=p.name;
+    els.price.textContent=currency(p.price);
+    els.installments.textContent=calcInstallments(p.price);
+    els.desc.innerHTML=p.description||'';
+    mountGallery(p);
+    mountSizes(p);
+    els.buyBtn.onclick=()=>{ if(typeof addToCart==='function'){ addToCart(p,current.selectedSize||'Único','Única'); LSModal.close(); }};
+  }
+
+  function open(id){
+    getProducts().then(list=>{
+      const p=list.find(x=>String(x.id)===String(id));
+      if(!p)return;
+      fill(p);
+      els.root.classList.add('is-open');
+      document.body.classList.add('lsx-no-scroll');
+    });
+  }
+
+  function close(){
+    els.root.classList.remove('is-open');
+    document.body.classList.remove('lsx-no-scroll');
+  }
+
+  els.root.addEventListener('click',e=>{ if(e.target.dataset.close==='true')close(); });
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape')close(); });
+
+  window.LSModal={open,close};
+})();
