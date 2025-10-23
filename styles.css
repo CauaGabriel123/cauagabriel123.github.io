@@ -862,13 +862,27 @@ footer {
 .card .info { position: relative; z-index: 5; }
 
 /* ===============================
-   v13.0.9.3 — Balões do nome e preço com rosa mais forte
+   v13.1.1 — Fundo rosinha nos cards + balões mais fortes
    =============================== */
 
+/* Fundo suave rosinha no card */
+.card {
+  background: linear-gradient(90deg, #ffe6f3, #ffd6e8) !important;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0,0,0,.06);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Balões com rosa mais forte */
 .card .name,
 .card .price {
-  background: linear-gradient(90deg, #ffb6da, #ff8fc8); /* rosa mais vivo */
-  color: #2E2336;
+  background: linear-gradient(90deg, #ffb6da, #ff8fc8) !important;
+  color: #2E2336 !important;
   text-align: center;
   padding: 6px 0;
   border-radius: 8px;
@@ -878,8 +892,15 @@ footer {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+/* Efeito de destaque ao tocar ou passar o mouse */
 .card .name:hover,
 .card .price:hover {
   transform: scale(1.03);
-  box-shadow: 0 6px 14px rgba(233, 107, 168, 0.25);
+  box-shadow: 0 6px 14px rgba(233,107,168,0.25);
+}
+
+/* Remove qualquer fundo interno que apague o degradê */
+.card .info {
+  background: transparent !important;
+  padding: 10px 10px 14px;
 }
