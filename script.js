@@ -1,1126 +1,1249 @@
-/* ================================
-   LS STORE v14.0 — Base Premium JS
-   Por Cauã Gabriel & GPT-5
-   ================================ */
+// =========================
+// LS STORE v11.4.0 — Upgrades garantidos (sem alterar layout funcional)
+// - Drawer: mantém "Femininos" (dropdown) com subcategorias
+// - Carrossel Início: arrastável com o dedo + itens reais do catálogo (clica e abre modal)
+// - WhatsApp: abertura garantida com window.location.href
+// - NOVO: campo Número só aceita números (bloqueio de letras)
+// - NOVO: link "Sobre Nós" no menu abre a seção correspondente
+// =========================
 
-// --- CONFIGURAÇÕES GERAIS ---
+const { jsPDF } = window.jspdf;
+
+// --- Configurações principais
 const WHATSAPP = '5551989235482';
-const INSTAGRAM = '@ls_store.fc';
+const ADMIN_MODE = new URLSearchParams(location.search).get('admin') === 'true';
+const FEES = {
+  "Mathias Velho": 5, "Harmonia": 6, "Mato Grande": 7, "São Luís": 8,
+  "Centro": 8, "Fátima": 9, "Igara": 10, "Rio Branco": 10, "Industrial": 10,
+  "Marechal Rondon": 11, "Estância Velha": 12, "Guajuviras": 15, "Olaria": 16, "Outra Cidade": "consultar"
+};
+const INSTAGRAM_HANDLE = '@ls_store.fc';
 
-// --- ÁUDIO SUAVE ---
+// Fallback local para quando o fetch('products.json') falhar
+const FALLBACK_PRODUCTS = [
+  { "id": "p1", "name": "Vestido Floral Midi", "category": "vestidos", "price": 99.99, "image": "assets/prod-vestido-floral.jpg", "description": "Vestido midi leve com estampa floral e caimento fluido, perfeito para dias ensolarados.", "status": "disponivel" },
+  { "id": "p2", "name": "Vestido Curto Preto Elegance", "category": "vestidos", "price": 189.9, "image": "assets/prod-vestido-preto.jpg", "description": "Vestido curto preto com toque sofisticado e caimento perfeito para festas e eventos.", "status": "disponivel" },
+  { "id": "p3", "name": "Vestido Longo Rosa Serenity", "category": "vestidos", "price": 229.9, "image": "assets/prod-vestido-longo.jpg", "description": "Longo com tom rosa suave, tecido leve e fenda discreta. Conforto e elegância.", "status": "disponivel" },
+
+  { "id": "p4", "name": "Camiseta Feminina Básica Branca", "category": "blusas", "price": 59.9, "image": "assets/prod-camiseta-branca.jpg", "description": "Camiseta básica em algodão macio, ideal para compor looks casuais.", "status": "disponivel" },
+  { "id": "p5", "name": "Blusa Cropped Canelada", "category": "blusas", "price": 79.9, "image": "assets/prod-blusa-cropped.jpg", "description": "Blusa cropped canelada com gola redonda e modelagem confortável.", "status": "disponivel" },
+  { "id": "p6", "name": "Blusa Off-Shoulder Bege", "category": "blusas", "price": 89.9, "image": "assets/prod-blusa-bege.jpg", "description": "Blusa ombro a ombro com tecido suave e elegante para qualquer ocasião.", "status": "disponivel" },
+
+  { "id": "p7", "name": "Calça Jeans Cintura Alta", "category": "calcas", "price": 139.9, "image": "assets/prod-calca-jeans.jpg", "description": "Jeans clássico de cintura alta e corte reto. Modela e valoriza o corpo.", "status": "disponivel" },
+  { "id": "p8", "name": "Calça Pantalona Rose", "category": "calcas", "price": 159.9, "image": "assets/prod-calca-pantalona.jpg", "description": "Pantalona moderna com tecido fluido e cintura elástica confortável.", "status": "disponivel" },
+  { "id": "p9", "name": "Calça de Moletom Feminina", "category": "calcas", "price": 119.9, "image": "assets/prod-calca-moletom.jpg", "description": "Calça comfy de moletom macio, ideal para o dia a dia.", "status": "disponivel" },
+
+  { "id": "p10", "name": "Lingerie Conjunto Rosa Pastel", "category": "intimas", "price": 89.9, "image": "assets/prod-lingerie-rosa.jpg", "description": "Conjunto delicado de renda com modelagem confortável e toque suave.", "status": "disponivel" },
+  { "id": "p11", "name": "Sutiã Sem Bojo Confort Lace", "category": "intimas", "price": 59.9, "image": "assets/prod-sutia-lace.jpg", "description": "Sutiã em renda delicada sem bojo, ideal para o conforto do dia a dia.", "status": "disponivel" },
+
+  { "id": "p12", "name": "Sandália Rosa Comfort", "category": "calcados", "price": 169.9, "image": "assets/prod-sandalia-rosa.jpg", "description": "Sandália leve com tiras cruzadas e palmilha macia, em tom rosa LS.", "status": "disponivel" },
+  { "id": "p13", "name": "Tênis Branco Casual Feminino", "category": "calcados", "price": 199.9, "image": "assets/prod-tenis-branco.jpg", "description": "Tênis branco clássico, combina com tudo. Estilo e conforto em um só modelo.", "status": "disponivel" },
+
+  { "id": "p14", "name": "Óculos de Sol LS Fashion", "category": "oculos", "price": 89.9, "image": "assets/prod-oculos-fashion.jpg", "description": "Óculos fashion com lentes degradê e hastes douradas, estilo moderno LS.", "status": "disponivel" },
+  { "id": "p15", "name": "Óculos de Sol Redondo Vintage", "category": "oculos", "price": 99.9, "image": "assets/prod-oculos-vintage.jpg", "description": "Óculos redondo retrô com lentes levemente rosadas, um charme.", "status": "disponivel" },
+
+  { "id": "p16", "name": "Batom Matte Rosa LS", "category": "cosmeticos", "price": 49.9, "image": "assets/prod-batom-rosa.jpg", "description": "Batom matte de longa duração, tom rosa LS perfeito para todos os tons de pele.", "status": "disponivel" },
+  { "id": "p17", "name": "Perfume LS Essence 50ml", "category": "cosmeticos", "price": 129.9, "image": "assets/prod-perfume-ls.jpg", "description": "Perfume feminino floral frutado, aroma leve e sofisticado LS.", "status": "disponivel" },
+
+  { "id": "p18", "name": "Creme Hidratante Corporal LS", "category": "beleza", "price": 69.9, "image": "assets/prod-hidratante.jpg", "description": "Hidratante corporal com fragrância suave e textura leve.", "status": "disponivel" },
+  { "id": "p19", "name": "Sérum Facial Iluminador", "category": "beleza", "price": 99.9, "image": "assets/prod-serum-facial.jpg", "description": "Sérum facial com toque seco, ideal para pele radiante e nutrida.", "status": "disponivel" },
+
+  { "id": "p20", "name": "Bolsa Rosa Pastel LS", "category": "acessorios", "price": 149.9, "image": "assets/prod-bolsa-rosa.jpg", "description": "Bolsa estruturada tom rosa LS, moderna e prática para o dia a dia.", "status": "disponivel" }
+];
+
+// --- Links Instagram (app + web)
+const instaDeepLink = `instagram://user?username=${INSTAGRAM_HANDLE.replace('@','')}`;
+const instaWeb = `https://www.instagram.com/${INSTAGRAM_HANDLE.replace('@','')}`;
+const instaLink = document.getElementById('insta-link');
+const footerInsta = document.getElementById('footer-insta');
+[instaLink, footerInsta].forEach(a => {
+  if (!a) return;
+  a.href = instaWeb;
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    window.location.href = instaDeepLink;
+    setTimeout(() => window.open(instaWeb, '_blank', 'noopener'), 700);
+  });
+});
+
+// --- Splash (corrigido para travamento)
+window.addEventListener('load', () => {
+  const splash = document.getElementById('splash');
+  if (!splash) return;
+  setTimeout(() => {
+    splash.classList.add('hidden');
+    setTimeout(() => splash.remove(), 800);
+  }, 2000);
+});
+
+// Failsafe extra: garante que o splash desapareça em qualquer cenário
+(function robustSplash(){
+  const kill = () => {
+    const s = document.getElementById('splash');
+    if (s) { s.classList.add('hidden'); setTimeout(()=>s.remove(), 800); }
+  };
+  // backup no DOMContentLoaded e um último timeout independente
+  document.addEventListener('DOMContentLoaded', () => setTimeout(kill, 3500));
+  setTimeout(kill, 5000);
+})();
+
+// --- Áudio (lazy init para iOS)
 let audioCtx;
 function getCtx() {
   if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   if (audioCtx.state === 'suspended') audioCtx.resume();
   return audioCtx;
 }
-function clickSoft() {
-  const ctx = getCtx();
-  const o = ctx.createOscillator();
-  const g = ctx.createGain();
-  const t = ctx.currentTime;
-  o.type = 'triangle';
-  o.frequency.setValueAtTime(500, t);
-  o.frequency.exponentialRampToValueAtTime(800, t + 0.08);
-  g.gain.setValueAtTime(0.001, t);
-  g.gain.exponentialRampToValueAtTime(0.1, t + 0.02);
-  g.gain.exponentialRampToValueAtTime(0.001, t + 0.2);
-  o.connect(g).connect(ctx.destination);
-  o.start(t);
-  o.stop(t + 0.25);
-}
 function playChime() {
   const ctx = getCtx();
+  const t = ctx.currentTime;
   const o = ctx.createOscillator();
   const g = ctx.createGain();
-  const t = ctx.currentTime;
   o.type = 'sine';
   o.frequency.setValueAtTime(880, t);
-  o.frequency.exponentialRampToValueAtTime(1320, t + 0.4);
-  g.gain.setValueAtTime(0.001, t);
-  g.gain.exponentialRampToValueAtTime(0.25, t + 0.05);
-  g.gain.exponentialRampToValueAtTime(0.001, t + 0.7);
+  o.frequency.exponentialRampToValueAtTime(1318, t + 0.35);
+  g.gain.setValueAtTime(0.0001, t);
+  g.gain.exponentialRampToValueAtTime(0.2, t + 0.02);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + 0.7);
   o.connect(g).connect(ctx.destination);
   o.start(t);
   o.stop(t + 0.75);
 }
+function clickSoft() {
+  const ctx = getCtx();
+  const t = ctx.currentTime;
+  const o = ctx.createOscillator();
+  const g = ctx.createGain();
+  o.type = 'triangle';
+  o.frequency.setValueAtTime(600, t);
+  o.frequency.exponentialRampToValueAtTime(900, t + 0.08);
+  g.gain.setValueAtTime(0.0001, t);
+  g.gain.exponentialRampToValueAtTime(0.12, t + 0.01);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + 0.15);
+  o.connect(g).connect(ctx.destination);
+  o.start(t);
+  o.stop(t + 0.18);
+}
 
-// --- SPLASH SCREEN (v14.0.1 Premium final - JSON na raiz) ---
+// --- Menu Drawer
+const drawer = document.getElementById('drawer');
+const menuBtn = document.getElementById('menu-btn');
+const closeDrawer = document.getElementById('close-drawer');
+
+menuBtn.onclick = () => {
+  drawer.setAttribute('aria-hidden', drawer.getAttribute('aria-hidden') === 'true' ? 'false' : 'true');
+  clickSoft();
+};
+closeDrawer.onclick = () => {
+  drawer.setAttribute('aria-hidden', 'true');
+  clickSoft();
+};
+drawer.querySelector('.drawer-backdrop').onclick = () => drawer.setAttribute('aria-hidden', 'true');
+
+// Accordion Produtos (100% funcional em desktop e mobile)
 document.addEventListener('DOMContentLoaded', () => {
-  const splash = document.getElementById('splash');
-  if (!splash) return;
+  const btn = document.querySelector('.drawer-accordion');
+  const sub = document.getElementById('sub-produtos');
+  if (!btn || !sub) return;
 
-  // Garante remoção suave e segura
-  let splashRemoved = false;
-  const removeSplash = () => {
-    if (splashRemoved) return;
-    splashRemoved = true;
-    splash.classList.add('hidden');
-    setTimeout(() => splash.remove(), 800);
-  };
-
-  // Remoção forçada após 5s se algo travar
-  const forceRemove = setTimeout(removeSplash, 5000);
-
-  // Remove quando a página carregar
-  window.addEventListener('load', () => {
-    clearTimeout(forceRemove);
-    setTimeout(removeSplash, 2000);
+  btn.addEventListener('click', () => {
+    const expanded = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', String(!expanded));
+    sub.hidden = expanded;
+    clickSoft(); // som suave no clique
   });
-
-  // Também remove assim que os produtos forem carregados
-  document.addEventListener('productsLoaded', removeSplash);
 });
 
-// ---------- FUNÇÃO: carregar catálogo ----------
-async function loadProducts() {
-  try {
-    // 🔹 JSON está na mesma pasta do index.html
-    const res = await fetch('products_v2.json');
-    const data = await res.json();
-    PRODUCTS = data;
-  } catch (err) {
-    console.warn('Catálogo não encontrado. Usando fallback local.');
-    PRODUCTS = [
-      {
-        name: 'Vestido Floral Verão',
-        price: 129.90,
-        description: 'Vestido leve e elegante com estampa floral exclusiva LS Store.',
-        image: 'assets/vestido1.jpg',
-        images: ['assets/vestido1.jpg', 'assets/vestido1b.jpg'],
-        sizes: ['P', 'M', 'G'],
-        colors: ['Rosa', 'Branco'],
-        status: 'disponível'
-      },
-      {
-        name: 'Cropped Lilás Premium',
-        price: 89.90,
-        description: 'Cropped moderno com tecido confortável e toque suave.',
-        image: 'assets/cropped1.jpg',
-        images: ['assets/cropped1.jpg', 'assets/cropped1b.jpg'],
-        sizes: ['P', 'M'],
-        colors: ['Lilás', 'Preto'],
-        status: 'esgotado'
+// --- Navegação entre seções
+document.querySelectorAll('.drawer-links a[data-section], .footer a[data-section]').forEach(a => {
+  a.onclick = e => {
+    e.preventDefault();
+    showSection(a.getAttribute('data-section'));
+    drawer.setAttribute('aria-hidden', 'true');
+  };
+});
+
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('visible'));
+  const sec = document.getElementById(id);
+  if (sec) sec.classList.add('visible');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// --- NOVO: link "Sobre Nós" no menu abre a seção correspondente
+(function sobreNosNav(){
+  const link = document.getElementById('sobre-nos-link');
+  if (!link) return;
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    showSection('sobre-nos');
+    drawer.setAttribute('aria-hidden', 'true');
+  });
+})();
+
+// =============================
+// BLOQUEIO DE LETRAS NO CAMPO "NÚMERO" (somente dígitos 0-9)
+// =============================
+(function onlyNumericNumberField() {
+  const numberInput = document.getElementById('number');
+  if (!numberInput) return;
+
+  // Ao digitar/colar, remove tudo que não for dígito
+  numberInput.addEventListener('input', () => {
+    numberInput.value = numberInput.value.replace(/\D+/g, '');
+  });
+
+  // Bloqueia caracteres não-numéricos no keypress
+  numberInput.addEventListener('keypress', e => {
+    const char = String.fromCharCode(e.which || e.keyCode);
+    if (!/[0-9]/.test(char)) e.preventDefault();
+  });
+})();
+
+// --- Catálogo de produtos dinâmico via products.json (com fallback robusto)
+let catalog = {};
+let featured = [];
+
+function buildCatalogAndRender(data) {
+  const normalizeSizes = (arr) => {
+    if (!Array.isArray(arr) || arr.length === 0) return ['Único'];
+    return arr.map(s => {
+      const t = String(s).trim();
+      if (t.toLowerCase() === 'único' || t.toLowerCase() === 'unico') return 'Único';
+      return t.toUpperCase();
+    });
+  };
+  const normalizeColors = (arr) => {
+    if (!Array.isArray(arr) || arr.length === 0) return ['Única'];
+    return arr.map(c => {
+      const txt = String(c).trim();
+      return txt.charAt(0).toUpperCase() + txt.slice(1);
+    });
+  };
+
+  catalog = {};
+  data.forEach(p => {
+    const cat = p.category || 'outros';
+    if (!catalog[cat]) catalog[cat] = [];
+
+    const sizes = normalizeSizes(p.sizes);
+    const colors = normalizeColors(p.colors);
+
+    catalog[cat].push({
+      id: p.id,
+      name: p.name,
+      price: p.price,
+      imgs: Array.isArray(p.images)
+  ? p.images.slice(0, 10)
+  : Array.isArray(p.image)
+    ? p.image.slice(0, 10)
+    : [p.image],
+      sizes,
+      colors,
+      stock: 5,
+      desc: p.description,
+      status: p.status
+    });
+  });
+    // Define os produtos em destaque (para o carrossel)
+  featured = data
+  .slice(0, 5)
+  .map(p => ({
+    id: p.id,
+    name: p.name,
+    price: p.price,
+    imgs: Array.isArray(p.images)
+      ? p.images
+      : Array.isArray(p.image)
+        ? p.image
+        : [p.image],
+    desc: p.description,
+    status: p.status
+  }));
+  renderAll();
+  initCarousel();
+  renderFooterProducts(featured.length ? featured : null);
+}
+
+// === Carregamento aprimorado do catálogo (corrigido — ignora falsos negativos do fetch) ===
+(function loadProducts() {
+  const url = 'products_v2.json?v=' + Date.now(); // força sempre nova versão
+
+  // Carrega catálogo com fallback interno
+  fetch(url, { cache: 'no-store' })
+    .then(res => {
+      if (!res.ok) throw new Error(`Erro HTTP ${res.status}`);
+      return res.json();
+    })
+    .then(data => {
+      console.log('✅ Catálogo carregado do arquivo externo:', url);
+      try {
+        buildCatalogAndRender(data);
+        console.log('🟢 Renderização iniciada...');
+      } catch (e) {
+        console.error('Erro ao montar catálogo:', e);
+        showAlert('Opa! Tivemos um erro ao montar o catálogo. Recarregue a página em alguns segundos.');
       }
-    ];
+
+      // ✅ Este setTimeout precisa estar DENTRO do .then(data => { ... })
+      setTimeout(() => {
+        const produtos = document.querySelectorAll('.product-item, .card');
+        if (produtos.length > 0) {
+          console.log('🟢 Catálogo carregado com sucesso após verificação.');
+          return; // tudo certo, não mostra alerta
+        }
+        // Só mostra o alerta se realmente não renderizou nada
+        showAlert('Não foi possível carregar os produtos atualizados. Recarregue a página em alguns segundos.');
+        console.error('❌ Nenhum produto renderizado após verificação.');
+      }, 2500); // 2,5 segundos de espera
+    })
+    .catch(err => {
+      console.error('❌ Erro ao carregar o catálogo:', err);
+      // Fallback: usa os produtos locais se der erro no fetch
+      buildCatalogAndRender(FALLBACK_PRODUCTS);
+    });
+})();
+
+function priceHTML(p) {
+  const v = p.discount ? (p.price * (1 - p.discount)) : p.price;
+  let s = `R$ ${v.toFixed(2).replace('.', ',')}`;
+  if (p.discount) {
+    s += ` <span style="text-decoration:line-through;color:#8a7aa5;font-size:12px;margin-left:6px">R$ ${p.price.toFixed(2).replace('.', ',')}</span>`;
+  }
+  return s;
+}
+function badgeHTML(p) {
+  if (p.status && p.status.toLowerCase() === 'esgotado')
+    return '<span class="badge">Esgotado</span>';
+  if (p.discount) return '<span class="badge">-30%</span>';
+  if (p.isNew) return '<span class="badge">Novo</span>';
+  return '';
+}
+function cardHTML(p) {
+  const sold = (p.status && p.status.toLowerCase() === 'esgotado') || p.stock <= 0;
+  return `<div class="card${sold ? ' soldout' : ''}" data-id="${p.id}">
+    ${badgeHTML(p)}
+    <img src="${(Array.isArray(p.images) ? p.images[0]
+  : Array.isArray(p.image) ? p.image[0]
+  : (p.images && p.images.length ? p.images[0]
+  : (p.imgs && p.imgs.length ? p.imgs[0]
+  : p.img || p.image)))}" alt="${p.name}">
+    <div class="info">
+      <p class="name">${p.name}</p>
+      <p class="price">${priceHTML(p)}</p>
+    </div>
+  </div>`;
+}
+// 🩶 Força reaplicação global do visual "esgotado"
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => {
+    document.querySelectorAll('.card').forEach(card => {
+      const isSold = card.textContent.toLowerCase().includes('esgotado');
+      if (isSold) card.classList.add('soldout');
+    });
+  }, 1200);
+});
+
+function renderGrid(el, arr) {
+  el.innerHTML = arr.map(p => {
+    const sold = (p.status && p.status.toLowerCase() === 'esgotado') || p.stock <= 0;
+    const soldClass = sold ? ' soldout' : '';
+    return `
+      <div class="card${soldClass}" data-id="${p.id}">
+        ${badgeHTML(p)}
+        <img src="${(p.images && p.images.length ? p.images[0] : (p.imgs && p.imgs.length ? p.imgs[0] : p.img || p.image))}" alt="${p.name}">
+        <div class="info">
+          <p class="name">${p.name}</p>
+          <p class="price">${priceHTML(p)}</p>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  // Só permite clique se o produto NÃO estiver esgotado
+  el.querySelectorAll('.card:not(.soldout)').forEach(c => {
+    c.onclick = () => openModal(c.getAttribute('data-id'));
+  });
+}
+
+function renderAll() {
+  const f = document.getElementById('featured'); if (f) renderGrid(f, featured);
+  // Força aplicação visual dos esgotados nos destaques
+if (f) {
+  f.querySelectorAll('.card').forEach(c => {
+    const isSold = c.textContent.toLowerCase().includes('esgotado');
+    if (isSold) c.classList.add('soldout');
+  });
+}
+  document.querySelectorAll('[data-cat]').forEach(g => {
+    const cat = g.getAttribute('data-cat');
+    renderGrid(g, catalog[cat] || []);
+  });
+}
+
+// 🩶 Correção — garante selo e efeito "esgotado" nos destaques da semana
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => {
+    document.querySelectorAll('#featured .card').forEach(card => {
+      const id = card.getAttribute('data-id');
+      const product = Object.values(catalog).flat().find(p => p.id === id);
+      if (product && product.status && product.status.toLowerCase() === 'esgotado') {
+        card.classList.add('soldout');
+      }
+    });
+  }, 1000);
+});
+
+// ===== Rodapé: vitrine horizontal com produtos reais =====
+function renderFooterProducts(listFromData) {
+  const box = document.getElementById('footer-products');
+  if (!box) return;
+
+  // Usa lista enviada ou junta todos do catálogo
+  let pool = listFromData;
+  if (!pool || !pool.length) {
+    pool = [];
+    for (const cat in catalog) {
+      (catalog[cat] || []).forEach(p => { if (p.stock > 0) pool.push(p); });
+    }
   }
 
-  renderProducts();
-  renderFooterVitrine();
+  // Limita para não pesar
+  const slice = pool.slice(0, 12);
 
-  // 🔹 Evento que avisa o splash pra desaparecer
-  document.dispatchEvent(new Event('productsLoaded'));
+  box.innerHTML = slice.map(p => `
+    <div class="footer-card" data-id="${p.id}" role="button" aria-label="${p.name}">
+          <img src="${(p.imgs ? p.imgs[0] : p.img || p.image)}" alt="${p.name}">
+      <div class="fc-info">
+        <div class="fc-name">${p.name}</div>
+        <div class="fc-price">R$ ${p.price.toFixed(2).replace('.', ',')}</div>
+      </div>
+    </div>
+  `).join('');
+
+  // Clique abre modal de produto
+  box.querySelectorAll('.footer-card').forEach(card => {
+    card.addEventListener('click', () => openModal(card.getAttribute('data-id')));
+  });
 }
-// --- BASE DO MODAL PREMIUM ---
+
+// =============================
+// MODAL DE PRODUTO (corrigido)
+// =============================
 const modal = document.getElementById('product-modal');
 const modalImgs = document.getElementById('modal-imgs');
 const modalName = document.getElementById('modal-name');
 const modalPrice = document.getElementById('modal-price');
 const modalDesc = document.getElementById('modal-desc');
-const modalClose = document.getElementById('modal-close');
-
 const sizeOpt = document.getElementById('size-options');
 const colorOpt = document.getElementById('color-options');
+const modalClose = document.getElementById('modal-close');
 
 let currentProduct = null;
 let selectedSize = '';
 let selectedColor = '';
 
-// ---------- FUNÇÃO: abrir modal ----------
-function openModalPremium(product) {
-  if (!product) return;
+function openModal(id) {
+  currentProduct = null;
+  for (const cat in catalog) {
+    const prod = (catalog[cat]||[]).find(p => p.id === id);
+    if (prod) { currentProduct = prod; break; }
+  }
+  if (!currentProduct) return;
 
-  currentProduct = product;
+  modalName.textContent = currentProduct.name;
+  modalPrice.textContent = `R$ ${currentProduct.price.toFixed(2).replace('.', ',')}`;
+  modalDesc.textContent = currentProduct.desc;
+
   selectedSize = '';
   selectedColor = '';
 
-  // Define conteúdo
-  modalName.textContent = product.name;
-  modalPrice.textContent = `R$ ${product.price.toFixed(2).replace('.', ',')}`;
-  modalDesc.textContent = product.description;
+// Normaliza imagens do produto (aceita images[], imgs[], image ou img)
+const imgsArr =
+  Array.isArray(currentProduct.images) ? currentProduct.images :
+  Array.isArray(currentProduct.image) ? currentProduct.image :
+  (currentProduct.images && currentProduct.images.length) ? currentProduct.images :
+  (currentProduct.imgs && currentProduct.imgs.length) ? currentProduct.imgs :
+  (currentProduct.img ? [currentProduct.img] :
+  (currentProduct.image ? [currentProduct.image] : []));
 
-  // Imagens
-  const imgs = Array.isArray(product.images)
-    ? product.images
-    : [product.image || product.img || 'assets/no-image.jpg'];
+const imgsHTML = imgsArr.slice(0, 10)
+  .map(i => `<img src="${i}" alt="${currentProduct.name}">`)
+  .join('');
+  modalImgs.innerHTML = imgsHTML;
 
-  modalImgs.innerHTML = imgs
-    .map(i => `<img src="${i}" alt="${product.name}">`)
-    .join('');
+  // --- Tamanhos
+  const sizes = Array.isArray(currentProduct.sizes) && currentProduct.sizes.length
+    ? currentProduct.sizes
+    : ['Único'];
+  if (sizes.length === 1) {
+    selectedSize = sizes[0];
+    sizeOpt.innerHTML = `<button class="active">${selectedSize}</button>`;
+  } else {
+    sizeOpt.innerHTML = sizes.map(s => `<button>${s}</button>`).join('');
+    sizeOpt.querySelectorAll('button').forEach(b => {
+      b.onclick = () => {
+        selectedSize = b.textContent;
+        sizeOpt.querySelectorAll('button').forEach(x => x.classList.remove('active'));
+        b.classList.add('active');
+      };
+    });
+  }
 
-  // Tamanhos
-  const sizes = product.sizes?.length ? product.sizes : ['Único'];
-  sizeOpt.innerHTML = sizes
-    .map(s => `<button>${s}</button>`)
-    .join('');
-  sizeOpt.querySelectorAll('button').forEach(btn => {
-    btn.onclick = () => {
-      selectedSize = btn.textContent;
-      sizeOpt.querySelectorAll('button').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-    };
-  });
+  // --- Cores
+  const colors = Array.isArray(currentProduct.colors) && currentProduct.colors.length
+    ? currentProduct.colors
+    : ['Única'];
+  if (colors.length === 1) {
+    selectedColor = colors[0];
+    colorOpt.innerHTML = `<button class="active">${selectedColor}</button>`;
+  } else {
+    colorOpt.innerHTML = colors.map(c => `<button>${c}</button>`).join('');
+    colorOpt.querySelectorAll('button').forEach(b => {
+      b.onclick = () => {
+        selectedColor = b.textContent;
+        colorOpt.querySelectorAll('button').forEach(x => x.classList.remove('active'));
+        b.classList.add('active');
+      };
+    });
+  }
 
-  // Cores
-  const colors = product.colors?.length ? product.colors : ['Única'];
-  colorOpt.innerHTML = colors
-    .map(c => `<button>${c}</button>`)
-    .join('');
-  colorOpt.querySelectorAll('button').forEach(btn => {
-    btn.onclick = () => {
-      selectedColor = btn.textContent;
-      colorOpt.querySelectorAll('button').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-    };
-  });
-
-  // Parcelamento dinâmico
-  const parcelDiv = document.createElement('div');
-  parcelDiv.className = 'parcelamento-box';
-  const parcelas = 6;
-  const valorParcela = (product.price / parcelas).toFixed(2).replace('.', ',');
-  parcelDiv.innerHTML = `
-    <p><strong>Ou em até ${parcelas}x</strong> de <strong>R$ ${valorParcela}</strong> sem juros 💳</p>
-  `;
-  modalDesc.insertAdjacentElement('afterend', parcelDiv);
-
-  // Botão WhatsApp Premium
-  const addBtn = document.getElementById('modal-add');
-  addBtn.className = 'btn-whatsapp';
-  addBtn.innerHTML = `<i class="fa-brands fa-whatsapp"></i> Comprar via WhatsApp`;
-
-  addBtn.onclick = () => {
-    if (!selectedSize && sizes.length > 1) {
-      showAlertPremium('Selecione o tamanho antes de continuar 💜');
-      return;
-    }
-    if (!selectedColor && colors.length > 1) {
-      showAlertPremium('Selecione a cor antes de continuar 💜');
-      return;
-    }
-
-    const msg = `
-🛍️ *Novo Pedido LS STORE*
-------------------------------
-👗 *Produto:* ${product.name}
-💰 *Preço:* R$ ${product.price.toFixed(2).replace('.', ',')}
-📏 *Tamanho:* ${selectedSize || sizes[0]}
-🎨 *Cor:* ${selectedColor || colors[0]}
-------------------------------
-💖 *Envie esta mensagem para confirmar seu pedido!*`;
-
-    const url = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
-    playChime();
-    window.open(url, '_blank');
-    modal.setAttribute('aria-hidden', 'true');
-  };
-
-  // Exibe modal
   modal.setAttribute('aria-hidden', 'false');
-  modal.classList.add('show');
+
+  setTimeout(() => {
+    const addBtn = document.getElementById('modal-add');
+    if (addBtn) {
+      addBtn.onclick = () => {
+        if (currentProduct.status && currentProduct.status.toLowerCase() === 'esgotado') {
+          showAlert('Este produto está esgotado no momento 💜');
+          return;
+        }
+        if ((sizes.length > 1 && !selectedSize) || (colors.length > 1 && !selectedColor)) {
+          showAlert('Por favor, selecione o tamanho e a cor antes de adicionar ao carrinho!');
+          return;
+        }
+        if (!selectedSize && sizes.length === 1) selectedSize = sizes[0];
+        if (!selectedColor && colors.length === 1) selectedColor = colors[0];
+
+        addToCart(currentProduct, selectedSize, selectedColor);
+        modal.setAttribute('aria-hidden', 'true');
+        playChime();
+      };
+    }
+  }, 100);
 }
 
-// ---------- FECHAR MODAL ----------
-modalClose.onclick = () => {
-  modal.classList.remove('show');
-  setTimeout(() => modal.setAttribute('aria-hidden', 'true'), 300);
-};
-modal.addEventListener('click', e => {
-  if (e.target === modal) modalClose.click();
-});
+modalClose.onclick = () => modal.setAttribute('aria-hidden', 'true');
+modal.addEventListener('click', e => { if (e.target === modal) modal.setAttribute('aria-hidden', 'true'); });
 
-// ---------- ALERTA PREMIUM ----------
-function showAlertPremium(msg) {
+function showAlert(msg) {
   const overlay = document.createElement('div');
-  overlay.className = 'alert-overlay';
+  overlay.style.position = 'fixed';
+  overlay.style.inset = '0';
+  overlay.style.background = 'rgba(0,0,0,.4)';
+  overlay.style.display = 'flex';
+  overlay.style.alignItems = 'center';
+  overlay.style.justifyContent = 'center';
+  overlay.style.zIndex = '9999';
   overlay.innerHTML = `
-    <div class="alert-box">
-      <h3>⚠️ Atenção</h3>
-      <p>${msg}</p>
-      <button>OK</button>
+    <div style="background:#fff;border-radius:16px;padding:20px 24px;text-align:center;max-width:320px;box-shadow:0 20px 60px rgba(0,0,0,.3)">
+      <p style="font-weight:600;color:#7A3BFD;margin-bottom:10px;">⚠️ Atenção</p>
+      <p style="margin-bottom:12px">${msg}</p>
+      <button style="background:linear-gradient(90deg,#E96BA8,#7A3BFD);color:#fff;border:0;border-radius:10px;padding:8px 16px;font-weight:600;cursor:pointer;">Ok</button>
     </div>`;
   overlay.querySelector('button').onclick = () => overlay.remove();
   document.body.appendChild(overlay);
 }
-/* ================================
-   LS STORE v14.0 — Parte 2/7
-   Catálogo, Cards e Integração Modal
-   ================================ */
 
-// ---------- VARIÁVEIS PRINCIPAIS ----------
-const productGrid = document.getElementById('product-grid');
-const footerVitrine = document.querySelector('.footer-vitrine .h-scroller');
-
-let PRODUCTS = [];
-
-// ---------- FUNÇÃO: renderizar produtos ----------
-function renderProducts() {
-  if (!productGrid) return;
-  productGrid.innerHTML = '';
-
-  PRODUCTS.forEach((product, index) => {
-    const card = document.createElement('div');
-    card.className = 'card fade-enter';
-    if (product.status === 'esgotado') card.classList.add('soldout');
-
-    card.innerHTML = `
-      <img src="${product.image}" alt="${product.name}">
-      <div class="info">
-        <div class="name">${product.name}</div>
-        <div class="price">R$ ${product.price.toFixed(2).replace('.', ',')}</div>
-      </div>
-    `;
-
-    card.addEventListener('click', () => {
-      if (product.status === 'esgotado') {
-        showAlertPremium('Este produto está ESGOTADO no momento 💔');
-        return;
-      }
-      openModalPremium(product);
-      clickSoft();
-    });
-
-    productGrid.appendChild(card);
-    setTimeout(() => card.classList.add('fade-enter-active'), 50 * index);
-  });
-}
-
-// ---------- FUNÇÃO: renderizar vitrine no rodapé ----------
-function renderFooterVitrine() {
-  if (!footerVitrine) return;
-  footerVitrine.innerHTML = '';
-
-  PRODUCTS.slice(0, 8).forEach((p) => {
-    const card = document.createElement('div');
-    card.className = 'footer-card';
-    if (p.status === 'esgotado') card.classList.add('soldout');
-    card.innerHTML = `
-      <img src="${p.image}" alt="${p.name}">
-      <div class="fc-info">
-        <div class="fc-name">${p.name}</div>
-        <div class="fc-price">R$ ${p.price.toFixed(2).replace('.', ',')}</div>
-      </div>
-    `;
-    card.onclick = () => {
-      if (p.status === 'esgotado') {
-        showAlertPremium('Produto ESGOTADO 😢');
-        return;
-      }
-      openModalPremium(p);
-    };
-    footerVitrine.appendChild(card);
-  });
-}
-/* ================================
-   LS STORE v14.0 — Parte 3/7
-   Busca inteligente + Scroll suave
-   ================================ */
-
-// ---------- ELEMENTOS ----------
-const searchInput = document.getElementById('search-input');
-const searchClear = document.getElementById('search-clear');
-const searchResults = document.querySelector('.search-results');
-const backToTop = document.getElementById('backToTop');
-
-// ---------- FUNÇÃO: buscar produtos ----------
-function searchProducts(term) {
-  if (!term.trim()) {
-    searchResults.innerHTML = '';
-    searchResults.style.display = 'none';
-    return;
-  }
-
-  const results = PRODUCTS.filter(p =>
-    p.name.toLowerCase().includes(term.toLowerCase())
-  );
-
-  if (!results.length) {
-    searchResults.innerHTML = `<p style="padding:10px;text-align:center;color:#888;">Nenhum produto encontrado 😢</p>`;
-    searchResults.style.display = 'block';
-    return;
-  }
-
-  searchResults.innerHTML = results
-    .map(p => `
-      <div class="search-item" onclick="selectSearchResult('${p.name}')">
-        <img src="${p.image}" alt="${p.name}">
-        <div>
-          <div><strong>${p.name}</strong></div>
-          <small>R$ ${p.price.toFixed(2).replace('.', ',')}</small>
-        </div>
-      </div>
-    `)
-    .join('');
-  searchResults.style.display = 'block';
-}
-
-// ---------- FUNÇÃO: selecionar resultado ----------
-function selectSearchResult(name) {
-  const product = PRODUCTS.find(p => p.name === name);
-  if (!product) return;
-  searchResults.innerHTML = '';
-  searchResults.style.display = 'none';
-
-  if (product.status === 'esgotado') {
-    showAlertPremium('Este produto está ESGOTADO no momento 💔');
-    return;
-  }
-
-  openModalPremium(product);
-  clickSoft();
-}
-
-// ---------- EVENTOS ----------
-if (searchInput) {
-  searchInput.addEventListener('input', e => {
-    searchProducts(e.target.value);
-  });
-}
-
-if (searchClear) {
-  searchClear.addEventListener('click', () => {
-    searchInput.value = '';
-    searchResults.innerHTML = '';
-    searchResults.style.display = 'none';
-    clickSoft();
-  });
-}
-
-// ---------- SCROLL SUAVE ----------
-window.addEventListener('scroll', () => {
-  const y = window.scrollY;
-  if (y > 400) {
-    backToTop.classList.add('show');
-  } else {
-    backToTop.classList.remove('show');
-  }
-});
-
-if (backToTop) {
-  backToTop.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    clickSoft();
-  });
-}
-
-// ---------- INTERAÇÃO EXTRA ----------
-document.addEventListener('click', e => {
-  if (!searchResults.contains(e.target) && e.target !== searchInput) {
-    searchResults.innerHTML = '';
-    searchResults.style.display = 'none';
-  }
-});
-/* ================================
-   LS STORE v14.0 — Parte 4/7
-   Carrinho Premium + WhatsApp integração
-   ================================ */
-
-// ---------- VARIÁVEIS ----------
+// =============================
+// CARRINHO (v11.4.1 — correção estável, sem mudar o visual)
+// =============================
 const cart = document.getElementById('cart');
 const cartBtn = document.getElementById('cart-btn');
-const closeCart = document.getElementById('close-cart');
+const cartCount = document.getElementById('cart-count');
 const cartItems = document.getElementById('cart-items');
 const cartTotal = document.getElementById('cart-total');
 const finalTotal = document.getElementById('final-total');
-const deliveryFee = document.getElementById('delivery-fee');
 const feeValue = document.getElementById('fee-value');
-const checkoutBtn = document.getElementById('checkout');
+const deliveryFee = document.getElementById('delivery-fee');
+const closeCart = document.getElementById('close-cart');
+const checkout = document.getElementById('checkout');
 
-let CART = [];
+let items = JSON.parse(localStorage.getItem('cartItems') || '[]');
 
-// ---------- FUNÇÃO: abrir/fechar carrinho ----------
+// Abrir e fechar carrinho
 cartBtn.onclick = () => {
-  const hidden = cart.getAttribute('aria-hidden') === 'true';
-  cart.setAttribute('aria-hidden', hidden ? 'false' : 'true');
-  clickSoft();
+  cart.setAttribute('aria-hidden', 'false');
+  renderCart();
 };
-closeCart.onclick = () => {
-  cart.setAttribute('aria-hidden', 'true');
-  clickSoft();
-};
+closeCart.onclick = () => cart.setAttribute('aria-hidden', 'true');
 
-// ---------- FUNÇÃO: adicionar produto ----------
-function addToCart(product, size, color) {
-  const item = { ...product, size, color, qty: 1 };
-  CART.push(item);
-  updateCart();
-  playChime();
-  showPopup('Produto adicionado ao carrinho! 🛍️');
+// Atualiza contador no botão 🛒
+function updateCartCount() {
+  cartCount.textContent = items.length;
+  localStorage.setItem('cartItems', JSON.stringify(items));
 }
 
-// ---------- FUNÇÃO: remover produto ----------
-function removeFromCart(index) {
-  CART.splice(index, 1);
-  updateCart();
-  clickSoft();
+// Atualiza totais visuais
+function refreshTotalsUI() {
+  const total = items.reduce((acc, it) => acc + it.price, 0);
+  cartTotal.textContent = total.toFixed(2).replace('.', ',');
+  finalTotal.textContent = total.toFixed(2).replace('.', ',');
+  feeValue.textContent = '0,00';
+  updateCartCount();
 }
 
-// ---------- FUNÇÃO: atualizar carrinho ----------
-function updateCart() {
-  if (!cartItems) return;
+// Renderiza o carrinho com itens e botões de remover
+function renderCart() {
   cartItems.innerHTML = '';
-  let total = 0;
+  if (items.length === 0) {
+    cartItems.innerHTML = '<p class="empty">Seu carrinho está vazio 💕</p>';
+    refreshTotalsUI();
+    return;
+  }
 
-  CART.forEach((item, i) => {
-    total += item.price * item.qty;
-
+  items.forEach((it, i) => {
     const row = document.createElement('div');
     row.className = 'row';
+    row.style.display = 'grid';
+    row.style.gridTemplateColumns = '1fr auto auto';
+    row.style.gap = '8px';
     row.innerHTML = `
-      <div><strong>${item.name}</strong><br><small>${item.size || ''} ${item.color || ''}</small></div>
-      <div><small>R$ ${(item.price).toFixed(2).replace('.', ',')}</small></div>
-      <div><small>x${item.qty}</small></div>
-      <button class="remove-btn">✕</button>
+      <small>${it.name} (${it.size}/${it.color})</small>
+      <small>R$ ${it.price.toFixed(2).replace('.', ',')}</small>
+      <button data-i="${i}" style="border:0;background:transparent;color:#E96BA8;font-weight:700;cursor:pointer;">✕</button>
     `;
-    row.querySelector('.remove-btn').onclick = () => removeFromCart(i);
     cartItems.appendChild(row);
   });
 
-  cartTotal.textContent = total.toFixed(2).replace('.', ',');
-  finalTotal.textContent = total.toFixed(2).replace('.', ',');
-
-  document.getElementById('cart-count').textContent = CART.length;
-}
-
-// ---------- POPUP DE SUCESSO ----------
-function showPopup(msg) {
-  const popup = document.createElement('div');
-  popup.className = 'popup';
-  popup.innerHTML = `<p>${msg}</p>`;
-  document.body.appendChild(popup);
-  setTimeout(() => popup.classList.add('show'), 50);
-  setTimeout(() => popup.remove(), 2200);
-}
-
-// ---------- CALCULAR ENTREGA ----------
-const neighborhoodSelect = document.getElementById('neighborhood');
-const deliveryType = document.getElementById('delivery-type');
-const fees = {
-  "Mathias Velho": 5, "Harmonia": 6, "Mato Grande": 7, "São Luís": 8,
-  "Centro": 8, "Fátima": 9, "Igara": 10, "Rio Branco": 10, "Industrial": 11,
-  "Guajuviras": 11, "Marechal Rondon": 12, "Estância Velha": 13, "Olaria": 13, "Outra Cidade": 15
-};
-
-function updateFee() {
-  const tipo = deliveryType.value;
-  if (tipo === 'retirada') {
-    deliveryFee.style.display = 'none';
-    feeValue.textContent = '0,00';
-  } else {
-    const bairro = neighborhoodSelect.value;
-    const fee = fees[bairro] || 0;
-    deliveryFee.style.display = fee > 0 ? 'block' : 'none';
-    feeValue.textContent = fee.toFixed(2).replace('.', ',');
-    const total = parseFloat(cartTotal.textContent.replace(',', '.')) + fee;
-    finalTotal.textContent = total.toFixed(2).replace('.', ',');
-  }
-}
-neighborhoodSelect.addEventListener('change', updateFee);
-deliveryType.addEventListener('change', updateFee);
-
-// ---------- FUNÇÃO: finalizar compra ----------
-checkoutBtn.onclick = () => {
-  if (CART.length === 0) {
-    showAlertPremium('Seu carrinho está vazio 💔');
-    return;
-  }
-
-  const name = document.getElementById('client-name').value.trim();
-  const payment = document.getElementById('payment').value;
-  const entrega = deliveryType.value;
-  const bairro = neighborhoodSelect.value;
-  const notes = document.getElementById('order-notes').value.trim();
-  const total = finalTotal.textContent;
-
-  if (!name) {
-    showAlertPremium('Informe seu nome completo 💖');
-    return;
-  }
-
-  let message = `🛍️ *Novo Pedido LS STORE*%0A%0A`;
-  message += `👩 Cliente: *${name}*%0A`;
-  message += `💳 Pagamento: *${payment}*%0A`;
-  message += `🚚 Entrega: *${entrega === 'entrega' ? 'Com entrega' : 'Retirada'}*%0A`;
-  if (entrega === 'entrega') message += `🏘️ Bairro: *${bairro}*%0A`;
-  message += `%0A*Itens:*%0A`;
-
-  CART.forEach((item, i) => {
-    message += `${i + 1}. ${item.name} — R$ ${item.price.toFixed(2).replace('.', ',')}%0A`;
-    if (item.size) message += `   Tamanho: ${item.size}%0A`;
-    if (item.color) message += `   Cor: ${item.color}%0A`;
+  // Liga eventos de remover corretamente
+  cartItems.querySelectorAll('button').forEach(b => {
+    b.onclick = () => {
+      const idx = parseInt(b.dataset.i);
+      items.splice(idx, 1);
+      localStorage.setItem('cartItems', JSON.stringify(items));
+      renderCart();
+      refreshTotalsUI();
+    };
   });
 
-  message += `%0A💰 *Total Final:* R$ ${total}%0A`;
-  if (notes) message += `%0A📋 Observações: ${notes}%0A`;
-  message += `%0A💬 Envie esta mensagem para confirmar seu pedido!`;
-
-  const url = `https://wa.me/${WHATSAPP}?text=${message}`;
-  playChime();
-  window.open(url, '_blank');
-  showPopup('Abrindo WhatsApp Premium 💬');
-  CART = [];
-  updateCart();
-  cart.setAttribute('aria-hidden', 'true');
-};
-/* ================================
-   LS STORE v14.0 — Parte 5/7
-   Conta do Cliente + Favoritos + Histórico
-   ================================ */
-
-// ---------- VARIÁVEIS ----------
-const accountArea = document.getElementById('account-area');
-const loginBtn = document.getElementById('login-btn');
-const favBtn = document.getElementById('fav-btn');
-const favCount = document.getElementById('fav-count');
-
-let FAVORITES = JSON.parse(localStorage.getItem('favorites') || '[]');
-let RECENT = JSON.parse(localStorage.getItem('recent') || '[]');
-
-// ---------- FUNÇÃO: abrir conta ----------
-if (loginBtn) {
-  loginBtn.onclick = () => {
-    clickSoft();
-    accountArea.innerHTML = `
-      <div class="auth-card">
-        <div class="auth-title">
-          <h3>Minha Conta</h3>
-          <button class="close-auth">✕</button>
-        </div>
-        <label>Seu nome
-          <input type="text" id="user-name" placeholder="Ex: Maria Eduarda">
-        </label>
-        <label>Email
-          <input type="email" id="user-email" placeholder="seuemail@email.com">
-        </label>
-        <label>Telefone
-          <input type="tel" id="user-phone" placeholder="(51) 99999-9999">
-        </label>
-        <button class="add-btn" id="save-account">Salvar</button>
-      </div>
-    `;
-
-    accountArea.querySelector('.close-auth').onclick = () => {
-      accountArea.innerHTML = '';
-    };
-
-    accountArea.querySelector('#save-account').onclick = () => {
-      const name = document.getElementById('user-name').value.trim();
-      const email = document.getElementById('user-email').value.trim();
-      const phone = document.getElementById('user-phone').value.trim();
-
-      if (!name || !email) {
-        showAlertPremium('Preencha todos os campos obrigatórios 💖');
-        return;
-      }
-
-      localStorage.setItem('userData', JSON.stringify({ name, email, phone }));
-      showPopup('Conta salva com sucesso! 💎');
-      accountArea.innerHTML = '';
-    };
-  };
+  refreshTotalsUI();
 }
 
-// ---------- FUNÇÃO: adicionar/remover favoritos ----------
-function toggleFavorite(product) {
-  const exists = FAVORITES.find(p => p.name === product.name);
-  if (exists) {
-    FAVORITES = FAVORITES.filter(p => p.name !== product.name);
-    showPopup('Removido dos favoritos 💔');
-  } else {
-    FAVORITES.push(product);
-    showPopup('Adicionado aos favoritos 💖');
+// Adiciona item ao carrinho
+function addToCart(prod, size, color) {
+  // Adiciona item ao carrinho e salva
+  items.push({ name: prod.name, size, color, price: prod.price });
+  localStorage.setItem('cartItems', JSON.stringify(items));
+
+  // 🛍️ Efeito visual do produto "voando" até o carrinho
+  const firstImg = (prod.imgs && prod.imgs[0]) || prod.img || '';
+  if (firstImg) {
+    const btn = document.getElementById('modal-add');
+    if (btn) {
+      const rect = btn.getBoundingClientRect();
+      flyToCart(firstImg, rect.x, rect.y);
+    }
   }
-  localStorage.setItem('favorites', JSON.stringify(FAVORITES));
-  updateFavCount();
+
+  // 💥 Efeito de explosão no botão do carrinho
+  cartBtn.classList.add('pulse');
+  setTimeout(() => cartBtn.classList.remove('pulse'), 400);
+
+  // 🔄 Atualiza interface do carrinho
+  renderCart();
+  refreshTotalsUI();
+
+  // 🧮 Corrige o número no carrinho (atualiza imediatamente)
+  const el = document.getElementById('cart-count');
+  if (el) el.textContent = items.length;
 }
 
-// ---------- FUNÇÃO: atualizar contador ----------
-function updateFavCount() {
-  if (favCount) favCount.textContent = FAVORITES.length;
+// Inicialização
+document.addEventListener('DOMContentLoaded', () => {
+  renderCart();
+  refreshTotalsUI();
+  updateCartCount();
+});
+
+// 🔧 FIX — garante que todos os produtos esgotados fiquem com o visual correto em qualquer seção
+document.addEventListener('DOMContentLoaded', () => {
+  const applySoldOutVisual = () => {
+    document.querySelectorAll('.card, .slide, .footer-card').forEach(el => {
+      const isSold = el.textContent.toLowerCase().includes('esgotado');
+      if (isSold) el.classList.add('soldout');
+    });
+  };
+
+  // Executa logo após renderizar
+  setTimeout(applySoldOutVisual, 600);
+
+  // Reexecuta depois pra garantir que o catálogo todo esteja na tela
+  setTimeout(applySoldOutVisual, 2000);
+});
+
+// =============================
+// ENTREGA, PAGAMENTO E WHATSAPP
+// =============================
+const nameInput = document.getElementById('client-name');
+const paymentSel = document.getElementById('payment');
+const cashSection = document.getElementById('cash-section');
+const cashRadios = cashSection.querySelectorAll('input[name="cash-change"]');
+const cashAmount = document.getElementById('cash-amount');
+const deliveryType = document.getElementById('delivery-type');
+const addressFields = document.getElementById('address-fields');
+const neighborhood = document.getElementById('neighborhood');
+const orderNotes = document.getElementById('order-notes');
+
+paymentSel.onchange = () => {
+  const v = paymentSel.value;
+  cashSection.style.display = (v === 'Dinheiro') ? 'block' : 'none';
+};
+cashRadios.forEach(r => r.onchange = () => {
+  cashAmount.style.display = (r.value === 'sim') ? 'inline-block' : 'none';
+});
+deliveryType.onchange = () => {
+  addressFields.style.display = (deliveryType.value === 'entrega') ? 'block' : 'none';
+  refreshFinalTotals();
+};
+neighborhood.onchange = refreshFinalTotals;
+
+function calcFee() {
+  if (deliveryType.value !== 'entrega') return 0;
+  const bairro = neighborhood.value;
+  const fee = FEES[bairro];
+  return (typeof fee === 'number') ? fee : 0;
 }
-updateFavCount();
+function refreshFinalTotals() {
+  const produtos = parseFloat(cartTotal.textContent.replace(',', '.')) || 0;
+  const fee = calcFee();
 
-// ---------- FUNÇÃO: exibir favoritos ----------
-if (favBtn) {
-  favBtn.onclick = () => {
-    clickSoft();
-    showSection('favoritos');
-    const favSection = document.getElementById('favoritos-list');
-    if (!favSection) return;
+  if (deliveryType.value === 'entrega') {
+    deliveryFee.style.display = 'block';
+    const bairro = neighborhood.value;
+    const val = FEES[bairro];
+    feeValue.textContent = (typeof val === 'number' ? val : 0).toFixed(2).replace('.', ',');
+  } else {
+    deliveryFee.style.display = 'none';
+    feeValue.textContent = '0,00';
+  }
 
-    if (!FAVORITES.length) {
-      favSection.innerHTML = '<p style="text-align:center;color:#999;">Nenhum favorito ainda 💔</p>';
+  const final = produtos + fee;
+  finalTotal.textContent = final.toFixed(2).replace('.', ',');
+}
+refreshTotalsUI();
+
+checkout.onclick = () => {
+  if (items.length === 0) { showAlert('Seu carrinho está vazio.'); return; }
+  if (!nameInput.value.trim()) { showAlert('Por favor, informe seu nome.'); return; }
+
+  const client = nameInput.value.trim();
+  const payment = paymentSel.value;
+  const entrega = deliveryType.value;
+
+  let rua = '', numero = '', bairro = neighborhood.value;
+  if (entrega === 'entrega') {
+    rua = document.getElementById('street').value.trim();
+    numero = document.getElementById('number').value.trim();
+    if (!rua || !numero || !bairro) {
+      showAlert('Para entrega, preencha Rua, Número e Bairro.');
       return;
     }
+  }
 
-    favSection.innerHTML = FAVORITES.map(p => `
-      <div class="fav-card">
-        <img src="${p.image}" alt="${p.name}">
-        <div class="info">
-          <div class="name">${p.name}</div>
-          <div class="price">R$ ${p.price.toFixed(2).replace('.', ',')}</div>
-          <button class="add-btn" onclick='openModalPremium(${JSON.stringify(p)})'>Ver Produto</button>
-        </div>
+  const obs = orderNotes.value.trim() || 'Nenhuma';
+  const feeRaw = entrega === 'entrega' ? FEES[bairro] || 'consultar' : 0;
+  let total = parseFloat(cartTotal.textContent.replace(',', '.'));
+  if (typeof feeRaw === 'number') total += feeRaw;
+
+  let valorPago = '', troco = '';
+  if (payment === 'Dinheiro') {
+    const trocoOp = [...cashRadios].find(r => r.checked)?.value || 'nao';
+    if (trocoOp === 'sim' && cashAmount.value) {
+      valorPago = parseFloat(cashAmount.value.replace(',', '.')).toFixed(2).replace('.', ',');
+      troco = (parseFloat(valorPago.replace(',', '.')) - total).toFixed(2).replace('.', ',');
+    } else troco = 'Não precisa';
+  }
+
+  const itensTxt = items.map(it => `
+---------------------------------
+👗 *Produto:* ${it.name}
+📏 *Tamanho:* ${it.size}
+🎨 *Cor:* ${it.color}
+💰 *Preço:* R$ ${it.price.toFixed(2).replace('.', ',')}
+---------------------------------`).join('');
+
+  const enderecoTxt = entrega === 'entrega'
+    ? `${rua}, ${numero} - ${bairro}`
+    : 'Retirada na loja';
+
+  const taxaTxt = (typeof feeRaw === 'number')
+    ? `R$ ${feeRaw.toFixed(2).replace('.', ',')}`
+    : feeRaw;
+
+  const msg = `🛍️ *NOVO PEDIDO - LS STORE*
+---------------------------------
+👩‍💖 *Cliente:* ${client}
+📦 *Entrega:* ${entrega}
+🏡 *Endereço:* ${enderecoTxt}
+💬 *Observações:* ${obs}
+
+🧺 *Itens do pedido:*
+${itensTxt}
+
+💳 *Pagamento:* ${payment}
+🚚 *Taxa de entrega:* ${taxaTxt}
+💰 *Total final:* R$ ${total.toFixed(2).replace('.', ',')}
+${
+  payment === 'Dinheiro'
+    ? `${valorPago ? `\n💵 *Valor pago:* R$ ${valorPago}` : ''}\n🔁 *Troco:* ${troco}`
+    : ''
+}
+---------------------------------
+✨ *Obrigada por comprar na LS Store!* 💖`;
+
+  const url = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
+    const pop = document.getElementById('popup-overlay');
+  pop.hidden = false;
+  pop.classList.add('show');
+
+  // 💬 Mostra popup primeiro e abre o WhatsApp com leve atraso (1 s)
+  setTimeout(() => {
+    window.location.href = url;
+  }, 1200);
+
+  // ⏳ Mantém o popup visível por 2,5 s antes de sumir
+  setTimeout(() => {
+    pop.classList.remove('show');
+    pop.hidden = true;
+  }, 3500);
+};
+
+// =============================
+// VOLTAR AO TOPO
+// =============================
+const backToTop = document.getElementById('backToTop');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 400) backToTop.classList.add('show');
+  else backToTop.classList.remove('show');
+});
+backToTop.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+
+// =============================
+// LOGIN BONITO (ENTRAR)
+// =============================
+const loginBtn = document.getElementById('login-btn');
+const accountArea = document.getElementById('account-area');
+
+// Garante que o botão existe antes de ativar o clique
+if (loginBtn) {
+  loginBtn.onclick = () => {
+    accountArea.innerHTML = `
+    <div class="auth-card">
+      <div class="auth-title">
+        <h3>Entrar</h3>
+        <button class="close-auth">✕</button>
       </div>
-    `).join('');
+      <label>Email
+        <input type="email" id="login-email" placeholder="seuemail@email.com">
+      </label>
+      <label>Senha
+        <input type="password" id="login-pass" placeholder="••••••••">
+      </label>
+      <div class="auth-actions">
+        <button class="add-btn" id="login-ok">Entrar</button>
+        <button class="add-btn" style="background:linear-gradient(90deg,#E96BA8,#7A3BFD)" id="register">Criar conta</button>
+      </div>
+    </div>`;
+
+    accountArea.querySelector('.close-auth').onclick = () => accountArea.innerHTML = '';
+    accountArea.querySelector('#login-ok').onclick = () => showAlert('Função de login em desenvolvimento 💜');
+    accountArea.querySelector('#register').onclick = () => showAlert('Cadastro disponível em breve 💖');
+    showSection('minha-conta');
   };
 }
 
-// ---------- FUNÇÃO: histórico de visualização ----------
-function addRecent(product) {
-  RECENT = RECENT.filter(p => p.name !== product.name);
-  RECENT.unshift(product);
-  if (RECENT.length > 5) RECENT.pop();
-  localStorage.setItem('recent', JSON.stringify(RECENT));
+// =============================
+// ADMIN (gerar PDF pedidos)
+// =============================
+if (ADMIN_MODE) {
+  const pdfBtn = document.createElement('button');
+  pdfBtn.textContent = 'Gerar PDF';
+  pdfBtn.style = 'position:fixed;bottom:90px;right:16px;background:#7A3BFD;color:#fff;border:0;border-radius:12px;padding:10px 16px;font-weight:700;cursor:pointer;z-index:9999;';
+  document.body.appendChild(pdfBtn);
+  pdfBtn.onclick = () => {
+    const doc = new jsPDF();
+    doc.text('Pedidos LS STORE', 20, 20);
+    let y = 40;
+    items.forEach((it, i) => {
+      doc.text(`${i + 1}. ${it.name} - ${it.size}/${it.color} - R$${it.price.toFixed(2)}`, 20, y);
+      y += 10;
+    });
+    doc.save('pedido-lsstore.pdf');
+  };
 }
 
-// ---------- MOSTRAR HISTÓRICO NA HOME ----------
-function renderRecent() {
-  const container = document.getElementById('recent-products');
-  if (!container || RECENT.length === 0) return;
+// CARROSSEL (produtos + swipe)
+window.initCarousel = function(){
+  const wrap = document.getElementById('carousel');
+  if (!wrap) return;
+  const slides = document.getElementById('carousel-slides');
+  const dotsBox = document.getElementById('carousel-dots');
 
-  container.innerHTML = RECENT.map(p => `
-    <div class="card" onclick='openModalPremium(${JSON.stringify(p)})'>
-      <img src="${p.image}" alt="${p.name}">
-      <div class="info">
-        <div class="name">${p.name}</div>
-        <div class="price">R$ ${p.price.toFixed(2).replace('.', ',')}</div>
+  // Monta slides a partir de "featured"
+  slides.innerHTML = featured.map((p, i) => `
+    <div class="slide" data-id="${p.id}" role="button" aria-label="${p.name}">
+      <img src="${(p.imgs ? p.imgs[0] : p.img)}" alt="${p.name}">
+      ${badgeHTML(p)}
+      <div class="slide-caption">
+        <strong>${p.name}</strong>
+        <span>${priceHTML(p)}</span>
       </div>
     </div>
   `).join('');
-}
 
-// Renderiza o histórico ao carregar
+  dotsBox.innerHTML = featured.map((_, i) => `<button class="dot ${i===0?'active':''}" data-i="${i}" aria-label="Slide ${i+1}"></button>`).join('');
 
-/* ================================
-   LS STORE v14.0 — Parte 6/7
-   Efeitos, sons e alertas Premium
-   ================================ */
+  const dots = [...dotsBox.querySelectorAll('.dot')];
+  let idx = 0;
+  let isDown = false;
+  let startX = 0;
+  let currentX = 0;
+  let delta = 0;
+  let width = wrap.clientWidth;
+  let timer = null;
 
-// ---------- ÁUDIO PREMIUM ----------
-let audioCtx;
-function getCtx() {
-  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  if (audioCtx.state === 'suspended') audioCtx.resume();
-  return audioCtx;
-}
+  function go(i, withAnim = true){
+    idx = (i + featured.length) % featured.length;
+    if (withAnim) slides.style.transition = 'transform .35s ease';
+    else slides.style.transition = 'none';
+    slides.style.transform = `translateX(-${idx * 100}%)`;
+    dots.forEach(d => d.classList.remove('active'));
+    dots[idx].classList.add('active');
+  }
 
-// Som de clique suave
-function clickSoft() {
-  const ctx = getCtx();
-  const t = ctx.currentTime;
-  const o = ctx.createOscillator();
-  const g = ctx.createGain();
-  o.type = 'triangle';
-  o.frequency.setValueAtTime(500, t);
-  o.frequency.exponentialRampToValueAtTime(800, t + 0.12);
-  g.gain.setValueAtTime(0.0001, t);
-  g.gain.exponentialRampToValueAtTime(0.08, t + 0.02);
-  g.gain.exponentialRampToValueAtTime(0.0001, t + 0.25);
-  o.connect(g).connect(ctx.destination);
-  o.start(t);
-  o.stop(t + 0.3);
-}
+  // Autoplay leve
+  function startAuto(){
+    stopAuto();
+    timer = setInterval(()=>go(idx+1), 6000);
+  }
+  function stopAuto(){
+    if (timer) clearInterval(timer);
+    timer = null;
+  }
 
-// Som de confirmação (compra)
-function playChime() {
-  const ctx = getCtx();
-  const t = ctx.currentTime;
-  const o = ctx.createOscillator();
-  const g = ctx.createGain();
-  o.type = 'sine';
-  o.frequency.setValueAtTime(660, t);
-  o.frequency.exponentialRampToValueAtTime(990, t + 0.3);
-  g.gain.setValueAtTime(0.0001, t);
-  g.gain.exponentialRampToValueAtTime(0.2, t + 0.02);
-  g.gain.exponentialRampToValueAtTime(0.0001, t + 0.6);
-  o.connect(g).connect(ctx.destination);
-  o.start(t);
-  o.stop(t + 0.7);
-}
+  // Click abre modal
+  slides.querySelectorAll('.slide').forEach(sl => {
+    sl.addEventListener('click', () => {
+      const id = sl.getAttribute('data-id');
+      if (Math.abs(delta) < 10) openModal(id); // evita abrir se foi swipe
+    });
+  });
 
-// ---------- ALERTA PREMIUM ----------
-function showAlertPremium(msg) {
-  const overlay = document.createElement('div');
-  overlay.className = 'alert-overlay';
-  overlay.innerHTML = `
-    <div class="alert-card">
-      <div class="alert-header">⚠️ Atenção</div>
-      <p>${msg}</p>
-      <button class="alert-btn">Ok</button>
-    </div>
-  `;
-  document.body.appendChild(overlay);
+  // Dots clicáveis
+  dots.forEach(d => d.addEventListener('click', () => { go(parseInt(d.dataset.i, 10)); startAuto(); }));
 
-  const btn = overlay.querySelector('.alert-btn');
-  btn.onclick = () => {
-    overlay.classList.add('hide');
-    setTimeout(() => overlay.remove(), 300);
-    clickSoft();
-  };
-}
+  // Touch/drag
+  function onStart(x){
+    isDown = true; startX = x; currentX = x; delta = 0;
+    stopAuto();
+    slides.style.transition = 'none';
+  }
+  function onMove(x){
+    if (!isDown) return;
+    currentX = x;
+    delta = currentX - startX;
+    const percent = (delta / width) * 100;
+    slides.style.transform = `translateX(calc(${-idx*100}% + ${percent}%))`;
+  }
+  function onEnd(){
+    if (!isDown) return;
+    isDown = false;
+    const threshold = width * 0.15; // 15%
+    if (delta > threshold) go(idx-1);
+    else if (delta < -threshold) go(idx+1);
+    else go(idx, true);
+    startAuto();
+  }
 
-// ---------- POPUP PREMIUM ----------
-function showPopup(msg) {
-  const popup = document.createElement('div');
-  popup.className = 'popup-premium';
-  popup.innerHTML = `<p>${msg}</p>`;
-  document.body.appendChild(popup);
-  setTimeout(() => popup.classList.add('show'), 50);
-  setTimeout(() => popup.remove(), 2600);
-}
+  wrap.addEventListener('touchstart', e => onStart(e.touches[0].clientX), {passive:true});
+  wrap.addEventListener('touchmove', e => onMove(e.touches[0].clientX), {passive:true});
+  wrap.addEventListener('touchend', onEnd);
+  wrap.addEventListener('mousedown', e => onStart(e.clientX));
+  window.addEventListener('mousemove', e => onMove(e.clientX));
+  window.addEventListener('mouseup', onEnd);
+  window.addEventListener('resize', ()=>{ width = wrap.clientWidth; go(idx,false); });
 
-// ---------- ANIMAÇÃO DE ENTRADA ----------
+  wrap.addEventListener('mouseenter', stopAuto);
+  wrap.addEventListener('mouseleave', startAuto);
+
+  // Estado inicial
+  go(0,false);
+  startAuto();
+};
+// 🔧 FIX — garante que produtos esgotados fiquem com o visual "ESGOTADO" mesmo após re-render
 document.addEventListener('DOMContentLoaded', () => {
-  document.body.classList.add('fade-in');
-  setTimeout(() => document.body.classList.add('ready'), 500);
+  const applySoldOutVisual = () => {
+    document.querySelectorAll('.card').forEach(card => {
+      const isSold = card.textContent.toLowerCase().includes('esgotado');
+      if (isSold) card.classList.add('soldout');
+    });
+  };
+  applySoldOutVisual();
+  // Também reexecuta após carregar catálogo
+  setTimeout(applySoldOutVisual, 1500);
 });
 
-// ---------- OBSERVADOR DE ELEMENTOS (aparece ao rolar) ----------
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
+// =============================
+// BUSCA funcional (nome/cor/categoria)
+// =============================
+(function initSearch(){
+  const input = document.getElementById('search-input');
+  const clearBtn = document.getElementById('search-clear');
+  const resultsBox = document.getElementById('search-results');
+
+  function allProducts(){
+    const arr = [];
+    for (const cat in catalog) {
+      (catalog[cat]||[]).forEach(p => arr.push({...p, _cat: cat}));
     }
-  });
-}, { threshold: 0.2 });
-
-document.querySelectorAll('.fade-on-scroll').forEach(el => observer.observe(el));
-/* ================================
-   LS STORE v14.0 — Parte 7/7
-   Modal Premium Final: Parcelas + Ver Mais Fotos + Confirmação WhatsApp
-   ================================ */
-
-(function () {
-  // Configurações de parcelamento (sem juros)
-  const MAX_INSTALLMENTS = 8; // até 8x sem juros
-  const MIN_PER_INSTALLMENT = 20; // parcela mínima (R$)
-
-  const modal = document.getElementById('product-modal');
-  const modalImgs = document.getElementById('modal-imgs');
-  const modalName = document.getElementById('modal-name');
-  const modalPrice = document.getElementById('modal-price');
-  const modalDesc = document.getElementById('modal-desc');
-  const sizeOpt = document.getElementById('size-options');
-  const colorOpt = document.getElementById('color-options');
-  const addBtn = document.getElementById('modal-add');
-  const modalClose = document.getElementById('modal-close');
-
-  let currentProduct = null;
-  let selectedSize = '';
-  let selectedColor = '';
-
-  // Utilitários
-  const fmt = (v) => `R$ ${Number(v).toFixed(2).replace('.', ',')}`;
-
-  function calcInstallments(price) {
-    // Gera opções até MAX_INSTALLMENTS respeitando parcela mínima
-    const opts = [];
-    for (let i = 2; i <= MAX_INSTALLMENTS; i++) {
-      const val = price / i;
-      if (val >= MIN_PER_INSTALLMENT) {
-        opts.push({ n: i, value: val });
-      }
-    }
-    return opts;
+    return arr;
   }
 
-  function buildParcelamentoUI(price) {
-    const box = document.createElement('div');
-    box.className = 'parcelamento-box';
-    const opts = calcInstallments(price);
-
-    if (!opts.length) {
-      box.innerHTML = `<p><strong>Em 1x no cartão</strong> de <strong>${fmt(price)}</strong> ou Pix/Dinheiro.</p>`;
-      return box;
+  function renderResults(list){
+    if (!list.length){
+      resultsBox.innerHTML = '<div class="search-item" style="grid-template-columns:1fr"><small>Nenhum resultado</small></div>';
+      resultsBox.hidden = false;
+      return;
     }
-
-    const best = opts.at(-1);
-    const list = opts
-      .map(({ n, value }) => `<li>${n}x de <strong>${fmt(value)}</strong> sem juros</li>`)
-      .join('');
-
-    box.innerHTML = `
-      <p><strong>Parcelamento sem juros</strong> 💳</p>
-      <ul style="margin:8px 0 0 18px; padding:0; color:#4d3a66; font-weight:600; line-height:1.6">
-        ${list}
-      </ul>
-      <p style="margin-top:8px">Melhor opção: <strong>${best.n}x</strong> de <strong>${fmt(best.value)}</strong></p>
-    `;
-    return box;
-  }
-
-  function makeVerMaisFotosBtn(images) {
-    if (!images || images.length <= 1) return null;
-    const btn = document.createElement('button');
-    btn.className = 'text-btn';
-    btn.style.cssText = 'margin-top:10px;font-weight:800;color:#7A3BFD';
-    btn.textContent = 'Ver mais fotos';
-    btn.onclick = () => openLightbox(images);
-    return btn;
-  }
-
-  // Lightbox fullscreen com swipe, setas e ESC
-  function openLightbox(images, startIndex = 0) {
-    const overlay = document.createElement('div');
-    overlay.style.cssText = `
-      position:fixed;inset:0;background:rgba(0,0,0,.9);
-      display:flex;align-items:center;justify-content:center;z-index:99999;
-    `;
-
-    const img = document.createElement('img');
-    img.style.cssText = 'max-width:92vw;max-height:86vh;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.6);transition:opacity .25s ease';
-    let idx = startIndex;
-
-    const btnStyle = `
-      position:fixed;top:50%;transform:translateY(-50%);
-      width:46px;height:46px;border-radius:50%;border:0;background:rgba(255,255,255,.15);
-      color:#fff;font-size:22px;display:flex;align-items:center;justify-content:center;cursor:pointer
-    `;
-    const prev = document.createElement('button');
-    prev.style.cssText = btnStyle + ';left:18px';
-    prev.textContent = '⟨';
-    const next = document.createElement('button');
-    next.style.cssText = btnStyle + ';right:18px';
-    next.textContent = '⟩';
-
-    const close = document.createElement('button');
-    close.style.cssText = `
-      position:fixed;top:18px;right:18px;width:42px;height:42px;border-radius:50%;
-      border:0;background:rgba(255,255,255,.15);color:#fff;font-size:20px;cursor:pointer
-    `;
-    close.textContent = '✕';
-
-    function show(i) {
-      idx = (i + images.length) % images.length;
-      img.style.opacity = '0';
-      setTimeout(() => {
-        img.src = images[idx];
-        img.onload = () => (img.style.opacity = '1');
-      }, 120);
-    }
-
-    function onKey(e) {
-      if (e.key === 'Escape') kill();
-      if (e.key === 'ArrowRight') show(idx + 1);
-      if (e.key === 'ArrowLeft') show(idx - 1);
-    }
-
-    // Swipe
-    let startX = 0, dx = 0, down = false;
-    const start = (x) => { down = true; startX = x; dx = 0; };
-    const move = (x) => { if (!down) return; dx = x - startX; };
-    const end = () => { if (!down) return; down = false; if (dx > 40) show(idx - 1); else if (dx < -40) show(idx + 1); };
-
-    overlay.addEventListener('click', (e) => { if (e.target === overlay) kill(); });
-    prev.onclick = (e) => { e.stopPropagation(); show(idx - 1); };
-    next.onclick = (e) => { e.stopPropagation(); show(idx + 1); };
-    close.onclick = (e) => { e.stopPropagation(); kill(); };
-
-    overlay.addEventListener('touchstart', (e) => start(e.touches[0].clientX), { passive: true });
-    overlay.addEventListener('touchmove', (e) => move(e.touches[0].clientX), { passive: true });
-    overlay.addEventListener('touchend', end);
-    overlay.addEventListener('mousedown', (e) => start(e.clientX));
-    overlay.addEventListener('mousemove', (e) => move(e.clientX));
-    overlay.addEventListener('mouseup', end);
-
-    function kill() {
-      document.removeEventListener('keydown', onKey);
-      overlay.remove();
-    }
-
-    document.addEventListener('keydown', onKey);
-    overlay.append(img, prev, next, close);
-    document.body.appendChild(overlay);
-    show(idx);
-  }
-
-  // Confirmação WhatsApp Premium
-  function confirmWhatsApp(message, onConfirm) {
-    const overlay = document.createElement('div');
-    overlay.className = 'popup-overlay show';
-    overlay.innerHTML = `
-      <div class="popup-box">
-        <h3>Enviar no WhatsApp</h3>
-        <p>Vamos abrir seu WhatsApp com o pedido pré-preenchido. Tudo certo?</p>
-        <div class="loading" style="margin-top:10px"></div>
-        <div style="display:flex;gap:8px;justify-content:center;margin-top:14px">
-          <button class="add-btn" style="padding:10px 14px;border-radius:12px;border:0">Sim, abrir</button>
-          <button class="text-btn" style="padding:10px 14px;border-radius:12px;border:0">Cancelar</button>
+    resultsBox.innerHTML = list.map(p => `
+      <div class="search-item" data-id="${p.id}">
+        <img src="${(p.imgs ? p.imgs[0] : p.img)}" alt="${p.name}">
+        <div>
+          <div style="font-weight:700">${p.name}</div>
+          <small>${p._cat}</small>
         </div>
-      </div>
-    `;
-    const [ok, cancel] = overlay.querySelectorAll('button');
-    ok.onclick = () => {
-      overlay.classList.remove('show');
-      overlay.remove();
-      onConfirm();
-    };
-    cancel.onclick = () => {
-      overlay.classList.remove('show');
-      overlay.remove();
-    };
-    document.body.appendChild(overlay);
-  }
+        <div style="font-weight:700">R$ ${p.price.toFixed(2).replace('.', ',')}</div>
+      </div>`).join('');
+    resultsBox.hidden = false;
 
-  // ===== Reimplementa (upgrade) o openModalPremium com tudo integrado =====
-  window.openModalPremium = function (product) {
-    if (!product) return;
-
-    currentProduct = product;
-    selectedSize = '';
-    selectedColor = '';
-
-    const images = Array.isArray(product.images) && product.images.length
-      ? product.images
-      : product.imgs?.length ? product.imgs
-      : product.image ? [product.image]
-      : [product.img || 'assets/no-image.jpg'];
-
-    // Conteúdo básico
-    modalName.textContent = product.name;
-    modalPrice.textContent = fmt(product.price);
-    modalDesc.textContent = product.description || '';
-
-    // Imagens no modal (mostra a primeira ativa)
-    modalImgs.innerHTML = images.map((src, i) => `<img src="${src}" alt="${product.name}" class="${i===0?'active':''}">`).join('');
-
-    // Botões de navegação do carrossel (no modal)
-    if (!modalImgs.querySelector('.img-prev')) {
-      const prev = document.createElement('button');
-      prev.className = 'img-prev';
-      prev.textContent = '⟨';
-      const next = document.createElement('button');
-      next.className = 'img-next';
-      next.textContent = '⟩';
-      const dots = document.createElement('div');
-      dots.className = 'img-dots';
-
-      images.forEach((_, i) => {
-        const d = document.createElement('div');
-        d.className = 'img-dot' + (i === 0 ? ' active' : '');
-        d.onclick = () => showImg(i);
-        dots.appendChild(d);
-      });
-
-      modalImgs.append(prev, next, dots);
-
-      let index = 0;
-      function showImg(i) {
-        const imgs = [...modalImgs.querySelectorAll('img')];
-        const ds = [...modalImgs.querySelectorAll('.img-dot')];
-        index = (i + imgs.length) % imgs.length;
-        imgs.forEach((im, n) => im.classList.toggle('active', n === index));
-        ds.forEach((d, n) => d.classList.toggle('active', n === index));
-      }
-      prev.onclick = () => showImg(index - 1);
-      next.onclick = () => showImg(index + 1);
-    }
-
-    // Tamanhos
-    const sizes = product.sizes?.length ? product.sizes : ['Único'];
-    sizeOpt.innerHTML = sizes.map(s => `<button>${s}</button>`).join('');
-    sizeOpt.querySelectorAll('button').forEach(btn => {
-      btn.onclick = () => {
-        selectedSize = btn.textContent;
-        sizeOpt.querySelectorAll('button').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
+    resultsBox.querySelectorAll('.search-item').forEach(it=>{
+      it.onclick = ()=>{
+        const id = it.getAttribute('data-id');
+        openModal(id);
+        resultsBox.hidden = true;
       };
     });
-
-    // Cores
-    const colors = product.colors?.length ? product.colors : ['Única'];
-    colorOpt.innerHTML = colors.map(c => `<button>${c}</button>`).join('');
-    colorOpt.querySelectorAll('button').forEach(btn => {
-      btn.onclick = () => {
-        selectedColor = btn.textContent;
-        colorOpt.querySelectorAll('button').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-      };
-    });
-
-    // Parcelamento avançado (lista dinâmica)
-    const oldBox = modalDesc.nextElementSibling;
-    if (oldBox?.classList.contains('parcelamento-box')) oldBox.remove();
-    modalDesc.insertAdjacentElement('afterend', buildParcelamentoUI(product.price));
-
-    // Botão "Ver mais fotos"
-    // Remove anterior, se houver
-    const oldVMF = modalDesc.parentElement.querySelector('.btn-ver-mais-fotos');
-    if (oldVMF) oldVMF.remove();
-    const vmf = makeVerMaisFotosBtn(images);
-    if (vmf) {
-      vmf.classList.add('btn-ver-mais-fotos');
-      modalDesc.parentElement.appendChild(vmf);
-    }
-
-    // Botão principal = WhatsApp Premium (com confirmação)
-    addBtn.className = 'btn-whatsapp';
-    addBtn.innerHTML = `<i class="fa-brands fa-whatsapp"></i> Comprar via WhatsApp`;
-    addBtn.onclick = () => {
-      const needSize = sizes.length > 1 && !selectedSize;
-      const needColor = colors.length > 1 && !selectedColor;
-      if (needSize || needColor) {
-        showAlertPremium('Selecione o tamanho e a cor antes de continuar 💜');
-        return;
-      }
-      const size = selectedSize || sizes[0];
-      const color = selectedColor || colors[0];
-
-      const msg =
-        `🛍️ *Novo Pedido LS STORE*\n` +
-        `------------------------------\n` +
-        `👗 *Produto:* ${product.name}\n` +
-        `💰 *Preço:* ${fmt(product.price)}\n` +
-        `📏 *Tamanho:* ${size}\n` +
-        `🎨 *Cor:* ${color}\n` +
-        `------------------------------\n` +
-        `💖 Envie esta mensagem para confirmar seu pedido!`;
-
-      const url = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
-      confirmWhatsApp(msg, () => {
-        playChime();
-        window.open(url, '_blank', 'noopener');
-        modal.setAttribute('aria-hidden', 'true');
-      });
-    };
-
-    // Abre modal
-    modal.setAttribute('aria-hidden', 'false');
-  };
-
-  // Fechar modal (garantia)
-  if (modalClose) {
-    modalClose.onclick = () => modal.setAttribute('aria-hidden', 'true');
-    modal.addEventListener('click', (e) => { if (e.target === modal) modal.setAttribute('aria-hidden', 'true'); });
   }
+
+  function doSearch(q){
+    const txt = q.trim().toLowerCase();
+    if (!txt){ resultsBox.hidden = true; return; }
+    const pool = allProducts();
+    const matches = pool.filter(p=>{
+      const inName = p.name.toLowerCase().includes(txt);
+      const inColors = (p.colors||[]).some(c=>c.toLowerCase().includes(txt));
+      const inCat = (p._cat||'').toLowerCase().includes(txt);
+      return inName || inColors || inCat;
+    }).slice(0, 8);
+    renderResults(matches);
+  }
+
+  input.addEventListener('input', ()=>doSearch(input.value));
+  input.addEventListener('focus', ()=>{ if (input.value.trim()) doSearch(input.value); });
+  clearBtn.addEventListener('click', ()=>{
+    input.value = '';
+    resultsBox.hidden = true;
+    input.focus();
+  });
+  document.addEventListener('click', (e)=>{
+    if (!resultsBox.contains(e.target) && e.target !== input) resultsBox.hidden = true;
+  });
 })();
-// ===========================
-// LS STORE v14.0.8 Premium — Splash Fix Definitivo 🚀
-// ===========================
 
-window.addEventListener('load', async () => {
-  const splash = document.getElementById('splash');
-  let removed = false;
+// Efeito visual: produto "voando" até o carrinho 🛒
+function flyToCart(imgSrc, startX, startY) {
+  const cartBtn = document.getElementById('cart-btn');
+  const img = document.createElement('img');
+  img.src = imgSrc;
+  img.style.position = 'fixed';
+  img.style.width = '60px';
+  img.style.height = '60px';
+  img.style.borderRadius = '12px';
+  img.style.objectFit = 'cover';
+  img.style.zIndex = '9999';
+  img.style.left = startX + 'px';
+  img.style.top = startY + 'px';
+  img.style.transition = 'all 0.8s cubic-bezier(.4,.02,.3,1)';
+  document.body.appendChild(img);
 
-  // Função segura de remoção
-  const removeSplash = () => {
-    if (removed || !splash) return;
-    removed = true;
-    splash.classList.add('hidden');
-    setTimeout(() => splash.remove(), 800);
-  };
+  const rect = cartBtn.getBoundingClientRect();
+  setTimeout(() => {
+    img.style.left = rect.left + rect.width / 2 + 'px';
+    img.style.top = rect.top + rect.height / 2 + 'px';
+    img.style.opacity = '0';
+    img.style.transform = 'scale(0.3)';
+  }, 50);
 
-  try {
-    await loadProducts();
-  } catch (e) {
-    console.warn('Erro ao carregar produtos:', e);
-  } finally {
-    renderRecent();
-    // Remove splash logo após renderizar
-    removeSplash();
+  setTimeout(() => img.remove(), 800);
+}
+// =============================
+// v13.1.4 — Carrossel Universal (modo inteligente, corrigido)
+// =============================
+document.addEventListener('DOMContentLoaded', () => {
+  function initImageCarousel(container) {
+    const imgs = [...container.querySelectorAll('img')];
+    if (imgs.length <= 1) return; // modo inteligente
+
+    imgs.forEach((img, i) => img.classList.toggle('active', i === 0));
+
+    const prev = document.createElement('button');
+    prev.className = 'img-prev';
+    prev.innerHTML = '⟨';
+    const next = document.createElement('button');
+    next.className = 'img-next';
+    next.innerHTML = '⟩';
+
+    const dotsWrap = document.createElement('div');
+    dotsWrap.className = 'img-dots';
+    imgs.forEach((_, i) => {
+      const dot = document.createElement('div');
+      dot.className = 'img-dot' + (i === 0 ? ' active' : '');
+      dot.addEventListener('click', () => showImg(i));
+      dotsWrap.appendChild(dot);
+    });
+
+    container.appendChild(prev);
+    container.appendChild(next);
+    container.appendChild(dotsWrap);
+
+    let index = 0;
+    function showImg(i) {
+      index = (i + imgs.length) % imgs.length;
+      imgs.forEach((img, n) => img.classList.toggle('active', n === index));
+      dotsWrap.querySelectorAll('.img-dot').forEach((d, n) => d.classList.toggle('active', n === index));
+    }
+    prev.onclick = () => showImg(index - 1);
+    next.onclick = () => showImg(index + 1);
   }
 
-  // Se algo travar, garante remoção forçada após 6s
-  setTimeout(removeSplash, 6000);
+  // aplica nos cards (vitrine)
+  document.querySelectorAll('.card').forEach(card => {
+    const img = card.querySelector('img');
+    const prodId = card.getAttribute('data-id');
+    if (!img || !prodId) return;
+
+    const prod = Object.values(window.catalog || {}).flat().find(p => p.id === prodId);
+    if (!prod) return;
+
+    // pega qualquer tipo de campo de imagem
+    const imgsArr =
+      Array.isArray(prod.images) ? prod.images :
+      Array.isArray(prod.imgs) ? prod.imgs :
+      Array.isArray(prod.image) ? prod.image :
+      (prod.img ? [prod.img] :
+      (prod.image ? [prod.image] : []));
+
+    if (imgsArr.length <= 1) return; // modo inteligente
+
+    const box = document.createElement('div');
+    box.className = 'img-carousel';
+    imgsArr.forEach(src => {
+      const i = document.createElement('img');
+      i.src = src;
+      box.appendChild(i);
+    });
+
+    card.insertBefore(box, img);
+    img.remove();
+    initImageCarousel(box);
+  });
+
+  // aplica dentro do modal
+  const modalImgs = document.getElementById('modal-imgs');
+  const observer = new MutationObserver(() => {
+    if (!modalImgs) return;
+    const imgs = modalImgs.querySelectorAll('img');
+    if (imgs.length <= 1) return;
+    if (!modalImgs.querySelector('.img-prev')) initImageCarousel(modalImgs);
+  });
+  if (modalImgs) observer.observe(modalImgs, { childList: true });
+});
+// =============================
+// v13.1.5 — Suporte a Swipe (toque e arraste) no carrossel universal
+// =============================
+document.addEventListener('DOMContentLoaded', () => {
+  // Função para ativar o gesto de deslizar em qualquer container de imagens
+  function enableSwipe(container) {
+    let startX = 0;
+    let deltaX = 0;
+    let isDown = false;
+    const imgs = container.querySelectorAll('img');
+    if (imgs.length <= 1) return; // só ativa se tiver várias imagens
+
+    // Pega os botões (caso existam)
+    const prev = container.querySelector('.img-prev');
+    const next = container.querySelector('.img-next');
+
+    function startTouch(e) {
+      isDown = true;
+      startX = e.touches ? e.touches[0].clientX : e.clientX;
+      deltaX = 0;
+    }
+
+    function moveTouch(e) {
+      if (!isDown) return;
+      const x = e.touches ? e.touches[0].clientX : e.clientX;
+      deltaX = x - startX;
+    }
+
+    function endTouch() {
+      if (!isDown) return;
+      isDown = false;
+      const limit = 40; // quantos pixels precisa mover pra trocar
+      if (Math.abs(deltaX) > limit) {
+        if (deltaX > 0 && prev) prev.click();   // arrastou pra direita → imagem anterior
+        else if (deltaX < 0 && next) next.click(); // arrastou pra esquerda → próxima imagem
+      }
+      deltaX = 0;
+    }
+
+    // Eventos de toque (mobile) e mouse (desktop)
+    container.addEventListener('touchstart', startTouch, { passive: true });
+    container.addEventListener('touchmove', moveTouch, { passive: true });
+    container.addEventListener('touchend', endTouch);
+    container.addEventListener('mousedown', startTouch);
+    container.addEventListener('mousemove', moveTouch);
+    container.addEventListener('mouseup', endTouch);
+    container.addEventListener('mouseleave', () => isDown = false);
+  }
+
+  // Aplica o swipe a todos os carrosseis ativos (vitrine e modal)
+  const applySwipeToAll = () => {
+    document.querySelectorAll('.img-carousel, .modal-imgs').forEach(enableSwipe);
+  };
+
+  // Aplica ao carregar
+  setTimeout(applySwipeToAll, 1000);
+
+  // Observa mudanças (ex: quando modal é aberto)
+  const observer = new MutationObserver(applySwipeToAll);
+  observer.observe(document.body, { childList: true, subtree: true });
+});
+
+// =============================
+// v13.2.0 — Auto-play do carrossel (modo Instagram)
+// =============================
+document.addEventListener('DOMContentLoaded', () => {
+  setInterval(() => {
+    document.querySelectorAll('.img-carousel, .modal-imgs').forEach(c => {
+      const imgs = c.querySelectorAll('img');
+      const active = c.querySelector('img.active');
+      if (imgs.length <= 1 || !active) return;
+      let idx = [...imgs].indexOf(active);
+      imgs[idx].classList.remove('active');
+      idx = (idx + 1) % imgs.length;
+      imgs[idx].classList.add('active');
+    });
+  }, 3000); // troca a cada 3 segundos
 });
