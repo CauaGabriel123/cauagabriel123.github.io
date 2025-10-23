@@ -210,7 +210,7 @@ let PRODUCTS = [];
 // ---------- FUNÇÃO: carregar catálogo ----------
 async function loadProducts() {
   try {
-    const res = await fetch('assets/products_v2.json');
+    const res = await fetch('products_v2.json');
     const data = await res.json();
     PRODUCTS = data;
   } catch (err) {
