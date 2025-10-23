@@ -1095,8 +1095,18 @@ document.querySelectorAll('.fade-on-scroll').forEach(el => observer.observe(el))
     modal.addEventListener('click', (e) => { if (e.target === modal) modal.setAttribute('aria-hidden', 'true'); });
   }
 })();
-// === Inicialização final (garantida e sem duplicar eventos) ===
-window.addEventListener('load', () => {
-  renderRecent();
-  loadProducts();
+// ===========================
+// LS STORE v14.0.7 Premium — Splash Fix Final
+// ===========================
+
+window.addEventListener('load', async () => {
+  try {
+    await loadProducts();
+  } catch (e) {
+    console.warn('Erro ao carregar produtos:', e);
+  } finally {
+    renderRecent();
+    const splash = document.getElementById('splash');
+    if (splash) splash.classList.add('hidden');
+  }
 });
