@@ -997,3 +997,39 @@ footer {
   background: #fff;
   transform: scale(1.4);
 }
+/* ===== LS STORE • Product Modal (Isolado) ===== */
+.lsx-modal{position:fixed;inset:0;z-index:9999;display:none}
+.lsx-modal.is-open{display:block}
+.lsx-modal__backdrop{position:absolute;inset:0;background:rgba(0,0,0,.55);backdrop-filter:saturate(120%) blur(2px)}
+.lsx-modal__dialog{position:relative;max-width:980px;margin:32px auto;background:#fff;border-radius:16px;box-shadow:0 30px 80px rgba(0,0,0,.25);overflow:hidden}
+.lsx-modal__close{position:absolute;top:8px;right:12px;font-size:28px;line-height:1;background:transparent;border:0;cursor:pointer;color:#333;opacity:.8}
+.lsx-modal__header{padding:20px 20px 8px;background:#ffc1dc}
+.lsx-modal__title{margin:6px 0 0;font-size:20px;font-weight:700;color:#2b2b2b}
+.lsx-breadcrumb{font-size:12px;color:#5a5a5a;opacity:.9}
+.lsx-modal__content{display:grid;grid-template-columns:1.15fr .85fr;gap:18px;padding:18px}
+@media (max-width:900px){.lsx-modal__content{grid-template-columns:1fr}}
+.lsx-gallery__stage{position:relative;border-radius:12px;overflow:hidden;background:#f8f8f8}
+.lsx-gallery__stage img{width:100%;display:block;height:auto}
+.lsx-gallery__zoom{position:absolute;right:10px;bottom:10px;background:#fff;border:0;border-radius:10px;padding:6px 10px;box-shadow:0 6px 18px rgba(0,0,0,.15);cursor:pointer}
+.lsx-gallery__thumbs{display:flex;gap:8px;margin-top:10px;overflow:auto;padding-bottom:4px}
+.lsx-gallery__thumbs img{width:68px;height:68px;object-fit:cover;border-radius:10px;cursor:pointer;opacity:.85;border:2px solid transparent}
+.lsx-gallery__thumbs img.is-active{opacity:1;border-color:#ff7fb6}
+.lsx-info{display:flex;flex-direction:column;gap:12px}
+.lsx-price__value{font-size:28px;font-weight:800;color:#222}
+.lsx-price__installments{display:inline-block;margin-top:-6px;font-size:14px;color:#ff7fb6;text-decoration:underline}
+.lsx-sizes{display:flex;flex-wrap:wrap;gap:8px}
+.lsx-size{min-width:46px;height:38px;border-radius:999px;border:2px solid #ff7fb6;background:#fff;color:#ff7fb6;font-weight:600;display:flex;align-items:center;justify-content:center;padding:0 12px;cursor:pointer}
+.lsx-size.is-selected{background:#ff7fb6;color:#fff}
+.lsx-size.is-disabled{opacity:.4;pointer-events:none;text-decoration:line-through}
+.lsx-stock{font-size:13px;color:#666}
+.lsx-cta{display:flex;gap:10px;flex-wrap:wrap}
+.lsx-btn{appearance:none;border:0;border-radius:999px;padding:14px 20px;font-weight:700;letter-spacing:.06em;cursor:pointer}
+.lsx-btn--primary{background:#ff7fb6;color:#fff;box-shadow:0 10px 24px rgba(255,127,182,.35)}
+.lsx-btn--ghost{background:#ffe6f3;color:#c74c8e;text-decoration:none}
+.lsx-details{border:1px solid #eee;border-radius:12px;padding:12px}
+.lsx-details summary{cursor:pointer;font-weight:700}
+.lsx-details__body{margin-top:10px;color:#444;font-size:14px;line-height:1.5}
+.lsx-share{display:flex;align-items:center;gap:10px;font-size:14px;color:#333}
+.lsx-share a{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:#f4f4f4;text-decoration:none}
+body.lsx-no-scroll{overflow:hidden}
+/* ===== /LS STORE • Product Modal ===== */
