@@ -110,6 +110,17 @@
       <h2 class="section-title">Calçados</h2>
       <div class="grid" data-cat="calcados"></div>
     </section>
+    <script>
+window.addEventListener('load', () => {
+  const splash = document.getElementById('splash');
+  if (!splash) return;
+  splash.style.transition = 'opacity 0.6s ease';
+  setTimeout(() => {
+    splash.style.opacity = '0';
+    setTimeout(() => splash.remove(), 800);
+  }, 2000);
+});
+</script>
 
     <section id="oculos" class="section">
       <h2 class="section-title">Óculos</h2>
