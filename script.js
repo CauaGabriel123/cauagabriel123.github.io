@@ -1230,3 +1230,20 @@ document.addEventListener('DOMContentLoaded', () => {
   const observer = new MutationObserver(applySwipeToAll);
   observer.observe(document.body, { childList: true, subtree: true });
 });
+
+// =============================
+// v13.2.0 — Auto-play do carrossel (modo Instagram)
+// =============================
+document.addEventListener('DOMContentLoaded', () => {
+  setInterval(() => {
+    document.querySelectorAll('.img-carousel, .modal-imgs').forEach(c => {
+      const imgs = c.querySelectorAll('img');
+      const active = c.querySelector('img.active');
+      if (imgs.length <= 1 || !active) return;
+      let idx = [...imgs].indexOf(active);
+      imgs[idx].classList.remove('active');
+      idx = (idx + 1) % imgs.length;
+      imgs[idx].classList.add('active');
+    });
+  }, 3000); // troca a cada 3 segundos
+});
