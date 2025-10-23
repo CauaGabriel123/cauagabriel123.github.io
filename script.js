@@ -45,23 +45,26 @@ function playChime() {
   o.stop(t + 0.75);
 }
 
-// --- SPLASH SCREEN ---
-window.addEventListener('load', () => {
+// --- SPLASH SCREEN (v14.0 Premium corrigido) ---
+document.addEventListener('DOMContentLoaded', () => {
   const splash = document.getElementById('splash');
   if (!splash) return;
-  setTimeout(() => {
-    splash.classList.add('hidden');
-    setTimeout(() => splash.remove(), 800);
-  }, 2000);
-});
-setTimeout(() => {
-  const splash = document.getElementById('splash');
-  if (splash) {
-    splash.classList.add('hidden');
-    setTimeout(() => splash.remove(), 800);
-  }
-}, 4000);
 
+  // Força remoção em até 4 segundos, mesmo se o load travar
+  const forceRemove = setTimeout(() => {
+    splash.classList.add('hidden');
+    setTimeout(() => splash.remove(), 800);
+  }, 4000);
+
+  // Se o site carregar normalmente, remove antes disso
+  window.addEventListener('load', () => {
+    clearTimeout(forceRemove);
+    setTimeout(() => {
+      splash.classList.add('hidden');
+      setTimeout(() => splash.remove(), 800);
+    }, 2000);
+  });
+});
 // --- BASE DO MODAL PREMIUM ---
 const modal = document.getElementById('product-modal');
 const modalImgs = document.getElementById('modal-imgs');
