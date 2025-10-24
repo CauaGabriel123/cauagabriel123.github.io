@@ -1033,3 +1033,9 @@ footer {
 .lsx-share a{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:#f4f4f4;text-decoration:none}
 body.lsx-no-scroll{overflow:hidden}
 /* ===== /LS STORE • Product Modal ===== */
+/* ==== FIX 2: Scroll interno no modal Premium ==== */
+.lsx-modal__dialog {
+  max-height: 90vh; /* altura máxima da tela */
+  overflow-y: auto; /* permite rolar internamente */
+  -webkit-overflow-scrolling: touch; /* rolagem suave no iPhone */
+}
