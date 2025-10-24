@@ -1051,6 +1051,7 @@ body {
   left: 0;
   right: 0;
   z-index: 1000;
+  -webkit-transform: translateZ(0);
 }
 
 .search-wrap {
