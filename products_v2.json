@@ -101,7 +101,7 @@
     "colors": ["Preto"]
   },
   {
-    "id": "p10",
+    "id": "p09",
     "name": "Blusa Romance",
     "category": "blusas",
     "price": 59.99,
@@ -114,7 +114,7 @@
     "colors": ["Preto"]
   },
   {
-    "id": "p11",
+    "id": "p10",
     "name": "Regata Luri Romance",
     "category": "blusas",
     "price": 49.99,
@@ -127,7 +127,7 @@
     "colors": ["Lilás"]
   },
   {
-    "id": "p12",
+    "id": "p11",
     "name": "Reparador de sobrancelha",
     "category": "belezas",
     "price": 34.99,
@@ -140,7 +140,7 @@
     "colors": ["Único"]
   },
   {
-    "id": "p13",
+    "id": "p12",
     "name": "Água Micelar 15 em 1",
     "category": "belezas",
     "price": 24.99,
@@ -153,7 +153,7 @@
     "colors": ["Transparente"]
   },
   {
-    "id": "p14",
+    "id": "p13",
     "name": "Paleta de Sombra",
     "category": "belezas",
     "price": 24.99,
@@ -166,7 +166,7 @@
     "colors": ["Único"]
   },
   {
-    "id": "p15",
+    "id": "p14",
     "name": "Corretivo Cor 1",
     "category": "belezas",
     "price": 24.99,
@@ -178,7 +178,7 @@
     "colors": ["01"]
   },
   {
-    "id": "p16",
+    "id": "p15",
     "name": "Limpador de pincéis Melu",
     "category": "belezas",
     "price": 29.99,
@@ -189,7 +189,7 @@
     "colors": ["Transparente"]
   },
   {
-    "id": "p17",
+    "id": "p16",
     "name": "Glow Girl",
     "category": "belezas",
     "price": 24.99,
@@ -202,7 +202,7 @@
     "colors": ["Rosa"]
   },
   {
-    "id": "p18",
+    "id": "p17",
     "name": "Creme Hidratante",
     "category": "belezas",
     "price":24.99,
@@ -214,7 +214,7 @@
     "colors": ["Transparente"]
   },
   {
-    "id": "p19",
+    "id": "p18",
     "name": "Creme Hidratante",
     "category": "belezas",
     "price": 24.99,
@@ -228,7 +228,7 @@
     "colors": ["Branco"]
   },
   {
-    "id": "p20",
+    "id": "p19",
     "name": "Perfume Capilar S/ Álcool",
     "category": "belezas",
     "price": 29.99,
@@ -242,7 +242,7 @@
     "colors": ["Transparente"]
   },
   {
-        "id": "p21",
+        "id": "p20",
     "name": "Mousse de Limpeza Facial",
     "category": "belezas",
     "price": 24.99,
@@ -256,7 +256,7 @@
     "colors": ["Transparente"]
     },
   {
-        "id": "p22",
+        "id": "p21",
     "name": "Mousse de higiene Íntima",
     "category": "belezas",
     "price": 24.99,
@@ -269,7 +269,7 @@
     "colors": ["Transparente"]
   },
   {
-        "id": "p23",
+        "id": "p22",
     "name": "Sabonete Íntimo Barbatimão e Flor de Algodão",
     "category": "belezas",
     "price": 14.99,
@@ -282,7 +282,7 @@
     "colors": ["Transparente"]
   },
   {
-        "id": "p24",
+        "id": "p23",
     "name": "Sabonete Íntimo Extrato de 17 ervas",
     "category": "belezas",
     "price": 14.99,
@@ -295,7 +295,7 @@
     "colors": ["Verde", "Azul"]
       },
   {
-        "id": "p25",
+        "id": "p24",
     "name": "Creme Hidratante",
     "category": "belezas",
     "price":24.99,
@@ -319,22 +319,11 @@
     "colors": ["Branco"]
       },
   {
-    "id": "p25",
+    "id": "p26",
     "name": "Vestido vermelho",
     "category": "intimas",
     "price": 199.99,
     "images": ["https://cauagabriel123.github.io/assets/prod-vestido-floral.png"],
-    "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
-    "status": "disponivel",
-    "sizes": ["M", "G"],
-    "colors": ["Verde", "Azul"]
-      },
-  {
-        "id": "p26",
-    "name": "Vestido vermelho",
-    "category": "intimas",
-    "price": 199.99,
-    "images":[ "https://cauagabriel123.github.io/assets/prod-vestido-floral.png"],
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
     "status": "disponivel",
     "sizes": ["M", "G"],
@@ -356,7 +345,7 @@
     "name": "Vestido vermelho",
     "category": "intimas",
     "price": 199.99,
-    "images": ["https://cauagabriel123.github.io/assets/prod-vestido-floral.png"],
+    "images":[ "https://cauagabriel123.github.io/assets/prod-vestido-floral.png"],
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
     "status": "disponivel",
     "sizes": ["M", "G"],
@@ -422,7 +411,7 @@
     "name": "Vestido vermelho",
     "category": "intimas",
     "price": 199.99,
-    "images":[ "https://cauagabriel123.github.io/assets/prod-vestido-floral.png"],
+    "images": ["https://cauagabriel123.github.io/assets/prod-vestido-floral.png"],
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
     "status": "disponivel",
     "sizes": ["M", "G"],
@@ -433,7 +422,7 @@
     "name": "Vestido vermelho",
     "category": "intimas",
     "price": 199.99,
-    "images": ["https://cauagabriel123.github.io/assets/prod-vestido-floral.png"],
+    "images":[ "https://cauagabriel123.github.io/assets/prod-vestido-floral.png"],
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
     "status": "disponivel",
     "sizes": ["M", "G"],
@@ -452,6 +441,17 @@
       },
   {
         "id": "p37",
+    "name": "Vestido vermelho",
+    "category": "intimas",
+    "price": 199.99,
+    "images": ["https://cauagabriel123.github.io/assets/prod-vestido-floral.png"],
+    "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
+    "status": "disponivel",
+    "sizes": ["M", "G"],
+    "colors": ["Verde", "Azul"]
+      },
+  {
+        "id": "p38",
     "name": "Vestido vermelho",
     "category": "intimas",
     "price": 199.99,
