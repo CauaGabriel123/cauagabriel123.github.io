@@ -1347,3 +1347,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.LSModal={open,close};
 })();
+// Garantia de saída da splash após 5s, mesmo se algo falhar
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    const splash = document.getElementById('splash');
+    if (splash) splash.classList.add('hidden');
+    setTimeout(() => splash?.remove(), 800);
+  }, 5000);
+});
