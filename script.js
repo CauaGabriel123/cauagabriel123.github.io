@@ -1354,6 +1354,7 @@ document.addEventListener('DOMContentLoaded', () => {
           addToCart(p, size, color);
           try { playChime && playChime(); } catch(_) {}
         }
+        LSModal.close();
       };
     }
   }
