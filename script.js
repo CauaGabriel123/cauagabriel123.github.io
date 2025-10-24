@@ -1150,9 +1150,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }, 3000); // troca a cada 3 segundos
 });
-/* ===== LS STORE • Product Modal (Isolado) ===== */
+/* ===== LS STORE • Product Modal (Isolado) — v14 FIX PACK ===== */
 (function () {
-  const $ = (sel, ctx=document) => ctx.querySelector(sel);
+  const $  = (sel, ctx=document) => ctx.querySelector(sel);
   const $$ = (sel, ctx=document) => Array.from(ctx.querySelectorAll(sel));
 
   const els = {
@@ -1164,18 +1164,21 @@ document.addEventListener('DOMContentLoaded', () => {
     price: $('#lsxPrice'),
     installments: $('#lsxInstallments'),
     sizes: $('#lsxSizes'),
+    colors: $('#lsxColors'),                 // ✅ NOVO
     stock: $('#lsxStock'),
     buyBtn: $('#lsxBuyBtn'),
-    waBtn: $('#lsxWhatsappBtn'),
-    desc: $('#lsxDescription'),
-    shareWA: $('#shareWA'),
-    shareFB: $('#shareFB'),
-    shareX: $('#shareX'),
-    sharePin: $('#sharePin')
+    addBtn: $('#lsxAddBtn'),                 // ✅ NOVO
+    zoomBtn: $('#lsxZoomBtn')                // ✅ habilitado
   };
 
   let PRODUCTS_CACHE = null;
-  let current = { product: null, selectedSize: null };
+  let current = {
+    product: null,
+    selectedSize: null,
+    selectedColor: null,
+    imgs: [],
+    idx: 0
+  };
 
   async function getProducts() {
     if (Array.isArray(window.PRODUCTS_V2) && window.PRODUCTS_V2.length) return window.PRODUCTS_V2;
@@ -1185,62 +1188,189 @@ document.addEventListener('DOMContentLoaded', () => {
     return PRODUCTS_CACHE;
   }
 
-  function currency(v) { return Number(v).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }); }
-  function calcInstallments(v) { const n = 12; return `${n}x de ${currency(v/n)}`; }
+  // util
+  const currency = v => Number(v).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  const calcInstallments = v => {
+    const n = 12;
+    return `${n}x de ${currency(v / n)}`;
+  };
+
+  // ====== Galeria com thumbs + swipe + zoom ======
+  function showImg(i) {
+    current.idx = (i + current.imgs.length) % current.imgs.length;
+    els.imgMain.src = current.imgs[current.idx];
+    // estado visual dos thumbs
+    $$('.is-active', els.thumbs).forEach(x => x.classList.remove('is-active'));
+    const activeThumb = els.thumbs.querySelector(`img[data-i="${current.idx}"]`);
+    if (activeThumb) activeThumb.classList.add('is-active');
+  }
 
   function mountGallery(p) {
-    const imgs = p.images || p.imgs || [p.image];
-    els.imgMain.src = imgs[0];
-    els.thumbs.innerHTML = imgs.map((src,i)=>`<img src="${src}" class="${i===0?'is-active':''}" data-i="${i}">`).join('');
+    current.imgs =
+      Array.isArray(p.images) ? p.images :
+      Array.isArray(p.imgs)   ? p.imgs   :
+      (p.image ? [p.image] : []);
+    current.idx = 0;
+
+    els.imgMain.src = current.imgs[0] || '';
+    els.thumbs.innerHTML = current.imgs.map((src, i) =>
+      `<img src="${src}" class="${i===0?'is-active':''}" data-i="${i}">`
+    ).join('');
+
+    // troca por clique no thumb
     els.thumbs.onclick = e => {
       const t = e.target.closest('img'); if (!t) return;
-      $$('.is-active', els.thumbs).forEach(x=>x.classList.remove('is-active'));
-      t.classList.add('is-active');
-      els.imgMain.src = t.src;
+      showImg(parseInt(t.dataset.i, 10));
     };
+
+    // swipe na imagem principal
+    const stage = els.imgMain.closest('.lsx-gallery__stage');
+    let startX = 0, deltaX = 0, down = false;
+
+    function start(e){ down = true; startX = (e.touches?e.touches[0].clientX:e.clientX); deltaX = 0; }
+    function move(e){ if(!down) return; const x = (e.touches?e.touches[0].clientX:e.clientX); deltaX = x - startX; }
+    function end(){ if(!down) return; down = false; if (Math.abs(deltaX) > 40) { deltaX > 0 ? showImg(current.idx-1) : showImg(current.idx+1); } }
+
+    stage.addEventListener('touchstart', start, {passive:true});
+    stage.addEventListener('touchmove',  move,  {passive:true});
+    stage.addEventListener('touchend',   end);
+    stage.addEventListener('mousedown',  start);
+    stage.addEventListener('mousemove',  move);
+    stage.addEventListener('mouseup',    end);
+    stage.addEventListener('mouseleave', ()=> { down=false; });
+
+    // zoom (abre overlay com a imagem atual)
+    if (els.zoomBtn) {
+      els.zoomBtn.onclick = () => {
+        const overlay = document.createElement('div');
+        overlay.style.cssText = `
+          position:fixed; inset:0; background:rgba(0,0,0,.9);
+          display:flex; align-items:center; justify-content:center; z-index:10000;
+        `;
+        const img = document.createElement('img');
+        img.src = current.imgs[current.idx];
+        img.style.cssText = 'max-width:95vw; max-height:95vh; border-radius:12px';
+        overlay.appendChild(img);
+        overlay.onclick = () => overlay.remove();
+        document.body.appendChild(overlay);
+      };
+    }
   }
 
+  // ====== Tamanhos e Cores ======
   function mountSizes(p) {
-    const sizes = p.sizes || ['Único'];
+    const sizes = Array.isArray(p.sizes) && p.sizes.length ? p.sizes.map(s=>String(s).toUpperCase()) : ['ÚNICO'];
     els.sizes.innerHTML = sizes.map(s=>`<button class="lsx-size" data-size="${s}">${s}</button>`).join('');
-    els.sizes.onclick = e=>{
-      const b=e.target.closest('.lsx-size'); if(!b)return;
+    current.selectedSize = null;
+
+    els.sizes.onclick = e => {
+      const b = e.target.closest('.lsx-size'); if (!b) return;
       $$('.lsx-size', els.sizes).forEach(x=>x.classList.remove('is-selected'));
       b.classList.add('is-selected');
-      current.selectedSize=b.dataset.size;
+      current.selectedSize = b.dataset.size;
     };
   }
 
-  function fill(p){
-    current.product=p;
-    els.title.textContent=p.name;
-    els.price.textContent=currency(p.price);
-    els.installments.textContent=calcInstallments(p.price);
-    els.desc.innerHTML=p.description||'';
-    mountGallery(p);
-    mountSizes(p);
-    els.buyBtn.onclick=()=>{ if(typeof addToCart==='function'){ addToCart(p,current.selectedSize||'Único','Única'); LSModal.close(); }};
+  function mountColors(p) {
+    const colors = Array.isArray(p.colors) && p.colors.length ? p.colors : ['Única'];
+    els.colors.innerHTML = colors.map(c=>`<button class="lsx-color" data-color="${c}">${c}</button>`).join('');
+    current.selectedColor = null;
+
+    els.colors.onclick = e => {
+      const b = e.target.closest('.lsx-color'); if (!b) return;
+      $$('.lsx-color', els.colors).forEach(x=>x.classList.remove('is-selected'));
+      b.classList.add('is-selected');
+      current.selectedColor = b.dataset.color;
+    };
   }
 
+  function needSelectSize(p) {
+    const sizes = Array.isArray(p.sizes) && p.sizes.length ? p.sizes.map(s=>String(s).toUpperCase()) : ['ÚNICO'];
+    // Se houver mais de 1 opção OU a opção não for literalmente "ÚNICO", exigir seleção explícita
+    return (sizes.length > 1 || sizes[0] !== 'ÚNICO');
+  }
+  function needSelectColor(p) {
+    const colors = Array.isArray(p.colors) && p.colors.length ? p.colors : ['Única'];
+    return (colors.length > 1 || (colors[0] && colors[0].toLowerCase() !== 'única'));
+  }
+
+  function validateSelections(p) {
+    if (needSelectSize(p) && !current.selectedSize) {
+      showAlert('Por favor, selecione um tamanho antes de continuar.');
+      return false;
+    }
+    if (needSelectColor(p) && !current.selectedColor) {
+      showAlert('Por favor, selecione uma cor antes de continuar.');
+      return false;
+    }
+    return true;
+  }
+
+  // ====== Preenchimento do modal ======
+  function fill(p){
+    current.product = p;
+    els.title.textContent = p.name;
+    els.price.textContent = currency(p.price);
+    els.installments.textContent = calcInstallments(p.price);
+    els.stock.textContent = ''; // (pode ser usado no futuro)
+    els.imgMain.alt = p.name;
+
+    mountGallery(p);
+    mountSizes(p);
+    mountColors(p);
+
+    // COMPRAR = adicionar + abrir checkout (sem fechar o carrinho até finalizar)
+    els.buyBtn.onclick = () => {
+      if (!validateSelections(p)) return;
+      const size  = current.selectedSize || 'Único';
+      const color = current.selectedColor || 'Única';
+      if (typeof addToCart === 'function') {
+        addToCart(p, size, color);
+      }
+      // abre o checkout
+      if (typeof cart !== 'undefined') {
+        cart.setAttribute('aria-hidden','false');
+        setTimeout(() => {
+          document.getElementById('client-name')?.focus();
+          document.querySelector('.client-info')?.scrollIntoView({ behavior:'smooth' });
+        }, 120);
+      }
+      LSModal.close();
+    };
+
+    // ADICIONAR AO CARRINHO = só adiciona (mantém modal aberto)
+    if (els.addBtn) {
+      els.addBtn.onclick = () => {
+        if (!validateSelections(p)) return;
+        const size  = current.selectedSize || 'Único';
+        const color = current.selectedColor || 'Única';
+        if (typeof addToCart === 'function') {
+          addToCart(p, size, color);
+          try { playChime && playChime(); } catch(_) {}
+        }
+      };
+    }
+  }
+
+  // ====== Abrir / Fechar ======
   function open(id){
     getProducts().then(list=>{
-      const p=list.find(x=>String(x.id)===String(id));
-      if(!p)return;
+      const p = list.find(x=>String(x.id)===String(id));
+      if (!p) return;
       fill(p);
       els.root.classList.add('is-open');
       document.body.classList.add('lsx-no-scroll');
     });
   }
-
   function close(){
     els.root.classList.remove('is-open');
     document.body.classList.remove('lsx-no-scroll');
   }
 
-  els.root.addEventListener('click',e=>{ if(e.target.dataset.close==='true')close(); });
-  document.addEventListener('keydown',e=>{ if(e.key==='Escape')close(); });
+  els.root.addEventListener('click',e=>{ if(e.target.dataset.close==='true') close(); });
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape') close(); });
 
-  window.LSModal={open,close};
+  window.LSModal = { open, close };
 })();
 // Garantia de saída da splash após 5s, mesmo se algo falhar
 window.addEventListener('load', () => {
