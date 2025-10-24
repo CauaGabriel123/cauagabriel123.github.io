@@ -54,7 +54,7 @@ img { max-width:100%; display:block; }
 .splash-card p { margin:8px 0 0; font-weight:600; color:#6b3ea8; }
 
 /* Drawer */
-.drawer { position:fixed; inset:0; display:none; z-index:120; }
+.drawer { position:fixed; inset:0; display:none; z-index:1500; }
 .drawer[aria-hidden="false"]{ display:block; }
 .drawer-backdrop {
   position:absolute; inset:0;
