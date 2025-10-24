@@ -1067,3 +1067,124 @@ body {
   padding:0 12px; cursor:pointer;
 }
 .lsx-color.is-selected { background:#ff7fb6; color:#fff; }
+/* ===============================
+   LS STORE v14.1 Premium Visual Pack — Cauã Gabriel
+   =============================== */
+
+/* Efeito de fade ao abrir o modal */
+.lsx-modal {
+  animation: fadeInModal 0.35s ease;
+}
+@keyframes fadeInModal {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Fundo com blur e brilho suave */
+.lsx-modal__backdrop {
+  background: rgba(0,0,0,.45);
+  backdrop-filter: blur(6px) saturate(140%);
+}
+
+/* Caixa do modal com sombra e transição */
+.lsx-modal__dialog {
+  box-shadow: 0 20px 60px rgba(0,0,0,.4);
+  transition: transform 0.25s ease, box-shadow 0.3s ease;
+}
+.lsx-modal__dialog:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 26px 70px rgba(122,59,253,0.25);
+}
+
+/* Botões refinados */
+.lsx-btn--primary {
+  background: linear-gradient(90deg, #e96ba8, #7a3bfd);
+  box-shadow: 0 8px 24px rgba(122,59,253,0.35);
+  transition: transform 0.15s ease, box-shadow 0.25s ease;
+}
+.lsx-btn--primary:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 32px rgba(122,59,253,0.45);
+}
+.lsx-btn--ghost {
+  background: linear-gradient(90deg, #fff0fa, #ffe8ff);
+  border: 1px solid #f8c7e6;
+  color: #c74c8e;
+  transition: transform 0.15s ease, background 0.25s ease;
+}
+.lsx-btn--ghost:hover {
+  background: linear-gradient(90deg, #ffd4eb, #f3caff);
+  transform: scale(1.05);
+}
+
+/* Galeria de imagens — zoom e transição suave */
+.lsx-gallery__stage {
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+}
+.lsx-gallery__stage img {
+  transition: transform 0.45s ease, opacity 0.4s ease;
+}
+.lsx-gallery__stage img.zoomed {
+  transform: scale(1.6);
+  cursor: zoom-out;
+}
+.lsx-gallery__zoom {
+  background: rgba(255,255,255,0.85);
+  border: 1px solid #f5d6ef;
+  transition: all 0.3s ease;
+}
+.lsx-gallery__zoom:hover {
+  background: #fff;
+  transform: scale(1.1);
+  box-shadow: 0 8px 18px rgba(233,107,168,0.35);
+}
+
+/* Miniaturas — efeito hover */
+.lsx-gallery__thumbs img {
+  transition: transform 0.25s ease, border-color 0.25s ease, opacity 0.25s ease;
+}
+.lsx-gallery__thumbs img:hover {
+  transform: scale(1.08);
+  opacity: 1;
+  border-color: #e96ba8;
+}
+
+/* Descrição e detalhes — visual refinado */
+.lsx-details {
+  border: 1px solid #f2d8ff;
+  background: linear-gradient(180deg, #fff, #fff8fe);
+  box-shadow: 0 6px 16px rgba(122,59,253,0.08);
+  transition: all 0.3s ease;
+}
+.lsx-details:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 20px rgba(122,59,253,0.12);
+}
+
+/* Transição suave nas cores e tamanhos */
+.lsx-size, .lsx-color {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.lsx-size:hover, .lsx-color:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 10px rgba(122,59,253,0.2);
+}
+
+/* Texto do preço com leve glow */
+.lsx-price__value {
+  background: linear-gradient(90deg, #e96ba8, #7a3bfd);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 2px 8px rgba(122,59,253,0.25);
+}
+
+/* Animação suave ao trocar imagens no swipe */
+@keyframes slideImage {
+  from { opacity: 0; transform: translateX(10px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.lsx-gallery__stage img.active {
+  animation: slideImage 0.4s ease;
+}
