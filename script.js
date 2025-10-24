@@ -1250,3 +1250,22 @@ window.addEventListener('load', () => {
     setTimeout(() => splash?.remove(), 800);
   }, 5000);
 });
+/* ==== FIX 1: Cabeçalho sobreposto ==== */
+body {
+  position: relative;
+  z-index: 1;
+  overflow-x: hidden;
+}
+
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.search-wrap {
+  position: relative !important;
+  margin-top: 68px; /* dá espaço abaixo do cabeçalho fixo */
+}
