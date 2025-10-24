@@ -1320,6 +1320,8 @@ document.addEventListener('DOMContentLoaded', () => {
     els.installments.textContent = calcInstallments(p.price);
     els.stock.textContent = ''; // (pode ser usado no futuro)
     els.imgMain.alt = p.name;
+    document.getElementById('lsxDescription').textContent = p.description || 'Sem descrição disponível.';
+
 
     mountGallery(p);
     mountSizes(p);
