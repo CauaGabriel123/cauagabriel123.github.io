@@ -451,7 +451,7 @@ let currentProduct = null;
 let selectedSize = '';
 let selectedColor = '';
 
-function LSModal.open(id) {
+LSModal.open = function(id) {
   currentProduct = null;
   for (const cat in catalog) {
     const prod = (catalog[cat]||[]).find(p => p.id === id);
