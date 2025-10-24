@@ -1197,13 +1197,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ====== Galeria com thumbs + swipe + zoom ======
   function showImg(i) {
-    current.idx = (i + current.imgs.length) % current.imgs.length;
-    els.imgMain.src = current.imgs[current.idx];
-    // estado visual dos thumbs
-    $$('.is-active', els.thumbs).forEach(x => x.classList.remove('is-active'));
-    const activeThumb = els.thumbs.querySelector(`img[data-i="${current.idx}"]`);
-    if (activeThumb) activeThumb.classList.add('is-active');
-  }
+  current.idx = (i + current.imgs.length) % current.imgs.length;
+  const newSrc = current.imgs[current.idx];
+  if (els.imgMain.src === newSrc) return;
+  els.imgMain.style.opacity = 0;
+  setTimeout(() => {
+    els.imgMain.src = newSrc;
+    els.imgMain.style.opacity = 1;
+  }, 150);
+  $$('.is-active', els.thumbs).forEach(x => x.classList.remove('is-active'));
+  const activeThumb = els.thumbs.querySelector(`img[data-i="${current.idx}"]`);
+  if (activeThumb) activeThumb.classList.add('is-active');
+}
 
   function mountGallery(p) {
     current.imgs =
@@ -1213,6 +1218,7 @@ document.addEventListener('DOMContentLoaded', () => {
     current.idx = 0;
 
     els.imgMain.src = current.imgs[0] || '';
+    els.imgMain.style.transition = 'opacity 0.35s ease';
     els.thumbs.innerHTML = current.imgs.map((src, i) =>
       `<img src="${src}" class="${i===0?'is-active':''}" data-i="${i}">`
     ).join('');
