@@ -1054,6 +1054,6 @@ body {
 }
 
 .search-wrap {
-  position: relative !important;
+  position: sticky !important;
   margin-top: 68px; /* dá espaço abaixo do cabeçalho fixo */
 }
