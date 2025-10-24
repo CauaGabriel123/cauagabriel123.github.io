@@ -152,27 +152,6 @@
   <p>© 2025 LS Store — Moda & Acessórios Femininos 💖</p>
 </footer>
 
-<!-- Modal Produto -->
-<div id="product-modal" class="modal" aria-hidden="true">
-  <div class="modal-card">
-    <button class="modal-close icon-btn" id="modal-close">✕</button>
-    <div class="modal-body">
-      <div class="modal-imgs" id="modal-imgs"></div>
-      <div class="modal-info">
-        <h3 id="modal-name"></h3>
-        <p class="modal-price" id="modal-price"></p>
-        <p class="modal-desc" id="modal-desc"></p>
-
-        <div class="modal-opts">
-          <label>Tamanho</label><div id="size-options" class="chips"></div>
-          <label>Cor</label><div id="color-options" class="chips"></div>
-        </div>
-        <button id="modal-add" class="add-btn">Adicionar ao carrinho</button>
-      </div>
-    </div>
-  </div>
-</div>
-
 <!-- Carrinho -->
 <aside id="cart" class="cart" aria-hidden="true">
   <div class="cart-header"><h3>Seu Carrinho</h3><button id="close-cart" class="icon-btn">✕</button></div>
@@ -234,16 +213,16 @@
     <p>O WhatsApp será aberto em instantes.<br><strong>Toque em ENVIAR no WhatsApp 💬</strong></p>
   </div>
 </div>
-  <script>
-  window.addEventListener('DOMContentLoaded', () => {
-    setTimeout(() => {
-      const box = document.getElementById('footer-products');
-      if (box && !box.innerHTML.trim()) {
-        console.warn('⚠️ Rodapé vazio — renderizando manualmente com fallback');
-        if (typeof renderFooterProducts === 'function') renderFooterProducts(FALLBACK_PRODUCTS);
-      }
-    }, 1500);
-  });
+<script>
+window.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => {
+    const box = document.getElementById('footer-products');
+    if (box && !box.innerHTML.trim() && typeof renderFooterProducts === 'function') {
+      console.warn('⚠️ Rodapé vazio — renderizando manualmente com fallback');
+      renderFooterProducts(FALLBACK_PRODUCTS);
+    }
+  }, 1500);
+});
 </script>
 
 <button id="backToTop" class="back-to-top" aria-label="Voltar ao topo">↑</button>
