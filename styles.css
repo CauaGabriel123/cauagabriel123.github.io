@@ -1058,3 +1058,12 @@ body {
   position: sticky !important;
   margin-top: 68px; /* dá espaço abaixo do cabeçalho fixo */
 }
+/* Chips de cores (mesmo visual dos tamanhos) */
+.lsx-colors { display:flex; flex-wrap:wrap; gap:8px; }
+.lsx-color {
+  min-width:46px; height:38px; border-radius:999px;
+  border:2px solid #ff7fb6; background:#fff; color:#ff7fb6;
+  font-weight:600; display:flex; align-items:center; justify-content:center;
+  padding:0 12px; cursor:pointer;
+}
+.lsx-color.is-selected { background:#ff7fb6; color:#fff; }
