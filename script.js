@@ -706,7 +706,7 @@ ${
 ---------------------------------
 ✨ *Obrigada por comprar na LS Store!* 💕`;
 
-  const url = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
+  const url = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg).replace(/%20/g, '+')}`;
     const pop = document.getElementById('popup-overlay');
   pop.hidden = false;
   pop.classList.add('show');
