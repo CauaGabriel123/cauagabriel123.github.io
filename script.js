@@ -52,8 +52,8 @@ const FALLBACK_PRODUCTS = [
   { "id": "p16", "name": "Batom Matte Rosa LS", "category": "cosmeticos", "price": 49.9, "images": ["assets/prod-batom-rosa.jpg"], "description": "Batom matte de longa duração, tom rosa LS perfeito para todos os tons de pele.", "status": "disponivel" },
   { "id": "p17", "name": "Perfume LS Essence 50ml", "category": "cosmeticos", "price": 129.9, "images": ["assets/prod-perfume-ls.jpg"], "description": "Perfume feminino floral frutado, aroma leve e sofisticado LS.", "status": "disponivel" },
 
-  { "id": "p18", "name": "Creme Hidratante Corporal LS", "category": "beleza", "price": 69.9, "images":[ "assets/prod-hidratante.jpg"], "description": "Hidratante corporal com fragrância suave e textura leve.", "status": "disponivel" },
-  { "id": "p19", "name": "Sérum Facial Iluminador", "category": "beleza", "price": 99.9, "images":[ "assets/prod-serum-facial.jpg"], "description": "Sérum facial com toque seco, ideal para pele radiante e nutrida.", "status": "disponivel" },
+  { "id": "p18", "name": "Creme Hidratante Corporal LS", "category": "belezas", "price": 69.9, "images":[ "assets/prod-hidratante.jpg"], "description": "Hidratante corporal com fragrância suave e textura leve.", "status": "disponivel" },
+  { "id": "p19", "name": "Sérum Facial Iluminador", "category": "belezas", "price": 99.9, "images":[ "assets/prod-serum-facial.jpg"], "description": "Sérum facial com toque seco, ideal para pele radiante e nutrida.", "status": "disponivel" },
 
   { "id": "p20", "name": "Bolsa Rosa Pastel LS", "category": "acessorios", "price": 149.9, "images": ["assets/prod-bolsa-rosa.jpg"], "description": "Bolsa estruturada tom rosa LS, moderna e prática para o dia a dia.", "status": "disponivel" }
 ];
