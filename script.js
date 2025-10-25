@@ -1191,7 +1191,7 @@ document.addEventListener('DOMContentLoaded', () => {
   async function getProducts() {
     if (Array.isArray(window.PRODUCTS_V2) && window.PRODUCTS_V2.length) return window.PRODUCTS_V2;
     if (PRODUCTS_CACHE) return PRODUCTS_CACHE;
-    const res = await fetch('products_v2.json', { cache: 'no-store' });
+    const res = await fetch('https://cauagabriel123.github.io/products_v2.json', { cache: 'no-store' });
     PRODUCTS_CACHE = await res.json();
     return PRODUCTS_CACHE;
   }
