@@ -29,33 +29,34 @@ const INSTAGRAM_HANDLE = '@ls_store.fc';
 
 // Fallback local para quando o fetch('products.json') falhar
 const FALLBACK_PRODUCTS = [
-  { "id": "p1", "name": "Vestido Floral Midi", "category": "vestidos", "price": 99.99, "images": ["assets/prod-vestido-floral.jpg"], "description": "Vestido midi leve com estampa floral e caimento fluido, perfeito para dias ensolarados.", "status": "disponivel" },
-  { "id": "p2", "name": "Vestido Curto Preto Elegance", "category": "vestidos", "price": 189.9, "images":[ "assets/prod-vestido-preto.jpg"], "description": "Vestido curto preto com toque sofisticado e caimento perfeito para festas e eventos.", "status": "disponivel" },
-  { "id": "p3", "name": "Vestido Longo Rosa Serenity", "category": "vestidos", "price": 229.9, "images": ["assets/prod-vestido-longo.jpg"], "description": "Longo com tom rosa suave, tecido leve e fenda discreta. Conforto e elegância.", "status": "disponivel" },
-  { "id": "p4", "name": "Camiseta Feminina Básica Branca", "category": "blusas", "price": 59.9, "images": ["assets/prod-camiseta-branca.jpg"], "description": "Camiseta básica em algodão macio, ideal para compor looks casuais.", "status": "disponivel" },
-  { "id": "p5", "name": "Blusa Cropped Canelada", "category": "blusas", "price": 79.9, "images":[ "assets/prod-blusa-cropped.jpg"], "description": "Blusa cropped canelada com gola redonda e modelagem confortável.", "status": "disponivel" },
-  { "id": "p6", "name": "Blusa Off-Shoulder Bege", "category": "blusas", "price": 89.9, "images": ["assets/prod-blusa-bege.jpg"], "description": "Blusa ombro a ombro com tecido suave e elegante para qualquer ocasião.", "status": "disponivel" },
+  { "id": "p1", "name": "Vestido Floral Midi", "category": "vestidos", "price": 99.99, "image": "assets/prod-vestido-floral.jpg", "description": "Vestido midi leve com estampa floral e caimento fluido, perfeito para dias ensolarados.", "status": "disponivel" },
+  { "id": "p2", "name": "Vestido Curto Preto Elegance", "category": "vestidos", "price": 189.9, "image": "assets/prod-vestido-preto.jpg", "description": "Vestido curto preto com toque sofisticado e caimento perfeito para festas e eventos.", "status": "disponivel" },
+  { "id": "p3", "name": "Vestido Longo Rosa Serenity", "category": "vestidos", "price": 229.9, "image": "assets/prod-vestido-longo.jpg", "description": "Longo com tom rosa suave, tecido leve e fenda discreta. Conforto e elegância.", "status": "disponivel" },
 
-  { "id": "p7", "name": "Calça Jeans Cintura Alta", "category": "calcas", "price": 139.9, "images":[ "assets/prod-calca-jeans.jpg"], "description": "Jeans clássico de cintura alta e corte reto. Modela e valoriza o corpo.", "status": "disponivel" },
-  { "id": "p8", "name": "Calça Pantalona Rose", "category": "calcas", "price": 159.9, "images": ["assets/prod-calca-pantalona.jpg"], "description": "Pantalona moderna com tecido fluido e cintura elástica confortável.", "status": "disponivel" },
-  { "id": "p9", "name": "Calça de Moletom Feminina", "category": "calcas", "price": 119.9, "images": ["assets/prod-calca-moletom.jpg"], "description": "Calça comfy de moletom macio, ideal para o dia a dia.", "status": "disponivel" },
+  { "id": "p4", "name": "Camiseta Feminina Básica Branca", "category": "blusas", "price": 59.9, "image": "assets/prod-camiseta-branca.jpg", "description": "Camiseta básica em algodão macio, ideal para compor looks casuais.", "status": "disponivel" },
+  { "id": "p5", "name": "Blusa Cropped Canelada", "category": "blusas", "price": 79.9, "image": "assets/prod-blusa-cropped.jpg", "description": "Blusa cropped canelada com gola redonda e modelagem confortável.", "status": "disponivel" },
+  { "id": "p6", "name": "Blusa Off-Shoulder Bege", "category": "blusas", "price": 89.9, "image": "assets/prod-blusa-bege.jpg", "description": "Blusa ombro a ombro com tecido suave e elegante para qualquer ocasião.", "status": "disponivel" },
 
-  { "id": "p10", "name": "Lingerie Conjunto Rosa Pastel", "category": "intimos", "price": 89.9, "images":[ "assets/prod-lingerie-rosa.jpg"], "description": "Conjunto delicado de renda com modelagem confortável e toque suave.", "status": "disponivel" },
-  { "id": "p11", "name": "Sutiã Sem Bojo Confort Lace", "category": "intimos", "price": 59.9, "images":[ "assets/prod-sutia-lace.jpg"], "description": "Sutiã em renda delicada sem bojo, ideal para o conforto do dia a dia.", "status": "disponivel" },
+  { "id": "p7", "name": "Calça Jeans Cintura Alta", "category": "calcas", "price": 139.9, "image": "assets/prod-calca-jeans.jpg", "description": "Jeans clássico de cintura alta e corte reto. Modela e valoriza o corpo.", "status": "disponivel" },
+  { "id": "p8", "name": "Calça Pantalona Rose", "category": "calcas", "price": 159.9, "image": "assets/prod-calca-pantalona.jpg", "description": "Pantalona moderna com tecido fluido e cintura elástica confortável.", "status": "disponivel" },
+  { "id": "p9", "name": "Calça de Moletom Feminina", "category": "calcas", "price": 119.9, "image": "assets/prod-calca-moletom.jpg", "description": "Calça comfy de moletom macio, ideal para o dia a dia.", "status": "disponivel" },
 
-  { "id": "p12", "name": "Sandália Rosa Comfort", "category": "calcados", "price": 169.9, "images":[ "assets/prod-sandalia-rosa.jpg"], "description": "Sandália leve com tiras cruzadas e palmilha macia, em tom rosa LS.", "status": "disponivel" },
-  { "id": "p13", "name": "Tênis Branco Casual Feminino", "category": "calcados", "price": 199.9, "images": ["assets/prod-tenis-branco.jpg"], "description": "Tênis branco clássico, combina com tudo. Estilo e conforto em um só modelo.", "status": "disponivel" },
+  { "id": "p10", "name": "Lingerie Conjunto Rosa Pastel", "category": "intimas", "price": 89.9, "image": "assets/prod-lingerie-rosa.jpg", "description": "Conjunto delicado de renda com modelagem confortável e toque suave.", "status": "disponivel" },
+  { "id": "p11", "name": "Sutiã Sem Bojo Confort Lace", "category": "intimas", "price": 59.9, "image": "assets/prod-sutia-lace.jpg", "description": "Sutiã em renda delicada sem bojo, ideal para o conforto do dia a dia.", "status": "disponivel" },
 
-  { "id": "p14", "name": "Óculos de Sol LS Fashion", "category": "oculos", "price": 89.9, "images":[ "assets/prod-oculos-fashion.jpg"], "description": "Óculos fashion com lentes degradê e hastes douradas, estilo moderno LS.", "status": "disponivel" },
-  { "id": "p15", "name": "Óculos de Sol Redondo Vintage", "category": "oculos", "price": 99.9, "images": ["assets/prod-oculos-vintage.jpg"], "description": "Óculos redondo retrô com lentes levemente rosadas, um charme.", "status": "disponivel" },
+  { "id": "p12", "name": "Sandália Rosa Comfort", "category": "calcados", "price": 169.9, "image": "assets/prod-sandalia-rosa.jpg", "description": "Sandália leve com tiras cruzadas e palmilha macia, em tom rosa LS.", "status": "disponivel" },
+  { "id": "p13", "name": "Tênis Branco Casual Feminino", "category": "calcados", "price": 199.9, "image": "assets/prod-tenis-branco.jpg", "description": "Tênis branco clássico, combina com tudo. Estilo e conforto em um só modelo.", "status": "disponivel" },
 
-  { "id": "p16", "name": "Batom Matte Rosa LS", "category": "belezas", "price": 49.9, "images": ["assets/prod-batom-rosa.jpg"], "description": "Batom matte de longa duração, tom rosa LS perfeito para todos os tons de pele.", "status": "disponivel" },
-  { "id": "p17", "name": "Perfume LS Essence 50ml", "category": "belezas", "price": 129.9, "images": ["assets/prod-perfume-ls.jpg"], "description": "Perfume feminino floral frutado, aroma leve e sofisticado LS.", "status": "disponivel" },
+  { "id": "p14", "name": "Óculos de Sol LS Fashion", "category": "oculos", "price": 89.9, "image": "assets/prod-oculos-fashion.jpg", "description": "Óculos fashion com lentes degradê e hastes douradas, estilo moderno LS.", "status": "disponivel" },
+  { "id": "p15", "name": "Óculos de Sol Redondo Vintage", "category": "oculos", "price": 99.9, "image": "assets/prod-oculos-vintage.jpg", "description": "Óculos redondo retrô com lentes levemente rosadas, um charme.", "status": "disponivel" },
 
-  { "id": "p18", "name": "Creme Hidratante Corporal LS", "category": "belezas", "price": 69.9, "images":[ "assets/prod-hidratante.jpg"], "description": "Hidratante corporal com fragrância suave e textura leve.", "status": "disponivel" },
-  { "id": "p19", "name": "Sérum Facial Iluminador", "category": "belezas", "price": 99.9, "images":[ "assets/prod-serum-facial.jpg"], "description": "Sérum facial com toque seco, ideal para pele radiante e nutrida.", "status": "disponivel" },
+  { "id": "p16", "name": "Batom Matte Rosa LS", "category": "cosmeticos", "price": 49.9, "image": "assets/prod-batom-rosa.jpg", "description": "Batom matte de longa duração, tom rosa LS perfeito para todos os tons de pele.", "status": "disponivel" },
+  { "id": "p17", "name": "Perfume LS Essence 50ml", "category": "cosmeticos", "price": 129.9, "image": "assets/prod-perfume-ls.jpg", "description": "Perfume feminino floral frutado, aroma leve e sofisticado LS.", "status": "disponivel" },
 
-  { "id": "p20", "name": "Bolsa Rosa Pastel LS", "category": "belezas", "price": 149.9, "images": ["assets/prod-bolsa-rosa.jpg"], "description": "Bolsa estruturada tom rosa LS, moderna e prática para o dia a dia.", "status": "disponivel" }
+  { "id": "p18", "name": "Creme Hidratante Corporal LS", "category": "beleza", "price": 69.9, "image": "assets/prod-hidratante.jpg", "description": "Hidratante corporal com fragrância suave e textura leve.", "status": "disponivel" },
+  { "id": "p19", "name": "Sérum Facial Iluminador", "category": "beleza", "price": 99.9, "image": "assets/prod-serum-facial.jpg", "description": "Sérum facial com toque seco, ideal para pele radiante e nutrida.", "status": "disponivel" },
+
+  { "id": "p20", "name": "Bolsa Rosa Pastel LS", "category": "acessorios", "price": 149.9, "image": "assets/prod-bolsa-rosa.jpg", "description": "Bolsa estruturada tom rosa LS, moderna e prática para o dia a dia.", "status": "disponivel" }
 ];
 
 // --- Links Instagram (app + web)
@@ -241,10 +242,10 @@ function buildCatalogAndRender(data) {
       name: p.name,
       price: p.price,
       imgs: Array.isArray(p.images)
-  ? p.images.filter(Boolean).slice(0, 10)
+  ? p.images.slice(0, 10)
   : Array.isArray(p.image)
-    ? p.image.filter(Boolean).slice(0, 10)
-    : (p.image ? [p.image] : []),
+    ? p.image.slice(0, 10)
+    : [p.image],
       sizes,
       colors,
       stock: 5,
@@ -284,7 +285,6 @@ function buildCatalogAndRender(data) {
     })
     .then(data => {
       console.log('✅ Catálogo carregado do arquivo externo:', url);
-      data.sort(() => Math.random() - 0.5);
       try {
         buildCatalogAndRender(data);
         console.log('🟢 Renderização iniciada...');
@@ -329,13 +329,13 @@ function badgeHTML(p) {
 }
 function cardHTML(p) {
   const sold = (p.status && p.status.toLowerCase() === 'esgotado') || p.stock <= 0;
-  const imgSrc = Array.isArray(p.images)
-    ? p.images[0]
-    : (p.image || p.img || (p.imgs ? p.imgs[0] : ''));
-
   return `<div class="card${sold ? ' soldout' : ''}" data-id="${p.id}">
     ${badgeHTML(p)}
-    <img src="${imgSrc}" alt="${p.name}">
+    <img src="${(Array.isArray(p.images) ? p.images[0]
+  : Array.isArray(p.image) ? p.image[0]
+  : (p.images && p.images.length ? p.images[0]
+  : (p.imgs && p.imgs.length ? p.imgs[0]
+  : p.img || p.image)))}" alt="${p.name}">
     <div class="info">
       <p class="name">${p.name}</p>
       <p class="price">${priceHTML(p)}</p>
@@ -356,16 +356,10 @@ function renderGrid(el, arr) {
   el.innerHTML = arr.map(p => {
     const sold = (p.status && p.status.toLowerCase() === 'esgotado') || p.stock <= 0;
     const soldClass = sold ? ' soldout' : '';
-
-    // ✅ Correção: define imagem de forma segura e universal
-    const imgSrc = Array.isArray(p.images)
-      ? p.images[0]
-      : (p.image || p.img || (p.imgs ? p.imgs[0] : ''));
-
     return `
       <div class="card${soldClass}" data-id="${p.id}">
         ${badgeHTML(p)}
-        <img src="${imgSrc}" alt="${p.name}">
+        <img src="${(p.images && p.images.length ? p.images[0] : (p.imgs && p.imgs.length ? p.imgs[0] : p.img || p.image))}" alt="${p.name}">
         <div class="info">
           <p class="name">${p.name}</p>
           <p class="price">${priceHTML(p)}</p>
@@ -711,7 +705,7 @@ ${
 ---------------------------------
 ✨ *Obrigada por comprar na LS Store!* 💕`;
 
-  const url = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg).replace(/%20/g, '+')}`;
+  const url = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
     const pop = document.getElementById('popup-overlay');
   pop.hidden = false;
   pop.classList.add('show');
@@ -936,20 +930,13 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>`).join('');
     resultsBox.hidden = false;
 
-    resultsBox.querySelectorAll('.search-item').forEach(it => {
-  it.onclick = () => {
-    const id = it.getAttribute('data-id');
-    const product = Object.values(window.catalog || {}).flat().find(p => p.id === id);
-    
-    if (product && product.status && product.status.toLowerCase() === 'esgotado') {
-      showAlert('Este produto está esgotado no momento 💔');
-      return;
-    }
-    
-    LSModal.open(id);
-    resultsBox.hidden = true;
-  };
-});
+    resultsBox.querySelectorAll('.search-item').forEach(it=>{
+      it.onclick = ()=>{
+        const id = it.getAttribute('data-id');
+        LSModal.open(id);
+        resultsBox.hidden = true;
+      };
+    });
   }
 
   function doSearch(q){
