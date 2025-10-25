@@ -355,10 +355,16 @@ function renderGrid(el, arr) {
   el.innerHTML = arr.map(p => {
     const sold = (p.status && p.status.toLowerCase() === 'esgotado') || p.stock <= 0;
     const soldClass = sold ? ' soldout' : '';
+
+    // ✅ Correção: define imagem de forma segura e universal
+    const imgSrc = Array.isArray(p.images)
+      ? p.images[0]
+      : (p.image || p.img || (p.imgs ? p.imgs[0] : ''));
+
     return `
       <div class="card${soldClass}" data-id="${p.id}">
         ${badgeHTML(p)}
-        <img src="${(p.images && p.images.length ? p.images[0] : (p.imgs && p.imgs.length ? p.imgs[0] : p.img || p.image))}" alt="${p.name}">
+        <img src="${imgSrc}" alt="${p.name}">
         <div class="info">
           <p class="name">${p.name}</p>
           <p class="price">${priceHTML(p)}</p>
