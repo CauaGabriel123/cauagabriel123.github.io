@@ -40,8 +40,8 @@ const FALLBACK_PRODUCTS = [
   { "id": "p8", "name": "Calça Pantalona Rose", "category": "calcas", "price": 159.9, "images": ["assets/prod-calca-pantalona.jpg"], "description": "Pantalona moderna com tecido fluido e cintura elástica confortável.", "status": "disponivel" },
   { "id": "p9", "name": "Calça de Moletom Feminina", "category": "calcas", "price": 119.9, "images": ["assets/prod-calca-moletom.jpg"], "description": "Calça comfy de moletom macio, ideal para o dia a dia.", "status": "disponivel" },
 
-  { "id": "p10", "name": "Lingerie Conjunto Rosa Pastel", "category": "intimas", "price": 89.9, "images":[ "assets/prod-lingerie-rosa.jpg"], "description": "Conjunto delicado de renda com modelagem confortável e toque suave.", "status": "disponivel" },
-  { "id": "p11", "name": "Sutiã Sem Bojo Confort Lace", "category": "intimas", "price": 59.9, "images":[ "assets/prod-sutia-lace.jpg"], "description": "Sutiã em renda delicada sem bojo, ideal para o conforto do dia a dia.", "status": "disponivel" },
+  { "id": "p10", "name": "Lingerie Conjunto Rosa Pastel", "category": "intimos", "price": 89.9, "images":[ "assets/prod-lingerie-rosa.jpg"], "description": "Conjunto delicado de renda com modelagem confortável e toque suave.", "status": "disponivel" },
+  { "id": "p11", "name": "Sutiã Sem Bojo Confort Lace", "category": "intimos", "price": 59.9, "images":[ "assets/prod-sutia-lace.jpg"], "description": "Sutiã em renda delicada sem bojo, ideal para o conforto do dia a dia.", "status": "disponivel" },
 
   { "id": "p12", "name": "Sandália Rosa Comfort", "category": "calcados", "price": 169.9, "images":[ "assets/prod-sandalia-rosa.jpg"], "description": "Sandália leve com tiras cruzadas e palmilha macia, em tom rosa LS.", "status": "disponivel" },
   { "id": "p13", "name": "Tênis Branco Casual Feminino", "category": "calcados", "price": 199.9, "images": ["assets/prod-tenis-branco.jpg"], "description": "Tênis branco clássico, combina com tudo. Estilo e conforto em um só modelo.", "status": "disponivel" },
@@ -49,13 +49,13 @@ const FALLBACK_PRODUCTS = [
   { "id": "p14", "name": "Óculos de Sol LS Fashion", "category": "oculos", "price": 89.9, "images":[ "assets/prod-oculos-fashion.jpg"], "description": "Óculos fashion com lentes degradê e hastes douradas, estilo moderno LS.", "status": "disponivel" },
   { "id": "p15", "name": "Óculos de Sol Redondo Vintage", "category": "oculos", "price": 99.9, "images": ["assets/prod-oculos-vintage.jpg"], "description": "Óculos redondo retrô com lentes levemente rosadas, um charme.", "status": "disponivel" },
 
-  { "id": "p16", "name": "Batom Matte Rosa LS", "category": "cosmeticos", "price": 49.9, "images": ["assets/prod-batom-rosa.jpg"], "description": "Batom matte de longa duração, tom rosa LS perfeito para todos os tons de pele.", "status": "disponivel" },
-  { "id": "p17", "name": "Perfume LS Essence 50ml", "category": "cosmeticos", "price": 129.9, "images": ["assets/prod-perfume-ls.jpg"], "description": "Perfume feminino floral frutado, aroma leve e sofisticado LS.", "status": "disponivel" },
+  { "id": "p16", "name": "Batom Matte Rosa LS", "category": "belezas", "price": 49.9, "images": ["assets/prod-batom-rosa.jpg"], "description": "Batom matte de longa duração, tom rosa LS perfeito para todos os tons de pele.", "status": "disponivel" },
+  { "id": "p17", "name": "Perfume LS Essence 50ml", "category": "belezas", "price": 129.9, "images": ["assets/prod-perfume-ls.jpg"], "description": "Perfume feminino floral frutado, aroma leve e sofisticado LS.", "status": "disponivel" },
 
   { "id": "p18", "name": "Creme Hidratante Corporal LS", "category": "belezas", "price": 69.9, "images":[ "assets/prod-hidratante.jpg"], "description": "Hidratante corporal com fragrância suave e textura leve.", "status": "disponivel" },
   { "id": "p19", "name": "Sérum Facial Iluminador", "category": "belezas", "price": 99.9, "images":[ "assets/prod-serum-facial.jpg"], "description": "Sérum facial com toque seco, ideal para pele radiante e nutrida.", "status": "disponivel" },
 
-  { "id": "p20", "name": "Bolsa Rosa Pastel LS", "category": "acessorios", "price": 149.9, "images": ["assets/prod-bolsa-rosa.jpg"], "description": "Bolsa estruturada tom rosa LS, moderna e prática para o dia a dia.", "status": "disponivel" }
+  { "id": "p20", "name": "Bolsa Rosa Pastel LS", "category": "belezas", "price": 149.9, "images": ["assets/prod-bolsa-rosa.jpg"], "description": "Bolsa estruturada tom rosa LS, moderna e prática para o dia a dia.", "status": "disponivel" }
 ];
 
 // --- Links Instagram (app + web)
@@ -331,11 +331,11 @@ function cardHTML(p) {
   const sold = (p.status && p.status.toLowerCase() === 'esgotado') || p.stock <= 0;
   return `<div class="card${sold ? ' soldout' : ''}" data-id="${p.id}">
     ${badgeHTML(p)}
-    <img src="${(Array.isArray(p.images) ? p.images[0]
-  : Array.isArray(p.image) ? p.image[0]
-  : (p.images && p.images.length ? p.images[0]
-  : (p.imgs && p.imgs.length ? p.imgs[0]
-  : p.img || p.image)))}" alt="${p.name}">
+    const imgSrc = Array.isArray(p.images)
+  ? p.images[0]
+  : (p.image || p.img || (p.imgs ? p.imgs[0] : ''));
+
+<img src="${imgSrc}" alt="${p.name}">
     <div class="info">
       <p class="name">${p.name}</p>
       <p class="price">${priceHTML(p)}</p>
@@ -1190,7 +1190,7 @@ document.addEventListener('DOMContentLoaded', () => {
   async function getProducts() {
     if (Array.isArray(window.PRODUCTS_V2) && window.PRODUCTS_V2.length) return window.PRODUCTS_V2;
     if (PRODUCTS_CACHE) return PRODUCTS_CACHE;
-    const res = await fetch('https://cauagabriel123.github.io/products_v2.json', { cache: 'no-store' });
+    const res = await fetch('products_v2.json', { cache: 'no-store' });
     PRODUCTS_CACHE = await res.json();
     return PRODUCTS_CACHE;
   }
