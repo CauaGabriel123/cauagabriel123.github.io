@@ -329,12 +329,13 @@ function badgeHTML(p) {
 }
 function cardHTML(p) {
   const sold = (p.status && p.status.toLowerCase() === 'esgotado') || p.stock <= 0;
+  const imgSrc = Array.isArray(p.images)
+    ? p.images[0]
+    : (p.image || p.img || (p.imgs ? p.imgs[0] : ''));
+
   return `<div class="card${sold ? ' soldout' : ''}" data-id="${p.id}">
     ${badgeHTML(p)}
-  ? p.images[0]
-  : (p.image || p.img || (p.imgs ? p.imgs[0] : ''));
-
-<img src="${imgSrc}" alt="${p.name}">
+    <img src="${imgSrc}" alt="${p.name}">
     <div class="info">
       <p class="name">${p.name}</p>
       <p class="price">${priceHTML(p)}</p>
