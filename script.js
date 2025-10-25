@@ -285,6 +285,7 @@ function buildCatalogAndRender(data) {
     })
     .then(data => {
       console.log('✅ Catálogo carregado do arquivo externo:', url);
+      products.sort(() => Math.random() - 0.5);
       try {
         buildCatalogAndRender(data);
         console.log('🟢 Renderização iniciada...');
