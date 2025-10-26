@@ -980,12 +980,20 @@ document.addEventListener('DOMContentLoaded', () => {
     resultsBox.hidden = false;
 
     resultsBox.querySelectorAll('.search-item').forEach(it=>{
-      it.onclick = ()=>{
-        const id = it.getAttribute('data-id');
-        LSModal.open(id);
-        resultsBox.hidden = true;
-      };
-    });
+  it.onclick = ()=>{
+    const id = it.getAttribute('data-id');
+    const product = (window.PRODUCTS_V2 || []).find(p => String(p.id) === String(id));
+
+    // 🔒 Bloqueia produtos esgotados mesmo quando vêm da busca
+    if (product && product.status && product.status.toLowerCase() === 'esgotado') {
+      showAlert('Este produto está esgotado e não pode ser adicionado ao carrinho.');
+      return;
+    }
+
+    LSModal.open(id);
+    resultsBox.hidden = true;
+  };
+});
   }
 
   function doSearch(q){
