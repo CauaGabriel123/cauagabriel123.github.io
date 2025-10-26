@@ -426,7 +426,7 @@
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
     "status": "disponivel",
     "sizes": ["GG"],
-    "colors": ["Branco"], ["Bordo"], ["Azul"]
+    "colors": ["Branco", "Bordo", "Azul"]
       },
   {
         "id": "p36",
@@ -437,7 +437,7 @@
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
     "status": "disponivel",
     "sizes": ["M", "GG"],
-    "colors": ["Cinza, Laranja, Azul"]
+    "colors": ["Cinza", "Laranja", "Azul"]
       },
   {
         "id": "p37",
@@ -459,6 +459,6 @@
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
     "status": "disponivel",
     "sizes": ["52"],
-    "colors": ["Laranja, Vermelho, Bordo"]
+    "colors": ["Laranja", "Vermelho", "Bordo"]
   }
 ]
