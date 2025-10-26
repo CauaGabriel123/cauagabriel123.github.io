@@ -720,52 +720,46 @@ checkout.onclick = () => {
     } else troco = 'Não precisa';
   }
 
-  // 🧾 Itens formatados com emojis corretos
-  const itensTxt = items.map(it => `
----------------------------------
-👗 *Produto:* ${it.name}
+// 🧾 Itens formatados com emojis corretos
+const itensTxt = items.map((it, i) => `
+━━━━━━━━━━━━━━━━━━
+${i + 1}. 👗 *Produto:* ${it.name}
 📏 *Tamanho:* ${it.size}
 🎨 *Cor:* ${it.color}
 💰 *Preço:* R$ ${it.price.toFixed(2).replace('.', ',')}
----------------------------------`).join('');
+`).join('');
 
-  const enderecoTxt = entrega === 'entrega'
-    ? `${rua}, ${numero} - ${bairro}`
-    : 'Retirada na loja';
+// 🧾 Endereço e totais formatados
+const enderecoTxt = entrega === 'entrega'
+  ? `${rua}, ${numero} - ${bairro}`
+  : '🏪 Retirada na loja';
 
-  const taxaTxt = (typeof feeRaw === 'number')
-    ? `R$ ${feeRaw.toFixed(2).replace('.', ',')}`
-    : feeRaw;
+const taxaTxt = (typeof feeRaw === 'number')
+  ? `R$ ${feeRaw.toFixed(2).replace('.', ',')}`
+  : feeRaw;
 
-  // 💬 Mensagem com emojis e acentos preservados
-  const message = `
-----------------------------
-💖 *Obrigada por comprar na LS Store!*
-----------------------------
+// 💬 Mensagem com emojis e formatação fixa (100% compatível)
+const message = `
+🌸 *Obrigada por comprar na LS Store!* 🌸
+━━━━━━━━━━━━━━━━━━
 🛍️ *NOVO PEDIDO - LS STORE*
-----------------------------
-👩‍💖 *Cliente:* ${client}
-📦 *Entrega:* ${entrega}
-🏡 *Endereço:* ${enderecoTxt}
-💬 *Observações:* ${obs}
-
-🧺 *Itens do pedido:*
+━━━━━━━━━━━━━━━━━━
+👩‍💼 *Cliente:* ${client}
+🚚 *Entrega:* ${entrega}
+📍 *Endereço:* ${enderecoTxt}
+📝 *Observações:* ${obs}
+━━━━━━━━━━━━━━━━━━
+📦 *Itens do pedido:*
 ${itensTxt}
-
+━━━━━━━━━━━━━━━━━━
 💳 *Pagamento:* ${payment}
 🚚 *Taxa de entrega:* ${taxaTxt}
 💰 *Total final:* R$ ${total.toFixed(2).replace('.', ',')}
-${
-  payment === 'Dinheiro'
-    ? `${valorPago ? `\n💵 *Valor pago:* R$ ${valorPago}` : ''}\n🔁 *Troco:* ${troco}`
-    : ''
-}
-----------------------------
-✨ *Obrigada por comprar na LS Store!* 💕`;
-
-  // ✅ Codificação segura para WhatsApp
-  const url = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(message)}`;
-
+${payment === 'Dinheiro'
+  ? `${valorPago ? `\n💵 *Valor pago:* R$ ${valorPago}` : ''}\n🔁 *Troco:* ${troco}`
+  : ''}
+━━━━━━━━━━━━━━━━━━
+🌷 *Obrigada por escolher a LS Store!* 💖`;
   // Pop-up de confirmação
   const pop = document.getElementById('popup-overlay');
   pop.hidden = false;
