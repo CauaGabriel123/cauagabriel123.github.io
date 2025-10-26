@@ -276,6 +276,20 @@ if (cat === 'calcados' || cat === 'calçados') cat = 'sapatos';
   renderAll();
   initCarousel();
   renderFooterProducts(featured.length ? featured : null);
+  // ✅ FORÇA SINCRONIZAÇÃO GLOBAL DE PRODUTOS (corrige modal, nomes e descrições)
+window.PRODUCTS_V2 = data.map(p => ({
+  id: p.id,
+  name: p.name,
+  price: p.price,
+  description: p.description || 'Sem descrição disponível.',
+  status: p.status || 'disponivel',
+  sizes: Array.isArray(p.sizes) ? p.sizes : ['Único'],
+  colors: Array.isArray(p.colors) ? p.colors : ['Única'],
+  images: Array.isArray(p.images)
+    ? p.images.filter(Boolean)
+    : (p.image ? [p.image] : (p.imgs ? p.imgs : [])),
+  category: (p.category || 'outros').toLowerCase().trim()
+}));
     // =============================
   // v14.2 — Renderiza TODOS os produtos na tela inicial (Início)
   // =============================
