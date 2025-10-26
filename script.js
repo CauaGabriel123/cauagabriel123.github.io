@@ -231,7 +231,12 @@ function buildCatalogAndRender(data) {
 
   catalog = {};
   data.forEach(p => {
-    const cat = p.category || 'outros';
+    let cat = (p.category || 'outros').toLowerCase().trim();
+
+// Normaliza nomes diferentes ou acentuados
+if (cat === 'intimas' || cat === 'íntimas') cat = 'intimos';
+if (cat === 'cosmeticos' || cat === 'cosméticos') cat = 'belezas';
+if (cat === 'calcados' || cat === 'calçados') cat = 'sapatos';
     if (!catalog[cat]) catalog[cat] = [];
 
     const sizes = normalizeSizes(p.sizes);
