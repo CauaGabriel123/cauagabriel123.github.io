@@ -1246,13 +1246,6 @@ body {
   flex-direction: column !important;
 }
 
-/* Cabeçalho fica logo abaixo do splash */
-.topbar {
-  position: sticky !important;
-  top: 0 !important;
-  z-index: 999 !important; /* abaixo do splash */
-}
-
 /* Quando splash some, o topo volta normalmente */
 #splash.hidden {
   opacity: 0;
