@@ -261,10 +261,10 @@ function buildCatalogAndRender(data) {
     name: p.name,
     price: p.price,
     imgs: Array.isArray(p.images)
-      ? p.images
-      : Array.isArray(p.image)
-        ? p.image
-        : [p.image],
+  ? p.images.filter(Boolean).slice(0, 10)
+  : p.image
+    ? (Array.isArray(p.image) ? p.image.filter(Boolean).slice(0, 10) : [p.image])
+    : (Array.isArray(p.imgs) ? p.imgs.filter(Boolean).slice(0, 10) : []),
     desc: p.description,
     status: p.status
   }));
