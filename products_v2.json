@@ -468,6 +468,6 @@
     "price": 24.99,
     "images":[ "https://cauagabriel123.github.io/assets/JPG"],
     "description": "Pantalona moderna com tecido fluido e cintura elástica confortável.",
-    "status": "disponivel",
+    "status": "indisponivel",
     "sizes": ["G"],
     "colors": ["Azul", "Preto"]
