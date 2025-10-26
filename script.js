@@ -239,16 +239,21 @@ function buildCatalogAndRender(data) {
   }
 
   let cat = (p.category || 'outros').toLowerCase().trim();
-// Normaliza nomes diferentes ou acentuados (compatível com HTML da LS STORE)
+// =============================
+// CORREÇÃO PREMIUM v14.1 — Normalização de categorias 100% compatível com o menu LS STORE
+// =============================
 if (cat === 'intimas' || cat === 'íntimas') cat = 'intimos';
 if (cat === 'cosmeticos' || cat === 'cosméticos' || cat === 'beleza') cat = 'belezas';
-if (cat === 'calcados' || cat === 'calçados') cat = 'calcados'; // mantém o mesmo nome do JSON
 if (cat === 'oculos' || cat === 'óculos') cat = 'oculos';
 if (cat === 'cropped' || cat === 'croppedes') cat = 'croppeds';
 if (cat === 'biquini') cat = 'biquinis';
 if (cat === 'pijama') cat = 'pijamas';
 if (cat === 'short') cat = 'shorts';
 if (cat === 'cueca') cat = 'cuecas';
+if (cat === 'legging') cat = 'leggings';
+if (cat === 'blusa') cat = 'blusas';
+if (cat === 'meia') cat = 'meias';
+if (cat === 'vestido') cat = 'vestidos';
     if (!catalog[cat]) catalog[cat] = [];
 
     const sizes = normalizeSizes(p.sizes);
