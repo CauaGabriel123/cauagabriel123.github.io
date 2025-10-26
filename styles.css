@@ -92,7 +92,7 @@ img { max-width:100%; display:block; }
 .drawer-sublinks a {
   padding:10px 24px; font-weight:600; color:#4c4064;
 }
-/* Topbar fixa e 100% branca (corrige o “vazamento” dos produtos por trás) */
+/* Cabeçalho fixo com degradê rosinha e correção de sobreposição */
 .topbar {
   position: fixed;
   top: 0;
@@ -103,11 +103,11 @@ img { max-width:100%; display:block; }
   align-items: center;
   justify-content: space-between;
   padding: 10px 12px;
-  background: #ffffff; /* branco sólido */
+  background: linear-gradient(90deg, #ffe6f3, #ffd6e8); /* volta o rosa original */
   box-shadow: 0 4px 16px rgba(0,0,0,.06);
 }
 
-/* Cria uma faixa branca atrás da área do notch (iPhones) */
+/* Bloqueia qualquer conteúdo passando por trás (inclusive no iPhone) */
 .topbar::before {
   content: "";
   position: fixed;
@@ -115,8 +115,14 @@ img { max-width:100%; display:block; }
   left: 0;
   right: 0;
   height: env(safe-area-inset-top);
-  background: #ffffff;
+  background: linear-gradient(90deg, #ffe6f3, #ffd6e8); /* igual ao cabeçalho */
   z-index: 10000;
+}
+
+/* Mantém o espaçamento do conteúdo */
+.search-wrap {
+  position: sticky !important;
+  margin-top: 68px; /* espaço abaixo do cabeçalho fixo */
 }
 .icon-btn {
   border:0; background:transparent; font-size:26px; line-height:1;
