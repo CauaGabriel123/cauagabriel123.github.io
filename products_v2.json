@@ -331,134 +331,134 @@
       },
   {
         "id": "p27",
-    "name": "Vestido vermelho",
+    "name": "Calsinha S/ Costura Romance",
     "category": "intimos",
-    "price": 199.99,
-    "images":[ "https://cauagabriel123.github.io/assets/prod-vestido-floral.png"],
+    "price": 29.99,
+    "images":[ "https://cauagabriel123.github.io/assets/intimo4.JPG"],
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
     "status": "disponivel",
-    "sizes": ["M", "G"],
-    "colors": ["Verde", "Azul"]
+    "sizes": ["M"],
+    "colors": ["Preto"]
       },
   {
         "id": "p28",
-    "name": "Vestido vermelho",
+    "name": "Conjunto Fio Duplo Romance",
     "category": "intimos",
-    "price": 199.99,
-    "images":[ "https://cauagabriel123.github.io/assets/prod-vestido-floral.png"],
+    "price": 109.99,
+    "images":[ "https://cauagabriel123.github.io/assets/intimo8.JPG"],
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
     "status": "disponivel",
-    "sizes": ["M", "G"],
-    "colors": ["Verde", "Azul"]
+    "sizes": ["G"],
+    "colors": ["Bege"]
       },
   {
         "id": "p29",
-    "name": "Vestido vermelho",
+    "name": "Calsinha Fio Duplo Romance",
     "category": "intimos",
-    "price": 199.99,
-    "images": ["https://cauagabriel123.github.io/assets/prod-vestido-floral.png"],
+    "price": 19.99,
+    "images": ["https://cauagabriel123.github.io/assets/intimo3.JPG"],
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
     "status": "disponivel",
-    "sizes": ["M", "G"],
-    "colors": ["Verde", "Azul"]
+    "sizes": ["M"],
+    "colors": ["Lilás"]
       },
   {
         "id": "p30",
-    "name": "Vestido vermelho",
+    "name": "Calsinha Fio Duplo Romance",
     "category": "intimos",
-    "price": 199.99,
-    "images": ["https://cauagabriel123.github.io/assets/prod-vestido-floral.png"],
+    "price": 19.99,
+    "images": ["https://cauagabriel123.github.io/assets/intimo5.JPG"],
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
     "status": "disponivel",
-    "sizes": ["M", "G"],
-    "colors": ["Verde", "Azul"]
+    "sizes": ["G"],
+    "colors": ["Rosa"]
       },
   {
         "id": "p31",
-    "name": "Vestido vermelho",
+    "name": "Calsinha Fio Duplo Romance",
     "category": "intimos",
-    "price": 199.99,
-    "images": ["https://cauagabriel123.github.io/assets/prod-vestido-floral.png"],
+    "price": 19.99,
+    "images": ["https://cauagabriel123.github.io/assets/intimo11.JPG"],
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
     "status": "disponivel",
-    "sizes": ["M", "G"],
-    "colors": ["Verde", "Azul"]
+    "sizes": ["P"],
+    "colors": ["Bege"]
       },
   {
         "id": "p32",
-    "name": "Vestido vermelho",
+    "name": "Tanga Short Nebia",
     "category": "intimos",
-    "price": 199.99,
-    "images": ["https://cauagabriel123.github.io/assets/prod-vestido-floral.png"],
+    "price": 29.99,
+    "images": ["https://cauagabriel123.github.io/assets/intimo9.JPG"],
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
     "status": "disponivel",
-    "sizes": ["M", "G"],
-    "colors": ["Verde", "Azul"]
+    "sizes": ["GG"],
+    "colors": ["Preto"]
       },
   {
         "id": "p33",
-    "name": "Vestido vermelho",
+    "name": "Calsinha Fio Duplo",
     "category": "intimos",
-    "price": 199.99,
-    "images": ["https://cauagabriel123.github.io/assets/prod-vestido-floral.png"],
+    "price": 19.99,
+    "images": ["https://cauagabriel123.github.io/assets/intimo13.JPG"],
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
     "status": "disponivel",
-    "sizes": ["M", "G"],
-    "colors": ["Verde", "Azul"]
+    "sizes": ["P"],
+    "colors": ["Rosa"]
       },
   {
         "id": "p34",
-    "name": "Vestido vermelho",
+    "name": "Conjunto Fio duplo Bordado Romance",
     "category": "intimos",
-    "price": 199.99,
-    "images": ["https://cauagabriel123.github.io/assets/prod-vestido-floral.png"],
+    "price": 99.99,
+    "images": ["https://cauagabriel123.github.io/assets/intimo7.JPG"],
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
     "status": "disponivel",
-    "sizes": ["M", "G"],
-    "colors": ["Verde", "Azul"]
+    "sizes": ["G"],
+    "colors": ["Verde"]
       },
   {
         "id": "p35",
-    "name": "Vestido vermelho",
+    "name": "Conjunto",
     "category": "intimos",
-    "price": 199.99,
-    "images":[ "https://cauagabriel123.github.io/assets/prod-vestido-floral.png"],
+    "price": 25.99,
+    "images":[ "https://cauagabriel123.github.io/assets/intimo12.JPG"],
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
     "status": "disponivel",
-    "sizes": ["M", "G"],
-    "colors": ["Verde", "Azul"]
+    "sizes": ["GG"],
+    "colors": ["Branco"], ["Bordo"], ["Azul"]
       },
   {
         "id": "p36",
-    "name": "Vestido vermelho",
+    "name": "Calsinha Luna",
     "category": "intimos",
-    "price": 199.99,
-    "images": ["https://cauagabriel123.github.io/assets/prod-vestido-floral.png"],
+    "price": 24.99,
+    "images": ["https://cauagabriel123.github.io/assets/intimo1.JPG"],
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
     "status": "disponivel",
-    "sizes": ["M", "G"],
-    "colors": ["Verde", "Azul"]
+    "sizes": ["M", "GG"],
+    "colors": ["Cinza, Laranja, Azul"]
       },
   {
         "id": "p37",
-    "name": "Vestido vermelho",
+    "name": "Conjunto Fio Duplo YOLANDA",
     "category": "intimos",
-    "price": 199.99,
-    "images": ["https://cauagabriel123.github.io/assets/prod-vestido-floral.png"],
+    "price": 109.99,
+    "images": ["https://cauagabriel123.github.io/assets/intimo6.JPG"],
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
     "status": "disponivel",
-    "sizes": ["M", "G"],
-    "colors": ["Verde", "Azul"]
+    "sizes": ["M"],
+    "colors": ["Roxo"]
       },
   {
         "id": "p38",
-    "name": "Vestido vermelho",
+    "name": "Conjunto Plus",
     "category": "intimos",
-    "price": 199.99,
-    "images": ["https://cauagabriel123.github.io/assets/prod-vestido-floral.png"],
+    "price": 74.99,
+    "images": ["https://cauagabriel123.github.io/assets/intimo10.JPG"],
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
     "status": "disponivel",
-    "sizes": ["M", "G"],
-    "colors": ["Verde", "Azul"]
+    "sizes": ["52"],
+    "colors": ["Laranja"]
   }
 ]
