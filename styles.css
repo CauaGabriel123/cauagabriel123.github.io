@@ -1064,15 +1064,6 @@ body {
   overflow-x: hidden;
 }
 
-.topbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 9999;
-  -webkit-transform: translateZ(0);
-}
-
 .search-wrap {
   position: sticky !important;
   margin-top: 68px; /* dá espaço abaixo do cabeçalho fixo */
