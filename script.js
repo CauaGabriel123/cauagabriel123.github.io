@@ -668,6 +668,7 @@ checkout.onclick = () => {
     } else troco = 'Não precisa';
   }
 
+  // 🧾 Itens formatados com emojis corretos
   const itensTxt = items.map(it => `
 ---------------------------------
 👗 *Produto:* ${it.name}
@@ -684,8 +685,13 @@ checkout.onclick = () => {
     ? `R$ ${feeRaw.toFixed(2).replace('.', ',')}`
     : feeRaw;
 
-  const msg = `🛍️ *NOVO PEDIDO - LS STORE*
----------------------------------
+  // 💬 Mensagem com emojis e acentos preservados
+  const message = `
+----------------------------
+💖 *Obrigada por comprar na LS Store!*
+----------------------------
+🛍️ *NOVO PEDIDO - LS STORE*
+----------------------------
 👩‍💖 *Cliente:* ${client}
 📦 *Entrega:* ${entrega}
 🏡 *Endereço:* ${enderecoTxt}
@@ -702,24 +708,19 @@ ${
     ? `${valorPago ? `\n💵 *Valor pago:* R$ ${valorPago}` : ''}\n🔁 *Troco:* ${troco}`
     : ''
 }
----------------------------------
+----------------------------
 ✨ *Obrigada por comprar na LS Store!* 💕`;
 
-  const url = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
-    const pop = document.getElementById('popup-overlay');
+  // ✅ Codificação segura para WhatsApp
+  const url = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(message)}`;
+
+  // Pop-up de confirmação
+  const pop = document.getElementById('popup-overlay');
   pop.hidden = false;
   pop.classList.add('show');
 
-  // 💬 Mostra popup primeiro e abre o WhatsApp com leve atraso (1 s)
-  setTimeout(() => {
-    window.location.href = url;
-  }, 1200);
-
-  // ⏳ Mantém o popup visível por 2,5 s antes de sumir
-  setTimeout(() => {
-    pop.classList.remove('show');
-    pop.hidden = true;
-  }, 3500);
+  setTimeout(() => { window.location.href = url; }, 1000);
+  setTimeout(() => { pop.classList.remove('show'); pop.hidden = true; }, 3500);
 };
 
 // =============================
