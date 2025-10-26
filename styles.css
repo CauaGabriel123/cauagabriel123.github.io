@@ -92,17 +92,31 @@ img { max-width:100%; display:block; }
 .drawer-sublinks a {
   padding:10px 24px; font-weight:600; color:#4c4064;
 }
-/* Topbar */
+/* Topbar fixa e 100% branca (corrige o “vazamento” dos produtos por trás) */
 .topbar {
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 100;
+  left: 0;
+  right: 0;
+  z-index: 9999;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 10px 12px;
-  background: linear-gradient(90deg, #ffe6f3, #ffd6e8);
+  background: #ffffff; /* branco sólido */
   box-shadow: 0 4px 16px rgba(0,0,0,.06);
+}
+
+/* Cria uma faixa branca atrás da área do notch (iPhones) */
+.topbar::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: env(safe-area-inset-top);
+  background: #ffffff;
+  z-index: 10000;
 }
 .icon-btn {
   border:0; background:transparent; font-size:26px; line-height:1;
