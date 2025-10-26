@@ -65,7 +65,7 @@
   },
   {
     "id": "p6",
-    "name": "Legging",
+    "name": "Legging Romance",
     "category": "leggings",
     "price": 119.99,
     "images": ["https://cauagabriel123.github.io/assets/legging1.JPG",
@@ -73,7 +73,7 @@
     "https://cauagabriel123.github.io/assets/legging1.3.JPG"],
     "description": "Blusa ombro a ombro com tecido suave e elegante para qualquer ocasião.",
     "status": "disponivel",
-    "sizes": ["M", "G", "GG"],
+    "sizes": ["M", "G"],
     "colors": ["Preto"]
   },
   {
