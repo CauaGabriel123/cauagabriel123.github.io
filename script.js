@@ -231,8 +231,14 @@ function buildCatalogAndRender(data) {
 
   catalog = {};
   data.forEach(p => {
-    let cat = (p.category || 'outros').toLowerCase().trim();
+  // 🧩 NOVO FILTRO — remove produtos com status "indisponível"
+  const st = (p.status || '').toLowerCase().trim();
+  if (st === 'indisponivel' || st === 'indisponível') {
+    console.log(`🚫 Produto ocultado do catálogo: ${p.name} (${p.id})`);
+    return; // simplesmente ignora o produto
+  }
 
+  let cat = (p.category || 'outros').toLowerCase().trim();
 // Normaliza nomes diferentes ou acentuados
 if (cat === 'intimas' || cat === 'íntimas') cat = 'intimos';
 if (cat === 'cosmeticos' || cat === 'cosméticos') cat = 'belezas';
