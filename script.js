@@ -240,9 +240,16 @@ function buildCatalogAndRender(data) {
 
   let cat = (p.category || 'outros').toLowerCase().trim();
 // Normaliza nomes diferentes ou acentuados
+// 🔧 Correção Premium v14.1 — Normalização de categorias 100% compatível com HTML + JSON
 if (cat === 'intimas' || cat === 'íntimas') cat = 'intimos';
-if (cat === 'cosmeticos' || cat === 'cosméticos') cat = 'belezas';
-if (cat === 'calcados' || cat === 'calçados') cat = 'sapatos';
+if (cat === 'cosmeticos' || cat === 'cosméticos' || cat === 'beleza') cat = 'belezas';
+if (cat === 'calcados' || cat === 'calçados') cat = 'sapatos'; // use apenas se existir seção "sapatos"
+if (cat === 'oculos' || cat === 'óculos') cat = 'oculos';
+if (cat === 'cropped' || cat === 'croppedes') cat = 'croppeds';
+if (cat === 'biquini') cat = 'biquinis';
+if (cat === 'pijama') cat = 'pijamas';
+if (cat === 'short') cat = 'shorts';
+if (cat === 'cueca') cat = 'cuecas';
     if (!catalog[cat]) catalog[cat] = [];
 
     const sizes = normalizeSizes(p.sizes);
