@@ -320,11 +320,11 @@
       },
   {
     "id": "p26",
-    "name": "Vestido vermelho",
+    "name": "Calcinha cagatoria",
     "category": "intimos",
     "price": 199.99,
     "images": ["https://cauagabriel123.github.io/assets/intimos1.JPG"],
-    "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
+    "description": "calcinha de coco.",
     "status": "disponivel",
     "sizes": ["M", "G"],
     "colors": ["Verde", "Azul"]
