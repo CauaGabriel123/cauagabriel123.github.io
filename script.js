@@ -271,6 +271,39 @@ function buildCatalogAndRender(data) {
   renderAll();
   initCarousel();
   renderFooterProducts(featured.length ? featured : null);
+    // =============================
+  // v14.2 — Renderiza TODOS os produtos na tela inicial (Início)
+  // =============================
+  function renderHomeAll() {
+    const home = document.getElementById('featured');
+    if (!home) return;
+
+    // junta todos os produtos de todas as categorias
+    let all = [];
+    for (const cat in catalog) {
+      if (Array.isArray(catalog[cat])) all = all.concat(catalog[cat]);
+    }
+
+    // embaralha a ordem (shuffle)
+    for (let i = all.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [all[i], all[j]] = [all[j], all[i]];
+    }
+
+    // renderiza na tela inicial (home)
+    renderGrid(home, all);
+
+    // revalida visual "esgotado" para produtos indisponíveis
+    home.querySelectorAll('.card').forEach(card => {
+      const id = card.getAttribute('data-id');
+      const p = all.find(x => x.id === id);
+      if (p && p.status && p.status.toLowerCase() === 'esgotado') {
+        card.classList.add('soldout');
+      }
+    });
+  }
+
+  renderHomeAll();
 }
 
 // === Carregamento aprimorado do catálogo (corrigido — ignora falsos negativos do fetch) ===
