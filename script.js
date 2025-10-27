@@ -778,7 +778,8 @@ ${payment === 'Dinheiro'
 ━━━━━━━━━━━━━━━━━━
 🌷 *Obrigada por escolher a LS Store!* 💖`;
 // 🔗 Cria o link do WhatsApp com codificação correta (sem ? e sem erro de emoji)
-const url = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(message)}`;
+const url = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(unescape(encodeURIComponent(message)))}`;
+
   // Pop-up de confirmação
   const pop = document.getElementById('popup-overlay');
   pop.hidden = false;
