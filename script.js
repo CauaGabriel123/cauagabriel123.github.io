@@ -777,17 +777,22 @@ ${payment === 'Dinheiro'
   : ''}
 ━━━━━━━━━━━━━━━━━━
 🌷 *Obrigada por escolher a LS Store!* 💖`;
-// 🔗 Cria o link do WhatsApp com codificação correta (sem ? e sem erro de emoji)
-const url = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(message)}`;
+// ✅ CORREÇÃO DEFINITIVA DE EMOJIS NO WHATSAPP (com encode completo e compatibilidade total)
+const encodedURL = encodeURI(`https://wa.me/${WHATSAPP}?text=${message}`);
 
-  // Pop-up de confirmação
-  const pop = document.getElementById('popup-overlay');
-  pop.hidden = false;
-  pop.classList.add('show');
+// Pop-up de confirmação e envio com segurança
+const pop = document.getElementById('popup-overlay');
+pop.hidden = false;
+pop.classList.add('show');
 
-  setTimeout(() => { window.location.href = url; }, 1000);
-  setTimeout(() => { pop.classList.remove('show'); pop.hidden = true; }, 3500);
-};
+setTimeout(() => {
+  window.location.href = encodedURL;
+}, 1000);
+
+setTimeout(() => {
+  pop.classList.remove('show');
+  pop.hidden = true;
+}, 3500);
 
 // =============================
 // VOLTAR AO TOPO
