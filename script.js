@@ -9,14 +9,6 @@
 
 const { jsPDF } = window.jspdf;
 
-// Splash inicial — some automaticamente após o carregamento
-window.addEventListener('load', () => {
-  const splash = document.getElementById('splash');
-  if (splash) {
-    setTimeout(() => splash.classList.add('hidden'), 800);
-  }
-});
-
 // --- Configurações principais
 const WHATSAPP = '5551989235482';
 const ADMIN_MODE = new URLSearchParams(location.search).get('admin') === 'true';
@@ -72,16 +64,6 @@ const footerInsta = document.getElementById('footer-insta');
     window.location.href = instaDeepLink;
     setTimeout(() => window.open(instaWeb, '_blank', 'noopener'), 700);
   });
-});
-
-// --- Splash (corrigido para travamento)
-window.addEventListener('load', () => {
-  const splash = document.getElementById('splash');
-  if (!splash) return;
-  setTimeout(() => {
-    splash.classList.add('hidden');
-    setTimeout(() => splash.remove(), 800);
-  }, 2000);
 });
 
 // Failsafe extra: garante que o splash desapareça em qualquer cenário
@@ -1461,11 +1443,3 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.LSModal = { open, close };
 })();
-// Garantia de saída da splash após 5s, mesmo se algo falhar
-window.addEventListener('load', () => {
-  setTimeout(() => {
-    const splash = document.getElementById('splash');
-    if (splash) splash.classList.add('hidden');
-    setTimeout(() => splash?.remove(), 800);
-  }, 5000);
-});
