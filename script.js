@@ -7,6 +7,31 @@
 // - NOVO: link "Sobre Nós" no menu abre a seção correspondente
 // =========================
 
+// =========================
+// SPLASH SCREEN — v14.1 Premium Fix Pack (correção definitiva)
+// =========================
+document.addEventListener('DOMContentLoaded', () => {
+  const splash = document.getElementById('splash');
+  if (!splash) return;
+
+  // Fade out suave após o carregamento inicial
+  setTimeout(() => {
+    splash.style.transition = 'opacity 0.6s ease';
+    splash.style.opacity = '0';
+    setTimeout(() => splash.remove(), 600);
+  }, 2000);
+});
+
+// Failsafe extra: garante que o splash desapareça mesmo se algo travar
+setTimeout(() => {
+  const splash = document.getElementById('splash');
+  if (splash) {
+    splash.style.transition = 'opacity 0.6s ease';
+    splash.style.opacity = '0';
+    setTimeout(() => splash.remove(), 600);
+  }
+}, 6000);
+
 const { jsPDF } = window.jspdf;
 
 // --- Configurações principais
