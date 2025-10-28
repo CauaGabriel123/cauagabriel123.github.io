@@ -92,37 +92,17 @@ img { max-width:100%; display:block; }
 .drawer-sublinks a {
   padding:10px 24px; font-weight:600; color:#4c4064;
 }
-/* Cabeçalho fixo com degradê rosinha e correção de sobreposição */
+/* Topbar */
 .topbar {
-  position: fixed;
+  position: sticky;
   top: 0;
-  left: 0;
-  right: 0;
-  z-index: 9999;
+  z-index: 100;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 10px 12px;
-  background: linear-gradient(90deg, #ffe6f3, #ffd6e8); /* volta o rosa original */
+  background: linear-gradient(90deg, #ffe6f3, #ffd6e8);
   box-shadow: 0 4px 16px rgba(0,0,0,.06);
-}
-
-/* Bloqueia qualquer conteúdo passando por trás (inclusive no iPhone) */
-.topbar::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: env(safe-area-inset-top);
-  background: linear-gradient(90deg, #ffe6f3, #ffd6e8); /* igual ao cabeçalho */
-  z-index: 10000;
-}
-
-/* Mantém o espaçamento do conteúdo */
-.search-wrap {
-  position: sticky !important;
-  margin-top: 68px; /* espaço abaixo do cabeçalho fixo */
 }
 .icon-btn {
   border:0; background:transparent; font-size:26px; line-height:1;
@@ -1064,6 +1044,15 @@ body {
   overflow-x: hidden;
 }
 
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  -webkit-transform: translateZ(0);
+}
+
 .search-wrap {
   position: sticky !important;
   margin-top: 68px; /* dá espaço abaixo do cabeçalho fixo */
@@ -1243,10 +1232,14 @@ body {
   flex-direction: column !important;
 }
 
+/* Cabeçalho fica logo abaixo do splash */
+.topbar {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 999 !important; /* abaixo do splash */
+}
+
 /* Quando splash some, o topo volta normalmente */
 #splash.hidden {
   opacity: 0;
-  pointer-events: none;
-  z-index: -1 !important;
-  transition: opacity .6s ease;
-}
+  pointer-eve
