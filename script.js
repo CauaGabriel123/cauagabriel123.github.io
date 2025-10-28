@@ -286,6 +286,7 @@ if (cat === 'vestido') cat = 'vestidos';
     desc: p.description,
     status: p.status
   }));
+  window.catalog = catalog;
   renderAll();
   initCarousel();
   renderFooterProducts(featured.length ? featured : null);
