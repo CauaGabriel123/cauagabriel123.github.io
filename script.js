@@ -7,33 +7,15 @@
 // - NOVO: link "Sobre Nós" no menu abre a seção correspondente
 // =========================
 
-// =========================
-// SPLASH SCREEN — CORREÇÃO iOS v14.1.2
-// =========================
+const { jsPDF } = window.jspdf;
+
+// Splash inicial — some automaticamente após o carregamento
 window.addEventListener('load', () => {
   const splash = document.getElementById('splash');
-  if (!splash) return;
-
-  // iOS precisa de um pequeno atraso extra pra garantir que o DOM foi pintado
-  setTimeout(() => {
-    splash.style.transition = 'opacity 0.6s ease';
-    splash.style.opacity = '0';
-    setTimeout(() => {
-      splash.remove();
-    }, 600);
-  }, 1200);
-});
-
-// Failsafe: se algo travar, some de qualquer jeito após 5s
-setTimeout(() => {
-  const splash = document.getElementById('splash');
   if (splash) {
-    splash.style.transition = 'opacity 0.4s ease';
-    splash.style.opacity = '0';
-    setTimeout(() => splash.remove(), 400);
+    setTimeout(() => splash.classList.add('hidden'), 800);
   }
-}, 5000);
-const { jsPDF } = window.jspdf;
+});
 
 // --- Configurações principais
 const WHATSAPP = '5551989235482';
@@ -91,6 +73,27 @@ const footerInsta = document.getElementById('footer-insta');
     setTimeout(() => window.open(instaWeb, '_blank', 'noopener'), 700);
   });
 });
+
+// --- Splash (corrigido para travamento)
+window.addEventListener('load', () => {
+  const splash = document.getElementById('splash');
+  if (!splash) return;
+  setTimeout(() => {
+    splash.classList.add('hidden');
+    setTimeout(() => splash.remove(), 800);
+  }, 2000);
+});
+
+// Failsafe extra: garante que o splash desapareça em qualquer cenário
+(function robustSplash(){
+  const kill = () => {
+    const s = document.getElementById('splash');
+    if (s) { s.classList.add('hidden'); setTimeout(()=>s.remove(), 800); }
+  };
+  // backup no DOMContentLoaded e um último timeout independente
+  document.addEventListener('DOMContentLoaded', () => setTimeout(kill, 3500));
+  setTimeout(kill, 5000);
+})();
 
 // --- Áudio (lazy init para iOS)
 let audioCtx;
@@ -228,29 +231,7 @@ function buildCatalogAndRender(data) {
 
   catalog = {};
   data.forEach(p => {
-  // 🧩 NOVO FILTRO — remove produtos com status "indisponível"
-  const st = (p.status || '').toLowerCase().trim();
-  if (st === 'indisponivel' || st === 'indisponível') {
-    console.log(`🚫 Produto ocultado do catálogo: ${p.name} (${p.id})`);
-    return; // simplesmente ignora o produto
-  }
-
-  let cat = (p.category || 'outros').toLowerCase().trim();
-// =============================
-// CORREÇÃO PREMIUM v14.1 — Normalização de categorias 100% compatível com o menu LS STORE
-// =============================
-if (cat === 'intimas' || cat === 'íntimas') cat = 'intimos';
-if (cat === 'cosmeticos' || cat === 'cosméticos' || cat === 'beleza') cat = 'belezas';
-if (cat === 'oculos' || cat === 'óculos') cat = 'oculos';
-if (cat === 'cropped' || cat === 'croppedes') cat = 'croppeds';
-if (cat === 'biquini') cat = 'biquinis';
-if (cat === 'pijama') cat = 'pijamas';
-if (cat === 'short') cat = 'shorts';
-if (cat === 'cueca') cat = 'cuecas';
-if (cat === 'legging') cat = 'leggings';
-if (cat === 'blusa') cat = 'blusas';
-if (cat === 'meia') cat = 'meias';
-if (cat === 'vestido') cat = 'vestidos';
+    const cat = p.category || 'outros';
     if (!catalog[cat]) catalog[cat] = [];
 
     const sizes = normalizeSizes(p.sizes);
@@ -280,64 +261,16 @@ if (cat === 'vestido') cat = 'vestidos';
     name: p.name,
     price: p.price,
     imgs: Array.isArray(p.images)
-  ? p.images.filter(Boolean).slice(0, 10)
-  : p.image
-    ? (Array.isArray(p.image) ? p.image.filter(Boolean).slice(0, 10) : [p.image])
-    : (Array.isArray(p.imgs) ? p.imgs.filter(Boolean).slice(0, 10) : []),
+      ? p.images
+      : Array.isArray(p.image)
+        ? p.image
+        : [p.image],
     desc: p.description,
     status: p.status
   }));
-  window.catalog = catalog;
   renderAll();
   initCarousel();
   renderFooterProducts(featured.length ? featured : null);
-  // ✅ FORÇA SINCRONIZAÇÃO GLOBAL DE PRODUTOS (corrige modal, nomes e descrições)
-window.PRODUCTS_V2 = data.map(p => ({
-  id: p.id,
-  name: p.name,
-  price: p.price,
-  description: p.description || 'Sem descrição disponível.',
-  status: p.status || 'disponivel',
-  sizes: Array.isArray(p.sizes) ? p.sizes : ['Único'],
-  colors: Array.isArray(p.colors) ? p.colors : ['Única'],
-  images: Array.isArray(p.images)
-    ? p.images.filter(Boolean)
-    : (p.image ? [p.image] : (p.imgs ? p.imgs : [])),
-  category: (p.category || 'outros').toLowerCase().trim()
-}));
-    // =============================
-  // v14.2 — Renderiza TODOS os produtos na tela inicial (Início)
-  // =============================
-  function renderHomeAll() {
-    const home = document.getElementById('featured');
-    if (!home) return;
-
-    // junta todos os produtos de todas as categorias
-    let all = [];
-    for (const cat in catalog) {
-      if (Array.isArray(catalog[cat])) all = all.concat(catalog[cat]);
-    }
-
-    // embaralha a ordem (shuffle)
-    for (let i = all.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [all[i], all[j]] = [all[j], all[i]];
-    }
-
-    // renderiza na tela inicial (home)
-    renderGrid(home, all);
-
-    // revalida visual "esgotado" para produtos indisponíveis
-    home.querySelectorAll('.card').forEach(card => {
-      const id = card.getAttribute('data-id');
-      const p = all.find(x => x.id === id);
-      if (p && p.status && p.status.toLowerCase() === 'esgotado') {
-        card.classList.add('soldout');
-      }
-    });
-  }
-
-  renderHomeAll();
 }
 
 // === Carregamento aprimorado do catálogo (corrigido — ignora falsos negativos do fetch) ===
@@ -609,7 +542,7 @@ function addToCart(prod, size, color) {
   // 🛍️ Efeito visual do produto "voando" até o carrinho
   const firstImg = (prod.imgs && prod.imgs[0]) || prod.img || '';
   if (firstImg) {
-    const btn = document.getElementById('lsxAddBtn') || document.getElementById('modal-add');
+    const btn = document.getElementById('modal-add');
     if (btn) {
       const rect = btn.getBoundingClientRect();
       flyToCart(firstImg, rect.x, rect.y);
@@ -735,62 +668,60 @@ checkout.onclick = () => {
     } else troco = 'Não precisa';
   }
 
-// 🧾 Itens formatados com emojis corretos
-const itensTxt = items.map((it, i) => `
-━━━━━━━━━━━━━━━━━━
-${i + 1}. 👗 *Produto:* ${it.name}
+  // 🧾 Itens formatados com emojis corretos
+  const itensTxt = items.map(it => `
+---------------------------------
+👗 *Produto:* ${it.name}
 📏 *Tamanho:* ${it.size}
 🎨 *Cor:* ${it.color}
 💰 *Preço:* R$ ${it.price.toFixed(2).replace('.', ',')}
-`).join('');
+---------------------------------`).join('');
 
-// 🧾 Endereço e totais formatados
-const enderecoTxt = entrega === 'entrega'
-  ? `${rua}, ${numero} - ${bairro}`
-  : '🏪 Retirada na loja';
+  const enderecoTxt = entrega === 'entrega'
+    ? `${rua}, ${numero} - ${bairro}`
+    : 'Retirada na loja';
 
-const taxaTxt = (typeof feeRaw === 'number')
-  ? `R$ ${feeRaw.toFixed(2).replace('.', ',')}`
-  : feeRaw;
+  const taxaTxt = (typeof feeRaw === 'number')
+    ? `R$ ${feeRaw.toFixed(2).replace('.', ',')}`
+    : feeRaw;
 
-// 💬 Mensagem com emojis e formatação fixa (100% compatível)
-const message = `
-🌸 *Obrigada por comprar na LS Store!* 🌸
-━━━━━━━━━━━━━━━━━━
+  // 💬 Mensagem com emojis e acentos preservados
+  const message = `
+----------------------------
+💖 *Obrigada por comprar na LS Store!*
+----------------------------
 🛍️ *NOVO PEDIDO - LS STORE*
-━━━━━━━━━━━━━━━━━━
-👩‍💼 *Cliente:* ${client}
-🚚 *Entrega:* ${entrega}
-📍 *Endereço:* ${enderecoTxt}
-📝 *Observações:* ${obs}
-━━━━━━━━━━━━━━━━━━
-📦 *Itens do pedido:*
+----------------------------
+👩‍💖 *Cliente:* ${client}
+📦 *Entrega:* ${entrega}
+🏡 *Endereço:* ${enderecoTxt}
+💬 *Observações:* ${obs}
+
+🧺 *Itens do pedido:*
 ${itensTxt}
-━━━━━━━━━━━━━━━━━━
+
 💳 *Pagamento:* ${payment}
 🚚 *Taxa de entrega:* ${taxaTxt}
 💰 *Total final:* R$ ${total.toFixed(2).replace('.', ',')}
-${payment === 'Dinheiro'
-  ? `${valorPago ? `\n💵 *Valor pago:* R$ ${valorPago}` : ''}\n🔁 *Troco:* ${troco}`
-  : ''}
-━━━━━━━━━━━━━━━━━━
-🌷 *Obrigada por escolher a LS Store!* 💖`;
-// ✅ CORREÇÃO DEFINITIVA DE EMOJIS NO WHATSAPP (com encode completo e compatibilidade total)
-const encodedURL = encodeURI(`https://wa.me/${WHATSAPP}?text=${message}`);
+${
+  payment === 'Dinheiro'
+    ? `${valorPago ? `\n💵 *Valor pago:* R$ ${valorPago}` : ''}\n🔁 *Troco:* ${troco}`
+    : ''
+}
+----------------------------
+✨ *Obrigada por comprar na LS Store!* 💕`;
 
-// Pop-up de confirmação e envio com segurança
-const pop = document.getElementById('popup-overlay');
-pop.hidden = false;
-pop.classList.add('show');
+  // ✅ Codificação segura para WhatsApp
+  const url = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(message)}`;
 
-setTimeout(() => {
-  window.location.href = encodedURL;
-}, 1000);
+  // Pop-up de confirmação
+  const pop = document.getElementById('popup-overlay');
+  pop.hidden = false;
+  pop.classList.add('show');
 
-setTimeout(() => {
-  pop.classList.remove('show');
-  pop.hidden = true;
-}, 3500);
+  setTimeout(() => { window.location.href = url; }, 1000);
+  setTimeout(() => { pop.classList.remove('show'); pop.hidden = true; }, 3500);
+};
 
 // =============================
 // VOLTAR AO TOPO
@@ -1001,20 +932,12 @@ document.addEventListener('DOMContentLoaded', () => {
     resultsBox.hidden = false;
 
     resultsBox.querySelectorAll('.search-item').forEach(it=>{
-  it.onclick = ()=>{
-    const id = it.getAttribute('data-id');
-    const product = (window.PRODUCTS_V2 || []).find(p => String(p.id) === String(id));
-
-    // 🔒 Bloqueia produtos esgotados mesmo quando vêm da busca
-    if (product && product.status && product.status.toLowerCase() === 'esgotado') {
-      showAlert('Este produto está esgotado e não pode ser adicionado ao carrinho.');
-      return;
-    }
-
-    LSModal.open(id);
-    resultsBox.hidden = true;
-  };
-});
+      it.onclick = ()=>{
+        const id = it.getAttribute('data-id');
+        LSModal.open(id);
+        resultsBox.hidden = true;
+      };
+    });
   }
 
   function doSearch(q){
@@ -1459,3 +1382,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.LSModal = { open, close };
 })();
+// Garantia de saída da splash após 5s, mesmo se algo falhar
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    const splash = document.getElementById('splash');
+    if (splash) splash.classList.add('hidden');
+    setTimeout(() => splash?.remove(), 800);
+  }, 5000);
