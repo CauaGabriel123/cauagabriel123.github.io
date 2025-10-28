@@ -8,21 +8,23 @@
 // =========================
 
 // =========================
-// SPLASH SCREEN — VERSÃO OTIMIZADA v14.1.1
+// SPLASH SCREEN — CORREÇÃO iOS v14.1.2
 // =========================
-document.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('load', () => {
   const splash = document.getElementById('splash');
   if (!splash) return;
 
-  // Some suavemente depois de 1.5 s
+  // iOS precisa de um pequeno atraso extra pra garantir que o DOM foi pintado
   setTimeout(() => {
     splash.style.transition = 'opacity 0.6s ease';
     splash.style.opacity = '0';
-    setTimeout(() => splash.remove(), 600);
-  }, 1500);
+    setTimeout(() => {
+      splash.remove();
+    }, 600);
+  }, 1200);
 });
 
-// Failsafe leve — se algo travar, força o sumiço após 4 s
+// Failsafe: se algo travar, some de qualquer jeito após 5s
 setTimeout(() => {
   const splash = document.getElementById('splash');
   if (splash) {
@@ -30,8 +32,7 @@ setTimeout(() => {
     splash.style.opacity = '0';
     setTimeout(() => splash.remove(), 400);
   }
-}, 4000);
-
+}, 5000);
 const { jsPDF } = window.jspdf;
 
 // --- Configurações principais
