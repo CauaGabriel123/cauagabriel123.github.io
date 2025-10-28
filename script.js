@@ -608,7 +608,7 @@ function addToCart(prod, size, color) {
   // 🛍️ Efeito visual do produto "voando" até o carrinho
   const firstImg = (prod.imgs && prod.imgs[0]) || prod.img || '';
   if (firstImg) {
-    const btn = document.getElementById('modal-add');
+    const btn = document.getElementById('lsxAddBtn') || document.getElementById('modal-add');
     if (btn) {
       const rect = btn.getBoundingClientRect();
       flyToCart(firstImg, rect.x, rect.y);
