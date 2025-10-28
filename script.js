@@ -8,13 +8,6 @@
 // =========================
 
 const { jsPDF } = window.jspdf;
-
-// Splash inicial — some automaticamente após o carregamento
-window.addEventListener('load', () => {
-  const splash = document.getElementById('splash');
-  if (splash) {
-    setTimeout(() => splash.classList.add('hidden'), 800);
-  }
 });
 
 // --- Configurações principais
