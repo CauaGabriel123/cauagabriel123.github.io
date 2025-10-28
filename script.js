@@ -8,29 +8,29 @@
 // =========================
 
 // =========================
-// SPLASH SCREEN — v14.1 Premium Fix Pack (correção definitiva)
+// SPLASH SCREEN — VERSÃO OTIMIZADA v14.1.1
 // =========================
 document.addEventListener('DOMContentLoaded', () => {
   const splash = document.getElementById('splash');
   if (!splash) return;
 
-  // Fade out suave após o carregamento inicial
+  // Some suavemente depois de 1.5 s
   setTimeout(() => {
     splash.style.transition = 'opacity 0.6s ease';
     splash.style.opacity = '0';
     setTimeout(() => splash.remove(), 600);
-  }, 2000);
+  }, 1500);
 });
 
-// Failsafe extra: garante que o splash desapareça mesmo se algo travar
+// Failsafe leve — se algo travar, força o sumiço após 4 s
 setTimeout(() => {
   const splash = document.getElementById('splash');
   if (splash) {
-    splash.style.transition = 'opacity 0.6s ease';
+    splash.style.transition = 'opacity 0.4s ease';
     splash.style.opacity = '0';
-    setTimeout(() => splash.remove(), 600);
+    setTimeout(() => splash.remove(), 400);
   }
-}, 6000);
+}, 4000);
 
 const { jsPDF } = window.jspdf;
 
@@ -90,17 +90,6 @@ const footerInsta = document.getElementById('footer-insta');
     setTimeout(() => window.open(instaWeb, '_blank', 'noopener'), 700);
   });
 });
-
-// Failsafe extra: garante que o splash desapareça em qualquer cenário
-(function robustSplash(){
-  const kill = () => {
-    const s = document.getElementById('splash');
-    if (s) { s.classList.add('hidden'); setTimeout(()=>s.remove(), 800); }
-  };
-  // backup no DOMContentLoaded e um último timeout independente
-  document.addEventListener('DOMContentLoaded', () => setTimeout(kill, 3500));
-  setTimeout(kill, 5000);
-})();
 
 // --- Áudio (lazy init para iOS)
 let audioCtx;
