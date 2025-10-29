@@ -250,7 +250,7 @@ function buildCatalogAndRender(data) {
   });
     // Define os produtos em destaque (para o carrossel)
   featured = data
-  .slice(0, 5)
+  .slice(0, 20)
   .map(p => ({
     id: p.id,
     name: p.name,
