@@ -279,27 +279,31 @@ function buildCatalogAndRender(data) {
       return res.json();
     })
     .then(data => {
-      console.log('✅ Catálogo carregado do arquivo externo:', url);
-      try {
-        buildCatalogAndRender(data);
-        console.log('🟢 Renderização iniciada...');
-      } catch (e) {
-        console.error('Erro ao montar catálogo:', e);
-        showAlert('Opa! Tivemos um erro ao montar o catálogo. Recarregue a página em alguns segundos.');
-      }
+  console.log('✅ Catálogo carregado do arquivo externo:', url);
 
-      // ✅ Este setTimeout precisa estar DENTRO do .then(data => { ... })
-      setTimeout(() => {
-        const produtos = document.querySelectorAll('.product-item, .card');
-        if (produtos.length > 0) {
-          console.log('🟢 Catálogo carregado com sucesso após verificação.');
-          return; // tudo certo, não mostra alerta
-        }
-        // Só mostra o alerta se realmente não renderizou nada
-        showAlert('Não foi possível carregar os produtos atualizados. Recarregue a página em alguns segundos.');
-        console.error('❌ Nenhum produto renderizado após verificação.');
-      }, 2500); // 2,5 segundos de espera
-    })
+  // 🔀 Embaralhar produtos aleatoriamente antes de renderizar
+  data = data.sort(() => Math.random() - 0.5);
+
+  try {
+    buildCatalogAndRender(data);
+    console.log('🟢 Renderização iniciada com produtos embaralhados...');
+  } catch (e) {
+    console.error('Erro ao montar catálogo:', e);
+    showAlert('Opa! Tivemos um erro ao montar o catálogo. Recarregue a página em alguns segundos.');
+  }
+
+  // ✅ Este setTimeout precisa estar DENTRO do .then(data => { ... })
+  setTimeout(() => {
+    const produtos = document.querySelectorAll('.product-item, .card');
+    if (produtos.length > 0) {
+      console.log('🟢 Catálogo carregado com sucesso após verificação.');
+      return;
+    }
+    // Só mostra o alerta se realmente não renderizou nada
+    showAlert('Não foi possível carregar os produtos atualizados. Recarregue a página em alguns segundos.');
+    console.error('❌ Nenhum produto renderizado após verificação.');
+  }, 2500); // 2,5 segundos de espera
+})
     .catch(err => {
       console.error('❌ Erro ao carregar o catálogo:', err);
       // Fallback: usa os produtos locais se der erro no fetch
