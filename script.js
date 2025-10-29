@@ -1381,3 +1381,4 @@ window.addEventListener('load', () => {
     if (splash) splash.classList.add('hidden');
     setTimeout(() => splash?.remove(), 800);
   }, 5000);
+}); // 👈 fecha corretamente o window.addEventListener
