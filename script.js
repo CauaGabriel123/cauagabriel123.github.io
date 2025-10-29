@@ -8,7 +8,6 @@
 // =========================
 
 const { jsPDF } = window.jspdf;
-});
 
 // --- Configurações principais
 const WHATSAPP = '5551989235482';
