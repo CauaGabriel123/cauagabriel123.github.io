@@ -1444,7 +1444,44 @@ function abrirCadastro() {
       <input type="email" id="emailCadastro" placeholder="seuemail@email.com">
     </label>
     <label>Telefone
-      <
+      <input type="tel" id="telefoneCadastro" placeholder="(51) 99999-9999">
+    </label>
+    <label>Senha
+      <div class="password-field">
+        <input type="password" id="senhaCadastro" placeholder="••••••••">
+        <button class="toggle-pass" type="button">👁</button>
+      </div>
+    </label>
+    <button id="criarContaBtn" class="add-btn">Cadastrar</button>
+  </div>
+  `;
+
+  area.querySelector('.close-auth').onclick = () => area.innerHTML = '';
+
+  const senhaInput = area.querySelector('#senhaCadastro');
+  const toggle = area.querySelector('.toggle-pass');
+  toggle.onclick = () => senhaInput.type = senhaInput.type === 'password' ? 'text' : 'password';
+
+  // criar conta
+  area.querySelector('#criarContaBtn').onclick = async () => {
+    const nome = document.getElementById('nomeCadastro').value.trim();
+    const email = document.getElementById('emailCadastro').value.trim();
+    const tel = document.getElementById('telefoneCadastro').value.trim();
+    const senha = document.getElementById('senhaCadastro').value.trim();
+
+    if (!nome || !email || !tel || !senha) return showAlert('Preencha todos os campos.');
+    try {
+      const cred = await createUserWithEmailAndPassword(auth, email, senha);
+      await setDoc(doc(db, 'usuarios', cred.user.uid), {
+        nome, email, telefone: tel, criadoEm: new Date().toISOString()
+      });
+      showAlert('Conta criada com sucesso 💖');
+      area.innerHTML = '';
+    } catch (err) {
+      showAlert('Erro ao criar conta: ' + err.message);
+    }
+  };
+}
 // Garantia de saída da splash após 5s, mesmo se algo falhar
 window.addEventListener('load', () => {
   setTimeout(() => {
