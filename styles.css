@@ -1300,3 +1300,37 @@ body {
 .toggle-pass:hover {
   transform: scale(1.2);
 }
+/* ==== LS STORE ALERT MODERNO ==== */
+.ls-alert {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.95);
+  background: linear-gradient(135deg, #fce6f9, #f2e6ff);
+  border: 1px solid rgba(122, 59, 253, 0.15);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  border-radius: 14px;
+  padding: 14px 24px;
+  text-align: center;
+  font-weight: 500;
+  font-size: 15px;
+  color: #4a306d;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity .3s ease, transform .3s ease;
+}
+
+.ls-alert.visible {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.ls-alert.success { 
+  background: linear-gradient(135deg, #e8fce9, #d7fce0);
+  color: #2b7a3f;
+}
+
+.ls-alert.error { 
+  background: linear-gradient(135deg, #ffe5ec, #ffd6d9);
+  color: #9a1a2a;
+}
