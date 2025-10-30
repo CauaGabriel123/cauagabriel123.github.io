@@ -286,6 +286,22 @@ window.addEventListener('DOMContentLoaded', () => {
   </div>
 </div>
 <!-- ===== /LS STORE • Product Modal ===== -->
+<!-- Firebase SDK (modo compatível com sites HTML puros) -->
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js"></script>
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyAcBWE1BXwkN5ynO9JJwelb...",
+    authDomain: "ls-store-8d77b.firebaseapp.com",
+    projectId: "ls-store-8d77b",
+    storageBucket: "ls-store-8d77b.appspot.com",
+    messagingSenderId: "267417239385",
+    appId: "1:267417239385:web:ce97e4548dc8b54b",
+    measurementId: "G-VSKFJFGY75"
+  };
 
+  firebase.initializeApp(firebaseConfig);
+</script>
+<script defer src="script.js"></script>
 </body>
 </html>
