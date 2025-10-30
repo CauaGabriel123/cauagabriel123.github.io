@@ -1381,6 +1381,104 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.LSModal = { open, close };
 })();
+// =============================
+// LOGIN / CADASTRO (Firebase Auth)
+// =============================
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, signOut } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAcBWElBXwkN5ynO9JJwelb34ds1GkCEkE",
+  authDomain: "ls-store-8d77b.firebaseapp.com",
+  projectId: "ls-store-8d77b",
+  storageBucket: "ls-store-8d77b.firebasestorage.app",
+  messagingSenderId: "267417239385",
+  appId: "1:267417239385:web:ce97e459ce7c17584e1648",
+  measurementId: "G-VSKFJFGY75"
+};
+
+// Inicializa Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+// Abre a aba de login ao clicar no bonequinho
+document.getElementById('login-btn').addEventListener('click', () => {
+  const area = document.getElementById('account-area');
+  area.innerHTML = `
+  <div class="auth-card">
+    <div class="auth-title">
+      <h3>Entrar</h3>
+      <button class="close-auth">✕</button>
+    </div>
+    <label>Email
+      <input type="email" id="emailLogin" placeholder="seuemail@email.com">
+    </label>
+    <label>Senha
+      <div class="password-field">
+        <input type="password" id="senhaLogin" placeholder="••••••••">
+        <button class="toggle-pass" type="button">👁</button>
+      </div>
+    </label>
+    <button id="entrarBtn" class="add-btn">Entrar</button>
+    <button id="abrirCadastro" class="add-btn" style="background:linear-gradient(90deg,#E96BA8,#7A3BFD)">Criar Conta</button>
+    <button id="esqueciSenha" class="add-btn" style="background:#f2e6ff;color:#7A3BFD">Esqueci minha senha</button>
+  </div>
+  `;
+  area.querySelector('.close-auth').onclick = () => area.innerHTML = '';
+
+  // alternar visibilidade da senha
+  const senhaInput = area.querySelector('#senhaLogin');
+  const toggle = area.querySelector('.toggle-pass');
+  toggle.onclick = () => senhaInput.type = senhaInput.type === 'password' ? 'text' : 'password';
+
+  // entrar
+  area.querySelector('#entrarBtn').onclick = async () => {
+    const email = document.getElementById('emailLogin').value.trim();
+    const senha = document.getElementById('senhaLogin').value.trim();
+    if (!email || !senha) return showAlert('Preencha email e senha.');
+    try {
+      await signInWithEmailAndPassword(auth, email, senha);
+      showAlert('Login realizado com sucesso 💜');
+      area.innerHTML = '';
+    } catch (err) {
+      showAlert('Erro ao entrar: ' + err.message);
+    }
+  };
+
+  // abrir tela de cadastro
+  area.querySelector('#abrirCadastro').onclick = () => abrirCadastro();
+
+  // redefinir senha
+  area.querySelector('#esqueciSenha').onclick = async () => {
+    const email = document.getElementById('emailLogin').value.trim();
+    if (!email) return showAlert('Digite seu email para redefinir a senha.');
+    try {
+      await sendPasswordResetEmail(auth, email);
+      showAlert('Um link para redefinição foi enviado para seu email.');
+    } catch (err) {
+      showAlert('Erro: ' + err.message);
+    }
+  };
+});
+
+function abrirCadastro() {
+  const area = document.getElementById('account-area');
+  area.innerHTML = `
+  <div class="auth-card">
+    <div class="auth-title">
+      <h3>Criar Conta</h3>
+      <button class="close-auth">✕</button>
+    </div>
+    <label>Nome Completo
+      <input type="text" id="nomeCadastro" placeholder="Seu nome completo">
+    </label>
+    <label>Email
+      <input type="email" id="emailCadastro" placeholder="seuemail@email.com">
+    </label>
+    <label>Telefone
+      <
 // Garantia de saída da splash após 5s, mesmo se algo falhar
 window.addEventListener('load', () => {
   setTimeout(() => {
