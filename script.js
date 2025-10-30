@@ -407,9 +407,6 @@ function buildCatalogAndRender(data) {
   data.forEach(p => {
     const cat = p.category || 'outros';
     if (!catalog[cat]) catalog[cat] = [];
-    
-      // NOVO: ignora produtos marcados como "indisponivel"
-  if (p.status && p.status.toLowerCase() === 'indisponivel') return;
 
     const sizes = normalizeSizes(p.sizes);
     const colors = normalizeColors(p.colors);
