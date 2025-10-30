@@ -375,14 +375,14 @@ window.addEventListener('DOMContentLoaded', () => {
     try {
       const cred = await createUserWithEmailAndPassword(auth, email, password);
       await setDoc(doc(db, "users", cred.user.uid), { name, email, phone });
-      alert("Conta criada com sucesso! Faça login agora.");
+      showAlertLS("Conta criada com sucesso! Faça login agora 💕", "success");
       loginArea.hidden = false; signupArea.hidden = true;
     } catch(err){
   let msg = "Ocorreu um erro.";
   if(err.code === "auth/invalid-email") msg = "E-mail inválido.";
   else if(err.code === "auth/user-not-found" || err.code === "auth/wrong-password") msg = "E-mail ou senha incorretos.";
   else if(err.code === "auth/email-already-in-use") msg = "Este e-mail já está cadastrado.";
-  alert(msg);
+  showAlertLS(msg, "error");
 }
   });
 
@@ -392,13 +392,13 @@ window.addEventListener('DOMContentLoaded', () => {
     try {
       await signInWithEmailAndPassword(auth, loginEmail.value, loginPassword.value);
       authModal.setAttribute('aria-hidden','true');
-      alert("Login efetuado com sucesso!");
+      showAlertLS("Login efetuado com sucesso 💖", "success");
     } catch(err){
   let msg = "Ocorreu um erro.";
   if(err.code === "auth/invalid-email") msg = "E-mail inválido.";
   else if(err.code === "auth/user-not-found" || err.code === "auth/wrong-password") msg = "E-mail ou senha incorretos.";
   else if(err.code === "auth/email-already-in-use") msg = "Este e-mail já está cadastrado.";
-  alert(msg);
+  showAlertLS(msg, "error");
 }
   });
 
@@ -406,7 +406,7 @@ window.addEventListener('DOMContentLoaded', () => {
   document.getElementById('forgot-pass').onclick = async ()=>{
     const email = prompt("Digite seu e-mail para redefinir a senha:");
     if(email) await sendPasswordResetEmail(auth, email);
-    alert("Se o e-mail estiver cadastrado, um link foi enviado!");
+    showAlertLS("Se o e-mail estiver cadastrado, um link foi enviado!", "info");
   };
 
   // ==== MONITORAR USUÁRIO LOGADO ====
