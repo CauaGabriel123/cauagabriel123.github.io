@@ -1560,11 +1560,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.LSModal = { open, close };
 })();
-// Garantia de saída da splash após 5s, mesmo se algo falhar
+// --- Splash (versão estável corrigida — sem travar)
 window.addEventListener('load', () => {
+  const splash = document.getElementById('splash');
+  if (!splash) return;
   setTimeout(() => {
-    const splash = document.getElementById('splash');
-    if (splash) splash.classList.add('hidden');
-    setTimeout(() => splash?.remove(), 800);
-  }, 5000);
-}); // 👈 fecha corretamente o window.addEventListener
+    splash.classList.add('hidden');
+    setTimeout(() => splash.remove(), 800);
+  }, 2000);
+});
+
+// Failsafe em 5s se algo quebrar antes
+setTimeout(() => {
+  const s = document.getElementById('splash');
+  if (s) { s.classList.add('hidden'); setTimeout(()=>s.remove(),800); }
+}, 5000);
