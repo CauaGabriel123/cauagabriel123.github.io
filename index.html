@@ -293,10 +293,16 @@ window.addEventListener('DOMContentLoaded', () => {
     <div id="login-area" class="auth-content">
       <h3>Entrar na conta</h3>
       <form id="login-form">
-        <input type="email" id="login-email" placeholder="E-mail" required>
-        <input type="password" id="login-password" placeholder="Senha" required>
-        <button type="submit" class="enter-btn">Entrar</button>
-      </form>
+  <input type="email" id="login-email" placeholder="E-mail" required>
+
+  <!-- senha com toggle -->
+  <div class="password-field">
+    <input type="password" id="login-password" placeholder="Senha" required>
+    <button type="button" class="toggle-pass" data-target="login-password" aria-label="Mostrar/ocultar senha">👁</button>
+  </div>
+
+  <button type="submit" class="enter-btn">Entrar</button>
+</form>
       <p><button id="forgot-pass" class="text-btn">Esqueci minha senha</button></p>
       <p>Não tem conta? <button id="switch-to-signup" class="text-btn">Cadastre-se</button></p>
     </div>
