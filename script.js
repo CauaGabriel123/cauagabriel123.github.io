@@ -733,40 +733,6 @@ window.addEventListener('scroll', () => {
 backToTop.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
 // =============================
-// LOGIN BONITO (ENTRAR)
-// =============================
-const loginBtn = document.getElementById('login-btn');
-const accountArea = document.getElementById('account-area');
-
-// Garante que o botão existe antes de ativar o clique
-if (loginBtn) {
-  loginBtn.onclick = () => {
-    accountArea.innerHTML = `
-    <div class="auth-card">
-      <div class="auth-title">
-        <h3>Entrar</h3>
-        <button class="close-auth">✕</button>
-      </div>
-      <label>Email
-        <input type="email" id="login-email" placeholder="seuemail@email.com">
-      </label>
-      <label>Senha
-        <input type="password" id="login-pass" placeholder="••••••••">
-      </label>
-      <div class="auth-actions">
-        <button class="add-btn" id="login-ok">Entrar</button>
-        <button class="add-btn" style="background:linear-gradient(90deg,#E96BA8,#7A3BFD)" id="register">Criar conta</button>
-      </div>
-    </div>`;
-
-    accountArea.querySelector('.close-auth').onclick = () => accountArea.innerHTML = '';
-    accountArea.querySelector('#login-ok').onclick = () => showAlert('Função de login em desenvolvimento 💜');
-    accountArea.querySelector('#register').onclick = () => showAlert('Cadastro disponível em breve 💖');
-    showSection('minha-conta');
-  };
-}
-
-// =============================
 // ADMIN (gerar PDF pedidos)
 // =============================
 if (ADMIN_MODE) {
