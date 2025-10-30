@@ -1244,3 +1244,33 @@ body {
   z-index: -1 !important;
   transition: opacity .6s ease;
 }
+/* ===== LS STORE v14.2 — Login e Cadastro Firebase ===== */
+#auth-modal[aria-hidden="false"] { display:flex !important; opacity:1; }
+#auth-modal {
+  position:fixed; inset:0;
+  display:none; align-items:center; justify-content:center;
+  background:rgba(0,0,0,.4);
+  z-index:9999;
+  transition:opacity .25s ease;
+}
+.auth-card {
+  background:#fff;
+  border-radius:16px;
+  box-shadow:0 16px 40px rgba(0,0,0,.25);
+  padding:20px;
+  width:90%;
+  max-width:380px;
+}
+.auth-card h3 { text-align:center; color:var(--lilac); }
+.auth-card form {
+  display:flex; flex-direction:column; gap:10px; margin-top:10px;
+}
+.auth-card input {
+  padding:10px 12px; border-radius:10px;
+  border:1px solid #e8d7e6; font-size:16px;
+}
+.auth-card input:focus {
+  border-color:#d6b0e6;
+  box-shadow:0 0 0 3px rgba(155,48,255,.12);
+  outline:none;
+}
