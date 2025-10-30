@@ -1246,3 +1246,11 @@ body {
   z-index: -1 !important;
   transition: opacity .6s ease;
 }
+
+/* Saudação no topo */
+#greeting {
+  font-weight: 800;
+  background: linear-gradient(90deg, var(--pink), var(--lilac));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
