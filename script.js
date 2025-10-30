@@ -65,188 +65,6 @@ const footerInsta = document.getElementById('footer-insta');
     setTimeout(() => window.open(instaWeb, '_blank', 'noopener'), 700);
   });
 });
-/* ============================
-   LS STORE — Firebase Auth (Login + Cadastro + Google + Saudação)
-   ============================ */
-
-// 1) Config do Firebase (troque pelos seus dados no passo 4)
-const firebaseConfig = {
-    apiKey: "AIzaSyAcBWElBXwkN5ynO9JJwelb34ds1GkCEkE",
-  authDomain: "ls-store-8d77b.firebaseapp.com",
-  projectId: "ls-store-8d77b",
-  storageBucket: "ls-store-8d77b.appspot.com",
-  messagingSenderId: "267417239385",
-  appId: "1:267417239385:web:ce97e459ce7c17584e1648",
-  measurementId: "G-VSKFJFGY75"
-  };
-
-// 2) Inicializa Firebase + Auth
-let firebaseApp, auth, googleProvider;
-(function initFirebaseAuth(){
-  firebaseApp = firebase.initializeApp(firebaseConfig);
-  auth = firebase.auth();
-  // Mantém sessão (login persiste entre visitas)
-  auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
-  googleProvider = new firebase.auth.GoogleAuthProvider();
-})();
-
-// 3) Helpers
-const $GREET = document.getElementById('greeting');
-const $ACCOUNT_BTN = document.getElementById('account-btn');
-const $ACCOUNT_AREA = document.getElementById('account-area');
-
-function firstNameFrom(emailOrName){
-  if (!emailOrName) return '';
-  if (emailOrName.includes(' ')) return emailOrName.split(' ')[0];
-  if (emailOrName.includes('@')) return emailOrName.split('@')[0];
-  return emailOrName;
-}
-
-function updateGreeting(user){
-  if (!user) {
-    $GREET.textContent = '';
-    return;
-  }
-  const name = user.displayName || user.email || 'Cliente';
-  $GREET.textContent = `Olá, ${firstNameFrom(name)} 💕`;
-}
-
-function openMinhaConta(){
-  showSection('minha-conta');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-// 4) Render da UI (Login / Cadastro / Perfil)
-function renderAuthUI(user){
-  if (!user){
-    $ACCOUNT_AREA.innerHTML = `
-      <div class="auth-card">
-        <div class="auth-title">
-          <h3>Entrar</h3>
-        </div>
-
-        <label>Email
-          <input type="email" id="login-email" placeholder="seuemail@email.com">
-        </label>
-        <label>Senha
-          <input type="password" id="login-pass" placeholder="••••••••">
-        </label>
-        <div class="auth-actions">
-          <button class="add-btn" id="btn-login">Entrar</button>
-          <button class="add-btn" id="btn-google" style="background:#fff;border:1px solid #eee;color:#444">Entrar com Google</button>
-        </div>
-      </div>
-
-      <div class="auth-card">
-        <div class="auth-title">
-          <h3>Criar conta</h3>
-        </div>
-        <label>Nome
-          <input type="text" id="reg-name" placeholder="Seu nome">
-        </label>
-        <label>Email
-          <input type="email" id="reg-email" placeholder="voce@email.com">
-        </label>
-        <label>Senha
-          <input type="password" id="reg-pass" placeholder="Mínimo 6 caracteres">
-        </label>
-        <div class="auth-actions">
-          <button class="add-btn" id="btn-register" style="background:linear-gradient(90deg,#E96BA8,#7A3BFD)">Criar conta</button>
-        </div>
-      </div>
-    `;
-
-    // Eventos
-    document.getElementById('btn-login').onclick = async () => {
-      const email = document.getElementById('login-email').value.trim();
-      const pass  = document.getElementById('login-pass').value.trim();
-      if (!email || !pass) return showAlert('Preencha email e senha.');
-      try {
-        await auth.signInWithEmailAndPassword(email, pass);
-        showAlert('Login realizado com sucesso 💖');
-        openMinhaConta();
-      } catch (e) {
-        showAlert('Erro ao entrar: ' + (e?.message || e));
-      }
-    };
-
-    document.getElementById('btn-google').onclick = async () => {
-      try {
-        await auth.signInWithPopup(googleProvider);
-        showAlert('Login com Google realizado 💖');
-        openMinhaConta();
-      } catch (e) {
-        showAlert('Erro no Google: ' + (e?.message || e));
-      }
-    };
-
-    document.getElementById('btn-register').onclick = async () => {
-      const name  = document.getElementById('reg-name').value.trim();
-      const email = document.getElementById('reg-email').value.trim();
-      const pass  = document.getElementById('reg-pass').value.trim();
-
-      if (!name || !email || !pass) return showAlert('Preencha nome, email e senha.');
-      if (pass.length < 6) return showAlert('A senha precisa ter pelo menos 6 caracteres.');
-
-      try {
-        const cred = await auth.createUserWithEmailAndPassword(email, pass);
-        await cred.user.updateProfile({ displayName: name });
-        showAlert('Conta criada com sucesso 💎');
-        openMinhaConta();
-      } catch (e) {
-        showAlert('Erro ao cadastrar: ' + (e?.message || e));
-      }
-    };
-
-  } else {
-    // Logado — mostra perfil e logout
-    const name = user.displayName || user.email || 'Cliente';
-    $ACCOUNT_AREA.innerHTML = `
-      <div class="auth-card">
-        <div class="auth-title">
-          <h3>Minha conta</h3>
-        </div>
-        <p style="margin:6px 0 12px;">Bem-vinda, <strong>${name}</strong> 💕</p>
-
-        <div class="auth-actions">
-          <button class="add-btn" id="btn-logout" style="background:#fff;border:1px solid #eee;color:#c74c8e">Sair</button>
-        </div>
-      </div>
-    `;
-
-    document.getElementById('btn-logout').onclick = async () => {
-      try {
-        await auth.signOut();
-        showAlert('Você saiu da sua conta. Até logo 💖');
-        openMinhaConta();
-      } catch (e) {
-        showAlert('Erro ao sair: ' + (e?.message || e));
-      }
-    };
-  }
-}
-
-// 5) Observa estado de autenticação (atualiza saudação e UI)
-auth.onAuthStateChanged((user) => {
-  updateGreeting(user);
-  renderAuthUI(user);
-});
-
-// 6) Botão do topo abre a seção Minha conta
-if ($ACCOUNT_BTN) {
-  $ACCOUNT_BTN.onclick = () => {
-    openMinhaConta();
-  };
-}
-
-/* ===== Desativar o "login bonito" antigo (se ainda existir) =====
-   Se no seu script houver algo assim:
-
-   const loginBtn = document.getElementById('login-btn');
-   if (loginBtn) { ... }
-
-   → Remova esse bloco ou deixe comentado, para evitar duas UIs diferentes.
-*/
 
 // --- Splash (corrigido para travamento)
 window.addEventListener('load', () => {
@@ -407,6 +225,9 @@ function buildCatalogAndRender(data) {
   data.forEach(p => {
     const cat = p.category || 'outros';
     if (!catalog[cat]) catalog[cat] = [];
+    
+      // NOVO: ignora produtos marcados como "indisponivel"
+  if (p.status && p.status.toLowerCase() === 'indisponivel') return;
 
     const sizes = normalizeSizes(p.sizes);
     const colors = normalizeColors(p.colors);
@@ -1560,18 +1381,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.LSModal = { open, close };
 })();
-// --- Splash (versão estável corrigida — sem travar)
+// Garantia de saída da splash após 5s, mesmo se algo falhar
 window.addEventListener('load', () => {
-  const splash = document.getElementById('splash');
-  if (!splash) return;
   setTimeout(() => {
-    splash.classList.add('hidden');
-    setTimeout(() => splash.remove(), 800);
-  }, 2000);
-});
-
-// Failsafe em 5s se algo quebrar antes
-setTimeout(() => {
-  const s = document.getElementById('splash');
-  if (s) { s.classList.add('hidden'); setTimeout(()=>s.remove(),800); }
-}, 5000);
+    const splash = document.getElementById('splash');
+    if (splash) splash.classList.add('hidden');
+    setTimeout(() => splash?.remove(), 800);
+  }, 5000);
+}); // 👈 fecha corretamente o window.addEventListener
