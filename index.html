@@ -1,18 +1,8 @@
-<!-- Failsafe do Splash - roda ANTES de tudo -->
-<script>
-  (function () {
-    setTimeout(function(){
-      var s = document.getElementById('splash');
-      if (!s) return;
-      s.classList.add('hidden');
-      setTimeout(function(){ try { s.remove(); } catch(_){} }, 800);
-    }, 6000); // some sozinho mesmo se o resto do JS cair
-  })();
-</script>
 <!doctype html>
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8"/>
+  
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
   <title>LS Store — Moda Feminina</title>
 
@@ -21,18 +11,19 @@
   <link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAQAAABo7GoNAAA...">
   <link rel="apple-touch-icon" sizes="180x180" href="assets/icone-ios.png">
 
-  <!-- Modo aplicativo no iPhone -->
+    <!-- Modo aplicativo no iPhone -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="LS Store">
 
-  <!-- Fonts + CSS -->
+  <!-- Fonts + CSS + jsPDF -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script defer src="script.js"></script>
 </head>
-
 <body>
 
 <!-- Splash -->
@@ -46,8 +37,6 @@
 <header class="topbar">
   <button class="icon-btn" id="menu-btn">☰</button>
   <div class="brand">
-    <span id="greeting" style="font-weight:700;margin-left:8px;"></span>
-    <button class="icon-btn" id="account-btn" title="Minha conta">👤</button>
     <img src="assets/logo-ls-storee.png" alt="LS Store" class="logo-header">
   </div>
   <button class="icon-btn" id="cart-btn">🛒<span id="cart-count" class="cart-count">0</span></button>
@@ -135,10 +124,10 @@
   </section>
 
   <!-- Minha conta -->
-<section id="minha-conta" class="section">
-  <h2 class="section-title">Minha conta</h2>
-  <div id="account-area" class="account-area"></div>
-</section>
+  <section id="minha-conta" class="section">
+    <h2 class="section-title">Minha conta</h2>
+    <div id="account-area" class="account-area"></div>
+  </section>
 
   <!-- Sobre Nós -->
   <section id="sobre-nos" class="section sobre-nos-modern">
@@ -292,11 +281,6 @@ window.addEventListener('DOMContentLoaded', () => {
   </div>
 </div>
 <!-- ===== /LS STORE • Product Modal ===== -->
-<!-- Firebase SDK (modo compatível com sites HTML puros) -->
-<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js"></script>
 
-<!-- Script principal -->
-<script defer src="script.js"></script>
 </body>
 </html>
