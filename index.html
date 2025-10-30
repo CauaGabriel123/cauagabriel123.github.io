@@ -284,6 +284,37 @@ window.addEventListener('DOMContentLoaded', () => {
   </div>
 </div>
 <!-- ===== /LS STORE • Product Modal ===== -->
+<!-- ===== LS STORE • Firebase Login / Cadastro ===== -->
+<div id="auth-modal" class="modal" aria-hidden="true">
+  <div class="modal-card auth-card">
+    <button id="close-auth" class="modal-close">✕</button>
+    
+    <!-- Login -->
+    <div id="login-area" class="auth-content">
+      <h3>Entrar na conta</h3>
+      <form id="login-form">
+        <input type="email" id="login-email" placeholder="E-mail" required>
+        <input type="password" id="login-password" placeholder="Senha" required>
+        <button type="submit" class="enter-btn">Entrar</button>
+      </form>
+      <p><button id="forgot-pass" class="text-btn">Esqueci minha senha</button></p>
+      <p>Não tem conta? <button id="switch-to-signup" class="text-btn">Cadastre-se</button></p>
+    </div>
 
+    <!-- Cadastro -->
+    <div id="signup-area" class="auth-content" hidden>
+      <h3>Criar conta</h3>
+      <form id="signup-form">
+        <input type="text" id="signup-name" placeholder="Nome completo" required>
+        <input type="email" id="signup-email" placeholder="E-mail" required>
+        <input type="tel" id="signup-phone" placeholder="Telefone" required>
+        <input type="password" id="signup-password" placeholder="Senha" required>
+        <button type="submit" class="enter-btn">Cadastrar</button>
+      </form>
+      <p>Já tem conta? <button id="switch-to-login" class="text-btn">Entrar</button></p>
+    </div>
+  </div>
+</div>
+<!-- ===== /LS STORE • Firebase Login / Cadastro ===== -->
 </body>
 </html>
