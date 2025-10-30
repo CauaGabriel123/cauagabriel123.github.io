@@ -311,12 +311,18 @@ window.addEventListener('DOMContentLoaded', () => {
     <div id="signup-area" class="auth-content" hidden>
       <h3>Criar conta</h3>
       <form id="signup-form">
-        <input type="text" id="signup-name" placeholder="Nome completo" required>
-        <input type="email" id="signup-email" placeholder="E-mail" required>
-        <input type="tel" id="signup-phone" placeholder="Telefone" required>
-        <input type="password" id="signup-password" placeholder="Senha" required>
-        <button type="submit" class="enter-btn">Cadastrar</button>
-      </form>
+  <input type="text" id="signup-name" placeholder="Nome completo" required>
+  <input type="email" id="signup-email" placeholder="E-mail" required>
+  <input type="tel" id="signup-phone" placeholder="Telefone" required>
+
+  <!-- senha com toggle -->
+  <div class="password-field">
+    <input type="password" id="signup-password" placeholder="Senha" required>
+    <button type="button" class="toggle-pass" data-target="signup-password" aria-label="Mostrar/ocultar senha">👁</button>
+  </div>
+
+  <button type="submit" class="enter-btn">Cadastrar</button>
+</form>
       <p>Já tem conta? <button id="switch-to-login" class="text-btn">Entrar</button></p>
     </div>
   </div>
