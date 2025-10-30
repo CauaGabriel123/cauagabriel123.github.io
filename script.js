@@ -71,10 +71,10 @@ const footerInsta = document.getElementById('footer-insta');
 
 // 1) Config do Firebase (troque pelos seus dados no passo 4)
 const firebaseConfig = {
-  apiKey: "TROQUE_AQUI",
-  authDomain: "TROQUE_AQUI.firebaseapp.com",
-  projectId: "TROQUE_AQUI",
-  appId: "TROQUE_AQUI",
+  apiKey: "AIzaSyAcBWElBXwkN5ynO9JJwelb34ds1GkCEkE",
+  authDomain: "ls-store-8d77b.firebaseapp.com",
+  projectId: "ls-store-8d77b",
+  appId: "1:267417239385:web:ce97e459ce7c17584e1648",
 };
 
 // 2) Inicializa Firebase + Auth
