@@ -1213,6 +1213,68 @@ body {
   width: 35px;
   height: 35px;
 }
+
+/* ========= LS STORE – Splash (failsafe visual e override final) ========= */
+#splash {
+  position: fixed !important;
+  inset: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: linear-gradient(145deg,#f7ecff,#ffeaf6) !important;
+  z-index: 10000 !important;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity .45s ease, visibility .45s ease;
+  animation: lsSplashAutoHide 8s ease forwards; /* Fallback automático */
+}
+
+/* Texto */
+#splash p {
+  margin-top: 16px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  background: linear-gradient(90deg,#E96BA8,#7A3BFD);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 2px 8px rgba(122,59,253,.25);
+}
+
+/* Estado hidden aplicado pelo JS */
+#splash.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  z-index: -1 !important;
+  transition: opacity .45s ease, visibility .45s ease;
+}
+
+/* Logo do splash (balanço + sombra suave) */
+.splash-logo-img {
+  width: 140px;
+  max-width: 80%;
+  border-radius: 16px;
+  filter: drop-shadow(0 4px 10px rgba(122,59,253,.25))
+          drop-shadow(0 2px 6px rgba(233,107,168,.25));
+  animation: swingLogo 4.5s ease-in-out infinite;
+  transform-origin: center bottom;
+}
+
+/* Animação de balanço */
+@keyframes swingLogo {
+  0%, 100% { transform: rotate(0deg); }
+  25%      { transform: rotate(2deg); }
+  75%      { transform: rotate(-2deg); }
+}
+
+/* Fallback CSS: se o JS falhar, o splash apaga sozinho */
+@keyframes lsSplashAutoHide {
+  0%   { opacity: 1; visibility: visible; }
+  90%  { opacity: 1; }
+  100% { opacity: 0; visibility: hidden; pointer-events: none; }
+}
+/* ========= /LS STORE – Splash ========= */
 /* ===============================
    FIX PRIORITÁRIO — Splash acima do Topbar
    =============================== */
