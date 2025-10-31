@@ -366,25 +366,33 @@ window.addEventListener('DOMContentLoaded', () => {
   };
 
   // ==== CADASTRO ====
-  document.getElementById('signup-form').addEventListener('submit', async (e)=>{
-    e.preventDefault();
-    const name = signupName.value;
-    const email = signupEmail.value;
-    const phone = signupPhone.value;
-    const password = signupPassword.value;
-    try {
-      const cred = await createUserWithEmailAndPassword(auth, email, password);
-      await setDoc(doc(db, "users", cred.user.uid), { name, email, phone });
-      showAlertLS("Conta criada com sucesso! Faça login agora 💕", "success");
-      loginArea.hidden = false; signupArea.hidden = true;
-    } catch(err){
-  let msg = "Ocorreu um erro.";
-  if(err.code === "auth/invalid-email") msg = "E-mail inválido.";
-  else if(err.code === "auth/user-not-found" || err.code === "auth/wrong-password") msg = "E-mail ou senha incorretos.";
-  else if(err.code === "auth/email-already-in-use") msg = "Este e-mail já está cadastrado.";
-  showAlertLS(msg, "error");
-}
-  });
+document.getElementById('signup-form').addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const name = document.getElementById('signup-name').value.trim();
+  const email = document.getElementById('signup-email').value.trim();
+  const phone = document.getElementById('signup-phone').value.trim();
+  const password = document.getElementById('signup-password').value;
+
+  if(!name || !email || !phone || !password) {
+    showAlertLS("Preencha todos os campos!", "error");
+    return;
+  }
+
+  try {
+    const cred = await createUserWithEmailAndPassword(auth, email, password);
+    await setDoc(doc(db, "users", cred.user.uid), { name, email, phone });
+    showAlertLS("Conta criada com sucesso! Faça login agora 💕", "success");
+    loginArea.hidden = false;
+    signupArea.hidden = true;
+  } catch(err){
+    console.error("Erro de cadastro:", err.code);
+    let msg = "Ocorreu um erro.";
+    if(err.code === "auth/email-already-in-use") msg = "Este e-mail já está cadastrado.";
+    else if(err.code === "auth/invalid-email") msg = "E-mail inválido.";
+    else if(err.code === "auth/weak-password") msg = "A senha precisa ter pelo menos 6 caracteres.";
+    showAlertLS(msg, "error");
+  }
+});
 
  // ==== LOGIN ====
 document.getElementById('login-form').addEventListener('submit', async (e)=>{
