@@ -365,42 +365,74 @@ window.addEventListener('DOMContentLoaded', () => {
     loginArea.hidden = false; signupArea.hidden = true;
   };
 
-  // ==== CADASTRO ====
-  document.getElementById('signup-form').addEventListener('submit', async (e)=>{
-    e.preventDefault();
-    const name = signupName.value;
-    const email = signupEmail.value;
-    const phone = signupPhone.value;
-    const password = signupPassword.value;
-    try {
-      const cred = await createUserWithEmailAndPassword(auth, email, password);
-      await setDoc(doc(db, "users", cred.user.uid), { name, email, phone });
-      showAlertLS("Conta criada com sucesso! Faça login agora 💕", "success");
-      loginArea.hidden = false; signupArea.hidden = true;
-    } catch(err){
-  let msg = "Ocorreu um erro.";
-  if(err.code === "auth/invalid-email") msg = "E-mail inválido.";
-  else if(err.code === "auth/user-not-found" || err.code === "auth/wrong-password") msg = "E-mail ou senha incorretos.";
-  else if(err.code === "auth/email-already-in-use") msg = "Este e-mail já está cadastrado.";
-  showAlertLS(msg, "error");
-}
-  });
+// ==== CADASTRO ====
+document.getElementById('signup-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
 
-  // ==== LOGIN ====
-  document.getElementById('login-form').addEventListener('submit', async (e)=>{
-    e.preventDefault();
-    try {
-      await signInWithEmailAndPassword(auth, loginEmail.value, loginPassword.value);
-      authModal.setAttribute('aria-hidden','true');
-      showAlertLS("Login efetuado com sucesso 💖", "success");
-    } catch(err){
-  let msg = "Ocorreu um erro.";
-  if(err.code === "auth/invalid-email") msg = "E-mail inválido.";
-  else if(err.code === "auth/user-not-found" || err.code === "auth/wrong-password") msg = "E-mail ou senha incorretos.";
-  else if(err.code === "auth/email-already-in-use") msg = "Este e-mail já está cadastrado.";
-  showAlertLS(msg, "error");
-}
-  });
+  const name = document.getElementById('signup-name').value.trim();
+  const email = document.getElementById('signup-email').value.trim();
+  const phone = document.getElementById('signup-phone').value.trim();
+  const password = document.getElementById('signup-password').value.trim();
+
+  if (!name || !email || !phone || !password) {
+    showAlertLS('Preencha todos os campos!', 'error');
+    return;
+  }
+
+  try {
+    const cred = await createUserWithEmailAndPassword(auth, email, password);
+    await setDoc(doc(db, 'users', cred.user.uid), {
+      name,
+      email,
+      phone,
+      createdAt: new Date().toISOString()
+    });
+
+    showAlertLS('Conta criada com sucesso! Faça login agora 💕', 'success');
+
+    // volta pra tela de login
+    loginArea.hidden = false;
+    signupArea.hidden = true;
+
+  } catch (err) {
+    console.error('Erro no cadastro:', err);
+    let msg = 'Ocorreu um erro.';
+
+    if (err.code === 'auth/email-already-in-use') msg = 'Este e-mail já está cadastrado.';
+    else if (err.code === 'auth/invalid-email') msg = 'E-mail inválido.';
+    else if (err.code === 'auth/weak-password') msg = 'A senha deve ter pelo menos 6 caracteres.';
+
+    showAlertLS(msg, 'error');
+  }
+});
+
+// ==== LOGIN ====
+document.getElementById('login-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const email = document.getElementById('login-email').value.trim();
+  const password = document.getElementById('login-password').value.trim();
+
+  if (!email || !password) {
+    showAlertLS('Digite seu e-mail e senha.', 'error');
+    return;
+  }
+
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+    authModal.setAttribute('aria-hidden', 'true');
+    showAlertLS('Login efetuado com sucesso 💖', 'success');
+  } catch (err) {
+    console.error('Erro no login:', err);
+    let msg = 'Ocorreu um erro.';
+
+    if (err.code === 'auth/invalid-email') msg = 'E-mail inválido.';
+    else if (err.code === 'auth/user-not-found') msg = 'E-mail não encontrado.';
+    else if (err.code === 'auth/wrong-password') msg = 'E-mail ou senha incorretos.';
+
+    showAlertLS(msg, 'error');
+  }
+});
 
   // ==== RECUPERAR SENHA ====
   document.getElementById('forgot-pass').onclick = async ()=>{
