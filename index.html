@@ -336,7 +336,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
     sendPasswordResetEmail, signOut, onAuthStateChanged
   } = await import("https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js");
-  const { getFirestore, setDoc, doc } = await import("https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js");
+  const { getFirestore, setDoc, getDoc, doc } = await import("https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js");
 
   // ==== CONFIG FIREBASE ====
   const firebaseConfig = {
@@ -362,7 +362,13 @@ await new Promise(resolve => setTimeout(resolve, 500));
   const userBtn = document.getElementById('user-btn');
   const closeAuth = document.getElementById('close-auth');
 
-  userBtn.onclick = () => authModal.setAttribute('aria-hidden', 'false');
+  userBtn.onclick = () => {
+  if (auth.currentUser) {
+    document.getElementById('minha-conta').scrollIntoView({ behavior: 'smooth' });
+  } else {
+    authModal.setAttribute('aria-hidden', 'false');
+  }
+};
   closeAuth.onclick = () => authModal.setAttribute('aria-hidden', 'true');
 
   document.getElementById('switch-to-signup').onclick = () => {
@@ -391,12 +397,10 @@ await new Promise(resolve => setTimeout(resolve, 500));
     });
 
     showAlertLS('Conta criada com sucesso 💕', 'success');
-
-    // Alterna automaticamente pra tela de login
-    setTimeout(() => {
-      signupArea.hidden = true;
-      loginArea.hidden = false;
-      authModal.scrollTo({ top: 0, behavior: 'smooth' });
+await new Promise(r => setTimeout(r, 1500)); // espera 1.5s pra mostrar o alerta
+signupArea.hidden = true;
+loginArea.hidden = false;
+authModal.scrollTo({ top: 0, behavior: 'smooth' });
     }, 800);
   } catch (err) {
     console.error('Erro cadastro:', err.code);
@@ -466,24 +470,34 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
   onAuthStateChanged(auth, user => updateAccountArea(user));
 
   // ==== ATUALIZAR CONTA ====
-  function updateAccountArea(user) {
-    const acc = document.getElementById('account-area');
-    if (!acc) return;
-    if (user) {
-      acc.innerHTML = `
-        <div class='auth-card'>
-          <h3>Bem-vindo, ${user.email}</h3>
-          <button class='enter-btn' id='logout-btn'>Sair</button>
-        </div>`;
-      document.getElementById('logout-btn').onclick = async () => {
-        await signOut(auth);
-        showAlertLS('Sessão encerrada 💕', 'info');
-        updateAccountArea(null);
-      };
-    } else {
-      acc.innerHTML = `<div class='auth-card'><p>Você não está logado.</p></div>`;
+  async function updateAccountArea(user) {
+  const acc = document.getElementById('account-area');
+  if (!acc) return;
+
+  if (user) {
+    // busca nome no Firestore
+    let displayName = user.email;
+    try {
+      const snap = await getDoc(doc(db, "users", user.uid));
+      if (snap.exists()) displayName = snap.data().name || user.email;
+    } catch (err) {
+      console.warn("⚠️ Falha ao buscar nome:", err);
     }
+
+    acc.innerHTML = `
+      <div class='auth-card'>
+        <h3>Olá, ${displayName}</h3>
+        <button class='enter-btn' id='logout-btn'>Sair</button>
+      </div>`;
+    document.getElementById('logout-btn').onclick = async () => {
+      await signOut(auth);
+      showAlertLS('Sessão encerrada 💕', 'info');
+      updateAccountArea(null);
+    };
+  } else {
+    acc.innerHTML = `<div class='auth-card'><p>Você não está logado.</p></div>`;
   }
+}
 
   // ==== MOSTRAR / OCULTAR SENHA ====
   document.querySelectorAll('.toggle-pass').forEach(btn => {
