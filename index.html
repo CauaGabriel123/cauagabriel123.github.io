@@ -421,38 +421,15 @@ document.getElementById('login-form').addEventListener('submit', async (e)=>{
   };
 
   // ==== MONITORAR USUÁRIO LOGADO ====
-import { getDoc } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
-
-onAuthStateChanged(auth, async (user) => {
-  const acc = document.getElementById('account-area');
-  if (user) {
-    let displayName = user.displayName || "";
-    // tenta buscar o nome salvo no Firestore
-    if (!displayName) {
-      try {
-        const docRef = doc(db, "users", user.uid);
-        const snap = await getDoc(docRef);
-        if (snap.exists()) {
-          displayName = snap.data().name || user.email;
-        } else {
-          displayName = user.email;
-        }
-      } catch (err) {
-        console.warn("Erro ao buscar nome do usuário:", err);
-        displayName = user.email;
-      }
+  onAuthStateChanged(auth, (user)=>{
+    const acc = document.getElementById('account-area');
+    if(user){
+      acc.innerHTML = `<div class='auth-card'><h3>Bem-vindo, ${user.email}</h3><button class='enter-btn' id='logout-btn'>Sair</button></div>`;
+      document.getElementById('logout-btn').onclick = ()=> signOut(auth);
+    } else {
+      acc.innerHTML = `<div class='auth-card'><p>Você não está logado.</p></div>`;
     }
-
-    acc.innerHTML = `
-      <div class='auth-card'>
-        <h3>Bem-vindo, ${displayName}</h3>
-        <button class='enter-btn' id='logout-btn'>Sair</button>
-      </div>`;
-    document.getElementById('logout-btn').onclick = () => signOut(auth);
-  } else {
-    acc.innerHTML = `<div class='auth-card'><p>Você não está logado.</p></div>`;
-  }
-});
+  })
     // ==== MOSTRAR / OCULTAR SENHA ====
   document.querySelectorAll('.toggle-pass').forEach(btn=>{
     btn.addEventListener('click', ()=>{
