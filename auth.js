@@ -3,9 +3,14 @@
 // LS STORE — LOGIN / CADASTRO Firebase (isolado, sem travar splash)
 // =============================
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
-import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
-
+import { 
+  getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, 
+  sendPasswordResetEmail, onAuthStateChanged, signOut, 
+  setPersistence, browserLocalPersistence 
+} from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+import { 
+  getFirestore, doc, setDoc, getDoc 
+} from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
 // Config do Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyAcBWElBXwkN5ynO9JJwelb34ds1GkCEkE",
@@ -21,8 +26,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
-import { onAuthStateChanged, signOut, setPersistence, browserLocalPersistence } 
-from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
 
 // Garante que o login fique salvo mesmo após atualizar o site
 await setPersistence(auth, browserLocalPersistence);
