@@ -352,7 +352,10 @@ window.addEventListener('DOMContentLoaded', async () => {
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const db = getFirestore(app);
-
+// 🔄 Verifica login ao carregar o site
+onAuthStateChanged(auth, (user) => {
+  updateAccountArea(user);
+});
   // 🔄 Aguarda inicialização real (evita falha no Safari)
   await new Promise(resolve => setTimeout(resolve, 500));
 
@@ -375,42 +378,39 @@ window.addEventListener('DOMContentLoaded', async () => {
 
   // ==== CADASTRAR ====
   document.getElementById('signup-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const name = document.getElementById('signup-name').value.trim();
-    const email = document.getElementById('signup-email').value.trim();
-    const phone = document.getElementById('signup-phone').value.trim();
-    const password = document.getElementById('signup-password').value.trim();
+  e.preventDefault();
+  const name = document.getElementById('signup-name').value.trim();
+  const email = document.getElementById('signup-email').value.trim();
+  const phone = document.getElementById('signup-phone').value.trim();
+  const password = document.getElementById('signup-password').value.trim();
 
-    if (!name || !email || !phone || !password) {
-      return showAlertLS('Preencha todos os campos!', 'error');
-    }
+  if (!name || !email || !phone || !password) {
+    return showAlertLS('Preencha todos os campos!', 'error');
+  }
 
-    try {
-      const cred = await createUserWithEmailAndPassword(auth, email, password);
-      await setDoc(doc(db, 'users', cred.user.uid), {
-        name, email, phone, createdAt: new Date().toISOString()
-      });
+  try {
+    const cred = await createUserWithEmailAndPassword(auth, email, password);
+    await setDoc(doc(db, 'users', cred.user.uid), {
+      name, email, phone, createdAt: new Date().toISOString()
+    });
 
-      showAlertLS('Conta criada com sucesso 💕', 'success');
-      updateAccountArea(cred.user);
-      onAuthStateChanged(auth, updateAccountArea);
-console.log('✅ Cadastro criado com sucesso');
-alert('Conta criada com sucesso!');
+    showAlertLS('Conta criada com sucesso 💕', 'success');
 
-      setTimeout(() => {
-        loginArea.hidden = false;
-        signupArea.hidden = true;
-        authModal.scrollTo({ top: 0, behavior: 'smooth' });
-      }, 600);
-    } catch (err) {
-      console.error('Erro cadastro:', err.code);
-      let msg = 'Erro ao criar conta.';
-      if (err.code === 'auth/email-already-in-use') msg = 'Este e-mail já está cadastrado.';
-      else if (err.code === 'auth/invalid-email') msg = 'E-mail inválido.';
-      else if (err.code === 'auth/weak-password') msg = 'Senha muito curta.';
-      showAlertLS(msg, 'error');
-    }
-  });
+    // Alterna automaticamente pra tela de login
+    setTimeout(() => {
+      signupArea.hidden = true;
+      loginArea.hidden = false;
+      authModal.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 800);
+  } catch (err) {
+    console.error('Erro cadastro:', err.code);
+    let msg = 'Erro ao criar conta.';
+    if (err.code === 'auth/email-already-in-use') msg = 'Este e-mail já está cadastrado.';
+    else if (err.code === 'auth/invalid-email') msg = 'E-mail inválido.';
+    else if (err.code === 'auth/weak-password') msg = 'Senha muito curta.';
+    showAlertLS(msg, 'error');
+  }
+});
 
   // ==== LOGIN ====
 document.getElementById('login-form').addEventListener('submit', async (e) => {
@@ -428,27 +428,29 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
     setTimeout(() => {
       authModal.setAttribute('aria-hidden', 'true');
     }, 500);
-  } catch (err) {
-    console.error('Erro login:', err.code);
-    let msg = 'Ocorreu um erro.';
-    switch (err.code) {
-      case 'auth/wrong-password':
-      case 'auth/invalid-credential':
-        msg = 'Senha incorreta.';
-        break;
-      case 'auth/user-not-found':
-        msg = 'E-mail não cadastrado.';
-        break;
-      case 'auth/invalid-email':
-        msg = 'E-mail inválido.';
-        break;
-      case 'auth/network-request-failed':
-        msg = 'Sem conexão com a internet.';
-        break;
-      default:
-        msg = 'Erro ao entrar.';
-    }
-    showAlertLS(msg, 'error');
+  catch (err) {
+  console.error('Erro login:', err.code);
+  let msg = 'Ocorreu um erro.';
+  switch (err.code) {
+    case 'auth/wrong-password':
+      msg = 'Senha incorreta.';
+      break;
+    case 'auth/user-not-found':
+      msg = 'E-mail não cadastrado.';
+      break;
+    case 'auth/invalid-email':
+      msg = 'E-mail inválido.';
+      break;
+    case 'auth/invalid-credential':
+      msg = 'E-mail ou senha incorretos.';
+      break;
+    case 'auth/network-request-failed':
+      msg = 'Sem conexão com a internet.';
+      break;
+    default:
+      msg = 'Erro ao entrar.';
+  }
+  showAlertLS(msg, 'error');
   }
 });
 
