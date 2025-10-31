@@ -433,30 +433,6 @@ function renderFooterProducts(listFromData) {
     card.addEventListener('click', () => LSModal.open(card.getAttribute('data-id')));
   });
 }
-
-// =============================
-// MODAL DE PRODUTO (corrigido)
-// =============================
-
-function showAlert(msg) {
-  const overlay = document.createElement('div');
-  overlay.style.position = 'fixed';
-  overlay.style.inset = '0';
-  overlay.style.background = 'rgba(0,0,0,.4)';
-  overlay.style.display = 'flex';
-  overlay.style.alignItems = 'center';
-  overlay.style.justifyContent = 'center';
-  overlay.style.zIndex = '9999';
-  overlay.innerHTML = `
-    <div style="background:#fff;border-radius:16px;padding:20px 24px;text-align:center;max-width:320px;box-shadow:0 20px 60px rgba(0,0,0,.3)">
-      <p style="font-weight:600;color:#7A3BFD;margin-bottom:10px;">⚠️ Atenção</p>
-      <p style="margin-bottom:12px">${msg}</p>
-      <button style="background:linear-gradient(90deg,#E96BA8,#7A3BFD);color:#fff;border:0;border-radius:10px;padding:8px 16px;font-weight:600;cursor:pointer;">Ok</button>
-    </div>`;
-  overlay.querySelector('button').onclick = () => overlay.remove();
-  document.body.appendChild(overlay);
-}
-
 // =============================
 // CARRINHO (v11.4.1 — correção estável, sem mudar o visual)
 // =============================
