@@ -350,11 +350,12 @@ window.addEventListener('DOMContentLoaded', async () => {
   };
 
   const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
 
-// Aguarda inicialização real (evita falha no Safari)
-await new Promise(resolve => setTimeout(resolve, 500));
+  // Aguarda inicialização real (evita falha no Safari)
+  await new Promise(resolve => setTimeout(resolve, 500));
+
   // ==== ELEMENTOS ====
   const authModal = document.getElementById('auth-modal');
   const loginArea = document.getElementById('login-area');
@@ -362,96 +363,98 @@ await new Promise(resolve => setTimeout(resolve, 500));
   const userBtn = document.getElementById('user-btn');
   const closeAuth = document.getElementById('close-auth');
 
+  // ==== ABRIR / FECHAR LOGIN ====
   userBtn.onclick = () => {
-  if (auth.currentUser) {
-    document.getElementById('minha-conta').scrollIntoView({ behavior: 'smooth' });
-  } else {
-    authModal.setAttribute('aria-hidden', 'false');
-  }
-};
+    if (auth.currentUser) {
+      document.getElementById('minha-conta').scrollIntoView({ behavior: 'smooth' });
+    } else {
+      authModal.setAttribute('aria-hidden', 'false');
+    }
+  };
   closeAuth.onclick = () => authModal.setAttribute('aria-hidden', 'true');
 
   document.getElementById('switch-to-signup').onclick = () => {
-    loginArea.hidden = true; signupArea.hidden = false;
+    loginArea.hidden = true; 
+    signupArea.hidden = false;
   };
   document.getElementById('switch-to-login').onclick = () => {
-    loginArea.hidden = false; signupArea.hidden = true;
+    loginArea.hidden = false; 
+    signupArea.hidden = true;
   };
 
   // ==== CADASTRAR ====
   document.getElementById('signup-form').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const name = document.getElementById('signup-name').value.trim();
-  const email = document.getElementById('signup-email').value.trim();
-  const phone = document.getElementById('signup-phone').value.trim();
-  const password = document.getElementById('signup-password').value.trim();
+    e.preventDefault();
+    const name = document.getElementById('signup-name').value.trim();
+    const email = document.getElementById('signup-email').value.trim();
+    const phone = document.getElementById('signup-phone').value.trim();
+    const password = document.getElementById('signup-password').value.trim();
 
-  if (!name || !email || !phone || !password) {
-    return showAlertLS('Preencha todos os campos!', 'error');
-  }
+    if (!name || !email || !phone || !password) {
+      return showAlertLS('Preencha todos os campos!', 'error');
+    }
 
-  try {
-    const cred = await createUserWithEmailAndPassword(auth, email, password);
-    await setDoc(doc(db, 'users', cred.user.uid), {
-      name, email, phone, createdAt: new Date().toISOString()
-    });
+    try {
+      const cred = await createUserWithEmailAndPassword(auth, email, password);
+      await setDoc(doc(db, 'users', cred.user.uid), {
+        name, email, phone, createdAt: new Date().toISOString()
+      });
 
-    showAlertLS('Conta criada com sucesso 💕', 'success');
-await new Promise(r => setTimeout(r, 1500)); // espera 1.5s pra mostrar o alerta
-signupArea.hidden = true;
-loginArea.hidden = false;
-authModal.scrollTo({ top: 0, behavior: 'smooth' });
-    }, 800);
-  } catch (err) {
-    console.error('Erro cadastro:', err.code);
-    let msg = 'Erro ao criar conta.';
-    if (err.code === 'auth/email-already-in-use') msg = 'Este e-mail já está cadastrado.';
-    else if (err.code === 'auth/invalid-email') msg = 'E-mail inválido.';
-    else if (err.code === 'auth/weak-password') msg = 'Senha muito curta.';
-    showAlertLS(msg, 'error');
-  }
-});
+      showAlertLS('Conta criada com sucesso 💕', 'success');
+      await new Promise(r => setTimeout(r, 1500)); // espera 1.5s pra mostrar o alerta
+      signupArea.hidden = true;
+      loginArea.hidden = false;
+      authModal.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (err) {
+      console.error('Erro cadastro:', err.code);
+      let msg = 'Erro ao criar conta.';
+      if (err.code === 'auth/email-already-in-use') msg = 'Este e-mail já está cadastrado.';
+      else if (err.code === 'auth/invalid-email') msg = 'E-mail inválido.';
+      else if (err.code === 'auth/weak-password') msg = 'Senha muito curta.';
+      showAlertLS(msg, 'error');
+    }
+  });
 
   // ==== LOGIN ====
-document.getElementById('login-form').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const email = document.getElementById('login-email').value.trim();
-  const password = document.getElementById('login-password').value.trim();
-  if (!email || !password) return showAlertLS('Digite seu e-mail e senha.', 'error');
+  document.getElementById('login-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('login-email').value.trim();
+    const password = document.getElementById('login-password').value.trim();
+    if (!email || !password) return showAlertLS('Digite seu e-mail e senha.', 'error');
 
-  try {
-    const userCred = await signInWithEmailAndPassword(auth, email, password);
-    showAlertLS('Login efetuado com sucesso 💖', 'success');
-    updateAccountArea(userCred.user);
+    try {
+      const userCred = await signInWithEmailAndPassword(auth, email, password);
+      showAlertLS('Login efetuado com sucesso 💖', 'success');
+      updateAccountArea(userCred.user);
 
-    setTimeout(() => {
-      authModal.setAttribute('aria-hidden', 'true');
-    }, 500);
-  } catch (err) {
-  console.error('Erro login:', err.code);
-  let msg = 'Ocorreu um erro.';
-  switch (err.code) {
-    case 'auth/wrong-password':
-      msg = 'Senha incorreta.';
-      break;
-    case 'auth/user-not-found':
-      msg = 'E-mail não cadastrado.';
-      break;
-    case 'auth/invalid-email':
-      msg = 'E-mail inválido.';
-      break;
-    case 'auth/invalid-credential':
-      msg = 'E-mail ou senha incorretos.';
-      break;
-    case 'auth/network-request-failed':
-      msg = 'Sem conexão com a internet.';
-      break;
-    default:
-      msg = 'Erro ao entrar.';
-  }
-  showAlertLS(msg, 'error');
-  }
-});
+      setTimeout(() => {
+        authModal.setAttribute('aria-hidden', 'true');
+      }, 500);
+    } catch (err) {
+      console.error('Erro login:', err.code);
+      let msg = 'Ocorreu um erro.';
+      switch (err.code) {
+        case 'auth/wrong-password':
+          msg = 'Senha incorreta.';
+          break;
+        case 'auth/user-not-found':
+          msg = 'E-mail não cadastrado.';
+          break;
+        case 'auth/invalid-email':
+          msg = 'E-mail inválido.';
+          break;
+        case 'auth/invalid-credential':
+          msg = 'E-mail ou senha incorretos.';
+          break;
+        case 'auth/network-request-failed':
+          msg = 'Sem conexão com a internet.';
+          break;
+        default:
+          msg = 'Erro ao entrar.';
+      }
+      showAlertLS(msg, 'error');
+    }
+  });
 
   // ==== ESQUECI SENHA ====
   document.getElementById('forgot-pass').onclick = async () => {
@@ -471,33 +474,33 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
 
   // ==== ATUALIZAR CONTA ====
   async function updateAccountArea(user) {
-  const acc = document.getElementById('account-area');
-  if (!acc) return;
+    const acc = document.getElementById('account-area');
+    if (!acc) return;
 
-  if (user) {
-    // busca nome no Firestore
-    let displayName = user.email;
-    try {
-      const snap = await getDoc(doc(db, "users", user.uid));
-      if (snap.exists()) displayName = snap.data().name || user.email;
-    } catch (err) {
-      console.warn("⚠️ Falha ao buscar nome:", err);
+    if (user) {
+      // busca nome no Firestore
+      let displayName = user.email;
+      try {
+        const snap = await getDoc(doc(db, "users", user.uid));
+        if (snap.exists()) displayName = snap.data().name || user.email;
+      } catch (err) {
+        console.warn("⚠️ Falha ao buscar nome:", err);
+      }
+
+      acc.innerHTML = `
+        <div class='auth-card'>
+          <h3>Olá, ${displayName}</h3>
+          <button class='enter-btn' id='logout-btn'>Sair</button>
+        </div>`;
+      document.getElementById('logout-btn').onclick = async () => {
+        await signOut(auth);
+        showAlertLS('Sessão encerrada 💕', 'info');
+        updateAccountArea(null);
+      };
+    } else {
+      acc.innerHTML = `<div class='auth-card'><p>Você não está logado.</p></div>`;
     }
-
-    acc.innerHTML = `
-      <div class='auth-card'>
-        <h3>Olá, ${displayName}</h3>
-        <button class='enter-btn' id='logout-btn'>Sair</button>
-      </div>`;
-    document.getElementById('logout-btn').onclick = async () => {
-      await signOut(auth);
-      showAlertLS('Sessão encerrada 💕', 'info');
-      updateAccountArea(null);
-    };
-  } else {
-    acc.innerHTML = `<div class='auth-card'><p>Você não está logado.</p></div>`;
   }
-}
 
   // ==== MOSTRAR / OCULTAR SENHA ====
   document.querySelectorAll('.toggle-pass').forEach(btn => {
