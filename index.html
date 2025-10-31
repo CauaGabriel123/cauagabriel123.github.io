@@ -355,11 +355,6 @@ const db = getFirestore(app);
 
 // Aguarda inicialização real (evita falha no Safari)
 await new Promise(resolve => setTimeout(resolve, 500));
-
-// MONITORA login
-onAuthStateChanged(auth, user => updateAccountArea(user));
-});
-
   // ==== ELEMENTOS ====
   const authModal = document.getElementById('auth-modal');
   const loginArea = document.getElementById('login-area');
