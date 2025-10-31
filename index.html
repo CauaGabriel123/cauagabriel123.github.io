@@ -350,15 +350,14 @@ window.addEventListener('DOMContentLoaded', async () => {
   };
 
   const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-// 🔄 Aguarda inicialização real (evita falha no Safari)
+// Aguarda inicialização real (evita falha no Safari)
 await new Promise(resolve => setTimeout(resolve, 500));
 
-// 🔄 Verifica login ao carregar o site (depois que tudo está pronto)
-onAuthStateChanged(auth, (user) => {
-  updateAccountArea(user);
+// MONITORA login
+onAuthStateChanged(auth, user => updateAccountArea(user));
 });
 
   // ==== ELEMENTOS ====
