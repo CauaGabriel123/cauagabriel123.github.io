@@ -21,7 +21,11 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
-import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+import { onAuthStateChanged, signOut, setPersistence, browserLocalPersistence } 
+from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+
+// Garante que o login fique salvo mesmo após atualizar o site
+await setPersistence(auth, browserLocalPersistence);
 
 const loginBtn = document.getElementById('login-btn');
 
@@ -140,5 +144,19 @@ function abrirCadastro() {
       showAlert('Erro ao criar conta. Tente novamente.');
     }
   };
+}
+// =======================================
+// ALERTA LS PREMIUM
+// =======================================
+function showAlert(msg, type = 'info') {
+  const alert = document.createElement('div');
+  alert.className = `ls-alert ${type}`;
+  alert.textContent = msg;
+  document.body.appendChild(alert);
+  setTimeout(() => alert.classList.add('visible'), 10);
+  setTimeout(() => {
+    alert.classList.remove('visible');
+    setTimeout(() => alert.remove(), 300);
+  }, 3000);
 }
 </script>
