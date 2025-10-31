@@ -413,44 +413,44 @@ alert('Conta criada com sucesso!');
   });
 
   // ==== LOGIN ====
-  document.getElementById('login-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const email = document.getElementById('login-email').value.trim();
-    const password = document.getElementById('login-password').value.trim();
-    if (!email || !password) return showAlertLS('Digite seu e-mail e senha.', 'error');
+document.getElementById('login-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('login-email').value.trim();
+  const password = document.getElementById('login-password').value.trim();
+  if (!email || !password) return showAlertLS('Digite seu e-mail e senha.', 'error');
 
-    try {
-      const userCred = await signInWithEmailAndPassword(auth, email, password);
-      showAlertLS('Login efetuado com sucesso 💖', 'success');
-      updateAccountArea(userCred.user);
-      onAuthStateChanged(auth, updateAccountArea);
+  try {
+    const userCred = await signInWithEmailAndPassword(auth, email, password);
+    showAlertLS('Login efetuado com sucesso 💖', 'success');
+    updateAccountArea(userCred.user);
+    onAuthStateChanged(auth, updateAccountArea);
 
-      setTimeout(() => {
-        authModal.setAttribute('aria-hidden', 'true');
-      }, 500);
-    catch (err) {
-  console.error('Erro login:', err.code);
-  let msg = 'Ocorreu um erro.';
-  switch (err.code) {
-    case 'auth/wrong-password':
-    case 'auth/invalid-credential':
-      msg = 'Senha incorreta.';
-      break;
-    case 'auth/user-not-found':
-      msg = 'E-mail não cadastrado.';
-      break;
-    case 'auth/invalid-email':
-      msg = 'E-mail inválido.';
-      break;
-    case 'auth/network-request-failed':
-      msg = 'Sem conexão com a internet.';
-      break;
-    default:
-      msg = 'Erro ao entrar.';
+    setTimeout(() => {
+      authModal.setAttribute('aria-hidden', 'true');
+    }, 500);
+  } catch (err) {
+    console.error('Erro login:', err.code);
+    let msg = 'Ocorreu um erro.';
+    switch (err.code) {
+      case 'auth/wrong-password':
+      case 'auth/invalid-credential':
+        msg = 'Senha incorreta.';
+        break;
+      case 'auth/user-not-found':
+        msg = 'E-mail não cadastrado.';
+        break;
+      case 'auth/invalid-email':
+        msg = 'E-mail inválido.';
+        break;
+      case 'auth/network-request-failed':
+        msg = 'Sem conexão com a internet.';
+        break;
+      default:
+        msg = 'Erro ao entrar.';
+    }
+    showAlertLS(msg, 'error');
   }
-  showAlertLS(msg, 'error');
-}
-  });
+});
 
   // ==== ESQUECI SENHA ====
   document.getElementById('forgot-pass').onclick = async () => {
