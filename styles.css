@@ -1088,6 +1088,9 @@ body {
   box-shadow: 0 20px 60px rgba(0,0,0,.4);
   transition: transform 0.25s ease, box-shadow 0.3s ease;
 }
+.lsx-modal__dialog {
+  animation: fadeInModal 0.3s ease;
+}
 .lsx-modal__dialog:hover {
   transform: translateY(-4px);
   box-shadow: 0 26px 70px rgba(122,59,253,0.25);
