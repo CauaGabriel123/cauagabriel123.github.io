@@ -389,8 +389,13 @@ window.addEventListener('DOMContentLoaded', () => {
           createdAt: new Date().toISOString()
         });
         showAlertLS('Conta criada com sucesso 💕', 'success');
-        loginArea.hidden = false;
-        signupArea.hidden = true;
+
+// Garante que a transição de telas e o alerta ocorram depois do Firebase confirmar o usuário
+setTimeout(() => {
+  loginArea.hidden = false;
+  signupArea.hidden = true;
+  authModal.scrollTo({ top: 0, behavior: 'smooth' });
+}, 500);
       } catch (err) {
         console.error('Erro no cadastro:', err.code);
         let msg = 'Ocorreu um erro.';
