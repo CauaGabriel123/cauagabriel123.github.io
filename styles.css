@@ -1347,3 +1347,24 @@ body {
   background: linear-gradient(135deg, #ffe5ec, #ffd6d9);
   color: #9a1a2a;
 }
+.ls-alert {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(50px);
+  background: var(--soft);
+  color: var(--ink);
+  padding: 12px 20px;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  opacity: 0;
+  z-index: 9999;
+  transition: all .3s ease;
+}
+.ls-alert.visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+.ls-alert.success { background: #c6f7d0; color: #205522; }
+.ls-alert.error { background: #ffd4d4; color: #7a0b0b; }
+.ls-alert.info { background: #e8e5ff; color: #3b2fa4; }
