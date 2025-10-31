@@ -1335,3 +1335,19 @@ body {
   background: linear-gradient(135deg, #ffe5ec, #ffd6d9);
   color: #9a1a2a;
 }
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.user-name {
+  font-weight: 600;
+  color: var(--lilac);
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
