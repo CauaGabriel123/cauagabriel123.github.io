@@ -29,16 +29,33 @@ await setPersistence(auth, browserLocalPersistence);
 
 const loginBtn = document.getElementById('login-btn');
 
-onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(auth, async (user) => {
+  const nameSpan = document.getElementById('user-name');
+
   if (user) {
+    // Tenta buscar nome do Firestore
+    try {
+      const docRef = doc(db, "usuarios", user.uid);
+      const docSnap = await getDoc(docRef);
+      const nome = docSnap.exists() ? docSnap.data().nome : user.email;
+
+      nameSpan.textContent = `Olá, ${nome.split(' ')[0]} 💕`;
+      nameSpan.hidden = false;
+    } catch {
+      nameSpan.textContent = `Olá 💕`;
+      nameSpan.hidden = false;
+    }
+
     loginBtn.textContent = 'Sair';
     loginBtn.onclick = async () => {
       await signOut(auth);
+      nameSpan.hidden = true;
       showAlert('Você saiu da sua conta.');
     };
   } else {
     loginBtn.textContent = 'Entrar';
     loginBtn.onclick = abrirLogin;
+    nameSpan.hidden = true;
   }
 });
 function abrirLogin() {
