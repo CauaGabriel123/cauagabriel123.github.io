@@ -21,6 +21,22 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+
+const loginBtn = document.getElementById('login-btn');
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    loginBtn.textContent = 'Sair';
+    loginBtn.onclick = async () => {
+      await signOut(auth);
+      showAlert('Você saiu da sua conta.');
+    };
+  } else {
+    loginBtn.textContent = 'Entrar';
+    loginBtn.onclick = abrirLogin;
+  }
+});
 
 // Abre o modal de login
 document.getElementById('login-btn').addEventListener('click', () => {
@@ -132,21 +148,3 @@ function abrirCadastro() {
   };
 }
 </script>
-  } catch {
-      showAlert('Erro ao criar conta. Tente novamente.');
-    }
-  };
-}
-
-// 🔽 Adiciona isso no final de tudo:
-function showAlert(msg, type = 'info') {
-  let alert = document.createElement('div');
-  alert.className = `ls-alert ${type}`;
-  alert.textContent = msg;
-  document.body.appendChild(alert);
-  setTimeout(() => alert.classList.add('visible'), 10);
-  setTimeout(() => {
-    alert.classList.remove('visible');
-    setTimeout(() => alert.remove(), 300);
-  }, 3000);
-}
