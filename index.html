@@ -352,12 +352,14 @@ window.addEventListener('DOMContentLoaded', async () => {
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const db = getFirestore(app);
-// 🔄 Verifica login ao carregar o site
+
+// 🔄 Aguarda inicialização real (evita falha no Safari)
+await new Promise(resolve => setTimeout(resolve, 500));
+
+// 🔄 Verifica login ao carregar o site (depois que tudo está pronto)
 onAuthStateChanged(auth, (user) => {
   updateAccountArea(user);
 });
-  // 🔄 Aguarda inicialização real (evita falha no Safari)
-  await new Promise(resolve => setTimeout(resolve, 500));
 
   // ==== ELEMENTOS ====
   const authModal = document.getElementById('auth-modal');
@@ -423,12 +425,11 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
     const userCred = await signInWithEmailAndPassword(auth, email, password);
     showAlertLS('Login efetuado com sucesso 💖', 'success');
     updateAccountArea(userCred.user);
-    onAuthStateChanged(auth, updateAccountArea);
 
     setTimeout(() => {
       authModal.setAttribute('aria-hidden', 'true');
     }, 500);
-  catch (err) {
+  } catch (err) {
   console.error('Erro login:', err.code);
   let msg = 'Ocorreu um erro.';
   switch (err.code) {
