@@ -327,23 +327,18 @@ window.addEventListener('DOMContentLoaded', () => {
     </div>
   </div>
 </div>
-<!-- ===== LS STORE • Firebase Login / Cadastro (FINAL v14.2 Premium Fix Pack) ===== -->
-<script type="module">
-window.addEventListener('DOMContentLoaded', async () => {
-  // ==== IMPORTA FIREBASE ====
-  const { initializeApp } = await import("https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js");
-  const { 
-    getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
-    sendPasswordResetEmail, signOut, onAuthStateChanged
-  } = await import("https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js");
-  const { getFirestore, setDoc, getDoc, doc } = await import("https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js");
 
-  // ==== CONFIG FIREBASE ====
+<!-- Firebase Auth -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+  import { getFirestore, setDoc, doc } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
+
   const firebaseConfig = {
     apiKey: "AIzaSyAcBWElBXwkN5ynO9JJwelb34ds1GkCEkE",
     authDomain: "ls-store-8d77b.firebaseapp.com",
     projectId: "ls-store-8d77b",
-    storageBucket: "ls-store-8d77b.appspot.com",
+    storageBucket: "ls-store-8d77b.firebasestorage.app",
     messagingSenderId: "267417239385",
     appId: "1:267417239385:web:ce97e459ce7c17584e1648",
     measurementId: "G-VSKFJFGY75"
@@ -353,179 +348,110 @@ window.addEventListener('DOMContentLoaded', async () => {
   const auth = getAuth(app);
   const db = getFirestore(app);
 
-  // Aguarda inicialização real (evita falha no Safari)
-  await new Promise(resolve => setTimeout(resolve, 500));
-
-  // ==== ELEMENTOS ====
+  // ==== LOGIN, CADASTRO E TROCA DE TELA ====
+  const userBtn = document.getElementById('user-btn') || document.getElementById('login-btn');
   const authModal = document.getElementById('auth-modal');
+  const closeAuth = document.getElementById('close-auth');
   const loginArea = document.getElementById('login-area');
   const signupArea = document.getElementById('signup-area');
-  const userBtn = document.getElementById('user-btn');
-  const closeAuth = document.getElementById('close-auth');
 
-  // ==== ABRIR / FECHAR LOGIN ====
-  userBtn.onclick = () => {
-    if (auth.currentUser) {
-      document.getElementById('minha-conta').scrollIntoView({ behavior: 'smooth' });
-    } else {
-      authModal.setAttribute('aria-hidden', 'false');
-    }
-  };
-  closeAuth.onclick = () => authModal.setAttribute('aria-hidden', 'true');
+  userBtn.onclick = () => { authModal.setAttribute('aria-hidden', 'false'); };
+  closeAuth.onclick = () => { authModal.setAttribute('aria-hidden', 'true'); };
 
   document.getElementById('switch-to-signup').onclick = () => {
-    loginArea.hidden = true; 
-    signupArea.hidden = false;
+    loginArea.hidden = true; signupArea.hidden = false;
   };
   document.getElementById('switch-to-login').onclick = () => {
-    loginArea.hidden = false; 
-    signupArea.hidden = true;
+    loginArea.hidden = false; signupArea.hidden = true;
   };
 
-  // ==== CADASTRAR ====
-  document.getElementById('signup-form').addEventListener('submit', async (e) => {
+  // ==== CADASTRO ====
+  document.getElementById('signup-form').addEventListener('submit', async (e)=>{
     e.preventDefault();
-    const name = document.getElementById('signup-name').value.trim();
-    const email = document.getElementById('signup-email').value.trim();
-    const phone = document.getElementById('signup-phone').value.trim();
-    const password = document.getElementById('signup-password').value.trim();
-
-    if (!name || !email || !phone || !password) {
-      return showAlertLS('Preencha todos os campos!', 'error');
-    }
-
+    const name = signupName.value;
+    const email = signupEmail.value;
+    const phone = signupPhone.value;
+    const password = signupPassword.value;
     try {
       const cred = await createUserWithEmailAndPassword(auth, email, password);
-      await setDoc(doc(db, 'users', cred.user.uid), {
-        name, email, phone, createdAt: new Date().toISOString()
-      });
-
-      showAlertLS('Conta criada com sucesso 💕', 'success');
-      await new Promise(r => setTimeout(r, 1500)); // espera 1.5s pra mostrar o alerta
-      signupArea.hidden = true;
-      loginArea.hidden = false;
-      authModal.scrollTo({ top: 0, behavior: 'smooth' });
-    } catch (err) {
-      console.error('Erro cadastro:', err.code);
-      let msg = 'Erro ao criar conta.';
-      if (err.code === 'auth/email-already-in-use') msg = 'Este e-mail já está cadastrado.';
-      else if (err.code === 'auth/invalid-email') msg = 'E-mail inválido.';
-      else if (err.code === 'auth/weak-password') msg = 'Senha muito curta.';
-      showAlertLS(msg, 'error');
-    }
+      await setDoc(doc(db, "users", cred.user.uid), { name, email, phone });
+      showAlertLS("Conta criada com sucesso! Faça login agora 💕", "success");
+      loginArea.hidden = false; signupArea.hidden = true;
+    } catch(err){
+  let msg = "Ocorreu um erro.";
+  if(err.code === "auth/invalid-email") msg = "E-mail inválido.";
+  else if(err.code === "auth/user-not-found" || err.code === "auth/wrong-password") msg = "E-mail ou senha incorretos.";
+  else if(err.code === "auth/email-already-in-use") msg = "Este e-mail já está cadastrado.";
+  showAlertLS(msg, "error");
+}
   });
 
   // ==== LOGIN ====
-  document.getElementById('login-form').addEventListener('submit', async (e) => {
+  document.getElementById('login-form').addEventListener('submit', async (e)=>{
     e.preventDefault();
-    const email = document.getElementById('login-email').value.trim();
-    const password = document.getElementById('login-password').value.trim();
-    if (!email || !password) return showAlertLS('Digite seu e-mail e senha.', 'error');
-
     try {
-      const userCred = await signInWithEmailAndPassword(auth, email, password);
-      showAlertLS('Login efetuado com sucesso 💖', 'success');
-      updateAccountArea(userCred.user);
-
-      setTimeout(() => {
-        authModal.setAttribute('aria-hidden', 'true');
-      }, 500);
-    } catch (err) {
-      console.error('Erro login:', err.code);
-      let msg = 'Ocorreu um erro.';
-      switch (err.code) {
-        case 'auth/wrong-password':
-          msg = 'Senha incorreta.';
-          break;
-        case 'auth/user-not-found':
-          msg = 'E-mail não cadastrado.';
-          break;
-        case 'auth/invalid-email':
-          msg = 'E-mail inválido.';
-          break;
-        case 'auth/invalid-credential':
-          msg = 'E-mail ou senha incorretos.';
-          break;
-        case 'auth/network-request-failed':
-          msg = 'Sem conexão com a internet.';
-          break;
-        default:
-          msg = 'Erro ao entrar.';
-      }
-      showAlertLS(msg, 'error');
-    }
+      await signInWithEmailAndPassword(auth, loginEmail.value, loginPassword.value);
+      authModal.setAttribute('aria-hidden','true');
+      showAlertLS("Login efetuado com sucesso 💖", "success");
+    } catch(err){
+  let msg = "Ocorreu um erro.";
+  if(err.code === "auth/invalid-email") msg = "E-mail inválido.";
+  else if(err.code === "auth/user-not-found" || err.code === "auth/wrong-password") msg = "E-mail ou senha incorretos.";
+  else if(err.code === "auth/email-already-in-use") msg = "Este e-mail já está cadastrado.";
+  showAlertLS(msg, "error");
+}
   });
 
-  // ==== ESQUECI SENHA ====
-  document.getElementById('forgot-pass').onclick = async () => {
-    const email = prompt("Digite seu e-mail para redefinir:");
-    if (email) {
-      try {
-        await sendPasswordResetEmail(auth, email);
-        showAlertLS('Verifique seu e-mail 📩', 'info');
-      } catch {
-        showAlertLS('Erro ao enviar link.', 'error');
-      }
-    }
+  // ==== RECUPERAR SENHA ====
+  document.getElementById('forgot-pass').onclick = async ()=>{
+    const email = prompt("Digite seu e-mail para redefinir a senha:");
+    if(email) await sendPasswordResetEmail(auth, email);
+    showAlertLS("Se o e-mail estiver cadastrado, um link foi enviado!", "info");
   };
 
-  // ==== MONITORAR LOGIN ====
-  onAuthStateChanged(auth, user => updateAccountArea(user));
-
-  // ==== ATUALIZAR CONTA ====
-  async function updateAccountArea(user) {
+  // ==== MONITORAR USUÁRIO LOGADO ====
+  onAuthStateChanged(auth, (user)=>{
     const acc = document.getElementById('account-area');
-    if (!acc) return;
-
-    if (user) {
-      // busca nome no Firestore
-      let displayName = user.email;
-      try {
-        const snap = await getDoc(doc(db, "users", user.uid));
-        if (snap.exists()) displayName = snap.data().name || user.email;
-      } catch (err) {
-        console.warn("⚠️ Falha ao buscar nome:", err);
-      }
-
-      acc.innerHTML = `
-        <div class='auth-card'>
-          <h3>Olá, ${displayName}</h3>
-          <button class='enter-btn' id='logout-btn'>Sair</button>
-        </div>`;
-      document.getElementById('logout-btn').onclick = async () => {
-        await signOut(auth);
-        showAlertLS('Sessão encerrada 💕', 'info');
-        updateAccountArea(null);
-      };
+    if(user){
+      acc.innerHTML = `<div class='auth-card'><h3>Bem-vindo, ${user.email}</h3><button class='enter-btn' id='logout-btn'>Sair</button></div>`;
+      document.getElementById('logout-btn').onclick = ()=> signOut(auth);
     } else {
       acc.innerHTML = `<div class='auth-card'><p>Você não está logado.</p></div>`;
     }
-  }
-
-  // ==== MOSTRAR / OCULTAR SENHA ====
-  document.querySelectorAll('.toggle-pass').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const input = document.getElementById(btn.dataset.target);
-      if (!input) return;
-      input.type = input.type === 'password' ? 'text' : 'password';
-      btn.textContent = input.type === 'password' ? '👁' : '🙈';
+  });
+    // ==== MOSTRAR / OCULTAR SENHA ====
+  document.querySelectorAll('.toggle-pass').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const targetId = btn.getAttribute('data-target');
+      const input = document.getElementById(targetId);
+      if(input){
+        const isPass = input.type === 'password';
+        input.type = isPass ? 'text' : 'password';
+        btn.textContent = isPass ? '🙈' : '👁';
+      }
     });
   });
+  // ==== ALERTA VISUAL ESTILO LS STORE ====
+function showAlertLS(msg, type="info") {
+  // remove alert anterior se existir
+  const old = document.querySelector(".ls-alert");
+  if (old) old.remove();
 
-  // ==== ALERTA VISUAL ====
-  function showAlertLS(msg, type = "info") {
-    const box = document.createElement("div");
-    box.className = `ls-alert ${type}`;
-    box.innerHTML = `<p>${msg}</p>`;
-    document.body.appendChild(box);
-    requestAnimationFrame(() => box.classList.add("visible"));
-    setTimeout(() => {
-      box.classList.remove("visible");
-      setTimeout(() => box.remove(), 300);
-    }, 3000);
-  }
-});
+  const box = document.createElement("div");
+  box.className = `ls-alert ${type}`;
+  box.innerHTML = `<p>${msg}</p>`;
+  document.body.appendChild(box);
+
+  // animação de entrada
+  requestAnimationFrame(() => box.classList.add("visible"));
+
+  // desaparece após 3 segundos
+  setTimeout(() => {
+    box.classList.remove("visible");
+    setTimeout(() => box.remove(), 400);
+  }, 3000);
+}
 </script>
-<!-- ===== /LS STORE • Firebase Login / Cadastro (FINAL v14.2 Premium Fix Pack) ===== -->
+<!-- ===== /LS STORE • Firebase Login / Cadastro ===== -->
 </body>
 </html>
