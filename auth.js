@@ -132,3 +132,21 @@ function abrirCadastro() {
   };
 }
 </script>
+  } catch {
+      showAlert('Erro ao criar conta. Tente novamente.');
+    }
+  };
+}
+
+// 🔽 Adiciona isso no final de tudo:
+function showAlert(msg, type = 'info') {
+  let alert = document.createElement('div');
+  alert.className = `ls-alert ${type}`;
+  alert.textContent = msg;
+  document.body.appendChild(alert);
+  setTimeout(() => alert.classList.add('visible'), 10);
+  setTimeout(() => {
+    alert.classList.remove('visible');
+    setTimeout(() => alert.remove(), 300);
+  }, 3000);
+}
