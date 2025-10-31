@@ -332,7 +332,7 @@ window.addEventListener('DOMContentLoaded', () => {
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
   import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
-  import { getFirestore, setDoc, doc } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
+  import { getFirestore, setDoc, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyAcBWElBXwkN5ynO9JJwelb34ds1GkCEkE",
@@ -421,15 +421,32 @@ document.getElementById('login-form').addEventListener('submit', async (e)=>{
   };
 
   // ==== MONITORAR USUÁRIO LOGADO ====
-  onAuthStateChanged(auth, (user)=>{
-    const acc = document.getElementById('account-area');
-    if(user){
-      acc.innerHTML = `<div class='auth-card'><h3>Bem-vindo, ${user.email}</h3><button class='enter-btn' id='logout-btn'>Sair</button></div>`;
-      document.getElementById('logout-btn').onclick = ()=> signOut(auth);
-    } else {
-      acc.innerHTML = `<div class='auth-card'><p>Você não está logado.</p></div>`;
+  onAuthStateChanged(auth, async (user) => {
+  const acc = document.getElementById('account-area');
+  if (!acc) return;
+
+  if (user) {
+    // tenta pegar nome salvo no Firestore
+    let displayName = user.displayName || "";
+    if (!displayName) {
+      try {
+        const snap = await getDoc(doc(db, "users", user.uid));
+        displayName = (snap.exists() && snap.data().name) ? snap.data().name : user.email;
+      } catch (_) {
+        displayName = user.email; // fallback seguro
+      }
     }
-  })
+
+    acc.innerHTML = `
+      <div class='auth-card'>
+        <h3>Bem-vindo, ${displayName}</h3>
+        <button class='enter-btn' id='logout-btn'>Sair</button>
+      </div>`;
+    document.getElementById('logout-btn').onclick = () => signOut(auth);
+  } else {
+    acc.innerHTML = `<div class='auth-card'><p>Você não está logado.</p></div>`;
+  }
+});
     // ==== MOSTRAR / OCULTAR SENHA ====
   document.querySelectorAll('.toggle-pass').forEach(btn=>{
     btn.addEventListener('click', ()=>{
