@@ -1242,7 +1242,8 @@ body {
   opacity: 0;
   pointer-events: none;
   z-index: -1 !important;
-  transition: opacity .6s ease;
+  transform: scale(0.98);
+  transition: opacity .6s ease, transform .6s ease;
 }
 /* ===== LS STORE v14.2 — Login e Cadastro Firebase ===== */
 #auth-modal[aria-hidden="false"] { display:flex !important; opacity:1; }
