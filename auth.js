@@ -37,9 +37,7 @@ onAuthStateChanged(auth, (user) => {
     loginBtn.onclick = abrirLogin;
   }
 });
-
-// Abre o modal de login
-document.getElementById('login-btn').addEventListener('click', () => {
+function abrirLogin() {
   const area = document.getElementById('account-area');
   area.innerHTML = `
   <div class="auth-card">
@@ -63,12 +61,10 @@ document.getElementById('login-btn').addEventListener('click', () => {
 
   area.querySelector('.close-auth').onclick = () => area.innerHTML = '';
 
-  // mostrar senha
   const senhaInput = area.querySelector('#senhaLogin');
   area.querySelector('.toggle-pass').onclick = () =>
     senhaInput.type = senhaInput.type === 'password' ? 'text' : 'password';
 
-  // login
   area.querySelector('#entrarBtn').onclick = async () => {
     const email = document.getElementById('emailLogin').value.trim();
     const senha = document.getElementById('senhaLogin').value.trim();
@@ -82,21 +78,19 @@ document.getElementById('login-btn').addEventListener('click', () => {
     }
   };
 
-  // abrir cadastro
   area.querySelector('#abrirCadastro').onclick = () => abrirCadastro();
 
-  // esqueci a senha
   area.querySelector('#esqueciSenha').onclick = async () => {
     const email = document.getElementById('emailLogin').value.trim();
     if (!email) return showAlert('Digite seu email para redefinir a senha.');
     try {
       await sendPasswordResetEmail(auth, email);
-      showAlert('Um link para redefinição foi enviado para seu email.');
+      showAlert('Um link foi enviado para redefinir sua senha.');
     } catch {
-      showAlert('Erro ao enviar e-mail de redefinição.');
+      showAlert('Erro ao enviar e-mail.');
     }
   };
-});
+}
 
 // Cadastro
 function abrirCadastro() {
