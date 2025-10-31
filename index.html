@@ -420,8 +420,23 @@ setTimeout(() => {
 
       try {
         await signInWithEmailAndPassword(auth, email, password);
-        authModal.setAttribute('aria-hidden', 'true');
-        showAlertLS('Login efetuado com sucesso 💖', 'success');
+
+// Fecha o modal após confirmar login e garante atualização visual
+setTimeout(() => {
+  authModal.setAttribute('aria-hidden', 'true');
+  showAlertLS('Login efetuado com sucesso 💖', 'success');
+}, 300);
+
+// força recarregar a área da conta
+onAuthStateChanged(auth, (user) => {
+  const acc = document.getElementById('account-area');
+  if (user) {
+    acc.innerHTML = `<div class='auth-card'><h3>Bem-vindo, ${user.email}</h3><button class='enter-btn' id='logout-btn'>Sair</button></div>`;
+    document.getElementById('logout-btn').onclick = () => signOut(auth);
+  } else {
+    acc.innerHTML = `<div class='auth-card'><p>Você não está logado.</p></div>`;
+  }
+});
       } catch (err) {
         console.error('Erro no login:', err.code);
         let msg = 'Ocorreu um erro.';
