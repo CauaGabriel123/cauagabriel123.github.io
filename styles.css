@@ -337,6 +337,18 @@ img { max-width:100%; display:block; }
   text-align:center;
 }
 
+/* Login bonito */
+.account-area .auth-card {
+  background:#fff; border-radius:16px;
+  box-shadow:0 12px 36px rgba(122,59,253,.18);
+  border:1px solid #efe8ff; padding:16px; margin:8px 0;
+}
+.account-area .auth-title { display:flex; align-items:center; justify-content:space-between; }
+.account-area .auth-title h3{ margin:0; }
+.account-area .close-auth{ border:0; background:transparent; font-size:22px; cursor:pointer; color:#7A3BFD; }
+.account-area .auth-actions{ display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
+.account-area .auth-actions .add-btn{ flex:1; }
+
 /* ========== NOVOS ESTILOS (v11.4.0) ========== */
 
 /* Carrinho mais bonito (somente visual) */
@@ -1322,20 +1334,4 @@ body {
 .ls-alert.error { 
   background: linear-gradient(135deg, #ffe5ec, #ffd6d9);
   color: #9a1a2a;
-}
-.user-info {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.user-name {
-  font-weight: 600;
-  color: var(--lilac);
-  animation: fadeIn 0.4s ease;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-4px); }
-  to { opacity: 1; transform: translateY(0); }
 }
