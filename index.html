@@ -393,6 +393,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 
       showAlertLS('Conta criada com sucesso 💕', 'success');
       updateAccountArea(cred.user);
+      onAuthStateChanged(auth, updateAccountArea);
 console.log('✅ Cadastro criado com sucesso');
 alert('Conta criada com sucesso!');
 
@@ -422,6 +423,7 @@ alert('Conta criada com sucesso!');
       const userCred = await signInWithEmailAndPassword(auth, email, password);
       showAlertLS('Login efetuado com sucesso 💖', 'success');
       updateAccountArea(userCred.user);
+      onAuthStateChanged(auth, updateAccountArea);
 
       setTimeout(() => {
         authModal.setAttribute('aria-hidden', 'true');
