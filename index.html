@@ -327,9 +327,10 @@ window.addEventListener('DOMContentLoaded', () => {
     </div>
   </div>
 </div>
-<!-- ===== LS STORE • Firebase Login / Cadastro (versão revisada) ===== -->
+<!-- ===== LS STORE • Firebase Login / Cadastro (FINAL v14.2 Premium Fix Pack) ===== -->
 <script type="module">
 window.addEventListener('DOMContentLoaded', async () => {
+  // ==== IMPORTA FIREBASE ====
   const { initializeApp } = await import("https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js");
   const { 
     getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
@@ -337,7 +338,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   } = await import("https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js");
   const { getFirestore, setDoc, doc } = await import("https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js");
 
-  // Configuração Firebase
+  // ==== CONFIG FIREBASE ====
   const firebaseConfig = {
     apiKey: "AIzaSyAcBWElBXwkN5ynO9JJwelb34ds1GkCEkE",
     authDomain: "ls-store-8d77b.firebaseapp.com",
@@ -352,7 +353,10 @@ window.addEventListener('DOMContentLoaded', async () => {
   const auth = getAuth(app);
   const db = getFirestore(app);
 
-  // Elementos do modal
+  // 🔄 Aguarda inicialização real (evita falha no Safari)
+  await new Promise(resolve => setTimeout(resolve, 500));
+
+  // ==== ELEMENTOS ====
   const authModal = document.getElementById('auth-modal');
   const loginArea = document.getElementById('login-area');
   const signupArea = document.getElementById('signup-area');
@@ -369,7 +373,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     loginArea.hidden = false; signupArea.hidden = true;
   };
 
-  // ==== CADASTRAR CONTA ====
+  // ==== CADASTRAR ====
   document.getElementById('signup-form').addEventListener('submit', async (e) => {
     e.preventDefault();
     const name = document.getElementById('signup-name').value.trim();
@@ -378,8 +382,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     const password = document.getElementById('signup-password').value.trim();
 
     if (!name || !email || !phone || !password) {
-      showAlertLS('Preencha todos os campos!', 'error');
-      return;
+      return showAlertLS('Preencha todos os campos!', 'error');
     }
 
     try {
@@ -388,22 +391,20 @@ window.addEventListener('DOMContentLoaded', async () => {
         name, email, phone, createdAt: new Date().toISOString()
       });
 
-      // Mensagem confirmando criação
       showAlertLS('Conta criada com sucesso 💕', 'success');
+      updateAccountArea(cred.user);
 
-      // Aguarda e muda pro login
       setTimeout(() => {
         loginArea.hidden = false;
         signupArea.hidden = true;
         authModal.scrollTo({ top: 0, behavior: 'smooth' });
-      }, 800);
+      }, 600);
     } catch (err) {
-      console.error('Erro no cadastro:', err.code);
-      let msg = 'Ocorreu um erro.';
+      console.error('Erro cadastro:', err.code);
+      let msg = 'Erro ao criar conta.';
       if (err.code === 'auth/email-already-in-use') msg = 'Este e-mail já está cadastrado.';
       else if (err.code === 'auth/invalid-email') msg = 'E-mail inválido.';
-      else if (err.code === 'auth/weak-password') msg = 'A senha deve ter pelo menos 6 caracteres.';
-      else if (err.code === 'auth/network-request-failed') msg = 'Sem conexão com a internet.';
+      else if (err.code === 'auth/weak-password') msg = 'Senha muito curta.';
       showAlertLS(msg, 'error');
     }
   });
@@ -413,51 +414,43 @@ window.addEventListener('DOMContentLoaded', async () => {
     e.preventDefault();
     const email = document.getElementById('login-email').value.trim();
     const password = document.getElementById('login-password').value.trim();
-
-    if (!email || !password) {
-      showAlertLS('Digite seu e-mail e senha.', 'error');
-      return;
-    }
+    if (!email || !password) return showAlertLS('Digite seu e-mail e senha.', 'error');
 
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const userCred = await signInWithEmailAndPassword(auth, email, password);
       showAlertLS('Login efetuado com sucesso 💖', 'success');
+      updateAccountArea(userCred.user);
 
-      // Espera o Firebase confirmar login e fecha o modal
       setTimeout(() => {
         authModal.setAttribute('aria-hidden', 'true');
-        updateAccountArea(userCredential.user);
-      }, 800);
+      }, 500);
     } catch (err) {
-      console.error('Erro no login:', err.code);
-      let msg = 'Ocorreu um erro.';
-      if (err.code === 'auth/invalid-credential' || err.code === 'auth/wrong-password') msg = 'E-mail ou senha incorretos.';
-      else if (err.code === 'auth/user-not-found') msg = 'E-mail não encontrado.';
+      console.error('Erro login:', err.code);
+      let msg = 'Erro ao entrar.';
+      if (err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential') msg = 'Senha incorreta.';
+      else if (err.code === 'auth/user-not-found') msg = 'Usuário não encontrado.';
       else if (err.code === 'auth/invalid-email') msg = 'E-mail inválido.';
-      else if (err.code === 'auth/network-request-failed') msg = 'Sem conexão com a internet.';
       showAlertLS(msg, 'error');
     }
   });
 
-  // ==== RECUPERAR SENHA ====
+  // ==== ESQUECI SENHA ====
   document.getElementById('forgot-pass').onclick = async () => {
-    const email = prompt("Digite seu e-mail para redefinir a senha:");
+    const email = prompt("Digite seu e-mail para redefinir:");
     if (email) {
       try {
         await sendPasswordResetEmail(auth, email);
-        showAlertLS("Se o e-mail estiver cadastrado, um link foi enviado!", "info");
+        showAlertLS('Verifique seu e-mail 📩', 'info');
       } catch {
-        showAlertLS("Erro ao enviar link. Verifique o e-mail.", "error");
+        showAlertLS('Erro ao enviar link.', 'error');
       }
     }
   };
 
   // ==== MONITORAR LOGIN ====
-  onAuthStateChanged(auth, (user) => {
-    updateAccountArea(user);
-  });
+  onAuthStateChanged(auth, user => updateAccountArea(user));
 
-  // ==== FUNÇÃO DE ATUALIZAR CONTA ====
+  // ==== ATUALIZAR CONTA ====
   function updateAccountArea(user) {
     const acc = document.getElementById('account-area');
     if (!acc) return;
@@ -482,16 +475,13 @@ window.addEventListener('DOMContentLoaded', async () => {
     btn.addEventListener('click', () => {
       const input = document.getElementById(btn.dataset.target);
       if (!input) return;
-      const isPass = input.type === 'password';
-      input.type = isPass ? 'text' : 'password';
-      btn.textContent = isPass ? '🙈' : '👁';
+      input.type = input.type === 'password' ? 'text' : 'password';
+      btn.textContent = input.type === 'password' ? '👁' : '🙈';
     });
   });
 
   // ==== ALERTA VISUAL ====
   function showAlertLS(msg, type = "info") {
-    const old = document.querySelector(".ls-alert");
-    if (old) old.remove();
     const box = document.createElement("div");
     box.className = `ls-alert ${type}`;
     box.innerHTML = `<p>${msg}</p>`;
@@ -499,11 +489,11 @@ window.addEventListener('DOMContentLoaded', async () => {
     requestAnimationFrame(() => box.classList.add("visible"));
     setTimeout(() => {
       box.classList.remove("visible");
-      setTimeout(() => box.remove(), 400);
+      setTimeout(() => box.remove(), 300);
     }, 3000);
   }
 });
 </script>
-<!-- ===== /LS STORE • Firebase Login / Cadastro (versão revisada) ===== -->
+<!-- ===== /LS STORE • Firebase Login / Cadastro (FINAL v14.2 Premium Fix Pack) ===== -->
 </body>
 </html>
