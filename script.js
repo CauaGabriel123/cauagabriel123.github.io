@@ -1505,22 +1505,38 @@ document.addEventListener('DOMContentLoaded', () => {
     validateButtons(p);
 
     // Ações
-    els.buyBtn && (els.buyBtn.onclick = () => {
-      if (!validateSelections(p)) return;
-      const size  = current.selectedSize || 'ÚNICO';
-      const color = current.selectedColor || 'Única';
-      if (typeof addToCart === 'function') {
-        addToCart(p, size, color, current.qty);
-      }
-      if (typeof cart !== 'undefined') {
-        cart.setAttribute('aria-hidden','false');
-        setTimeout(() => {
-          document.getElementById('client-name')?.focus();
-          document.querySelector('.client-info')?.scrollIntoView({ behavior:'smooth' });
-        }, 120);
-      }
-      LSModal.close();
-    });
+els.buyBtn && (els.buyBtn.onclick = () => {
+  // 🔒 Força validação visual mesmo se o botão não estiver desativado
+  if (!validateSelections(p)) {
+    if (!current.selectedColor && needSelectColor(p)) showAlert('Por favor, selecione uma cor.');
+    else if (!current.selectedSize && needSelectSize(p)) showAlert('Por favor, selecione um tamanho.');
+    return;
+  }
+  const size  = current.selectedSize || 'ÚNICO';
+  const color = current.selectedColor || 'Única';
+  addToCart(p, size, color, current.qty);
+  if (typeof cart !== 'undefined') {
+    cart.setAttribute('aria-hidden','false');
+    setTimeout(() => {
+      document.getElementById('client-name')?.focus();
+      document.querySelector('.client-info')?.scrollIntoView({ behavior:'smooth' });
+    }, 120);
+  }
+  LSModal.close();
+});
+
+els.addBtn && (els.addBtn.onclick = () => {
+  if (!validateSelections(p)) {
+    if (!current.selectedColor && needSelectColor(p)) showAlert('Por favor, selecione uma cor.');
+    else if (!current.selectedSize && needSelectSize(p)) showAlert('Por favor, selecione um tamanho.');
+    return;
+  }
+  const size  = current.selectedSize || 'ÚNICO';
+  const color = current.selectedColor || 'Única';
+  addToCart(p, size, color, current.qty);
+  try { playChime && playChime(); } catch(_) {}
+  LSModal.close();
+});
 
     els.addBtn && (els.addBtn.onclick = () => {
       if (!validateSelections(p)) return;
