@@ -1505,6 +1505,16 @@ els.sizes.innerHTML =
     els.stock.textContent = ''; 
     els.imgMain.alt = p.name;
     document.getElementById('lsxDescription').textContent = p.description || 'Sem descrição disponível.';
+    // 🧩 Garantir ordem e posição correta dos blocos
+if (els.colors && els.sizes && els.colors.nextElementSibling !== els.sizes) {
+  els.colors.parentNode.insertBefore(els.colors, els.sizes);
+}
+
+// 🧹 Corrige bug de duplicação e de elementos indo pro final do modal
+// (limpa antes de recriar — mas mantém a posição original no HTML)
+els.colors.innerHTML = '';
+els.sizes.innerHTML = '';
+els.stock.innerHTML = '';
     // 🔄 Garante que o bloco de CORES venha antes do bloco de TAMANHOS no DOM
 if (els.colors && els.sizes && els.colors.nextElementSibling !== els.sizes) {
   els.colors.parentNode.insertBefore(els.colors, els.sizes);
