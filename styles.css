@@ -1585,3 +1585,24 @@ body {
   margin-top: 8px !important;
   margin-bottom: 6px !important;
 }
+
+/* ===== LS STORE FIX — Restaura letreiros (v14.2.6-b) ===== */
+#lsxColors::before {
+  content: "Cor disponível:";
+  display: block;
+  font-weight: 600;
+  color: #7A3BFD;
+  margin-bottom: 4px;
+  font-size: 0.9rem;
+  text-shadow: 0 1px 4px rgba(122,59,253,0.15);
+}
+
+#lsxSizes::before {
+  content: "Tamanho disponível:";
+  display: block;
+  font-weight: 600;
+  color: #7A3BFD;
+  margin-bottom: 4px;
+  font-size: 0.9rem;
+  text-shadow: 0 1px 4px rgba(122,59,253,0.15);
+}
