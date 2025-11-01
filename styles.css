@@ -1442,3 +1442,38 @@ body {
 /* Garante “Cor disponível” encima de “Tamanho disponível” */
 #lsxColors { order: 10; }
 #lsxSizes  { order: 11; }
+
+/* ===============================
+   Ajuste visual — posiciona Cor e Tamanho logo abaixo do preço
+   =============================== */
+.lsx-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+/* Reforça a ordem e espaçamento */
+#lsxColors,
+#lsxSizes {
+  margin-top: 5px;
+  width: 100%;
+}
+
+#lsxColors::before {
+  content: "Cor disponível:";
+  display: block;
+  font-weight: 600;
+  color: #7A3BFD;
+  margin-bottom: 6px;
+  font-size: 0.95em;
+}
+
+#lsxSizes::before {
+  content: "Tamanho disponível:";
+  display: block;
+  font-weight: 600;
+  color: #7A3BFD;
+  margin-bottom: 6px;
+  font-size: 0.95em;
+}
