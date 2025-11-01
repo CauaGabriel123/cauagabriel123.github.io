@@ -1510,16 +1510,6 @@ els.sizes.innerHTML =
   // === GALERIA ===
   mountGallery(p);
 
-  // === LIMPA CONTEÚDO SEM REMOVER ELEMENTOS ===
-  if (els.colors) els.colors.innerHTML = '';
-  if (els.sizes) els.sizes.innerHTML = '';
-  if (els.stock) els.stock.innerHTML = '';
-
-  // === GARANTE ORDEM COR -> TAMANHO ===
-  if (els.colors && els.sizes && els.colors.nextElementSibling !== els.sizes) {
-    els.colors.parentNode.insertBefore(els.colors, els.sizes);
-  }
-
   // === MONTAGEM DAS OPÇÕES ===
   if (p.colors && p.colors.length > 0) {
     mountColors(p);
