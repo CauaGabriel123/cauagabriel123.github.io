@@ -1650,3 +1650,28 @@ body {
   box-shadow: 0 0 10px rgba(233,107,168,0.35);
   transform: scale(1.1);
 }
+
+/* ===== LS STORE FIX — Centralização dos balões de cor e tamanho (v14.2.6-c) ===== */
+.lsx-colors,
+.lsx-sizes {
+  justify-content: center !important;     /* centraliza horizontalmente */
+  text-align: center !important;          /* garante alinhamento do texto */
+}
+
+.lsx-color,
+.lsx-size {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: 70px !important;             /* largura mínima igual para todos */
+  padding: 0 16px !important;
+  border-radius: 999px !important;
+  text-align: center !important;
+}
+
+/* Dá um equilíbrio no bloco inteiro */
+#lsxColors, #lsxSizes {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+}
