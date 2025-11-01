@@ -1455,6 +1455,7 @@ if (stockBox && stockBox.parentElement) {
 } else if (cta && cta.parentElement) {
   cta.parentElement.insertBefore(qtyWrap, cta);
 }
+}
   function updateQtyUI() {
     if (qtyNum) qtyNum.textContent = String(current.qty);
   }
