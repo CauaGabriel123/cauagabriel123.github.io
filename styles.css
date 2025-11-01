@@ -1335,3 +1335,11 @@ body {
   background: linear-gradient(135deg, #ffe5ec, #ffd6d9);
   color: #9a1a2a;
 }
+/* ============================
+   Correção v14.2.3 — Validação Visual (Botões de ação)
+   ============================ */
+.is-disabled {
+  opacity: 0.6;              /* deixa o botão mais “apagado” */
+  pointer-events: auto;      /* mantém o clique ativo */
+  cursor: pointer;           /* mantém o cursor de clique */
+}
