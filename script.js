@@ -1473,12 +1473,18 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function validateButtons(p) {
-    const disabled = (needSelectColor(p) && !current.selectedColor) ||
-                     (needSelectSize(p) && !current.selectedSize) ||
-                     (getMaxStock(p) <= 0);
-    if (els.buyBtn) els.buyBtn.disabled = !!disabled;
-    if (els.addBtn) els.addBtn.disabled = !!disabled;
-  }
+  const shouldDisable =
+    (needSelectColor(p) && !current.selectedColor) ||
+    (needSelectSize(p) && !current.selectedSize) ||
+    (getMaxStock(p) <= 0);
+
+  [els.buyBtn, els.addBtn].forEach(btn => {
+    if (!btn) return;
+    // NUNCA mais use disabled aqui
+    btn.classList.toggle('is-disabled', !!shouldDisable);
+    btn.setAttribute('aria-disabled', shouldDisable ? 'true' : 'false');
+  });
+}
 
   // ====== Preenchimento ======
   function fill(p){
@@ -1502,16 +1508,12 @@ document.addEventListener('DOMContentLoaded', () => {
     mountGallery(p);
     refreshStockLabel(p);
     ensureQtyControls();
-    validateButtons(p);
+    [els.buyBtn, els.addBtn].forEach(b => b && b.removeAttribute('disabled'));
+validateButtons(p);
 
     // Ações
 els.buyBtn && (els.buyBtn.onclick = () => {
-  // 🔒 Força validação visual mesmo se o botão não estiver desativado
-  if (!validateSelections(p)) {
-    if (!current.selectedColor && needSelectColor(p)) showAlert('Por favor, selecione uma cor.');
-    else if (!current.selectedSize && needSelectSize(p)) showAlert('Por favor, selecione um tamanho.');
-    return;
-  }
+  if (!validateSelections(p)) return; // <-- mostra o alerta e cancela
   const size  = current.selectedSize || 'ÚNICO';
   const color = current.selectedColor || 'Única';
   addToCart(p, size, color, current.qty);
@@ -1526,11 +1528,7 @@ els.buyBtn && (els.buyBtn.onclick = () => {
 });
 
 els.addBtn && (els.addBtn.onclick = () => {
-  if (!validateSelections(p)) {
-    if (!current.selectedColor && needSelectColor(p)) showAlert('Por favor, selecione uma cor.');
-    else if (!current.selectedSize && needSelectSize(p)) showAlert('Por favor, selecione um tamanho.');
-    return;
-  }
+  if (!validateSelections(p)) return; // <-- mostra o alerta e cancela
   const size  = current.selectedSize || 'ÚNICO';
   const color = current.selectedColor || 'Única';
   addToCart(p, size, color, current.qty);
