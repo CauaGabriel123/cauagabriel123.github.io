@@ -425,21 +425,31 @@
     "name": "Calcinha Luna",
     "category": "intimos",
     "price": 24.99,
-    "images": ["https://cauagabriel123.github.io/assets/intimo1.3.JPG",
-    "https://cauagabriel123.github.io/assets/intimo1.2.JPG",
-    "https://cauagabriel123.github.io/assets/intimo1.JPG",
-    "https://cauagabriel123.github.io/assets/intimo1igual.JPG",
-    "https://cauagabriel123.github.io/assets/intimo1igual22.JPG",
-    "https://cauagabriel123.github.io/assets/intimo1igual66.JPG",
-    "https://cauagabriel123.github.io/assets/intimo1igual7.JPG",
-    "https://cauagabriel123.github.io/assets/intimo1igual3.JPG",
-    "https://cauagabriel123.github.io/assets/intimo1igual4.JPG",
-    "https://cauagabriel123.github.io/assets/intimo1igual5.JPG"],
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
     "status": "disponivel",
-    "sizes": ["M", "GG"],
-    "colors": ["Cinza", "Laranja", "Azul"]
-      },
+    "variations": {
+    "Cinza": {
+      "sizes": ["M"],
+      "stock": 1,
+      "images": ["https://cauagabriel123.github.io/assets/intimo1.3.JPG",
+      "https://cauagabriel123.github.io/assets/intimo1.2.JPG",
+      "https://cauagabriel123.github.io/assets/intimo1.JPG" ]
+    },
+    "Laranja": {
+      "sizes": ["GG"],
+      "stock": 1,
+      "images": ["https://cauagabriel123.github.io/assets/intimo1igual66.JPG",
+      "https://cauagabriel123.github.io/assets/intimo1igual.JPG",
+      "https://cauagabriel123.github.io/assets/intimo1igual22.JPG",
+      "https://cauagabriel123.github.io/assets/intimo1igual7.JPG" ]
+    },
+    "Aul": {
+      "sizes": ["GG"],
+      "stock": 1,
+      "images": ["https://cauagabriel123.github.io/assets/intimo1igual4.JPG",
+      "https://cauagabriel123.github.io/assets/intimo1igual3.JPG",
+      "https://cauagabriel123.github.io/assets/intimo1igual5.JPG" ]
+      }
   {
         "id": "p37",
     "name": "Conjunto Fio Duplo YOLANDA",
