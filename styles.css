@@ -1606,3 +1606,47 @@ body {
   font-size: 0.9rem;
   text-shadow: 0 1px 4px rgba(122,59,253,0.15);
 }
+/* Realce suave nos blocos de cor e tamanho */
+.lsx-colors, .lsx-sizes {
+  background: linear-gradient(180deg, #fff, #fff8fe);
+  border: 1px solid #f4d9ff;
+  border-radius: 14px;
+  padding: 10px 12px;
+  box-shadow: 0 6px 16px rgba(122,59,253,0.08);
+  transition: all 0.3s ease;
+}
+.lsx-colors:hover, .lsx-sizes:hover {
+  transform: scale(1.01);
+  box-shadow: 0 8px 20px rgba(122,59,253,0.15);
+}
+
+.lsx-color.is-selected, .lsx-size.is-selected {
+  background: linear-gradient(90deg, #E96BA8, #7A3BFD);
+  color: #fff;
+  box-shadow: 0 0 12px rgba(233,107,168,0.45);
+}
+
+.lsx-price__value {
+  font-size: 30px;
+  font-weight: 800;
+  background: linear-gradient(90deg, #ff8ac9, #7a3bfd);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 4px 12px rgba(233,107,168,0.25);
+  animation: pulsePrice 2.8s ease-in-out infinite;
+}
+
+@keyframes pulsePrice {
+  0%, 100% { text-shadow: 0 4px 12px rgba(233,107,168,0.25); }
+  50% { text-shadow: 0 4px 18px rgba(233,107,168,0.45); }
+}
+
+.lsx-modal__dialog {
+  background: linear-gradient(180deg, #fff, #fff3fa);
+  border: 1px solid rgba(233,107,168,0.1);
+}
+
+.lsx-gallery__thumbs img:hover {
+  box-shadow: 0 0 10px rgba(233,107,168,0.35);
+  transform: scale(1.1);
+}
