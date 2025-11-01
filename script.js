@@ -1369,7 +1369,10 @@ document.addEventListener('DOMContentLoaded', () => {
   function mountColors(p) {
     if (!els.colors) return;
     const colors = p.variations ? Object.keys(p.variations) : (p.colors || ['Única']);
-    els.colors.innerHTML = colors.map(c=>`<button class="lsx-color" data-color="${c}">${c}</button>`).join('');
+  // ✅ AGORA COM RÓTULO ACIMA
+  els.colors.innerHTML =
+    `<span class="lsx-label">Cor disponível:</span>` +
+    colors.map(c=>`<button class="lsx-color" data-color="${c}">${c}</button>`).join('');
     current.selectedColor = null;
 
     els.colors.onclick = e => {
