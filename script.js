@@ -1492,13 +1492,14 @@ els.sizes.innerHTML =
 }
 
   // ====== Preenchimento ======
-  function fill(p){
+  function fill(p) {
   current.product = p;
   current.selectedSize = null;
   current.selectedColor = null;
   current.qty = 1;
   current.maxStock = Infinity;
 
+  // === DADOS BÁSICOS ===
   els.title.textContent = p.name;
   els.price.textContent = currency(p.price);
   els.installments.textContent = calcInstallments(p.price);
@@ -1506,45 +1507,61 @@ els.sizes.innerHTML =
   els.imgMain.alt = p.name;
   document.getElementById('lsxDescription').textContent = p.description || 'Sem descrição disponível.';
 
-  // 🧩 Garante ordem e posição correta dos blocos (sem duplicar)
+  // === GALERIA ===
+  mountGallery(p);
+
+  // === LIMPA CONTEÚDO SEM REMOVER ELEMENTOS ===
+  if (els.colors) els.colors.innerHTML = '';
+  if (els.sizes) els.sizes.innerHTML = '';
+  if (els.stock) els.stock.innerHTML = '';
+
+  // === GARANTE ORDEM COR -> TAMANHO ===
   if (els.colors && els.sizes && els.colors.nextElementSibling !== els.sizes) {
     els.colors.parentNode.insertBefore(els.colors, els.sizes);
   }
 
-  // 🧹 Corrige bug de duplicação e elementos indo pro final do modal
-  els.colors.innerHTML = '';
-  els.sizes.innerHTML = '';
-  els.stock.innerHTML = '';
+  // === MONTAGEM DAS OPÇÕES ===
+  if (p.colors && p.colors.length > 0) {
+    mountColors(p);
+  } else {
+    els.colors.innerHTML = '<p style="color:var(--lilac)">Cor única disponível</p>';
+  }
 
-  mountGallery(p);
+  if (p.sizes && p.sizes.length > 0) {
+    mountSizesFromColor(p, current.selectedColor);
+  } else {
+    els.sizes.innerHTML = '<p style="color:var(--lilac)">Tamanho único disponível</p>';
+  }
+
   refreshStockLabel(p);
   ensureQtyControls();
   [els.buyBtn, els.addBtn].forEach(b => b && b.removeAttribute('disabled'));
   validateButtons(p);
 
-  // Ações dos botões
+  // === BOTÃO COMPRAR ===
   els.buyBtn && (els.buyBtn.onclick = () => {
     if (!validateSelections(p)) return;
     const size  = current.selectedSize || 'ÚNICO';
     const color = current.selectedColor || 'Única';
     addToCart(p, size, color, current.qty);
     if (typeof cart !== 'undefined') {
-      cart.setAttribute('aria-hidden','false');
+      cart.setAttribute('aria-hidden', 'false');
       setTimeout(() => {
         document.getElementById('client-name')?.focus();
-        document.querySelector('.client-info')?.scrollIntoView({ behavior:'smooth' });
-      }, 120);
+        document.querySelector('.client-info')?.scrollIntoView({ behavior: 'smooth' });
+      }, 150);
     }
     LSModal.close();
   });
 
+  // === BOTÃO ADICIONAR AO CARRINHO ===
   els.addBtn && (els.addBtn.onclick = () => {
     if (!validateSelections(p)) return;
     const size  = current.selectedSize || 'ÚNICO';
     const color = current.selectedColor || 'Única';
     if (typeof addToCart === 'function') {
       addToCart(p, size, color, current.qty);
-      try { playChime && playChime(); } catch(_) {}
+      try { playChime && playChime(); } catch (_) {}
     }
     LSModal.close();
   });
