@@ -1504,12 +1504,6 @@ body {
 #lsxSizes  { order: 2 !important; }
 #lsxStock  { order: 3 !important; }
 
-/* Remove pseudo-rótulos automáticos (usa os labels reais do JS) */
-#lsxColors::before,
-#lsxSizes::before {
-  content: none !important;
-}
-
 /* Mantém espaçamento elegante */
 #lsxColors, #lsxSizes, #lsxStock {
   width: 100%;
