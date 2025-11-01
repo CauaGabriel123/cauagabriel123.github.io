@@ -1418,45 +1418,46 @@ function mountColors(p) {
   // ====== Quantidade ======
   // injeta controles ao lado dos botões (sem depender de HTML extra)
   let qtyWrap = null, qtyNum = null;
-  function ensureQtyControls() {
-    if (qtyWrap) return;
-    const cta = els.buyBtn?.parentElement || els.addBtn?.parentElement || els.root;
-    qtyWrap = document.createElement('div');
-    qtyWrap.style.display = 'flex';
-    qtyWrap.style.alignItems = 'center';
-    qtyWrap.style.gap = '10px';
-    qtyWrap.style.margin = '6px 0';
+  // ====== Quantidade ======
+let qtyWrap = null, qtyNum = null;
+function ensureQtyControls() {
+  // Se já existe, remove do lugar antigo pra reinserir no novo ponto
+  if (qtyWrap && qtyWrap.parentElement) qtyWrap.parentElement.removeChild(qtyWrap);
 
-    const minus = document.createElement('button');
-    minus.textContent = '−';
-    minus.style.cssText = 'width:34px;height:34px;border:1px solid #eee;background:#fff;border-radius:10px;cursor:pointer;font-size:18px;';
-    const plus = document.createElement('button');
-    plus.textContent = '+';
-    plus.style.cssText = 'width:34px;height:34px;border:1px solid #eee;background:#fff;border-radius:10px;cursor:pointer;font-size:18px;';
-    qtyNum = document.createElement('strong');
-    qtyNum.textContent = String(current.qty);
+  const cta = els.buyBtn?.parentElement || els.addBtn?.parentElement || els.root;
+  qtyWrap = document.createElement('div');
+  qtyWrap.className = 'qty-wrap';
+  qtyWrap.style.display = 'flex';
+  qtyWrap.style.alignItems = 'center';
+  qtyWrap.style.gap = '10px';
+  qtyWrap.style.margin = '8px 0';
 
-    minus.onclick = () => { current.qty = Math.max(1, current.qty - 1); updateQtyUI(); };
-    plus.onclick  = () => { 
-      const limit = current.maxStock === Infinity ? 99 : current.maxStock;
-      if (limit <= 0) return;
-      current.qty = Math.min(limit, current.qty + 1);
-      updateQtyUI(); 
-    };
+  const minus = document.createElement('button');
+  minus.textContent = '−';
+  minus.style.cssText = 'width:34px;height:34px;border:1px solid #eee;background:#fff;border-radius:10px;cursor:pointer;font-size:18px;';
+  const plus = document.createElement('button');
+  plus.textContent = '+';
+  plus.style.cssText = 'width:34px;height:34px;border:1px solid #eee;background:#fff;border-radius:10px;cursor:pointer;font-size:18px;';
+  qtyNum = document.createElement('strong');
+  qtyNum.textContent = String(current.qty);
 
-    qtyWrap.appendChild(minus);
-    qtyWrap.appendChild(qtyNum);
-    qtyWrap.appendChild(plus);
+  minus.onclick = () => { current.qty = Math.max(1, current.qty - 1); updateQtyUI(); };
+  plus.onclick = () => { 
+    const limit = current.maxStock === Infinity ? 99 : current.maxStock;
+    if (limit <= 0) return;
+    current.qty = Math.min(limit, current.qty + 1);
+    updateQtyUI();
+  };
 
-    // insere logo após o estoque, antes dos botões
-const stockBox = document.getElementById('lsxStock');
-if (stockBox && stockBox.parentElement) {
-  // 👉 Garante que a quantidade vá logo DEPOIS do texto de estoque
-  stockBox.insertAdjacentElement('afterend', qtyWrap);
-} else if (cta && cta.parentElement) {
-  // fallback pra evitar sumiço do controle
-  cta.parentElement.insertBefore(qtyWrap, cta);
-}
+  qtyWrap.append(minus, qtyNum, plus);
+
+  // 🩷 AQUI: força o bloco logo após o estoque
+  const stockBox = document.getElementById('lsxStock');
+  if (stockBox && stockBox.parentElement) {
+    stockBox.insertAdjacentElement('afterend', qtyWrap);
+  } else if (cta && cta.parentElement) {
+    cta.parentElement.insertBefore(qtyWrap, cta);
+  }
 }
   function updateQtyUI() {
     if (qtyNum) qtyNum.textContent = String(current.qty);
