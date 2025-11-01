@@ -1559,48 +1559,33 @@ body {
   margin-bottom: 4px;
   font-size: 0.9rem;
 }
-/* ===============================
-   FIX COMPLETO — Quantidade logo abaixo do estoque
-   =============================== */
-
+/* =======================================
+   LS STORE FIX — Quantidade abaixo do estoque
+   ======================================= */
 .lsx-info {
   display: flex !important;
   flex-direction: column !important;
-  align-items: flex-start !important;
 }
 
-/* Ordem visual definitiva */
-.lsx-price        { order: 1 !important; }
-#lsxColors        { order: 2 !important; }
-#lsxSizes         { order: 3 !important; }
-.lsx-stock        { order: 4 !important; }
-.lsx-qty,
-.lsx-quantity,
-#lsxQuantity      { order: 5 !important; }  /* 👈 garante que quantidade vá abaixo do estoque */
-.lsx-cta          { order: 6 !important; }
-.lsx-details      { order: 7 !important; }
+/* Ordem dos elementos */
+.lsx-price   { order: 1 !important; }
+#lsxColors   { order: 2 !important; }
+#lsxSizes    { order: 3 !important; }
+.lsx-stock   { order: 4 !important; }
 
-/* Letreiros */
-#lsxColors::before {
-  content: "Cor disponível:" !important;
-  display: block !important;
-  font-weight: 600 !important;
-  color: #7A3BFD !important;
-  margin-bottom: 4px !important;
-  font-size: 0.9rem !important;
-}
-#lsxSizes::before {
-  content: "Tamanho disponível:" !important;
-  display: block !important;
-  font-weight: 600 !important;
-  color: #7A3BFD !important;
-  margin-bottom: 4px !important;
-  font-size: 0.9rem !important;
+/* 👇 garante que a quantidade venha logo abaixo do estoque */
+.lsx-info div[id*="qty"],
+.lsx-info div[class*="qty"],
+.lsx-info div[id*="quant"],
+.lsx-info div[class*="quant"] {
+  order: 5 !important;
 }
 
-/* Espaçamento */
-#lsxColors, #lsxSizes, .lsx-stock, .lsx-qty, .lsx-quantity, #lsxQuantity {
-  width: 100% !important;
+.lsx-cta     { order: 6 !important; }
+.lsx-details { order: 7 !important; }
+
+/* Espaçamento suave */
+.lsx-info > div {
   margin-top: 8px !important;
-  margin-bottom: 4px !important;
+  margin-bottom: 6px !important;
 }
