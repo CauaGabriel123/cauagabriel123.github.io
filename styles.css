@@ -1515,3 +1515,47 @@ body {
   width: 100%;
   margin-top: 10px;
 }
+/* ===============================
+   FIX PREMIUM — Ordem Cor/Tamanho/Estoque restaurada
+   =============================== */
+
+/* Garante que o container .lsx-info siga a ordem visual correta */
+.lsx-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Força a ordem: preço → cor → tamanho → estoque → botões */
+.lsx-price__value { order: 1; }
+#lsxColors        { order: 2; }
+#lsxSizes         { order: 3; }
+.lsx-stock        { order: 4; }
+.lsx-cta          { order: 5; }
+.lsx-details      { order: 6; }
+
+/* Espaçamentos consistentes */
+#lsxColors,
+#lsxSizes,
+.lsx-stock {
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+/* Rótulos "Cor disponível" e "Tamanho disponível" */
+#lsxColors::before {
+  content: "Cor disponível:";
+  display: block;
+  font-weight: 600;
+  color: #7A3BFD;
+  margin-bottom: 4px;
+  font-size: 0.9rem;
+}
+#lsxSizes::before {
+  content: "Tamanho disponível:";
+  display: block;
+  font-weight: 600;
+  color: #7A3BFD;
+  margin-bottom: 4px;
+  font-size: 0.9rem;
+}
