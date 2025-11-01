@@ -1387,3 +1387,55 @@ body {
   transform: scale(1.08);
   box-shadow: 0 4px 10px rgba(122,59,253,0.2);
 }
+/* ===============================
+   v14.2.4 — Rótulos Premium (cor e tamanho)
+   =============================== */
+
+/* Contêineres */
+.lsx-colors,
+.lsx-sizes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+/* Espaço entre os dois blocos */
+.lsx-colors {
+  margin-bottom: 12px;
+}
+
+/* Rótulos */
+.lsx-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #7A3BFD;
+  text-shadow: 0 1px 4px rgba(122,59,253,0.15);
+  margin-bottom: 4px;
+  display: block;
+}
+
+/* Mantém estilo dos botões */
+.lsx-color, .lsx-size {
+  min-width: 46px;
+  height: 38px;
+  border-radius: 999px;
+  border: 2px solid #ff7fb6;
+  background: #fff;
+  color: #ff7fb6;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 12px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.lsx-color.is-selected, .lsx-size.is-selected {
+  background: #ff7fb6;
+  color: #fff;
+}
+.lsx-color:hover, .lsx-size:hover {
+  transform: scale(1.08);
+  box-shadow: 0 4px 10px rgba(122,59,253,0.2);
+}
