@@ -622,10 +622,29 @@ function addToCart(prod, size, color, qty = 1) {
   // agrupa por (id+size+color)
   const key = (x) => `${x.id}|${x.name}|${x.size}|${x.color}`;
   const newLine = { id: prod.id, name: prod.name, size, color, price: prod.price, qty: Math.max(1, qty|0) };
+    // ⚠️ Limita a quantidade conforme estoque do produto selecionado
+  const maxStock = (prod.variations && prod.variations[color])
+    ? prod.variations[color].stock
+    : (prod.stock || 5);
+
+  if (newLine.qty > maxStock) {
+    newLine.qty = maxStock;
+    showAlert(`Limite de ${maxStock} unidades disponíveis no estoque.`);
+  }
 
   const pos = items.findIndex(it => key(it) === key(newLine));
   if (pos >= 0) {
-    items[pos].qty += newLine.qty;
+  const maxStock = (prod.variations && prod.variations[color])
+    ? prod.variations[color].stock
+    : (prod.stock || 5);
+
+  const newTotal = items[pos].qty + newLine.qty;
+  if (newTotal > maxStock) {
+    items[pos].qty = maxStock;
+    showAlert(`⚠️ Estoque máximo atingido: ${maxStock} unidades.`);
+  } else {
+    items[pos].qty = newTotal;
+  }
   } else {
     items.push(newLine);
   }
