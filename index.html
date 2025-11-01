@@ -251,39 +251,46 @@ window.addEventListener('DOMContentLoaded', () => {
       </div>
 
       <div class="lsx-info">
-      <div class="lsx-price">
-  <div class="lsx-price__value" id="lsxPrice"></div>
-  <a class="lsx-price__installments" id="lsxInstallments" href="#payments">12x sem juros*</a>
+
+  <!-- PREÇO -->
+  <div class="lsx-price">
+    <div class="lsx-price__value" id="lsxPrice"></div>
+    <a class="lsx-price__installments" id="lsxInstallments" href="#payments">12x sem juros*</a>
+  </div>
+
+  <!-- CORES -->
+  <div class="lsx-colors" id="lsxColors"></div>
+
+  <!-- TAMANHOS -->
+  <div class="lsx-sizes" id="lsxSizes"></div>
+
+  <!-- ESTOQUE -->
+  <div class="lsx-stock" id="lsxStock"></div>
+
+  <!-- BOTÕES -->
+  <div class="lsx-cta">
+    <button class="lsx-btn lsx-btn--primary" id="lsxBuyBtn">COMPRAR</button>
+    <button class="lsx-btn lsx-btn--ghost" id="lsxAddBtn" type="button">Adicionar ao carrinho</button>
+  </div>
+
+  <!-- ENTREGA -->
+  <details class="lsx-details">
+    <summary>Entrega & retirada</summary>
+    <div class="lsx-details__body">
+      <ul>
+        <li>Motoboy (mesmo dia em área atendida)</li>
+        <li>Retirada na loja / ponto combinado</li>
+      </ul>
+    </div>
+  </details>
+
+  <!-- DESCRIÇÃO -->
+  <details class="lsx-details" id="lsxDescriptionBox">
+    <summary>Descrição</summary>
+    <div class="lsx-details__body" id="lsxDescription"></div>
+  </details>
+
 </div>
-
-<!-- CORES E TAMANHOS ACIMA DO ESTOQUE -->
-<div class="lsx-colors" id="lsxColors"></div>
-<div class="lsx-sizes" id="lsxSizes"></div>
-
-<!-- ESTOQUE -->
-<div class="lsx-stock" id="lsxStock"></div>
-
-<!-- BOTÕES -->
-<div class="lsx-cta">
-  <button class="lsx-btn lsx-btn--primary" id="lsxBuyBtn">COMPRAR</button>
-  <button class="lsx-btn lsx-btn--ghost" id="lsxAddBtn" type="button">Adicionar ao carrinho</button>
-</div>
-
-        <details class="lsx-details">
-          <summary>Entrega & retirada</summary>
-          <div class="lsx-details__body">
-            <ul>
-  <li>Motoboy (mesmo dia em área atendida)</li>
-  <li>Retirada na loja / ponto combinado</li>
-</ul>
-          </div>
-        </details>
-
-        <details class="lsx-details" id="lsxDescriptionBox">
-          <summary>Descrição</summary>
-          <div class="lsx-details__body" id="lsxDescription"></div>
-        </details>
-      </div>
     </section>
   </div>
 </div>
