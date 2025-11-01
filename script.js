@@ -606,14 +606,23 @@ function renderCart() {
     };
   });
   cartItems.querySelectorAll('.qty-inc').forEach(b => {
-    b.onclick = () => {
-      const idx = parseInt(b.dataset.i, 10);
-      items[idx].qty = (items[idx].qty || 1) + 1;
-      localStorage.setItem('cartItems', JSON.stringify(items));
-      renderCart();
-      refreshTotalsUI();
-    };
-  });
+  b.onclick = () => {
+    const idx = parseInt(b.dataset.i, 10);
+    const it = items[idx];
+    const prod = Object.values(window.catalog || {}).flat().find(p => p.id === it.id);
+    const maxStock = prod?.variations?.[it.color]?.stock || prod?.stock || 5;
+
+    if (it.qty >= maxStock) {
+      showAlert(`⚠️ Estoque máximo atingido: ${maxStock} unidades.`);
+      return;
+    }
+
+    items[idx].qty = (it.qty || 1) + 1;
+    localStorage.setItem('cartItems', JSON.stringify(items));
+    renderCart();
+    refreshTotalsUI();
+  };
+});
 
   refreshTotalsUI();
 }
