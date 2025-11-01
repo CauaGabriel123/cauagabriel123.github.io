@@ -1343,3 +1343,47 @@ body {
   pointer-events: auto;      /* mantém o clique ativo */
   cursor: pointer;           /* mantém o cursor de clique */
 }
+/* ===============================
+   Ajuste Premium — Espaçamento entre cores e tamanhos
+   =============================== */
+
+/* Blocos de seleção de cor e tamanho */
+.lsx-colors,
+.lsx-sizes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+/* Espaçamento adicional entre cores e tamanhos */
+.lsx-colors {
+  margin-bottom: 12px; /* dá um respiro entre o bloco de cores e o de tamanhos */
+}
+
+/* Mantém visual refinado e alinhado */
+.lsx-color, .lsx-size {
+  min-width: 46px;
+  height: 38px;
+  border-radius: 999px;
+  border: 2px solid #ff7fb6;
+  background: #fff;
+  color: #ff7fb6;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 12px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.lsx-color.is-selected, .lsx-size.is-selected {
+  background: #ff7fb6;
+  color: #fff;
+}
+
+.lsx-color:hover, .lsx-size:hover {
+  transform: scale(1.08);
+  box-shadow: 0 4px 10px rgba(122,59,253,0.2);
+}
