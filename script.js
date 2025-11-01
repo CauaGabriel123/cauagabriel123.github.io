@@ -1504,32 +1504,16 @@ els.sizes.innerHTML =
     els.installments.textContent = calcInstallments(p.price);
     els.stock.textContent = ''; 
     els.imgMain.alt = p.name;
-    document.getElementById('lsxDescription').textContent = p.description || 'Sem descrição disponível.';
-    // 🧩 Garantir ordem e posição correta dos blocos
+    // 🧩 Garantir ordem e posição correta dos blocos (sem duplicar)
 if (els.colors && els.sizes && els.colors.nextElementSibling !== els.sizes) {
   els.colors.parentNode.insertBefore(els.colors, els.sizes);
 }
 
-// 🧹 Corrige bug de duplicação e de elementos indo pro final do modal
-// (limpa antes de recriar — mas mantém a posição original no HTML)
+// 🧹 Corrige bug de duplicação e elementos indo pro final do modal
+// (limpa o conteúdo, mas mantém o nó na posição correta no DOM)
 els.colors.innerHTML = '';
 els.sizes.innerHTML = '';
 els.stock.innerHTML = '';
-    // 🔄 Garante que o bloco de CORES venha antes do bloco de TAMANHOS no DOM
-if (els.colors && els.sizes && els.colors.nextElementSibling !== els.sizes) {
-  els.colors.parentNode.insertBefore(els.colors, els.sizes);
-}
-// 🔄 Garante que o bloco de CORES venha antes do bloco de TAMANHOS no DOM
-if (els.colors && els.sizes && els.colors.nextElementSibling !== els.sizes) {
-  els.colors.parentNode.insertBefore(els.colors, els.sizes);
-}
-
-// 🧹 Correção: limpa conteúdos duplicados do modal antes de remontar
-els.colors.innerHTML = '';
-els.sizes.innerHTML = '';
-    // Exibir SEMPRE as cores primeiro e depois os tamanhos
-mountColors(p);
-mountSizesFromColor(p, current.selectedColor);
 
     mountGallery(p);
     refreshStockLabel(p);
