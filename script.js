@@ -1501,9 +1501,9 @@ document.addEventListener('DOMContentLoaded', () => {
     els.imgMain.alt = p.name;
     document.getElementById('lsxDescription').textContent = p.description || 'Sem descrição disponível.';
 
-    mountColors(p);
-    // se não tiver variações, mostra tamanhos padrão
-    if (!p.variations) mountSizesFromColor(p, null);
+    // Exibe primeiro as cores, depois os tamanhos
+if (!p.variations) mountSizesFromColor(p, null);
+mountColors(p);
 
     mountGallery(p);
     refreshStockLabel(p);
