@@ -1418,8 +1418,6 @@ function mountColors(p) {
   // ====== Quantidade ======
   // injeta controles ao lado dos botões (sem depender de HTML extra)
   let qtyWrap = null, qtyNum = null;
-  // ====== Quantidade ======
-let qtyWrap = null, qtyNum = null;
 function ensureQtyControls() {
   // Se já existe, remove do lugar antigo pra reinserir no novo ponto
   if (qtyWrap && qtyWrap.parentElement) qtyWrap.parentElement.removeChild(qtyWrap);
