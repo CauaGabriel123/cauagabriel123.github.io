@@ -1497,3 +1497,21 @@ body {
   border-top: 1px solid rgba(0,0,0,0.08);
   padding-top: 10px;
 }
+/* ===== Fix Premium — Ordem correta no modal (v14.2.5) ===== */
+
+/* Força a sequência correta: Cor → Tamanho → Estoque */
+#lsxColors { order: 1 !important; }
+#lsxSizes  { order: 2 !important; }
+#lsxStock  { order: 3 !important; }
+
+/* Remove pseudo-rótulos automáticos (usa os labels reais do JS) */
+#lsxColors::before,
+#lsxSizes::before {
+  content: none !important;
+}
+
+/* Mantém espaçamento elegante */
+#lsxColors, #lsxSizes, #lsxStock {
+  width: 100%;
+  margin-top: 10px;
+}
