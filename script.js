@@ -1505,8 +1505,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('lsxDescription').textContent = p.description || 'Sem descrição disponível.';
 
     // Exibe primeiro as cores, depois os tamanhos
-if (!p.variations) mountSizesFromColor(p, null);
-mountColors(p);
+if (!p.variations) mountColors(p);                       // primeiro as cores (com rótulo)
+if (!p.variations) mountSizesFromColor(p, null);  // depois os tamanhos
 
     mountGallery(p);
     refreshStockLabel(p);
