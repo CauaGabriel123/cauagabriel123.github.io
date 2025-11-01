@@ -1503,21 +1503,32 @@ els.sizes.innerHTML =
   els.title.textContent = p.name;
   els.price.textContent = currency(p.price);
   els.installments.textContent = calcInstallments(p.price);
-  els.stock.textContent = ''; 
+  els.stock.textContent = '';
   els.imgMain.alt = p.name;
   document.getElementById('lsxDescription').textContent = p.description || 'Sem descrição disponível.';
 
   // === GALERIA ===
   mountGallery(p);
 
-  // === MONTAGEM DAS OPÇÕES ===
-  if (p.colors && p.colors.length > 0) {
+  // === LIMPA containers sem bagunçar layout ===
+  if (els.colors) els.colors.innerHTML = '';
+  if (els.sizes) els.sizes.innerHTML = '';
+
+  // === GERA CORES ===
+  const hasVariations = p.variations && Object.keys(p.variations).length > 0;
+  if (hasVariations) {
+    mountColors(p);
+  } else if (p.colors && p.colors.length > 0) {
     mountColors(p);
   } else {
     els.colors.innerHTML = '<p style="color:var(--lilac)">Cor única disponível</p>';
   }
 
-  if (p.sizes && p.sizes.length > 0) {
+  // === GERA TAMANHOS ===
+  if (hasVariations) {
+    const firstColor = Object.keys(p.variations)[0];
+    mountSizesFromColor(p, firstColor);
+  } else if (p.sizes && p.sizes.length > 0) {
     mountSizesFromColor(p, current.selectedColor);
   } else {
     els.sizes.innerHTML = '<p style="color:var(--lilac)">Tamanho único disponível</p>';
@@ -1531,7 +1542,7 @@ els.sizes.innerHTML =
   // === BOTÃO COMPRAR ===
   els.buyBtn && (els.buyBtn.onclick = () => {
     if (!validateSelections(p)) return;
-    const size  = current.selectedSize || 'ÚNICO';
+    const size = current.selectedSize || 'ÚNICO';
     const color = current.selectedColor || 'Única';
     addToCart(p, size, color, current.qty);
     if (typeof cart !== 'undefined') {
@@ -1547,7 +1558,7 @@ els.sizes.innerHTML =
   // === BOTÃO ADICIONAR AO CARRINHO ===
   els.addBtn && (els.addBtn.onclick = () => {
     if (!validateSelections(p)) return;
-    const size  = current.selectedSize || 'ÚNICO';
+    const size = current.selectedSize || 'ÚNICO';
     const color = current.selectedColor || 'Única';
     if (typeof addToCart === 'function') {
       addToCart(p, size, color, current.qty);
