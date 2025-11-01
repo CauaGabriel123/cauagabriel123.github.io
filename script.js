@@ -1451,8 +1451,10 @@ function mountColors(p) {
     // insere logo após o estoque, antes dos botões
 const stockBox = document.getElementById('lsxStock');
 if (stockBox && stockBox.parentElement) {
-  stockBox.parentElement.insertBefore(qtyWrap, stockBox.nextSibling);
+  // 👉 Garante que a quantidade vá logo DEPOIS do texto de estoque
+  stockBox.insertAdjacentElement('afterend', qtyWrap);
 } else if (cta && cta.parentElement) {
+  // fallback pra evitar sumiço do controle
   cta.parentElement.insertBefore(qtyWrap, cta);
 }
 }
