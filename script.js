@@ -1353,7 +1353,9 @@ document.addEventListener('DOMContentLoaded', () => {
       sizes = p.sizes || ['ÚNICO'];
     }
     sizes = sizes.length ? sizes : ['ÚNICO'];
-    els.sizes.innerHTML = sizes.map(s=>`<button class="lsx-size" data-size="${String(s).toUpperCase()}">${String(s).toUpperCase()}</button>`).join('');
+els.sizes.innerHTML =
+  `<span class="lsx-label">Tamanho disponível:</span>` +
+  sizes.map(s=>`<button class="lsx-size" data-size="${String(s).toUpperCase()}">${String(s).toUpperCase()}</button>`).join('');
     current.selectedSize = null;
 
     els.sizes.onclick = e => {
