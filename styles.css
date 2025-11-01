@@ -1560,7 +1560,7 @@ body {
   font-size: 0.9rem;
 }
 /* ===============================
-   FIX FINAL — Ordem completa (com quantidade)
+   FIX COMPLETO — Quantidade logo abaixo do estoque
    =============================== */
 
 .lsx-info {
@@ -1574,11 +1574,13 @@ body {
 #lsxColors        { order: 2 !important; }
 #lsxSizes         { order: 3 !important; }
 .lsx-stock        { order: 4 !important; }
-.lsx-qty          { order: 5 !important; }  /* ⬅ quantidade abaixo do estoque */
+.lsx-qty,
+.lsx-quantity,
+#lsxQuantity      { order: 5 !important; }  /* 👈 garante que quantidade vá abaixo do estoque */
 .lsx-cta          { order: 6 !important; }
 .lsx-details      { order: 7 !important; }
 
-/* Rótulos de cor/tamanho */
+/* Letreiros */
 #lsxColors::before {
   content: "Cor disponível:" !important;
   display: block !important;
@@ -1597,7 +1599,7 @@ body {
 }
 
 /* Espaçamento */
-#lsxColors, #lsxSizes, .lsx-stock, .lsx-qty {
+#lsxColors, #lsxSizes, .lsx-stock, .lsx-qty, .lsx-quantity, #lsxQuantity {
   width: 100% !important;
   margin-top: 8px !important;
   margin-bottom: 4px !important;
