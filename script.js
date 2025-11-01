@@ -1505,10 +1505,14 @@ els.sizes.innerHTML =
     els.stock.textContent = ''; 
     els.imgMain.alt = p.name;
     document.getElementById('lsxDescription').textContent = p.description || 'Sem descrição disponível.';
+    // 🔄 Garante que o bloco de CORES venha antes do bloco de TAMANHOS no DOM
+if (els.colors && els.sizes && els.colors.nextElementSibling !== els.sizes) {
+  els.colors.parentNode.insertBefore(els.colors, els.sizes);
+}
 
-    // Exibe primeiro as cores, depois os tamanhos
-if (!p.variations) mountColors(p);                       // primeiro as cores (com rótulo)
-if (!p.variations) mountSizesFromColor(p, null);  // depois os tamanhos
+    // Exibir SEMPRE as cores primeiro e depois os tamanhos
+mountColors(p);
+mountSizesFromColor(p, current.selectedColor);
 
     mountGallery(p);
     refreshStockLabel(p);
