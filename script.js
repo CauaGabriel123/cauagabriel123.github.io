@@ -1549,19 +1549,6 @@ els.sizes.innerHTML =
     LSModal.close();
   });
 }
-
-    els.addBtn && (els.addBtn.onclick = () => {
-      if (!validateSelections(p)) return;
-      const size  = current.selectedSize || 'ÚNICO';
-      const color = current.selectedColor || 'Única';
-      if (typeof addToCart === 'function') {
-        addToCart(p, size, color, current.qty);
-        try { playChime && playChime(); } catch(_) {}
-      }
-      LSModal.close();
-    });
-  }
-
   function open(id){
     getProducts().then(list=>{
       const p = list.find(x=>String(x.id)===String(id));
