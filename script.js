@@ -1448,9 +1448,13 @@ function mountColors(p) {
     qtyWrap.appendChild(qtyNum);
     qtyWrap.appendChild(plus);
 
-    // insere antes dos botões de ação
-    if (cta && cta.parentElement) cta.parentElement.insertBefore(qtyWrap, cta);
-  }
+    // insere logo após o estoque, antes dos botões
+const stockBox = document.getElementById('lsxStock');
+if (stockBox && stockBox.parentElement) {
+  stockBox.parentElement.insertBefore(qtyWrap, stockBox.nextSibling);
+} else if (cta && cta.parentElement) {
+  cta.parentElement.insertBefore(qtyWrap, cta);
+}
   function updateQtyUI() {
     if (qtyNum) qtyNum.textContent = String(current.qty);
   }
