@@ -1477,3 +1477,23 @@ body {
   margin-bottom: 6px;
   font-size: 0.95em;
 }
+
+/* Refinamento da área de informações do modal LSX */
+.lsx-info > * {
+  margin-bottom: 12px;
+}
+
+.lsx-colors, .lsx-sizes, .lsx-stock {
+  margin-top: 10px;
+  margin-bottom: 8px;
+}
+
+.lsx-cta {
+  margin-top: 16px;
+}
+
+.lsx-details {
+  margin-top: 12px;
+  border-top: 1px solid rgba(0,0,0,0.08);
+  padding-top: 10px;
+}
