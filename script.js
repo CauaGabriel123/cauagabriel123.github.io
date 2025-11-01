@@ -1493,58 +1493,62 @@ els.sizes.innerHTML =
 
   // ====== Preenchimento ======
   function fill(p){
-    current.product = p;
-    current.selectedSize = null;
-    current.selectedColor = null;
-    current.qty = 1;
-    current.maxStock = Infinity;
+  current.product = p;
+  current.selectedSize = null;
+  current.selectedColor = null;
+  current.qty = 1;
+  current.maxStock = Infinity;
 
-    els.title.textContent = p.name;
-    els.price.textContent = currency(p.price);
-    els.installments.textContent = calcInstallments(p.price);
-    els.stock.textContent = ''; 
-    els.imgMain.alt = p.name;
-    // 🧩 Garantir ordem e posição correta dos blocos (sem duplicar)
-if (els.colors && els.sizes && els.colors.nextElementSibling !== els.sizes) {
-  els.colors.parentNode.insertBefore(els.colors, els.sizes);
-}
+  els.title.textContent = p.name;
+  els.price.textContent = currency(p.price);
+  els.installments.textContent = calcInstallments(p.price);
+  els.stock.textContent = ''; 
+  els.imgMain.alt = p.name;
+  document.getElementById('lsxDescription').textContent = p.description || 'Sem descrição disponível.';
 
-// 🧹 Corrige bug de duplicação e elementos indo pro final do modal
-// (limpa o conteúdo, mas mantém o nó na posição correta no DOM)
-els.colors.innerHTML = '';
-els.sizes.innerHTML = '';
-els.stock.innerHTML = '';
-
-    mountGallery(p);
-    refreshStockLabel(p);
-    ensureQtyControls();
-    [els.buyBtn, els.addBtn].forEach(b => b && b.removeAttribute('disabled'));
-validateButtons(p);
-
-    // Ações
-els.buyBtn && (els.buyBtn.onclick = () => {
-  if (!validateSelections(p)) return; // <-- mostra o alerta e cancela
-  const size  = current.selectedSize || 'ÚNICO';
-  const color = current.selectedColor || 'Única';
-  addToCart(p, size, color, current.qty);
-  if (typeof cart !== 'undefined') {
-    cart.setAttribute('aria-hidden','false');
-    setTimeout(() => {
-      document.getElementById('client-name')?.focus();
-      document.querySelector('.client-info')?.scrollIntoView({ behavior:'smooth' });
-    }, 120);
+  // 🧩 Garante ordem e posição correta dos blocos (sem duplicar)
+  if (els.colors && els.sizes && els.colors.nextElementSibling !== els.sizes) {
+    els.colors.parentNode.insertBefore(els.colors, els.sizes);
   }
-  LSModal.close();
-});
 
-els.addBtn && (els.addBtn.onclick = () => {
-  if (!validateSelections(p)) return; // <-- mostra o alerta e cancela
-  const size  = current.selectedSize || 'ÚNICO';
-  const color = current.selectedColor || 'Única';
-  addToCart(p, size, color, current.qty);
-  try { playChime && playChime(); } catch(_) {}
-  LSModal.close();
-});
+  // 🧹 Corrige bug de duplicação e elementos indo pro final do modal
+  els.colors.innerHTML = '';
+  els.sizes.innerHTML = '';
+  els.stock.innerHTML = '';
+
+  mountGallery(p);
+  refreshStockLabel(p);
+  ensureQtyControls();
+  [els.buyBtn, els.addBtn].forEach(b => b && b.removeAttribute('disabled'));
+  validateButtons(p);
+
+  // Ações dos botões
+  els.buyBtn && (els.buyBtn.onclick = () => {
+    if (!validateSelections(p)) return;
+    const size  = current.selectedSize || 'ÚNICO';
+    const color = current.selectedColor || 'Única';
+    addToCart(p, size, color, current.qty);
+    if (typeof cart !== 'undefined') {
+      cart.setAttribute('aria-hidden','false');
+      setTimeout(() => {
+        document.getElementById('client-name')?.focus();
+        document.querySelector('.client-info')?.scrollIntoView({ behavior:'smooth' });
+      }, 120);
+    }
+    LSModal.close();
+  });
+
+  els.addBtn && (els.addBtn.onclick = () => {
+    if (!validateSelections(p)) return;
+    const size  = current.selectedSize || 'ÚNICO';
+    const color = current.selectedColor || 'Única';
+    if (typeof addToCart === 'function') {
+      addToCart(p, size, color, current.qty);
+      try { playChime && playChime(); } catch(_) {}
+    }
+    LSModal.close();
+  });
+}
 
     els.addBtn && (els.addBtn.onclick = () => {
       if (!validateSelections(p)) return;
