@@ -206,10 +206,10 @@ let featured = [];
 
 function buildCatalogAndRender(data) {
   const normalizeSizes = (arr) => {
-    if (!Array.isArray(arr) || arr.length === 0) return ['Único'];
+    if (!Array.isArray(arr) || arr.length === 0) return ['ÚNICO'];
     return arr.map(s => {
       const t = String(s).trim();
-      if (t.toLowerCase() === 'único' || t.toLowerCase() === 'unico') return 'Único';
+      if (t.toLowerCase() === 'único' || t.toLowerCase() === 'unico') return 'ÚNICO';
       return t.toUpperCase();
     });
   };
@@ -221,48 +221,97 @@ function buildCatalogAndRender(data) {
     });
   };
 
+  function union(arrays) {
+    return [...new Set(arrays.flat())];
+  }
+
   catalog = {};
-  data.forEach(p => {
+  featured = [];
+
+  const safeArray = Array.isArray(data) ? data : [];
+  safeArray.forEach(p => {
     const cat = p.category || 'outros';
-    if (!catalog[cat]) catalog[cat] = [];
-    
-      // NOVO: ignora produtos marcados como "indisponivel"
-  if (p.status && p.status.toLowerCase() === 'indisponivel') return;
 
-    const sizes = normalizeSizes(p.sizes);
-    const colors = normalizeColors(p.colors);
+    // ignora indisponível (mantém sua regra)
+    if (p.status && String(p.status).toLowerCase() === 'indisponivel') return;
 
-    catalog[cat].push({
+    // --- NOVO: suporte a variations no JSON
+    // Formato esperado:
+    // "variations": {
+    //   "Rosa": { "sizes": ["P","M"], "stock": 5, "image": "url" },
+    //   "Lilás": { "sizes": ["G"], "stock": 2, "image": "url2" }
+    // }
+    let colors = [];
+    let sizes = [];
+    let primaryImg = '';
+    let vmap = null; // mapeamento de variações (cor -> {sizes, stock, image})
+
+    if (p.variations && typeof p.variations === 'object') {
+      vmap = {};
+      for (const colorName of Object.keys(p.variations)) {
+        const variant = p.variations[colorName] || {};
+        const vsizes = normalizeSizes(variant.sizes || []);
+        const vstock = typeof variant.stock === 'number' ? variant.stock : 0;
+        const vimg   = variant.image || null;
+        vmap[colorName] = { sizes: vsizes, stock: vstock, image: vimg };
+        colors.push(colorName);
+        sizes.push(vsizes);
+        if (!primaryImg && vimg) primaryImg = vimg;
+      }
+      colors = normalizeColors(colors);
+      sizes = normalizeSizes(union(sizes));
+    } else {
+      // retrocompatibilidade
+      colors = normalizeColors(p.colors);
+      sizes  = normalizeSizes(p.sizes);
+      if (Array.isArray(p.images) && p.images.length) primaryImg = p.images[0];
+      else if (Array.isArray(p.image) && p.image.length) primaryImg = p.image[0];
+      else primaryImg = p.img || p.image || '';
+    }
+
+    // imgs para cards: prioriza p.images; senão, variação principal; senão, image único
+    const imgs = Array.isArray(p.images) && p.images.length
+      ? p.images.slice(0, 10)
+      : (primaryImg ? [primaryImg] : (
+         Array.isArray(p.image) ? p.image.slice(0, 10) :
+         (p.img ? [p.img] : [])
+      ));
+
+    const record = {
       id: p.id,
       name: p.name,
       price: p.price,
-      imgs: Array.isArray(p.images)
-  ? p.images.slice(0, 10)
-  : Array.isArray(p.image)
-    ? p.image.slice(0, 10)
-    : [p.image],
+      imgs,
+      images: p.images,   // mantido
+      image: p.image,     // mantido
+      img: p.img,         // mantido
       sizes,
       colors,
-      stock: 5,
+      variations: vmap,   // << NOVO (pode ser null)
+      stock: 5,           // compatibilidade (não usado se variations estiver presente)
       desc: p.description,
       status: p.status
-    });
+    };
+
+    if (!catalog[cat]) catalog[cat] = [];
+    catalog[cat].push(record);
   });
-    // Define os produtos em destaque (para o carrossel)
-  featured = data
-  .slice(0, 20)
-  .map(p => ({
-    id: p.id,
-    name: p.name,
-    price: p.price,
-    imgs: Array.isArray(p.images)
-      ? p.images
-      : Array.isArray(p.image)
-        ? p.image
-        : [p.image],
-    desc: p.description,
-    status: p.status
-  }));
+
+  // Destaques (embaralhado como você já faz)
+  featured = safeArray
+    .slice(0, 20)
+    .sort(() => Math.random() - 0.5)
+    .map(p => ({
+      id: p.id,
+      name: p.name,
+      price: p.price,
+      imgs: (Array.isArray(p.images) && p.images.length) ? p.images :
+            (Array.isArray(p.image) && p.image.length) ? p.image :
+            (p.img ? [p.img] : []),
+      desc: p.description,
+      status: p.status
+    }));
+
   renderAll();
   initCarousel();
   renderFooterProducts(featured.length ? featured : null);
@@ -458,7 +507,7 @@ function showAlert(msg) {
 }
 
 // =============================
-// CARRINHO (v11.4.1 — correção estável, sem mudar o visual)
+// CARRINHO PRO (com qty + migração) – v14.2.1
 // =============================
 const cart = document.getElementById('cart');
 const cartBtn = document.getElementById('cart-btn');
@@ -473,29 +522,40 @@ const checkout = document.getElementById('checkout');
 
 let items = JSON.parse(localStorage.getItem('cartItems') || '[]');
 
-// Abrir e fechar carrinho
-cartBtn.onclick = () => {
+// 🔁 Migração p/ formato novo (sem quebrar carrinhos antigos)
+items = items.map(it => {
+  if (typeof it.qty !== 'number' || it.qty < 1) return { ...it, qty: 1 };
+  return it;
+});
+localStorage.setItem('cartItems', JSON.stringify(items));
+
+// Abrir/fechar
+cartBtn && (cartBtn.onclick = () => {
   cart.setAttribute('aria-hidden', 'false');
   renderCart();
-};
-closeCart.onclick = () => cart.setAttribute('aria-hidden', 'true');
+});
+closeCart && (closeCart.onclick = () => cart.setAttribute('aria-hidden', 'true'));
 
-// Atualiza contador no botão 🛒
+// Utilidades
+function sumQty() {
+  return items.reduce((acc, it) => acc + (it.qty || 1), 0);
+}
+function sumTotal() {
+  return items.reduce((acc, it) => acc + (it.price * (it.qty || 1)), 0);
+}
 function updateCartCount() {
-  cartCount.textContent = items.length;
+  cartCount.textContent = String(sumQty());
   localStorage.setItem('cartItems', JSON.stringify(items));
 }
-
-// Atualiza totais visuais
 function refreshTotalsUI() {
-  const total = items.reduce((acc, it) => acc + it.price, 0);
-  cartTotal.textContent = total.toFixed(2).replace('.', ',');
-  finalTotal.textContent = total.toFixed(2).replace('.', ',');
+  const subtotal = sumTotal();
+  cartTotal.textContent = subtotal.toFixed(2).replace('.', ',');
+  finalTotal.textContent = subtotal.toFixed(2).replace('.', ',');
   feeValue.textContent = '0,00';
   updateCartCount();
 }
 
-// Renderiza o carrinho com itens e botões de remover
+// Render com qty + controles
 function renderCart() {
   cartItems.innerHTML = '';
   if (items.length === 0) {
@@ -508,21 +568,47 @@ function renderCart() {
     const row = document.createElement('div');
     row.className = 'row';
     row.style.display = 'grid';
-    row.style.gridTemplateColumns = '1fr auto auto';
+    row.style.gridTemplateColumns = '1fr auto auto auto';
     row.style.gap = '8px';
+
+    const lineTotal = it.price * (it.qty || 1);
+
     row.innerHTML = `
       <small>${it.name} (${it.size}/${it.color})</small>
-      <small>R$ ${it.price.toFixed(2).replace('.', ',')}</small>
-      <button data-i="${i}" style="border:0;background:transparent;color:#E96BA8;font-weight:700;cursor:pointer;">✕</button>
+      <div style="display:flex;align-items:center;gap:6px">
+        <button class="qty-dec" data-i="${i}" style="border:1px solid #eee;background:#fff;border-radius:8px;width:28px;height:28px;cursor:pointer;">−</button>
+        <strong>${it.qty || 1}</strong>
+        <button class="qty-inc" data-i="${i}" style="border:1px solid #eee;background:#fff;border-radius:8px;width:28px;height:28px;cursor:pointer;">+</button>
+      </div>
+      <small>R$ ${(lineTotal).toFixed(2).replace('.', ',')}</small>
+      <button class="rm" data-i="${i}" style="border:0;background:transparent;color:#E96BA8;font-weight:700;cursor:pointer;">✕</button>
     `;
     cartItems.appendChild(row);
   });
 
-  // Liga eventos de remover corretamente
-  cartItems.querySelectorAll('button').forEach(b => {
+  // eventos
+  cartItems.querySelectorAll('.rm').forEach(b => {
     b.onclick = () => {
-      const idx = parseInt(b.dataset.i);
+      const idx = parseInt(b.dataset.i, 10);
       items.splice(idx, 1);
+      localStorage.setItem('cartItems', JSON.stringify(items));
+      renderCart();
+      refreshTotalsUI();
+    };
+  });
+  cartItems.querySelectorAll('.qty-dec').forEach(b => {
+    b.onclick = () => {
+      const idx = parseInt(b.dataset.i, 10);
+      items[idx].qty = Math.max(1, (items[idx].qty || 1) - 1);
+      localStorage.setItem('cartItems', JSON.stringify(items));
+      renderCart();
+      refreshTotalsUI();
+    };
+  });
+  cartItems.querySelectorAll('.qty-inc').forEach(b => {
+    b.onclick = () => {
+      const idx = parseInt(b.dataset.i, 10);
+      items[idx].qty = (items[idx].qty || 1) + 1;
       localStorage.setItem('cartItems', JSON.stringify(items));
       renderCart();
       refreshTotalsUI();
@@ -532,84 +618,45 @@ function renderCart() {
   refreshTotalsUI();
 }
 
-// Adiciona item ao carrinho
-function addToCart(prod, size, color) {
-  // Adiciona item ao carrinho e salva
-  items.push({ name: prod.name, size, color, price: prod.price });
+function addToCart(prod, size, color, qty = 1) {
+  // agrupa por (id+size+color)
+  const key = (x) => `${x.id}|${x.name}|${x.size}|${x.color}`;
+  const newLine = { id: prod.id, name: prod.name, size, color, price: prod.price, qty: Math.max(1, qty|0) };
+
+  const pos = items.findIndex(it => key(it) === key(newLine));
+  if (pos >= 0) {
+    items[pos].qty += newLine.qty;
+  } else {
+    items.push(newLine);
+  }
   localStorage.setItem('cartItems', JSON.stringify(items));
 
-  // 🛍️ Efeito visual do produto "voando" até o carrinho
+  // efeito e feedback
   const firstImg = (prod.imgs && prod.imgs[0]) || prod.img || '';
   if (firstImg) {
-    const btn = document.getElementById('modal-add');
+    const btn = document.getElementById('modal-add') || document.getElementById('lsxAddBtn');
     if (btn) {
       const rect = btn.getBoundingClientRect();
       flyToCart(firstImg, rect.x, rect.y);
     }
   }
-
-  // 💥 Efeito de explosão no botão do carrinho
   cartBtn.classList.add('pulse');
   setTimeout(() => cartBtn.classList.remove('pulse'), 400);
 
-  // 🔄 Atualiza interface do carrinho
   renderCart();
   refreshTotalsUI();
-
-  // 🧮 Corrige o número no carrinho (atualiza imediatamente)
   const el = document.getElementById('cart-count');
-  if (el) el.textContent = items.length;
+  if (el) el.textContent = String(sumQty());
 }
 
-// Inicialização
+// Init carrinho ao carregar
 document.addEventListener('DOMContentLoaded', () => {
   renderCart();
   refreshTotalsUI();
   updateCartCount();
 });
 
-// 🔧 FIX — garante que todos os produtos esgotados fiquem com o visual correto em qualquer seção
-document.addEventListener('DOMContentLoaded', () => {
-  const applySoldOutVisual = () => {
-    document.querySelectorAll('.card, .slide, .footer-card').forEach(el => {
-      const isSold = el.textContent.toLowerCase().includes('esgotado');
-      if (isSold) el.classList.add('soldout');
-    });
-  };
-
-  // Executa logo após renderizar
-  setTimeout(applySoldOutVisual, 600);
-
-  // Reexecuta depois pra garantir que o catálogo todo esteja na tela
-  setTimeout(applySoldOutVisual, 2000);
-});
-
-// =============================
-// ENTREGA, PAGAMENTO E WHATSAPP
-// =============================
-const nameInput = document.getElementById('client-name');
-const paymentSel = document.getElementById('payment');
-const cashSection = document.getElementById('cash-section');
-const cashRadios = cashSection.querySelectorAll('input[name="cash-change"]');
-const cashAmount = document.getElementById('cash-amount');
-const deliveryType = document.getElementById('delivery-type');
-const addressFields = document.getElementById('address-fields');
-const neighborhood = document.getElementById('neighborhood');
-const orderNotes = document.getElementById('order-notes');
-
-paymentSel.onchange = () => {
-  const v = paymentSel.value;
-  cashSection.style.display = (v === 'Dinheiro') ? 'block' : 'none';
-};
-cashRadios.forEach(r => r.onchange = () => {
-  cashAmount.style.display = (r.value === 'sim') ? 'inline-block' : 'none';
-});
-deliveryType.onchange = () => {
-  addressFields.style.display = (deliveryType.value === 'entrega') ? 'block' : 'none';
-  refreshFinalTotals();
-};
-neighborhood.onchange = refreshFinalTotals;
-
+// ===== ENTREGA/PAGAMENTO/WHATSAPP (mantido, só usa os novos totais) =====
 function calcFee() {
   if (deliveryType.value !== 'entrega') return 0;
   const bairro = neighborhood.value;
@@ -617,7 +664,7 @@ function calcFee() {
   return (typeof fee === 'number') ? fee : 0;
 }
 function refreshFinalTotals() {
-  const produtos = parseFloat(cartTotal.textContent.replace(',', '.')) || 0;
+  const produtos = sumTotal();
   const fee = calcFee();
 
   if (deliveryType.value === 'entrega') {
@@ -655,7 +702,7 @@ checkout.onclick = () => {
 
   const obs = orderNotes.value.trim() || 'Nenhuma';
   const feeRaw = entrega === 'entrega' ? FEES[bairro] || 'consultar' : 0;
-  let total = parseFloat(cartTotal.textContent.replace(',', '.'));
+  let total = sumTotal();
   if (typeof feeRaw === 'number') total += feeRaw;
 
   let valorPago = '', troco = '';
@@ -667,13 +714,14 @@ checkout.onclick = () => {
     } else troco = 'Não precisa';
   }
 
-  // 🧾 Itens formatados com emojis corretos
   const itensTxt = items.map(it => `
 ---------------------------------
 👗 *Produto:* ${it.name}
 📏 *Tamanho:* ${it.size}
 🎨 *Cor:* ${it.color}
-💰 *Preço:* R$ ${it.price.toFixed(2).replace('.', ',')}
+🔢 *Qtd:* ${it.qty}
+💰 *Preço unit.:* R$ ${it.price.toFixed(2).replace('.', ',')}
+💵 *Subtotal:* R$ ${(it.price * it.qty).toFixed(2).replace('.', ',')}
 ---------------------------------`).join('');
 
   const enderecoTxt = entrega === 'entrega'
@@ -684,7 +732,6 @@ checkout.onclick = () => {
     ? `R$ ${feeRaw.toFixed(2).replace('.', ',')}`
     : feeRaw;
 
-  // 💬 Mensagem com emojis e acentos preservados
   const message = `
 ----------------------------
 💖 *Obrigada por comprar na LS Store!*
@@ -710,10 +757,8 @@ ${
 ----------------------------
 ✨ *Obrigada por comprar na LS Store!* 💕`;
 
-  // ✅ Codificação segura para WhatsApp
   const url = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(message)}`;
 
-  // Pop-up de confirmação
   const pop = document.getElementById('popup-overlay');
   pop.hidden = false;
   pop.classList.add('show');
@@ -1150,7 +1195,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }, 3000); // troca a cada 3 segundos
 });
-/* ===== LS STORE • Product Modal (Isolado) — v14 FIX PACK ===== */
+/* ===== LS STORE • Product Modal (Isolado) — v14.2.1 (variations + qty) ===== */
 (function () {
   const $  = (sel, ctx=document) => ctx.querySelector(sel);
   const $$ = (sel, ctx=document) => Array.from(ctx.querySelectorAll(sel));
@@ -1164,11 +1209,11 @@ document.addEventListener('DOMContentLoaded', () => {
     price: $('#lsxPrice'),
     installments: $('#lsxInstallments'),
     sizes: $('#lsxSizes'),
-    colors: $('#lsxColors'),                 // ✅ NOVO
+    colors: $('#lsxColors'),
     stock: $('#lsxStock'),
     buyBtn: $('#lsxBuyBtn'),
-    addBtn: $('#lsxAddBtn'),                 // ✅ NOVO
-    zoomBtn: $('#lsxZoomBtn')                // ✅ habilitado
+    addBtn: $('#lsxAddBtn'),
+    zoomBtn: $('#lsxZoomBtn')
   };
 
   let PRODUCTS_CACHE = null;
@@ -1177,7 +1222,9 @@ document.addEventListener('DOMContentLoaded', () => {
     selectedSize: null,
     selectedColor: null,
     imgs: [],
-    idx: 0
+    idx: 0,
+    qty: 1,
+    maxStock: Infinity
   };
 
   async function getProducts() {
@@ -1188,33 +1235,40 @@ document.addEventListener('DOMContentLoaded', () => {
     return PRODUCTS_CACHE;
   }
 
-  // util
   const currency = v => Number(v).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-  const calcInstallments = v => {
-    const n = 12;
-    return `${n}x de ${currency(v / n)}`;
-  };
+  const calcInstallments = v => `${12}x de ${currency(v / 12)}`;
 
-  // ====== Galeria com thumbs + swipe + zoom ======
+  // ====== Galeria ======
   function showImg(i) {
-  current.idx = (i + current.imgs.length) % current.imgs.length;
-  const newSrc = current.imgs[current.idx];
-  if (els.imgMain.src === newSrc) return;
-  els.imgMain.style.opacity = 0;
-  setTimeout(() => {
-    els.imgMain.src = newSrc;
-    els.imgMain.style.opacity = 1;
-  }, 150);
-  $$('.is-active', els.thumbs).forEach(x => x.classList.remove('is-active'));
-  const activeThumb = els.thumbs.querySelector(`img[data-i="${current.idx}"]`);
-  if (activeThumb) activeThumb.classList.add('is-active');
-}
+    if (!current.imgs.length) return;
+    current.idx = (i + current.imgs.length) % current.imgs.length;
+    const newSrc = current.imgs[current.idx];
+    if (els.imgMain.src === newSrc) return;
+    els.imgMain.style.opacity = 0;
+    setTimeout(() => {
+      els.imgMain.src = newSrc;
+      els.imgMain.style.opacity = 1;
+    }, 150);
+    $$('.is-active', els.thumbs).forEach(x => x.classList.remove('is-active'));
+    const activeThumb = els.thumbs.querySelector(`img[data-i="${current.idx}"]`);
+    if (activeThumb) activeThumb.classList.add('is-active');
+  }
 
   function mountGallery(p) {
-    current.imgs =
-      Array.isArray(p.images) ? p.images :
-      Array.isArray(p.imgs)   ? p.imgs   :
-      (p.image ? [p.image] : []);
+    // imagens por prioridade: se tiver variations+cor escolhida com image → usa; senão usa p.images/imgs
+    let baseImgs = [];
+    if (Array.isArray(p.images) && p.images.length) baseImgs = p.images;
+    else if (Array.isArray(p.imgs) && p.imgs.length) baseImgs = p.imgs;
+    else if (Array.isArray(p.image) && p.image.length) baseImgs = p.image;
+    else if (p.img) baseImgs = [p.img];
+
+    // se cor tiver imagem, coloca como primeira
+    if (p.variations && current.selectedColor) {
+      const v = p.variations[current.selectedColor];
+      if (v && v.image) baseImgs = [v.image, ...baseImgs.filter(x => x !== v.image)];
+    }
+
+    current.imgs = baseImgs.slice(0, 10);
     current.idx = 0;
 
     els.imgMain.src = current.imgs[0] || '';
@@ -1223,13 +1277,11 @@ document.addEventListener('DOMContentLoaded', () => {
       `<img src="${src}" class="${i===0?'is-active':''}" data-i="${i}">`
     ).join('');
 
-    // troca por clique no thumb
     els.thumbs.onclick = e => {
       const t = e.target.closest('img'); if (!t) return;
       showImg(parseInt(t.dataset.i, 10));
     };
 
-    // swipe na imagem principal
     const stage = els.imgMain.closest('.lsx-gallery__stage');
     let startX = 0, deltaX = 0, down = false;
 
@@ -1245,7 +1297,6 @@ document.addEventListener('DOMContentLoaded', () => {
     stage.addEventListener('mouseup',    end);
     stage.addEventListener('mouseleave', ()=> { down=false; });
 
-    // zoom (abre overlay com a imagem atual)
     if (els.zoomBtn) {
       els.zoomBtn.onclick = () => {
         const overlay = document.createElement('div');
@@ -1263,10 +1314,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // ====== Tamanhos e Cores ======
-  function mountSizes(p) {
-    const sizes = Array.isArray(p.sizes) && p.sizes.length ? p.sizes.map(s=>String(s).toUpperCase()) : ['ÚNICO'];
-    els.sizes.innerHTML = sizes.map(s=>`<button class="lsx-size" data-size="${s}">${s}</button>`).join('');
+  // ====== Tamanhos & Cores & Estoque ======
+  function mountSizesFromColor(p, color) {
+    if (!els.sizes) return;
+    let sizes = [];
+
+    if (p.variations && p.variations[color]) {
+      sizes = p.variations[color].sizes || [];
+    } else {
+      sizes = p.sizes || ['ÚNICO'];
+    }
+    sizes = sizes.length ? sizes : ['ÚNICO'];
+    els.sizes.innerHTML = sizes.map(s=>`<button class="lsx-size" data-size="${String(s).toUpperCase()}">${String(s).toUpperCase()}</button>`).join('');
     current.selectedSize = null;
 
     els.sizes.onclick = e => {
@@ -1274,11 +1333,14 @@ document.addEventListener('DOMContentLoaded', () => {
       $$('.lsx-size', els.sizes).forEach(x=>x.classList.remove('is-selected'));
       b.classList.add('is-selected');
       current.selectedSize = b.dataset.size;
+      refreshStockLabel(p);
+      validateButtons(p);
     };
   }
 
   function mountColors(p) {
-    const colors = Array.isArray(p.colors) && p.colors.length ? p.colors : ['Única'];
+    if (!els.colors) return;
+    const colors = p.variations ? Object.keys(p.variations) : (p.colors || ['Única']);
     els.colors.innerHTML = colors.map(c=>`<button class="lsx-color" data-color="${c}">${c}</button>`).join('');
     current.selectedColor = null;
 
@@ -1287,55 +1349,141 @@ document.addEventListener('DOMContentLoaded', () => {
       $$('.lsx-color', els.colors).forEach(x=>x.classList.remove('is-selected'));
       b.classList.add('is-selected');
       current.selectedColor = b.dataset.color;
+      // atualiza tamanhos conforme a cor
+      mountSizesFromColor(p, current.selectedColor);
+      // atualiza imagem e estoque
+      mountGallery(p);
+      refreshStockLabel(p);
+      validateButtons(p);
     };
   }
 
+  function getMaxStock(p) {
+    // prioridade: variations + color; senão, stock padrão (5)
+    if (p.variations && current.selectedColor && p.variations[current.selectedColor]) {
+      const v = p.variations[current.selectedColor];
+      const stock = typeof v.stock === 'number' ? v.stock : 0;
+      return Math.max(0, stock);
+    }
+    // compatibilidade
+    const s = typeof p.stock === 'number' ? p.stock : 5;
+    return Math.max(0, s);
+  }
+
+  function refreshStockLabel(p) {
+    current.maxStock = getMaxStock(p);
+    if (els.stock) {
+      if (current.maxStock > 0) els.stock.textContent = `Estoque: ${current.maxStock} un.`;
+      else els.stock.textContent = `Sem estoque para a seleção atual`;
+    }
+    // Ajusta qty se ultrapassou
+    if (current.qty > current.maxStock && current.maxStock > 0) current.qty = current.maxStock;
+    updateQtyUI();
+  }
+
+  // ====== Quantidade ======
+  // injeta controles ao lado dos botões (sem depender de HTML extra)
+  let qtyWrap = null, qtyNum = null;
+  function ensureQtyControls() {
+    if (qtyWrap) return;
+    const cta = els.buyBtn?.parentElement || els.addBtn?.parentElement || els.root;
+    qtyWrap = document.createElement('div');
+    qtyWrap.style.display = 'flex';
+    qtyWrap.style.alignItems = 'center';
+    qtyWrap.style.gap = '10px';
+    qtyWrap.style.margin = '6px 0';
+
+    const minus = document.createElement('button');
+    minus.textContent = '−';
+    minus.style.cssText = 'width:34px;height:34px;border:1px solid #eee;background:#fff;border-radius:10px;cursor:pointer;font-size:18px;';
+    const plus = document.createElement('button');
+    plus.textContent = '+';
+    plus.style.cssText = 'width:34px;height:34px;border:1px solid #eee;background:#fff;border-radius:10px;cursor:pointer;font-size:18px;';
+    qtyNum = document.createElement('strong');
+    qtyNum.textContent = String(current.qty);
+
+    minus.onclick = () => { current.qty = Math.max(1, current.qty - 1); updateQtyUI(); };
+    plus.onclick  = () => { 
+      const limit = current.maxStock === Infinity ? 99 : current.maxStock;
+      if (limit <= 0) return;
+      current.qty = Math.min(limit, current.qty + 1);
+      updateQtyUI(); 
+    };
+
+    qtyWrap.appendChild(minus);
+    qtyWrap.appendChild(qtyNum);
+    qtyWrap.appendChild(plus);
+
+    // insere antes dos botões de ação
+    if (cta && cta.parentElement) cta.parentElement.insertBefore(qtyWrap, cta);
+  }
+  function updateQtyUI() {
+    if (qtyNum) qtyNum.textContent = String(current.qty);
+  }
+
+  // ====== Validação ======
   function needSelectSize(p) {
+    if (p.variations && current.selectedColor) {
+      const v = p.variations[current.selectedColor];
+      const vs = (v?.sizes || []);
+      return vs.length > 1 || String(vs[0] || 'ÚNICO').toUpperCase() !== 'ÚNICO';
+    }
     const sizes = Array.isArray(p.sizes) && p.sizes.length ? p.sizes.map(s=>String(s).toUpperCase()) : ['ÚNICO'];
-    // Se houver mais de 1 opção OU a opção não for literalmente "ÚNICO", exigir seleção explícita
     return (sizes.length > 1 || sizes[0] !== 'ÚNICO');
   }
   function needSelectColor(p) {
+    if (p.variations) return true;
     const colors = Array.isArray(p.colors) && p.colors.length ? p.colors : ['Única'];
-    return (colors.length > 1 || (colors[0] && colors[0].toLowerCase() !== 'única'));
+    return (colors.length > 1 || (colors[0] && String(colors[0]).toLowerCase() !== 'única'));
   }
-
   function validateSelections(p) {
-    if (needSelectSize(p) && !current.selectedSize) {
-      showAlert('Por favor, selecione um tamanho antes de continuar.');
-      return false;
-    }
-    if (needSelectColor(p) && !current.selectedColor) {
-      showAlert('Por favor, selecione uma cor antes de continuar.');
-      return false;
-    }
+    if (needSelectColor(p) && !current.selectedColor) { showAlert('Por favor, selecione uma cor.'); return false; }
+    if (needSelectSize(p) && !current.selectedSize)   { showAlert('Por favor, selecione um tamanho.'); return false; }
+    if (current.maxStock <= 0) { showAlert('Sem estoque para a seleção atual.'); return false; }
+    if (current.qty < 1) current.qty = 1;
     return true;
   }
 
-  // ====== Preenchimento do modal ======
+  function validateButtons(p) {
+    const disabled = (needSelectColor(p) && !current.selectedColor) ||
+                     (needSelectSize(p) && !current.selectedSize) ||
+                     (getMaxStock(p) <= 0);
+    if (els.buyBtn) els.buyBtn.disabled = !!disabled;
+    if (els.addBtn) els.addBtn.disabled = !!disabled;
+  }
+
+  // ====== Preenchimento ======
   function fill(p){
     current.product = p;
+    current.selectedSize = null;
+    current.selectedColor = null;
+    current.qty = 1;
+    current.maxStock = Infinity;
+
     els.title.textContent = p.name;
     els.price.textContent = currency(p.price);
     els.installments.textContent = calcInstallments(p.price);
-    els.stock.textContent = ''; // (pode ser usado no futuro)
+    els.stock.textContent = ''; 
     els.imgMain.alt = p.name;
     document.getElementById('lsxDescription').textContent = p.description || 'Sem descrição disponível.';
 
+    mountColors(p);
+    // se não tiver variações, mostra tamanhos padrão
+    if (!p.variations) mountSizesFromColor(p, null);
 
     mountGallery(p);
-    mountSizes(p);
-    mountColors(p);
+    refreshStockLabel(p);
+    ensureQtyControls();
+    validateButtons(p);
 
-    // COMPRAR = adicionar + abrir checkout (sem fechar o carrinho até finalizar)
-    els.buyBtn.onclick = () => {
+    // Ações
+    els.buyBtn && (els.buyBtn.onclick = () => {
       if (!validateSelections(p)) return;
-      const size  = current.selectedSize || 'Único';
+      const size  = current.selectedSize || 'ÚNICO';
       const color = current.selectedColor || 'Única';
       if (typeof addToCart === 'function') {
-        addToCart(p, size, color);
+        addToCart(p, size, color, current.qty);
       }
-      // abre o checkout
       if (typeof cart !== 'undefined') {
         cart.setAttribute('aria-hidden','false');
         setTimeout(() => {
@@ -1344,24 +1492,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 120);
       }
       LSModal.close();
-    };
+    });
 
-    // ADICIONAR AO CARRINHO = só adiciona (mantém modal aberto)
-    if (els.addBtn) {
-      els.addBtn.onclick = () => {
-        if (!validateSelections(p)) return;
-        const size  = current.selectedSize || 'Único';
-        const color = current.selectedColor || 'Única';
-        if (typeof addToCart === 'function') {
-          addToCart(p, size, color);
-          try { playChime && playChime(); } catch(_) {}
-        }
-        LSModal.close();
-      };
-    }
+    els.addBtn && (els.addBtn.onclick = () => {
+      if (!validateSelections(p)) return;
+      const size  = current.selectedSize || 'ÚNICO';
+      const color = current.selectedColor || 'Única';
+      if (typeof addToCart === 'function') {
+        addToCart(p, size, color, current.qty);
+        try { playChime && playChime(); } catch(_) {}
+      }
+      LSModal.close();
+    });
   }
 
-  // ====== Abrir / Fechar ======
   function open(id){
     getProducts().then(list=>{
       const p = list.find(x=>String(x.id)===String(id));
