@@ -1344,52 +1344,53 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ====== Tamanhos & Cores & Estoque ======
   function mountSizesFromColor(p, color) {
-    if (!els.sizes) return;
-    let sizes = [];
+  if (!els.sizes) return;
+  let sizes = [];
 
-    if (p.variations && p.variations[color]) {
-      sizes = p.variations[color].sizes || [];
-    } else {
-      sizes = p.sizes || ['ÚNICO'];
-    }
-    sizes = sizes.length ? sizes : ['ÚNICO'];
-els.sizes.innerHTML =
-  `<span class="lsx-label">Tamanho disponível:</span>` +
-  sizes.map(s=>`<button class="lsx-size" data-size="${String(s).toUpperCase()}">${String(s).toUpperCase()}</button>`).join('');
-    current.selectedSize = null;
-
-    els.sizes.onclick = e => {
-      const b = e.target.closest('.lsx-size'); if (!b) return;
-      $$('.lsx-size', els.sizes).forEach(x=>x.classList.remove('is-selected'));
-      b.classList.add('is-selected');
-      current.selectedSize = b.dataset.size;
-      refreshStockLabel(p);
-      validateButtons(p);
-    };
+  if (p.variations && p.variations[color]) {
+    sizes = p.variations[color].sizes || [];
+  } else {
+    sizes = p.sizes || ['ÚNICO'];
   }
+  sizes = sizes.length ? sizes : ['ÚNICO'];
 
-  function mountColors(p) {
-    if (!els.colors) return;
-    const colors = p.variations ? Object.keys(p.variations) : (p.colors || ['Única']);
-  // ✅ AGORA COM RÓTULO ACIMA
-  els.colors.innerHTML =
-    `<span class="lsx-label">Cor disponível:</span>` +
-    colors.map(c=>`<button class="lsx-color" data-color="${c}">${c}</button>`).join('');
-    current.selectedColor = null;
+  // 🔧 monta só os botões, sem repetir o título
+  els.sizes.innerHTML = sizes.map(s =>
+    `<button class="lsx-size" data-size="${String(s).toUpperCase()}">${String(s).toUpperCase()}</button>`
+  ).join('');
 
-    els.colors.onclick = e => {
-      const b = e.target.closest('.lsx-color'); if (!b) return;
-      $$('.lsx-color', els.colors).forEach(x=>x.classList.remove('is-selected'));
-      b.classList.add('is-selected');
-      current.selectedColor = b.dataset.color;
-      // atualiza tamanhos conforme a cor
-      mountSizesFromColor(p, current.selectedColor);
-      // atualiza imagem e estoque
-      mountGallery(p);
-      refreshStockLabel(p);
-      validateButtons(p);
-    };
-  }
+  current.selectedSize = null;
+  els.sizes.onclick = e => {
+    const b = e.target.closest('.lsx-size'); if (!b) return;
+    $$('.lsx-size', els.sizes).forEach(x => x.classList.remove('is-selected'));
+    b.classList.add('is-selected');
+    current.selectedSize = b.dataset.size;
+    refreshStockLabel(p);
+    validateButtons(p);
+  };
+}
+
+function mountColors(p) {
+  if (!els.colors) return;
+  const colors = p.variations ? Object.keys(p.variations) : (p.colors || ['Única']);
+  
+  // 🔧 monta só os botões, sem repetir o título
+  els.colors.innerHTML = colors.map(c =>
+    `<button class="lsx-color" data-color="${c}">${c}</button>`
+  ).join('');
+
+  current.selectedColor = null;
+  els.colors.onclick = e => {
+    const b = e.target.closest('.lsx-color'); if (!b) return;
+    $$('.lsx-color', els.colors).forEach(x => x.classList.remove('is-selected'));
+    b.classList.add('is-selected');
+    current.selectedColor = b.dataset.color;
+    mountSizesFromColor(p, current.selectedColor);
+    mountGallery(p);
+    refreshStockLabel(p);
+    validateButtons(p);
+  };
+}
 
   function getMaxStock(p) {
     // prioridade: variations + color; senão, stock padrão (5)
@@ -1514,15 +1515,23 @@ els.sizes.innerHTML =
   if (els.colors) els.colors.innerHTML = '';
   if (els.sizes) els.sizes.innerHTML = '';
 
-  // === GERA CORES ===
-  const hasVariations = p.variations && Object.keys(p.variations).length > 0;
-  if (hasVariations) {
-    mountColors(p);
-  } else if (p.colors && p.colors.length > 0) {
-    mountColors(p);
-  } else {
-    els.colors.innerHTML = '<p style="color:var(--lilac)">Cor única disponível</p>';
-  }
+  // === SEÇÃO: COR E TAMANHO ACIMA DO ESTOQUE ===
+els.colors.innerHTML = '<span class="lsx-label">Cor disponível:</span>';
+els.sizes.innerHTML = '<span class="lsx-label">Tamanho disponível:</span>';
+
+const hasVariations = p.variations && Object.keys(p.variations).length > 0;
+
+if (hasVariations) {
+  mountColors(p);
+  const firstColor = Object.keys(p.variations)[0];
+  mountSizesFromColor(p, firstColor);
+} else {
+  if (p.colors && p.colors.length > 0) mountColors(p);
+  else els.colors.innerHTML += '<p style="color:var(--lilac)">Cor única disponível</p>';
+
+  if (p.sizes && p.sizes.length > 0) mountSizesFromColor(p);
+  else els.sizes.innerHTML += '<p style="color:var(--lilac)">Tamanho único disponível</p>';
+}
 
   // === GERA TAMANHOS ===
   if (hasVariations) {
