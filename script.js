@@ -1509,7 +1509,14 @@ els.sizes.innerHTML =
 if (els.colors && els.sizes && els.colors.nextElementSibling !== els.sizes) {
   els.colors.parentNode.insertBefore(els.colors, els.sizes);
 }
+// 🔄 Garante que o bloco de CORES venha antes do bloco de TAMANHOS no DOM
+if (els.colors && els.sizes && els.colors.nextElementSibling !== els.sizes) {
+  els.colors.parentNode.insertBefore(els.colors, els.sizes);
+}
 
+// 🧹 Correção: limpa conteúdos duplicados do modal antes de remontar
+els.colors.innerHTML = '';
+els.sizes.innerHTML = '';
     // Exibir SEMPRE as cores primeiro e depois os tamanhos
 mountColors(p);
 mountSizesFromColor(p, current.selectedColor);
