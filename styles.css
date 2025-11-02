@@ -1822,23 +1822,23 @@ body {
   font-weight: 600;
 }
 /* ===============================
-   LS STORE 2026 — FIX CORRETO DO BOTÃO "X"
-   Mantém fixo dentro do modal/aba aberta
+   LS STORE 2026 — FIX GERAL DO BOTÃO "X"
+   Mantém o X fixo dentro de modais e menu lateral
    =============================== */
 
-/* Aplica a todos os tipos de modal e abas */
+/* Todos os X dos modais e abas */
 .modal-close,
 .cart-header button,
 .account-area .close-auth,
 .lsx-modal__close,
 .lsx-modal__parcelas-close {
-  position: sticky !important;       /* gruda no topo interno da área */
-  top: 0 !important;                 /* sempre visível dentro do modal */
+  position: sticky !important;
+  top: 0 !important;
   right: 0 !important;
   z-index: 1000 !important;
-  background: rgba(255,255,255,0.85) !important;
+  background: rgba(255, 255, 255, 0.85) !important;
   backdrop-filter: blur(6px) !important;
-  border: 1px solid rgba(122,59,253,0.15) !important;
+  border: 1px solid rgba(122, 59, 253, 0.15) !important;
   border-radius: 50% !important;
   width: 36px !important;
   height: 36px !important;
@@ -1853,7 +1853,7 @@ body {
   transition: all 0.25s ease !important;
 }
 
-/* Efeito de hover suave */
+/* Hover suave */
 .modal-close:hover,
 .cart-header button:hover,
 .account-area .close-auth:hover,
@@ -1863,4 +1863,38 @@ body {
   color: #fff !important;
   transform: scale(1.08) !important;
   box-shadow: 0 6px 18px rgba(122,59,253,0.25) !important;
+}
+
+/* ===============================
+   FIX EXTRA — Botão "X" do Drawer Lateral (menu)
+   =============================== */
+.drawer-header button {
+  position: sticky !important;
+  top: 0 !important;
+  right: 0 !important;
+  z-index: 2000 !important;
+  background: rgba(255, 255, 255, 0.9) !important;
+  backdrop-filter: blur(6px) !important;
+  border: 1px solid rgba(122, 59, 253, 0.15) !important;
+  border-radius: 50% !important;
+  width: 34px !important;
+  height: 34px !important;
+  font-size: 20px !important;
+  color: #7A3BFD !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  margin-left: auto !important;
+  margin-right: 8px !important;
+  margin-top: 8px !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1) !important;
+  transition: all 0.25s ease !important;
+}
+
+/* Hover do X do Drawer */
+.drawer-header button:hover {
+  background: linear-gradient(90deg,#e96ba8,#7a3bfd) !important;
+  color: #fff !important;
+  transform: scale(1.08) !important;
 }
