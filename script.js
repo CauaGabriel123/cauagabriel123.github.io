@@ -1776,3 +1776,34 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+// ===== LS STORE 2026 — Fix definitivo de abertura do carrinho =====
+window.addEventListener('load', () => {
+  const cartBtn = document.getElementById('cart-btn');
+  const cart = document.getElementById('cart');
+  const closeCart = document.getElementById('close-cart');
+  const backdrop = document.querySelector('.cart-backdrop');
+
+  if (cartBtn && cart) {
+    cartBtn.addEventListener('click', () => {
+      cart.setAttribute('aria-hidden', 'false');
+      renderCart();
+      console.log('🛒 Carrinho aberto com sucesso!');
+    });
+  } else {
+    console.error('❌ Botão ou carrinho não encontrados no DOM.');
+  }
+
+  if (closeCart && cart) {
+    closeCart.addEventListener('click', () => {
+      cart.setAttribute('aria-hidden', 'true');
+      console.log('❎ Carrinho fechado.');
+    });
+  }
+
+  if (backdrop && cart) {
+    backdrop.addEventListener('click', () => {
+      cart.setAttribute('aria-hidden', 'true');
+      console.log('🌙 Fechou pelo fundo translúcido.');
+    });
+  }
+});
