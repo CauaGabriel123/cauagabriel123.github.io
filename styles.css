@@ -1821,3 +1821,48 @@ body {
   padding: 2px 5px;
   font-weight: 600;
 }
+/* ===== LS STORE • Botões fixos corrigidos ===== */
+
+/* Só fixa o botão X do modal de produto e das parcelas */
+.lsx-modal__close,
+.lsx-modal__parcelas-close {
+  position: fixed !important;
+  top: 14px;
+  right: 14px;
+  z-index: 9999;
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(8px);
+  border: none;
+  font-size: 22px;
+  line-height: 1;
+  padding: 6px 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.lsx-modal__close:hover,
+.lsx-modal__parcelas-close:hover {
+  background: linear-gradient(90deg,#ff90cc,#b276ff);
+  color: #fff;
+  transform: scale(1.1);
+}
+
+/* Botão X do carrinho volta ao normal (não fixo!) */
+#close-cart.icon-btn {
+  position: absolute !important;
+  top: 10px;
+  right: 10px;
+  z-index: 10;
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  color: #333;
+  transition: transform 0.15s ease;
+}
+
+#close-cart.icon-btn:hover {
+  transform: scale(1.15);
+  color: #a84df0;
+}
