@@ -1675,3 +1675,15 @@ body {
   flex-direction: column !important;
   align-items: center !important;
 }
+.logo-link {
+  display: inline-block;
+}
+
+.logo-link img {
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.logo-link img:hover {
+  transform: scale(1.05);
+}
