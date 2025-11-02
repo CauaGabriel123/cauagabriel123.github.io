@@ -1543,7 +1543,7 @@ function fill(p) {
   // Valida botões
   validateButtons(p);
 }
-// 🔧 LSX Premium Upgrade — Animação suave no botão "COMPRAR"
+// 💎 LSX Premium Upgrade — comportamento atualizado dos botões
 function bindModalButtons() {
   const addBtn = document.getElementById("lsxAddBtn");
   const buyBtn = document.getElementById("lsxBuyBtn");
@@ -1564,37 +1564,35 @@ function bindModalButtons() {
     // Adiciona o produto ao carrinho
     addToCart(prod, size, color, qty);
 
-    if (action === "buy") {
-      // ✨ Animação: produto voando até o carrinho
-      const firstImg =
-        (prod.imgs && prod.imgs[0]) ||
-        (prod.images && prod.images[0]) ||
-        prod.img ||
-        prod.image ||
-        "";
+    // ✨ Animação: produto voando até o carrinho
+    const firstImg =
+      (prod.imgs && prod.imgs[0]) ||
+      (prod.images && prod.images[0]) ||
+      prod.img ||
+      prod.image ||
+      "";
+    const originBtn = action === "buy" ? buyBtn : addBtn;
+    if (firstImg && originBtn) {
+      const rect = originBtn.getBoundingClientRect();
+      flyToCart(firstImg, rect.x, rect.y);
+    }
 
-      const btnRect = buyBtn.getBoundingClientRect();
-      if (firstImg) {
-        flyToCart(firstImg, btnRect.x, btnRect.y);
-      }
+    // Espera o voo terminar antes de fechar / abrir carrinho
+    setTimeout(() => {
+      const modal = document.getElementById("lsxModal");
+      if (modal) modal.classList.remove("is-open");
+      document.body.classList.remove("lsx-no-scroll");
 
-      // Espera a animação terminar antes de abrir o carrinho
-      setTimeout(() => {
-        const modal = document.getElementById("lsxModal");
-        if (modal) modal.classList.remove("is-open");
-        document.body.classList.remove("lsx-no-scroll");
-
-        // Abre o carrinho diretamente
+      if (action === "buy") {
+        // Se for "COMPRAR", abre o carrinho direto
         const cart = document.getElementById("cart");
         if (cart) {
           cart.setAttribute("aria-hidden", "false");
           renderCart();
         }
-      }, 800); // tempo igual ao da animação flyToCart
-    } else {
-      // Mostra apenas o alerta visual padrão
-      showAlert("Produto adicionado ao carrinho 💕");
-    }
+      }
+      // Se for "Adicionar", não abre carrinho nem alerta
+    }, 800); // tempo da animação
   }
 
   if (addBtn) addBtn.onclick = () => handleAddOrBuy("add");
