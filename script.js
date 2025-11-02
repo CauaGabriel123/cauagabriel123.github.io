@@ -1746,3 +1746,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 })();
+// ===== FIX LS STORE 2026 — garante abertura do carrinho =====
+document.addEventListener('DOMContentLoaded', () => {
+  const cartBtn = document.getElementById('cart-btn');
+  const cart = document.getElementById('cart');
+  const closeCart = document.getElementById('close-cart');
+
+  if (cartBtn && cart) {
+    cartBtn.addEventListener('click', () => {
+      cart.setAttribute('aria-hidden', 'false');
+      renderCart();
+    });
+  }
+
+  if (closeCart && cart) {
+    closeCart.addEventListener('click', () => {
+      cart.setAttribute('aria-hidden', 'true');
+    });
+  }
+});
