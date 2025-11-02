@@ -1003,13 +1003,22 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>`).join('');
     resultsBox.hidden = false;
 
-    resultsBox.querySelectorAll('.search-item').forEach(it=>{
-      it.onclick = ()=>{
-        const id = it.getAttribute('data-id');
-        LSModal.open(id);
-        resultsBox.hidden = true;
-      };
-    });
+    resultsBox.querySelectorAll('.search-item').forEach(it => {
+  it.onclick = () => {
+    const id = it.getAttribute('data-id');
+    const product = Object.values(catalog)
+      .flat()
+      .find(p => String(p.id) === String(id));
+
+    if (product && product.status && product.status.toLowerCase() === "esgotado") {
+      showAlert("💔 Este produto está esgotado no momento.");
+      return;
+    }
+
+    LSModal.open(id);
+    resultsBox.hidden = true;
+  };
+});
   }
 
   function doSearch(q){
