@@ -301,16 +301,38 @@ function buildCatalogAndRender(data) {
   featured = safeArray
     .slice(0, 20)
     .sort(() => Math.random() - 0.5)
-    .map(p => ({
-      id: p.id,
-      name: p.name,
-      price: p.price,
-      imgs: (Array.isArray(p.images) && p.images.length) ? p.images :
-            (Array.isArray(p.image) && p.image.length) ? p.image :
-            (p.img ? [p.img] : []),
-      desc: p.description,
-      status: p.status
-    }));
+    .map(p => {
+  let mainImg = "";
+
+  if (p.images && p.images.length > 0) {
+    mainImg = p.images[0];
+  } else if (p.variations) {
+    const firstVar = Object.values(p.variations)[0];
+    if (firstVar) {
+      if (firstVar.image) mainImg = firstVar.image;
+      else if (firstVar.images && firstVar.images.length > 0) mainImg = firstVar.images[0];
+    }
+  } else if (p.imgs && p.imgs.length > 0) {
+    mainImg = p.imgs[0];
+  } else if (p.img) {
+    mainImg = p.img;
+  } else if (p.image) {
+    mainImg = p.image;
+  }
+
+  if (!mainImg) {
+    mainImg = "https://cauagabriel123.github.io/assets/placeholder.png";
+  }
+
+  return {
+    id: p.id,
+    name: p.name,
+    price: p.price,
+    imgs: [mainImg],
+    desc: p.description,
+    status: p.status
+  };
+});
 
   renderAll();
   initCarousel();
