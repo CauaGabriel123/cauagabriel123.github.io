@@ -377,13 +377,37 @@ function badgeHTML(p) {
 }
 function cardHTML(p) {
   const sold = (p.status && p.status.toLowerCase() === 'esgotado') || p.stock <= 0;
+
+  // === Imagem principal adaptada (suporte a variations + compatibilidade retroativa) ===
+  let mainImg = "";
+
+  if (p.images && p.images.length > 0) {
+    // Modelo antigo
+    mainImg = p.images[0];
+  } else if (p.variations) {
+    // Modelo novo (com cores)
+    const firstVariation = Object.values(p.variations)[0];
+    if (firstVariation && firstVariation.image) {
+      mainImg = firstVariation.image;
+    } else if (firstVariation && firstVariation.images && firstVariation.images.length > 0) {
+      mainImg = firstVariation.images[0];
+    }
+  } else if (p.imgs && p.imgs.length > 0) {
+    mainImg = p.imgs[0];
+  } else if (p.img) {
+    mainImg = p.img;
+  } else if (p.image) {
+    mainImg = p.image;
+  }
+
+  // fallback para evitar "?"
+  if (!mainImg) {
+    mainImg = "https://cauagabriel123.github.io/assets/placeholder.png";
+  }
+
   return `<div class="card${sold ? ' soldout' : ''}" data-id="${p.id}">
     ${badgeHTML(p)}
-    <img src="${(Array.isArray(p.images) ? p.images[0]
-  : Array.isArray(p.image) ? p.image[0]
-  : (p.images && p.images.length ? p.images[0]
-  : (p.imgs && p.imgs.length ? p.imgs[0]
-  : p.img || p.image)))}" alt="${p.name}">
+    <img src="${mainImg}" alt="${p.name}">
     <div class="info">
       <p class="name">${p.name}</p>
       <p class="price">${priceHTML(p)}</p>
