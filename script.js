@@ -1601,3 +1601,46 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.target.dataset.close) modal.hidden = true;
   });
 });
+/* ====== LS STORE • Fix — Botões de compra e carrinho ====== */
+document.addEventListener("DOMContentLoaded", () => {
+
+  // reativa botão "Adicionar ao carrinho" do modal LSX
+  const addBtn = document.getElementById("lsxAddBtn");
+  if (addBtn) {
+    addBtn.onclick = () => {
+      const pid = addBtn.dataset.id || window.currentProductId;
+      if (pid) {
+        addToCart(pid);
+        showAlertLS("Produto adicionado ao carrinho 💕", "success");
+      } else {
+        console.warn("⚠️ Nenhum ID de produto encontrado para adicionar ao carrinho.");
+      }
+    };
+  }
+
+  // reativa botão "COMPRAR" do modal LSX
+  const buyBtn = document.getElementById("lsxBuyBtn");
+  if (buyBtn) {
+    buyBtn.onclick = () => {
+      const pid = buyBtn.dataset.id || window.currentProductId;
+      if (pid) {
+        addToCart(pid);
+        openCart(); // abre carrinho automaticamente
+      } else {
+        console.warn("⚠️ Nenhum ID de produto encontrado no botão COMPRAR.");
+      }
+    };
+  }
+
+  // reativa botões gerais "Adicionar ao carrinho" nos cards de produtos
+  document.querySelectorAll(".add-cart-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const id = btn.dataset.id;
+      if (id) {
+        addToCart(id);
+        showAlertLS("Produto adicionado ao carrinho 💖", "success");
+      }
+    });
+  });
+
+});
