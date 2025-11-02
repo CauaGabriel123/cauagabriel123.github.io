@@ -1498,24 +1498,99 @@ function ensureQtyControls() {
   });
 }
 
-  // ====== Preenchimento ======
-  function fill(p) {
-  current.product = p;
-  current.selectedSize = null;
-  current.selectedColor = null;
-  current.qty = 1;
-  current.maxStock = Infinity;
+// ======================================================
+// TRECHO ATUALIZADO — SUPORTE A VÁRIAS IMAGENS POR COR
+// ======================================================
 
-  // === DADOS BÁSICOS ===
-  els.title.textContent = p.name;
-  els.price.textContent = currency(p.price);
-  els.installments.textContent = calcInstallments(p.price);
-  els.stock.textContent = '';
+function fill(p) {
+  // Define imagem principal padrão
+  els.imgMain.src = p.images && p.images[0] ? p.images[0] : '';
   els.imgMain.alt = p.name;
   document.getElementById('lsxDescription').textContent = p.description || 'Sem descrição disponível.';
 
-  // === GALERIA ===
+  // Atualiza título e preço
+  els.name.textContent = p.name;
+  els.price.textContent = formatPrice(p.price);
+
+  // Cores e tamanhos
+  const colorWrap = els.colors;
+  colorWrap.innerHTML = '';
+  if (p.variations) {
+    Object.keys(p.variations).forEach(color => {
+      const btn = document.createElement('button');
+      btn.className = 'lsx-color';
+      btn.textContent = color;
+      btn.onclick = () => {
+        // Seleciona cor
+        selectedColor = color;
+        document.querySelectorAll('.lsx-color').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        // Define imagens com base na cor
+        const variant = p.variations[color];
+        if (variant) {
+          // Se houver várias imagens para a cor → usa elas
+          if (variant.images && variant.images.length > 0) {
+            baseImgs = variant.images;
+            els.imgMain.src = variant.images[0];
+          } 
+          // Se só tiver uma imagem principal → usa ela
+          else if (variant.image) {
+            baseImgs = [variant.image];
+            els.imgMain.src = variant.image;
+          } 
+          // Caso não tenha variações de imagem → volta pro padrão
+          else {
+            baseImgs = p.images || [];
+            els.imgMain.src = p.images && p.images[0] ? p.images[0] : '';
+          }
+        }
+
+        // Atualiza tamanhos conforme a cor
+        const sizeWrap = els.sizes;
+        sizeWrap.innerHTML = '';
+        if (variant && variant.sizes) {
+          variant.sizes.forEach(sz => {
+            const sbtn = document.createElement('button');
+            sbtn.className = 'lsx-size';
+            sbtn.textContent = sz;
+            sbtn.onclick = () => {
+              selectedSize = sz;
+              document.querySelectorAll('.lsx-size').forEach(b => b.classList.remove('active'));
+              sbtn.classList.add('active');
+            };
+            sizeWrap.appendChild(sbtn);
+          });
+        }
+
+        // Atualiza galeria com base na cor
+        mountGallery(p);
+      };
+      colorWrap.appendChild(btn);
+    });
+  }
+
+  // Monta tamanhos padrão (caso não tenha variações de cor)
+  const sizeWrap = els.sizes;
+  if (!p.variations && p.sizes) {
+    sizeWrap.innerHTML = '';
+    p.sizes.forEach(sz => {
+      const sbtn = document.createElement('button');
+      sbtn.className = 'lsx-size';
+      sbtn.textContent = sz;
+      sbtn.onclick = () => {
+        selectedSize = sz;
+        document.querySelectorAll('.lsx-size').forEach(b => b.classList.remove('active'));
+        sbtn.classList.add('active');
+      };
+      sizeWrap.appendChild(sbtn);
+    });
+  }
+
+  // Monta galeria inicial
+  baseImgs = p.images || [];
   mountGallery(p);
+}
 
   // === LIMPA containers sem bagunçar layout ===
   if (els.colors) els.colors.innerHTML = '';
