@@ -1562,3 +1562,42 @@ function fill(p) {
 
   window.LSModal = { open, close };
 })();
+// ===== Parcelas Modal LS STORE =====
+document.addEventListener('DOMContentLoaded', () => {
+  const installmentsLink = document.getElementById('lsxInstallments');
+  const modal = document.getElementById('installments-modal');
+  const list = document.getElementById('installments-list');
+
+  if (!installmentsLink) return;
+
+  // abre modal ao clicar no link "12x de R$..."
+  installmentsLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    const priceEl = document.getElementById('lsxPrice');
+    if (!priceEl) return;
+
+    // extrai número do preço
+    const text = priceEl.textContent.replace(/[^\d,]/g, '').replace(',', '.');
+    const price = parseFloat(text);
+    if (isNaN(price)) return;
+
+    // limpa lista
+    list.innerHTML = '';
+
+    // gera parcelas de 2x até 12x
+    for (let i = 2; i <= 12; i++) {
+      const value = (price / i).toFixed(2).replace('.', ',');
+      const li = document.createElement('li');
+      li.textContent = `${i}x de R$ ${value}`;
+      list.appendChild(li);
+    }
+
+    // mostra modal
+    modal.hidden = false;
+  });
+
+  // fecha modal clicando no X ou fora
+  modal.addEventListener('click', (e) => {
+    if (e.target.dataset.close) modal.hidden = true;
+  });
+});
