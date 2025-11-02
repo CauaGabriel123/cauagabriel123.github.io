@@ -1543,6 +1543,16 @@ function fill(p) {
   // Valida botões
   validateButtons(p);
 }
+function open(id){
+  getProducts().then(list=>{
+    const p = list.find(x=>String(x.id)===String(id));
+    if (!p) return;
+    fill(p);
+    bindModalButtons();
+    els.root.classList.add('is-open');
+    document.body.classList.add('lsx-no-scroll');
+  });
+}
   function open(id){
     getProducts().then(list=>{
       const p = list.find(x=>String(x.id)===String(id));
