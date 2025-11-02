@@ -1549,20 +1549,29 @@ function bindModalButtons() {
   const buyBtn = document.getElementById("lsxBuyBtn");
 
   function handleAddOrBuy(action) {
-    const ctx = window.LSModal?.current || null;
-    const prod = ctx?.product || null;
+  const ctx = window.LSModal?.current || null;
+  const prod = ctx?.product || null;
 
-    if (!prod) {
-      showAlert("Erro ao adicionar: produto não encontrado.");
-      return;
-    }
+  if (!prod) {
+    showAlert("Erro ao adicionar: produto não encontrado.");
+    return;
+  }
 
-    const color = ctx.selectedColor || "Única";
-    const size = ctx.selectedSize || "ÚNICO";
-    const qty = ctx.qty || 1;
+  const color = ctx.selectedColor || "Única";
+  const size = ctx.selectedSize || "ÚNICO";
+  const qty = ctx.qty || 1;
 
-    addToCart(prod, size, color, qty);
+  addToCart(prod, size, color, qty);
+
+  if (action === "buy") {
+    // Abre o carrinho direto, sem mostrar alerta
+    document.getElementById("cart").setAttribute("aria-hidden", "false");
+    renderCart();
+  } else {
+    // Só mostra alerta se for "Adicionar ao carrinho"
     showAlert("Produto adicionado ao carrinho 💕");
+  }
+}
 
     if (action === "buy") {
       document.getElementById("cart").setAttribute("aria-hidden", "false");
