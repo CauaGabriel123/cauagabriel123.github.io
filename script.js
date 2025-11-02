@@ -132,7 +132,182 @@ function buildCatalogAndRender(data) {
   renderAll();
   renderFooterProducts(featured);
 }
+<script>
+// =============================
+// RENDER PACK v14.3-R (catálogo, categorias, subcategorias, rodapé)
+// =============================
 
+// helpers visuais (preço e selo)
+function priceHTML(p) {
+  const v = p.discount ? (p.price * (1 - p.discount)) : p.price;
+  let s = `R$ ${Number(v).toFixed(2).replace('.', ',')}`;
+  if (p.discount) {
+    s += ` <span style="text-decoration:line-through;color:#8a7aa5;font-size:12px;margin-left:6px">R$ ${Number(p.price).toFixed(2).replace('.', ',')}</span>`;
+  }
+  return s;
+}
+function badgeHTML(p) {
+  if (p.status && String(p.status).toLowerCase() === 'esgotado') return '<span class="badge">Esgotado</span>';
+  if (p.discount) return '<span class="badge">-30%</span>';
+  if (p.isNew) return '<span class="badge">Novo</span>';
+  return '';
+}
+
+// CSS mínimo caso falte (selo + soldout)
+(function ensureMinimalCardCSS(){
+  if (document.getElementById('ls-render-pack-css')) return;
+  const style = document.createElement('style');
+  style.id = 'ls-render-pack-css';
+  style.textContent = `
+    .card{position:relative;background:#fff;border-radius:16px;box-shadow:var(--shadow,0 10px 30px rgba(0,0,0,.08));overflow:hidden;cursor:pointer}
+    .card img{width:100%;height:220px;object-fit:cover;display:block}
+    .card .info{padding:10px 12px}
+    .card .name{font-weight:700;margin:0 0 6px}
+    .card .price{font-weight:700;color:#2E2336}
+    .badge{position:absolute;left:10px;top:10px;background:linear-gradient(90deg,#E96BA8,#7A3BFD);color:#fff;border-radius:999px;padding:4px 10px;font-size:12px;font-weight:700}
+    .card.soldout::after{
+      content:'ESGOTADO';
+      position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+      background:rgba(255,255,255,.65);backdrop-filter:blur(3px);
+      color:#7A3BFD;font-weight:900;font-size:22px;letter-spacing:.06em
+    }
+  `;
+  document.head.appendChild(style);
+})();
+
+// card de produto
+function cardHTML(p) {
+  const img0 =
+    (Array.isArray(p.images) && p.images[0]) ? p.images[0] :
+    (Array.isArray(p.imgs)   && p.imgs[0])   ? p.imgs[0]   :
+    (Array.isArray(p.image)  && p.image[0])  ? p.image[0]  :
+    (p.img || p.image || '');
+  const sold = (p.status && p.status.toLowerCase() === 'esgotado') || (p.stock|0) <= 0;
+  return `
+    <div class="card${sold ? ' soldout' : ''}" data-id="${p.id}">
+      ${badgeHTML(p)}
+      <img src="${img0}" alt="${p.name}">
+      <div class="info">
+        <p class="name">${p.name}</p>
+        <p class="price">${priceHTML(p)}</p>
+      </div>
+    </div>
+  `;
+}
+
+// grid genérico
+function renderGrid(el, arr) {
+  el.innerHTML = (arr && arr.length)
+    ? arr.map(cardHTML).join('')
+    : '<p style="opacity:.6">Nada por aqui ainda…</p>';
+
+  // clique abre modal
+  el.querySelectorAll('.card').forEach(c => {
+    if (!c.classList.contains('soldout')) {
+      c.addEventListener('click', () => LSModal.open(c.getAttribute('data-id')));
+    }
+  });
+}
+
+// destaque da home (#featured) + categorias [data-cat]
+function renderAll() {
+  // Home - Destaques
+  const f = document.getElementById('featured');
+  if (f) {
+    const pool = featured && featured.length ? featured : Object.values(catalog).flat().slice(0, 12);
+    renderGrid(f, pool);
+  }
+
+  // Cada seção por categoria (respeita data-cat em teu HTML)
+  document.querySelectorAll('[data-cat]').forEach(section => {
+    const cat = section.getAttribute('data-cat');
+    const list = (catalog[cat] || []);
+    renderGrid(section, list);
+  });
+}
+
+// rodapé horizontal “Veja também”
+function renderFooterProducts(listFromData) {
+  const box = document.getElementById('footer-products');
+  if (!box) return;
+
+  let pool = listFromData && listFromData.length ? listFromData : Object.values(catalog).flat();
+  pool = pool.filter(p => (p.status || '').toLowerCase() !== 'esgotado'); // leve priorização
+  const slice = pool.slice(0, 12);
+
+  box.innerHTML = slice.map(p => {
+    const img0 =
+      (Array.isArray(p.images) && p.images[0]) ? p.images[0] :
+      (Array.isArray(p.imgs)   && p.imgs[0])   ? p.imgs[0]   :
+      (Array.isArray(p.image)  && p.image[0])  ? p.image[0]  :
+      (p.img || p.image || '');
+    return `
+      <div class="footer-card" data-id="${p.id}" role="button" aria-label="${p.name}">
+        <img src="${img0}" alt="${p.name}">
+        <div class="fc-info">
+          <div class="fc-name">${p.name}</div>
+          <div class="fc-price">R$ ${Number(p.price).toFixed(2).replace('.', ',')}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  box.querySelectorAll('.footer-card').forEach(card => {
+    card.addEventListener('click', () => LSModal.open(card.getAttribute('data-id')));
+  });
+}
+
+// subcategorias (drawer) auto a partir do catálogo
+function mountDrawerSubcats() {
+  const wrap = document.getElementById('sub-produtos');
+  if (!wrap) return;
+
+  // Mapeia nomes para manter tua organização visual
+  const presentCats = Object.keys(catalog); // p.ex.: ['pijamas','meias','leggings',...]
+  if (!presentCats.length) { wrap.hidden = true; return; }
+
+  // Gera lista clicável que abre a seção correspondente (precisa existir um [data-cat="<cat>"] na página)
+  wrap.hidden = false;
+  wrap.innerHTML = presentCats.map(cat => `
+    <a href="#" data-goto="${cat}" class="drawer-subitem">${cat.charAt(0).toUpperCase()+cat.slice(1)}</a>
+  `).join('');
+
+  wrap.querySelectorAll('[data-goto]').forEach(a => {
+    a.onclick = (e) => {
+      e.preventDefault();
+      const target = a.getAttribute('data-goto');
+      const sec = document.querySelector('[data-cat="'+target+'"]');
+      if (sec) {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('visible'));
+        // se tua estrutura usa id/section por categoria, garante que está visível
+        const parentSection = sec.closest('.section') || document.getElementById('produtos');
+        if (parentSection) parentSection.classList.add('visible');
+        window.scrollTo({ top: sec.getBoundingClientRect().top + window.scrollY - 60, behavior: 'smooth' });
+      }
+      // fecha o drawer
+      const drawer = document.getElementById('drawer');
+      if (drawer) drawer.setAttribute('aria-hidden','true');
+    };
+  });
+}
+
+// 🔗 Hooka na tua pipeline atual: chamamos isso ao final do buildCatalogAndRender
+const _orig_buildCatalogAndRender = (typeof buildCatalogAndRender === 'function') ? buildCatalogAndRender : null;
+if (_orig_buildCatalogAndRender) {
+  window.buildCatalogAndRender = function(data) {
+    // executa tua montagem original
+    _orig_buildCatalogAndRender.call(this, data);
+    // e em seguida garante as telas
+    try { renderAll(); } catch(e){ console.warn('renderAll falhou', e); }
+    try { renderFooterProducts(featured && featured.length ? featured : null); } catch(e){}
+    try { mountDrawerSubcats(); } catch(e){}
+  };
+} else {
+  // caso alguém renomeie a função no futuro, ainda temos um plano B
+  console.warn('buildCatalogAndRender não encontrado — chamando renderizadores diretamente quando possível.');
+  // quando catálogo for setado, você pode chamar manualmente: renderAll(); renderFooterProducts(); mountDrawerSubcats();
+}
+</script>
 // Carregar catálogo
 (function loadProducts() {
   fetch('products_v2.json?v=' + Date.now(), { cache: 'no-store' })
