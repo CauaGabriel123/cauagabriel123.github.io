@@ -1282,65 +1282,74 @@ document.addEventListener('DOMContentLoaded', () => {
     if (activeThumb) activeThumb.classList.add('is-active');
   }
 
-  function mountGallery(p) {
-    // imagens por prioridade: se tiver variations+cor escolhida com image → usa; senão usa p.images/imgs
-    let baseImgs = [];
+    function mountGallery(p) {
+  let baseImgs = [];
+
+  // 🔧 Se a cor selecionada tiver imagens específicas, usa elas
+  if (p.variations && current.selectedColor) {
+    const variant = p.variations[current.selectedColor];
+    if (variant) {
+      if (Array.isArray(variant.images) && variant.images.length > 0) {
+        baseImgs = variant.images;
+      } else if (variant.image) {
+        baseImgs = [variant.image];
+      }
+    }
+  }
+
+  // 🔁 Se ainda não tiver nada, usa as imagens gerais do produto
+  if (baseImgs.length === 0) {
     if (Array.isArray(p.images) && p.images.length) baseImgs = p.images;
     else if (Array.isArray(p.imgs) && p.imgs.length) baseImgs = p.imgs;
     else if (Array.isArray(p.image) && p.image.length) baseImgs = p.image;
     else if (p.img) baseImgs = [p.img];
-
-    // se cor tiver imagem, coloca como primeira
-    if (p.variations && current.selectedColor) {
-      const v = p.variations[current.selectedColor];
-      if (v && v.image) baseImgs = [v.image, ...baseImgs.filter(x => x !== v.image)];
-    }
-
-    current.imgs = baseImgs.slice(0, 10);
-    current.idx = 0;
-
-    els.imgMain.src = current.imgs[0] || '';
-    els.imgMain.style.transition = 'opacity 0.35s ease';
-    els.thumbs.innerHTML = current.imgs.map((src, i) =>
-      `<img src="${src}" class="${i===0?'is-active':''}" data-i="${i}">`
-    ).join('');
-
-    els.thumbs.onclick = e => {
-      const t = e.target.closest('img'); if (!t) return;
-      showImg(parseInt(t.dataset.i, 10));
-    };
-
-    const stage = els.imgMain.closest('.lsx-gallery__stage');
-    let startX = 0, deltaX = 0, down = false;
-
-    function start(e){ down = true; startX = (e.touches?e.touches[0].clientX:e.clientX); deltaX = 0; }
-    function move(e){ if(!down) return; const x = (e.touches?e.touches[0].clientX:e.clientX); deltaX = x - startX; }
-    function end(){ if(!down) return; down = false; if (Math.abs(deltaX) > 40) { deltaX > 0 ? showImg(current.idx-1) : showImg(current.idx+1); } }
-
-    stage.addEventListener('touchstart', start, {passive:true});
-    stage.addEventListener('touchmove',  move,  {passive:true});
-    stage.addEventListener('touchend',   end);
-    stage.addEventListener('mousedown',  start);
-    stage.addEventListener('mousemove',  move);
-    stage.addEventListener('mouseup',    end);
-    stage.addEventListener('mouseleave', ()=> { down=false; });
-
-    if (els.zoomBtn) {
-      els.zoomBtn.onclick = () => {
-        const overlay = document.createElement('div');
-        overlay.style.cssText = `
-          position:fixed; inset:0; background:rgba(0,0,0,.9);
-          display:flex; align-items:center; justify-content:center; z-index:10000;
-        `;
-        const img = document.createElement('img');
-        img.src = current.imgs[current.idx];
-        img.style.cssText = 'max-width:95vw; max-height:95vh; border-radius:12px';
-        overlay.appendChild(img);
-        overlay.onclick = () => overlay.remove();
-        document.body.appendChild(overlay);
-      };
-    }
   }
+
+  current.imgs = baseImgs.slice(0, 10);
+  current.idx = 0;
+
+  els.imgMain.src = current.imgs[0] || '';
+  els.imgMain.style.transition = 'opacity 0.35s ease';
+  els.thumbs.innerHTML = current.imgs
+    .map((src, i) => `<img src="${src}" class="${i===0?'is-active':''}" data-i="${i}">`)
+    .join('');
+
+  els.thumbs.onclick = e => {
+    const t = e.target.closest('img');
+    if (!t) return;
+    showImg(parseInt(t.dataset.i, 10));
+  };
+
+  // Mantém o swipe e o zoom (resto do código igual)
+  const stage = els.imgMain.closest('.lsx-gallery__stage');
+  let startX = 0, deltaX = 0, down = false;
+  function start(e){ down = true; startX = (e.touches?e.touches[0].clientX:e.clientX); deltaX = 0; }
+  function move(e){ if(!down) return; const x = (e.touches?e.touches[0].clientX:e.clientX); deltaX = x - startX; }
+  function end(){ if(!down) return; down = false; if (Math.abs(deltaX) > 40) { deltaX > 0 ? showImg(current.idx-1) : showImg(current.idx+1); } }
+  stage.addEventListener('touchstart', start, {passive:true});
+  stage.addEventListener('touchmove',  move,  {passive:true});
+  stage.addEventListener('touchend',   end);
+  stage.addEventListener('mousedown',  start);
+  stage.addEventListener('mousemove',  move);
+  stage.addEventListener('mouseup',    end);
+  stage.addEventListener('mouseleave', ()=> { down=false; });
+
+  if (els.zoomBtn) {
+    els.zoomBtn.onclick = () => {
+      const overlay = document.createElement('div');
+      overlay.style.cssText = `
+        position:fixed; inset:0; background:rgba(0,0,0,.9);
+        display:flex; align-items:center; justify-content:center; z-index:10000;
+      `;
+      const img = document.createElement('img');
+      img.src = current.imgs[current.idx];
+      img.style.cssText = 'max-width:95vw; max-height:95vh; border-radius:12px';
+      overlay.appendChild(img);
+      overlay.onclick = () => overlay.remove();
+      document.body.appendChild(overlay);
+    };
+  }
+}
 
   // ====== Tamanhos & Cores & Estoque ======
   function mountSizesFromColor(p, color) {
@@ -1499,163 +1508,40 @@ function ensureQtyControls() {
 }
 
 // ======================================================
-// TRECHO ATUALIZADO — SUPORTE A VÁRIAS IMAGENS POR COR
+// LSX Premium — fill(p) atualizado com suporte a várias imagens por cor
 // ======================================================
-
 function fill(p) {
-  // Define imagem principal padrão
-  els.imgMain.src = p.images && p.images[0] ? p.images[0] : '';
-  els.imgMain.alt = p.name;
-  document.getElementById('lsxDescription').textContent = p.description || 'Sem descrição disponível.';
+  current.product = p;
+  current.selectedColor = null;
+  current.selectedSize = null;
+  current.qty = 1;
+  current.imgs = [];
 
-  // Atualiza título e preço
-  els.name.textContent = p.name;
-  els.price.textContent = formatPrice(p.price);
+  // Define dados básicos
+  els.title.textContent = p.name;
+  els.price.textContent = currency(p.price);
+  els.installments.textContent = calcInstallments(p.price);
+  $('#lsxDescription').textContent = p.description || 'Sem descrição disponível.';
 
-  // Cores e tamanhos
-  const colorWrap = els.colors;
-  colorWrap.innerHTML = '';
-  if (p.variations) {
-    Object.keys(p.variations).forEach(color => {
-      const btn = document.createElement('button');
-      btn.className = 'lsx-color';
-      btn.textContent = color;
-      btn.onclick = () => {
-        // Seleciona cor
-        selectedColor = color;
-        document.querySelectorAll('.lsx-color').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-
-        // Define imagens com base na cor
-        const variant = p.variations[color];
-        if (variant) {
-          // Se houver várias imagens para a cor → usa elas
-          if (variant.images && variant.images.length > 0) {
-            baseImgs = variant.images;
-            els.imgMain.src = variant.images[0];
-          } 
-          // Se só tiver uma imagem principal → usa ela
-          else if (variant.image) {
-            baseImgs = [variant.image];
-            els.imgMain.src = variant.image;
-          } 
-          // Caso não tenha variações de imagem → volta pro padrão
-          else {
-            baseImgs = p.images || [];
-            els.imgMain.src = p.images && p.images[0] ? p.images[0] : '';
-          }
-        }
-
-        // Atualiza tamanhos conforme a cor
-        const sizeWrap = els.sizes;
-        sizeWrap.innerHTML = '';
-        if (variant && variant.sizes) {
-          variant.sizes.forEach(sz => {
-            const sbtn = document.createElement('button');
-            sbtn.className = 'lsx-size';
-            sbtn.textContent = sz;
-            sbtn.onclick = () => {
-              selectedSize = sz;
-              document.querySelectorAll('.lsx-size').forEach(b => b.classList.remove('active'));
-              sbtn.classList.add('active');
-            };
-            sizeWrap.appendChild(sbtn);
-          });
-        }
-
-        // Atualiza galeria com base na cor
-        mountGallery(p);
-      };
-      colorWrap.appendChild(btn);
-    });
-  }
-
-  // Monta tamanhos padrão (caso não tenha variações de cor)
-  const sizeWrap = els.sizes;
-  if (!p.variations && p.sizes) {
-    sizeWrap.innerHTML = '';
-    p.sizes.forEach(sz => {
-      const sbtn = document.createElement('button');
-      sbtn.className = 'lsx-size';
-      sbtn.textContent = sz;
-      sbtn.onclick = () => {
-        selectedSize = sz;
-        document.querySelectorAll('.lsx-size').forEach(b => b.classList.remove('active'));
-        sbtn.classList.add('active');
-      };
-      sizeWrap.appendChild(sbtn);
-    });
-  }
-
-  // Monta galeria inicial
-  baseImgs = p.images || [];
+  // Inicializa galeria padrão (sem cor selecionada)
   mountGallery(p);
-}
 
-  // === LIMPA containers sem bagunçar layout ===
-  if (els.colors) els.colors.innerHTML = '';
-  if (els.sizes) els.sizes.innerHTML = '';
-
-  // === SEÇÃO: COR E TAMANHO ACIMA DO ESTOQUE ===
-els.colors.innerHTML = '<span class="lsx-label">Cor disponível:</span>';
-els.sizes.innerHTML = '<span class="lsx-label">Tamanho disponível:</span>';
-
-const hasVariations = p.variations && Object.keys(p.variations).length > 0;
-
-if (hasVariations) {
+  // Monta cores
   mountColors(p);
-  const firstColor = Object.keys(p.variations)[0];
-  mountSizesFromColor(p, firstColor);
-} else {
-  if (p.colors && p.colors.length > 0) mountColors(p);
-  else els.colors.innerHTML += '<p style="color:var(--lilac)">Cor única disponível</p>';
 
-  if (p.sizes && p.sizes.length > 0) mountSizesFromColor(p);
-  else els.sizes.innerHTML += '<p style="color:var(--lilac)">Tamanho único disponível</p>';
-}
-
-  // === GERA TAMANHOS ===
-  if (hasVariations) {
-    const firstColor = Object.keys(p.variations)[0];
-    mountSizesFromColor(p, firstColor);
-  } else if (p.sizes && p.sizes.length > 0) {
-    mountSizesFromColor(p, current.selectedColor);
-  } else {
-    els.sizes.innerHTML = '<p style="color:var(--lilac)">Tamanho único disponível</p>';
+  // Monta tamanhos (caso o produto não tenha variações por cor)
+  if (!p.variations && p.sizes) {
+    mountSizesFromColor(p, null);
   }
 
+  // Define estoque inicial
   refreshStockLabel(p);
+
+  // Garante controles de quantidade
   ensureQtyControls();
-  [els.buyBtn, els.addBtn].forEach(b => b && b.removeAttribute('disabled'));
+
+  // Valida botões
   validateButtons(p);
-
-  // === BOTÃO COMPRAR ===
-  els.buyBtn && (els.buyBtn.onclick = () => {
-    if (!validateSelections(p)) return;
-    const size = current.selectedSize || 'ÚNICO';
-    const color = current.selectedColor || 'Única';
-    addToCart(p, size, color, current.qty);
-    if (typeof cart !== 'undefined') {
-      cart.setAttribute('aria-hidden', 'false');
-      setTimeout(() => {
-        document.getElementById('client-name')?.focus();
-        document.querySelector('.client-info')?.scrollIntoView({ behavior: 'smooth' });
-      }, 150);
-    }
-    LSModal.close();
-  });
-
-  // === BOTÃO ADICIONAR AO CARRINHO ===
-  els.addBtn && (els.addBtn.onclick = () => {
-    if (!validateSelections(p)) return;
-    const size = current.selectedSize || 'ÚNICO';
-    const color = current.selectedColor || 'Única';
-    if (typeof addToCart === 'function') {
-      addToCart(p, size, color, current.qty);
-      try { playChime && playChime(); } catch (_) {}
-    }
-    LSModal.close();
-  });
 }
   function open(id){
     getProducts().then(list=>{
@@ -1676,11 +1562,3 @@ if (hasVariations) {
 
   window.LSModal = { open, close };
 })();
-// Garantia de saída da splash após 5s, mesmo se algo falhar
-window.addEventListener('load', () => {
-  setTimeout(() => {
-    const splash = document.getElementById('splash');
-    if (splash) splash.classList.add('hidden');
-    setTimeout(() => splash?.remove(), 800);
-  }, 5000);
-}); // 👈 fecha corretamente o window.addEventListener
