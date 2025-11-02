@@ -1543,6 +1543,36 @@ function fill(p) {
   // Valida botões
   validateButtons(p);
 }
+// 🔧 Garante que os botões do modal funcionem sempre que ele for aberto
+function bindModalButtons() {
+  const addBtn = document.getElementById("lsxAddBtn");
+  const buyBtn = document.getElementById("lsxBuyBtn");
+
+  function handleAddOrBuy(action) {
+    const ctx = window.LSModal?.current || null;
+    const prod = ctx?.product || null;
+
+    if (!prod) {
+      showAlert("Erro ao adicionar: produto não encontrado.");
+      return;
+    }
+
+    const color = ctx.selectedColor || "Única";
+    const size = ctx.selectedSize || "ÚNICO";
+    const qty = ctx.qty || 1;
+
+    addToCart(prod, size, color, qty);
+    showAlert("Produto adicionado ao carrinho 💕");
+
+    if (action === "buy") {
+      document.getElementById("cart").setAttribute("aria-hidden", "false");
+      renderCart();
+    }
+  }
+
+  if (addBtn) addBtn.onclick = () => handleAddOrBuy("add");
+  if (buyBtn) buyBtn.onclick = () => handleAddOrBuy("buy");
+}
 function open(id){
   getProducts().then(list=>{
     const p = list.find(x=>String(x.id)===String(id));
@@ -1553,16 +1583,6 @@ function open(id){
     document.body.classList.add('lsx-no-scroll');
   });
 }
-  function open(id){
-    getProducts().then(list=>{
-      const p = list.find(x=>String(x.id)===String(id));
-      if (!p) return;
-      fill(p);
-      bindModalButtons();
-      els.root.classList.add('is-open');
-      document.body.classList.add('lsx-no-scroll');
-    });
-  }
   function close(){
     els.root.classList.remove('is-open');
     document.body.classList.remove('lsx-no-scroll');
@@ -1611,52 +1631,5 @@ document.addEventListener('DOMContentLoaded', () => {
   // fecha modal clicando no X ou fora
   modal.addEventListener('click', (e) => {
     if (e.target.dataset.close) modal.hidden = true;
-  });
-});
-/* ====== LS STORE • Fix — Botões de compra e carrinho (v14.2.3 compatível) ====== */
-document.addEventListener("DOMContentLoaded", () => {
-  const addBtn = document.getElementById("lsxAddBtn");
-  const buyBtn = document.getElementById("lsxBuyBtn");
-
-  function handleAddOrBuy(action) {
-    const ctx = window.LSModal?.current || null;
-    const prod = ctx?.product || null;
-
-    if (!prod) {
-      console.warn("⚠️ Produto não encontrado no modal LSX.");
-      showAlert("Erro ao adicionar: produto não encontrado.");
-      return;
-    }
-
-    const color = ctx.selectedColor || "Única";
-    const size = ctx.selectedSize || "ÚNICO";
-    const qty = ctx.qty || 1;
-
-    addToCart(prod, size, color, qty);
-    showAlert(`Produto adicionado ao carrinho 💕`);
-
-    if (action === "buy") {
-      // abre carrinho automaticamente
-      document.getElementById("cart").setAttribute("aria-hidden", "false");
-      renderCart();
-    }
-  }
-
-  if (addBtn) {
-    addBtn.onclick = () => handleAddOrBuy("add");
-  }
-  if (buyBtn) {
-    buyBtn.onclick = () => handleAddOrBuy("buy");
-  }
-
-  // Reativa botões gerais fora do modal (cards)
-  document.querySelectorAll(".add-cart-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const id = btn.dataset.id;
-      const prod = Object.values(window.catalog || {}).flat().find(p => p.id === id);
-      if (!prod) return showAlert("Produto não encontrado 💔");
-      addToCart(prod, "ÚNICO", "Única", 1);
-      showAlert("Produto adicionado ao carrinho 💖");
-    });
   });
 });
