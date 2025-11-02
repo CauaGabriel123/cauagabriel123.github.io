@@ -1765,3 +1765,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+// ===== LS STORE 2026 — Clique fora do carrinho fecha o painel =====
+document.addEventListener('DOMContentLoaded', () => {
+  const cart = document.getElementById('cart');
+  const backdrop = document.querySelector('.cart-backdrop');
+
+  if (backdrop && cart) {
+    backdrop.addEventListener('click', () => {
+      cart.setAttribute('aria-hidden', 'true');
+    });
+  }
+});
