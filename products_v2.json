@@ -118,9 +118,10 @@
     "name": "Regata Luri Romance",
     "category": "blusas",
     "price": 49.99,
-    "images":[ "https://cauagabriel123.github.io/assets/blusa2.JPG",
-    "https://cauagabriel123.github.io/assets/blusa2.2.JPG",
-    "https://cauagabriel123.github.io/assets/blusa2.3.JPG"],
+    "images":[ "https://cauagabriel123.github.io/assets/blusa2_JPG",
+    "https://cauagabriel123.github.io/assets/blusa2_2.JPG",
+    "https://cauagabriel123.github.io/assets/blusa2_3.JPG"
+    "https://cauagabriel123.github.io/assets/blusa2_4.JPG"],
     "description": "Sutiã em renda delicada sem bojo, ideal para o conforto do dia a dia.",
     "status": "disponivel",
     "sizes": ["M"],
