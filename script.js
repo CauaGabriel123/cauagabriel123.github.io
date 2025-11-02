@@ -515,7 +515,12 @@ function renderFooterProducts(listFromData) {
 
   box.innerHTML = slice.map(p => `
     <div class="footer-card" data-id="${p.id}" role="button" aria-label="${p.name}">
-          <img src="${(p.imgs ? p.imgs[0] : p.img || p.image)}" alt="${p.name}">
+          <img src="${(p.imgs && p.imgs[0]) ||
+  (p.images && p.images[0]) ||
+  (p.variations && Object.values(p.variations)[0]?.image) ||
+  (p.variations && Object.values(p.variations)[0]?.images?.[0]) ||
+  p.img || p.image ||
+  'https://cauagabriel123.github.io/assets/placeholder.png'}" alt="${p.name}">
       <div class="fc-info">
         <div class="fc-name">${p.name}</div>
         <div class="fc-price">R$ ${p.price.toFixed(2).replace('.', ',')}</div>
