@@ -1898,3 +1898,29 @@ body {
   color: #fff !important;
   transform: scale(1.08) !important;
 }
+/* ===== LS STORE 2026 — FIX ESPECÍFICO (X fixo em carrinho e menu lateral) ===== */
+.drawer-header button,
+.cart-header button {
+  position: sticky !important;
+  top: 12px !important;
+  right: 16px !important;
+  z-index: 1000 !important;
+  background: rgba(255, 255, 255, 0.8) !important;
+  border-radius: 50% !important;
+  backdrop-filter: blur(10px) !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1) !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.drawer-header button:hover,
+.cart-header button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 14px rgba(122, 59, 253, 0.25);
+}
+
+/* Garante que o botão X não role junto com o conteúdo */
+.drawer-inner,
+.cart {
+  overflow-y: auto !important;
+  position: relative !important;
+}
