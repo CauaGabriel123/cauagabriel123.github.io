@@ -1543,7 +1543,7 @@ function fill(p) {
   // Valida botões
   validateButtons(p);
 }
-// 🔧 Garante que os botões do modal funcionem sempre que ele for aberto
+// 🔧 LSX Premium Upgrade — Animação suave no botão "COMPRAR"
 function bindModalButtons() {
   const addBtn = document.getElementById("lsxAddBtn");
   const buyBtn = document.getElementById("lsxBuyBtn");
@@ -1565,17 +1565,32 @@ function bindModalButtons() {
     addToCart(prod, size, color, qty);
 
     if (action === "buy") {
-      // Fecha o modal de produto
-      const modal = document.getElementById("lsxModal");
-      if (modal) modal.classList.remove("is-open");
-      document.body.classList.remove("lsx-no-scroll");
+      // ✨ Animação: produto voando até o carrinho
+      const firstImg =
+        (prod.imgs && prod.imgs[0]) ||
+        (prod.images && prod.images[0]) ||
+        prod.img ||
+        prod.image ||
+        "";
 
-      // Abre o carrinho diretamente
-      const cart = document.getElementById("cart");
-      if (cart) {
-        cart.setAttribute("aria-hidden", "false");
-        renderCart();
+      const btnRect = buyBtn.getBoundingClientRect();
+      if (firstImg) {
+        flyToCart(firstImg, btnRect.x, btnRect.y);
       }
+
+      // Espera a animação terminar antes de abrir o carrinho
+      setTimeout(() => {
+        const modal = document.getElementById("lsxModal");
+        if (modal) modal.classList.remove("is-open");
+        document.body.classList.remove("lsx-no-scroll");
+
+        // Abre o carrinho diretamente
+        const cart = document.getElementById("cart");
+        if (cart) {
+          cart.setAttribute("aria-hidden", "false");
+          renderCart();
+        }
+      }, 800); // tempo igual ao da animação flyToCart
     } else {
       // Mostra apenas o alerta visual padrão
       showAlert("Produto adicionado ao carrinho 💕");
