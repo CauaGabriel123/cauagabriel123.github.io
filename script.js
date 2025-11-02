@@ -1561,6 +1561,7 @@ function fill(p) {
   document.addEventListener('keydown',e=>{ if(e.key==='Escape') close(); });
 
   window.LSModal = { open, close };
+  window.LSModal.current = current;
 })();
 // ===== Parcelas Modal LS STORE =====
 document.addEventListener('DOMContentLoaded', () => {
