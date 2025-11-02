@@ -1549,33 +1549,36 @@ function bindModalButtons() {
   const buyBtn = document.getElementById("lsxBuyBtn");
 
   function handleAddOrBuy(action) {
-  const ctx = window.LSModal?.current || null;
-  const prod = ctx?.product || null;
+    const ctx = window.LSModal?.current || null;
+    const prod = ctx?.product || null;
 
-  if (!prod) {
-    showAlert("Erro ao adicionar: produto não encontrado.");
-    return;
-  }
+    if (!prod) {
+      showAlert("Erro ao adicionar: produto não encontrado.");
+      return;
+    }
 
-  const color = ctx.selectedColor || "Única";
-  const size = ctx.selectedSize || "ÚNICO";
-  const qty = ctx.qty || 1;
+    const color = ctx.selectedColor || "Única";
+    const size = ctx.selectedSize || "ÚNICO";
+    const qty = ctx.qty || 1;
 
-  addToCart(prod, size, color, qty);
-
-  if (action === "buy") {
-    // Abre o carrinho direto, sem mostrar alerta
-    document.getElementById("cart").setAttribute("aria-hidden", "false");
-    renderCart();
-  } else {
-    // Só mostra alerta se for "Adicionar ao carrinho"
-    showAlert("Produto adicionado ao carrinho 💕");
-  }
-}
+    // Adiciona o produto ao carrinho
+    addToCart(prod, size, color, qty);
 
     if (action === "buy") {
-      document.getElementById("cart").setAttribute("aria-hidden", "false");
-      renderCart();
+      // Fecha o modal de produto
+      const modal = document.getElementById("lsxModal");
+      if (modal) modal.classList.remove("is-open");
+      document.body.classList.remove("lsx-no-scroll");
+
+      // Abre o carrinho diretamente
+      const cart = document.getElementById("cart");
+      if (cart) {
+        cart.setAttribute("aria-hidden", "false");
+        renderCart();
+      }
+    } else {
+      // Mostra apenas o alerta visual padrão
+      showAlert("Produto adicionado ao carrinho 💕");
     }
   }
 
