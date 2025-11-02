@@ -1924,3 +1924,37 @@ body {
   overflow-y: auto !important;
   position: relative !important;
 }
+/* ===== LS STORE 2026 — Efeito Premium do Carrinho ===== */
+.cart {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 340px;
+  max-width: 90%;
+  height: 100vh;
+  background: #fff;
+  box-shadow: -2px 0 25px rgba(122, 59, 253, 0.2);
+  transform: translateX(100%);
+  transition: transform 0.45s ease, box-shadow 0.45s ease;
+  z-index: 9998;
+  display: flex;
+  flex-direction: column;
+  border-left: 3px solid transparent;
+  border-image: linear-gradient(180deg, #e96ba8, #7a3bfd) 1;
+}
+
+.cart[aria-hidden="false"] {
+  transform: translateX(0);
+  box-shadow: -6px 0 35px rgba(233, 107, 168, 0.35);
+}
+
+/* Cabeçalho */
+.cart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+  background: linear-gradient(90deg, #f8f4ff, #fce9f7);
+  border-bottom: 1px solid #efeafd;
+  font-weight: 600;
+  c
