@@ -580,12 +580,35 @@ items = items.map(it => {
 });
 localStorage.setItem('cartItems', JSON.stringify(items));
 
-// Abrir/fechar
-cartBtn && (cartBtn.onclick = () => {
-  cart.setAttribute('aria-hidden', 'false');
-  renderCart();
+// === Abrir e fechar o carrinho (corrigido, compatível com LS STORE 2026) ===
+document.addEventListener('DOMContentLoaded', () => {
+  const cart = document.getElementById('cart');
+  const cartBtn = document.getElementById('cart-btn');
+  const closeCart = document.getElementById('close-cart');
+
+  if (cartBtn) {
+    cartBtn.addEventListener('click', () => {
+      cart.setAttribute('aria-hidden', 'false');
+      cart.classList.add('open'); // se quiser animação CSS
+      renderCart();
+    });
+  }
+
+  if (closeCart) {
+    closeCart.addEventListener('click', () => {
+      cart.setAttribute('aria-hidden', 'true');
+      cart.classList.remove('open');
+    });
+  }
+
+  // Fecha carrinho se clicar fora dele (extra)
+  cart.addEventListener('click', e => {
+    if (e.target === cart) {
+      cart.setAttribute('aria-hidden', 'true');
+      cart.classList.remove('open');
+    }
+  });
 });
-closeCart && (closeCart.onclick = () => cart.setAttribute('aria-hidden', 'true'));
 
 // Utilidades
 function sumQty() {
