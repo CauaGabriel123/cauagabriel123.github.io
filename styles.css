@@ -1974,3 +1974,11 @@ body {
 #close-cart:hover {
   transform: scale(1.2);
 }
+/* === Exibição do carrinho === */
+.cart[aria-hidden="true"] {
+  display: none;
+}
+.cart.open,
+.cart[aria-hidden="false"] {
+  display: flex;
+}
