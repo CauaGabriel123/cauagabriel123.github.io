@@ -580,35 +580,12 @@ items = items.map(it => {
 });
 localStorage.setItem('cartItems', JSON.stringify(items));
 
-// === Abrir e fechar o carrinho (corrigido, compatível com LS STORE 2026) ===
-document.addEventListener('DOMContentLoaded', () => {
-  const cart = document.getElementById('cart');
-  const cartBtn = document.getElementById('cart-btn');
-  const closeCart = document.getElementById('close-cart');
-
-  if (cartBtn) {
-    cartBtn.addEventListener('click', () => {
-      cart.setAttribute('aria-hidden', 'false');
-      cart.classList.add('open'); // se quiser animação CSS
-      renderCart();
-    });
-  }
-
-  if (closeCart) {
-    closeCart.addEventListener('click', () => {
-      cart.setAttribute('aria-hidden', 'true');
-      cart.classList.remove('open');
-    });
-  }
-
-  // Fecha carrinho se clicar fora dele (extra)
-  cart.addEventListener('click', e => {
-    if (e.target === cart) {
-      cart.setAttribute('aria-hidden', 'true');
-      cart.classList.remove('open');
-    }
-  });
+// Abrir/fechar
+cartBtn && (cartBtn.onclick = () => {
+  cart.setAttribute('aria-hidden', 'false');
+  renderCart();
 });
+closeCart && (closeCart.onclick = () => cart.setAttribute('aria-hidden', 'true'));
 
 // Utilidades
 function sumQty() {
@@ -1766,37 +1743,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (current && current.status && current.status.toLowerCase() === 'esgotado') {
       e.preventDefault();
       showAlert("🚫 Este produto está esgotado. Não é possível adicioná-lo ao carrinho.");
-      }
-      });
-      })();
-// ============ LS STORE 2026 — FIX ÚNICO iPHONE + UNIVERSAL ============
-(() => {
-  const cart = document.getElementById('cart');
-  const cartBtn = document.getElementById('cart-btn');
-  const closeCart = document.getElementById('close-cart');
-
-  if (!cart || !cartBtn) return;
-
-  function openCart() {
-    cart.classList.add('open');
-    cart.setAttribute('aria-hidden', 'false');
-    if (typeof renderCart === 'function') renderCart();
-    console.log('🛒 Carrinho aberto (universal fix)');
-  }
-
-  function closeCartFn() {
-    cart.classList.remove('open');
-    cart.setAttribute('aria-hidden', 'true');
-    console.log('❌ Carrinho fechado');
-  }
-
-  // Clique direto (funciona em Safari iOS, Chrome, PWA)
-  cartBtn.addEventListener('touchstart', openCart, { passive: true });
-  cartBtn.addEventListener('click', openCart);
-  closeCart?.addEventListener('click', closeCartFn);
-
-  // Fecha se tocar no fundo escuro
-  cart.addEventListener('click', e => {
-    if (e.target === cart) closeCartFn();
+    }
   });
 })();
