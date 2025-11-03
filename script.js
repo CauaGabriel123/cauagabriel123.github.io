@@ -1800,3 +1800,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.target === cart) closeCartFn();
   });
 })();
+// ===== TESTE DIRETO iPhone =====
+(() => {
+  const cartBtn = document.getElementById('cart-btn');
+  if (!cartBtn) return;
+
+  cartBtn.addEventListener('touchstart', () => {
+    alert("✅ O toque no carrinho foi DETECTADO pelo JavaScript!");
+  });
+})();
