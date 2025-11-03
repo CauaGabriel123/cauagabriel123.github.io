@@ -1769,4 +1769,24 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       });
       })();
+// ============ FIX DEFINITIVO — CARRINHO NO IPHONE ==============
+window.addEventListener('load', () => {
+  const cartBtn = document.getElementById('cart-btn');
+  const cart = document.getElementById('cart');
+  const closeCart = document.getElementById('close-cart');
 
+  if (!cartBtn || !cart) return;
+
+  cartBtn.addEventListener('click', () => {
+    cart.setAttribute('aria-hidden', 'false');
+    cart.classList.add('open');
+    if (typeof renderCart === 'function') renderCart();
+  });
+
+  if (closeCart) {
+    closeCart.addEventListener('click', () => {
+      cart.setAttribute('aria-hidden', 'true');
+      cart.classList.remove('open');
+    });
+  }
+});
