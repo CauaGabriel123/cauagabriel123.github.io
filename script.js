@@ -1800,12 +1800,37 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.target === cart) closeCartFn();
   });
 })();
-// ===== TESTE DIRETO iPhone =====
+// ===== LS STORE 2026 • FIX FINAL iPHONE (carrinho abrindo e fechando) =====
 (() => {
+  const cart = document.getElementById('cart');
   const cartBtn = document.getElementById('cart-btn');
-  if (!cartBtn) return;
+  const closeCart = document.getElementById('close-cart');
 
-  cartBtn.addEventListener('touchstart', () => {
-    alert("✅ O toque no carrinho foi DETECTADO pelo JavaScript!");
+  if (!cart || !cartBtn) return;
+
+  function openCart() {
+    cart.classList.add('open');
+    cart.setAttribute('aria-hidden', 'false');
+    // Garante que o conteúdo é renderizado
+    if (typeof renderCart === 'function') {
+      try { renderCart(); } catch (err) { console.warn('renderCart falhou:', err); }
+    }
+    console.log('🛒 Carrinho aberto (iPhone fix)');
+  }
+
+  function closeCartFn() {
+    cart.classList.remove('open');
+    cart.setAttribute('aria-hidden', 'true');
+    console.log('❌ Carrinho fechado');
+  }
+
+  // Ativa em iPhone e desktop
+  cartBtn.addEventListener('touchstart', openCart, { passive: true });
+  cartBtn.addEventListener('click', openCart);
+  closeCart?.addEventListener('click', closeCartFn);
+
+  // Fecha se clicar fora do carrinho
+  cart.addEventListener('click', (e) => {
+    if (e.target === cart) closeCartFn();
   });
 })();
