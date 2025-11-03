@@ -1769,42 +1769,34 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       });
       })();
-// ============ FIX DEFINITIVO — CARRINHO NO IPHONE ==============
-window.addEventListener('load', () => {
-  const cartBtn = document.getElementById('cart-btn');
+// ============ LS STORE 2026 — FIX ÚNICO iPHONE + UNIVERSAL ============
+(() => {
   const cart = document.getElementById('cart');
+  const cartBtn = document.getElementById('cart-btn');
   const closeCart = document.getElementById('close-cart');
 
-  if (!cartBtn || !cart) return;
+  if (!cart || !cartBtn) return;
 
-  cartBtn.addEventListener('click', () => {
-    cart.setAttribute('aria-hidden', 'false');
+  function openCart() {
     cart.classList.add('open');
+    cart.setAttribute('aria-hidden', 'false');
     if (typeof renderCart === 'function') renderCart();
-  });
-
-  if (closeCart) {
-    closeCart.addEventListener('click', () => {
-      cart.setAttribute('aria-hidden', 'true');
-      cart.classList.remove('open');
-    });
+    console.log('🛒 Carrinho aberto (universal fix)');
   }
-});
-// ===== FIX iPHONE — Carrinho não abre =====
-document.addEventListener('click', (e) => {
-  const cartBtn = e.target.closest('#cart-btn');
-  const closeCart = e.target.closest('#close-cart');
-  const cart = document.getElementById('cart');
-  if (!cart) return;
 
-  if (cartBtn) {
-    cart.classList.add('open');
-    cart.setAttribute('aria-hidden', 'false');
-    console.log('🛒 Carrinho aberto (iPhone fix)');
-  }
-  if (closeCart) {
+  function closeCartFn() {
     cart.classList.remove('open');
     cart.setAttribute('aria-hidden', 'true');
-    console.log('❌ Carrinho fechado (iPhone fix)');
+    console.log('❌ Carrinho fechado');
   }
-});
+
+  // Clique direto (funciona em Safari iOS, Chrome, PWA)
+  cartBtn.addEventListener('touchstart', openCart, { passive: true });
+  cartBtn.addEventListener('click', openCart);
+  closeCart?.addEventListener('click', closeCartFn);
+
+  // Fecha se tocar no fundo escuro
+  cart.addEventListener('click', e => {
+    if (e.target === cart) closeCartFn();
+  });
+})();
