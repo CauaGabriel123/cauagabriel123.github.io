@@ -1790,3 +1790,21 @@ window.addEventListener('load', () => {
     });
   }
 });
+// ===== FIX iPHONE — Carrinho não abre =====
+document.addEventListener('click', (e) => {
+  const cartBtn = e.target.closest('#cart-btn');
+  const closeCart = e.target.closest('#close-cart');
+  const cart = document.getElementById('cart');
+  if (!cart) return;
+
+  if (cartBtn) {
+    cart.classList.add('open');
+    cart.setAttribute('aria-hidden', 'false');
+    console.log('🛒 Carrinho aberto (iPhone fix)');
+  }
+  if (closeCart) {
+    cart.classList.remove('open');
+    cart.setAttribute('aria-hidden', 'true');
+    console.log('❌ Carrinho fechado (iPhone fix)');
+  }
+});
