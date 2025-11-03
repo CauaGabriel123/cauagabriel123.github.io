@@ -1824,3 +1824,29 @@ document.addEventListener("DOMContentLoaded", () => {
     if (e.key === "Escape") closeCartPanel();
   });
 });
+// ===== LS STORE 2026 • REATIVAÇÃO DO BOTÃO COMPRAR =====
+document.addEventListener("DOMContentLoaded", () => {
+  const buyBtn = document.getElementById("lsxBuyBtn");
+  const cart = document.getElementById("cart");
+
+  if (buyBtn && cart) {
+    buyBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      // dispara o mesmo evento de "adicionar ao carrinho"
+      const addBtn = document.getElementById("lsxAddBtn");
+      if (addBtn) addBtn.click();
+
+      // abre o carrinho logo após
+      setTimeout(() => {
+        cart.style.display = "flex";
+        cart.setAttribute("aria-hidden", "false");
+        cart.style.position = "fixed";
+        cart.style.inset = "0";
+        cart.style.zIndex = "9999";
+        cart.style.background = "rgba(255,255,255,0.97)";
+        cart.style.overflowY = "auto";
+      }, 300);
+    });
+  }
+});
