@@ -1746,3 +1746,32 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 })();
+// ===== LS STORE 2026 — FIX SAFARI iPHONE =====
+document.addEventListener("DOMContentLoaded", () => {
+  const cartBtn = document.getElementById("cart-btn");
+  const cart = document.getElementById("cart");
+  const closeCart = document.getElementById("close-cart");
+
+  if (!cartBtn || !cart || !closeCart) {
+    console.warn("Carrinho não encontrado!");
+    return;
+  }
+
+  // abrir
+  cartBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    cart.classList.add("show");
+  });
+
+  // fechar
+  closeCart.addEventListener("click", () => {
+    cart.classList.remove("show");
+  });
+
+  // clicar fora fecha
+  document.addEventListener("click", (e) => {
+    if (cart.classList.contains("show") && !cart.contains(e.target) && !cartBtn.contains(e.target)) {
+      cart.classList.remove("show");
+    }
+  });
+});
