@@ -1741,7 +1741,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const current = window.LSModal?.current?.product;
     if (current && current.status && current.status.toLowerCase() === 'esgotado') {
-    // ===== FIX DEFINITIVO DO CARRINHO — FUNCIONAL EM SAFARI iPHONE =====
+      e.preventDefault();
+      showAlert("🚫 Este produto está esgotado. Não é possível adicioná-lo ao carrinho.");
+      }
+      });
+      })();
+      // ===== FIX DEFINITIVO DO CARRINHO — FUNCIONAL EM SAFARI iPHONE =====
 document.addEventListener("DOMContentLoaded", () => {
   const cartBtn = document.getElementById("cart-btn");
   const cart = document.getElementById("cart");
