@@ -1924,3 +1924,53 @@ body {
   overflow-y: auto !important;
   position: relative !important;
 }
+/* ===== LS STORE 2026 — FIX DEFINITIVO DO CARRINHO QUE NÃO ABRE ===== */
+#cart {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: flex-end;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(4px);
+  z-index: 9999;
+  transition: opacity 0.3s ease;
+  opacity: 0;
+}
+
+#cart.open,
+#cart[aria-hidden="false"] {
+  display: flex !important;
+  opacity: 1 !important;
+}
+
+#cart .cart-box {
+  background: #fff;
+  border-radius: 20px 20px 0 0;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.25);
+  padding: 16px;
+  animation: slideUpCart 0.35s ease;
+}
+
+@keyframes slideUpCart {
+  from { transform: translateY(40px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+#close-cart {
+  position: absolute;
+  top: 10px;
+  right: 18px;
+  border: none;
+  background: none;
+  font-size: 26px;
+  color: #7A3BFD;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+#close-cart:hover {
+  transform: scale(1.2);
+}
