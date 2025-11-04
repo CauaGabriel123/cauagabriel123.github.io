@@ -66,36 +66,39 @@ const footerInsta = document.getElementById('footer-insta');
   });
 });
 
-// ===== LS STORE 2026 — Splash compatível com iPhone/Safari (versão final 2026-FIX) =====
+// ===== LS STORE 2026 — Splash FIX UNIVERSAL (iPhone, Android, PC) =====
 document.addEventListener('DOMContentLoaded', () => {
   const splash = document.getElementById('splash');
   if (!splash) return;
 
-  const hideSplash = () => {
-    splash.style.opacity = '0';
+  function hideSplash() {
     splash.style.transition = 'opacity 0.6s ease';
+    splash.style.opacity = '0';
     setTimeout(() => {
-      splash.remove();
+      splash.style.display = 'none';
       document.body.style.overflow = 'auto';
-    }, 800);
-  };
+    }, 600);
+  }
 
-  // ✅ Esconde assim que o site terminar de carregar
-  if (document.readyState === 'complete') {
-  hideSplash();
-} else {
-  window.addEventListener('load', hideSplash);
-}
+  // ✅ Garante que o splash suma mesmo se o load falhar
+  function tryHideSplash() {
+    if (!splash || splash.style.display === 'none') return;
+    hideSplash();
+  }
 
-  // ✅ Fallback: se o load não disparar, força esconder em até 3 segundos
-  setTimeout(() => {
-    if (splash && splash.offsetParent !== null) hideSplash();
-  }, 3000);
+  // Some assim que tudo carregar
+  window.addEventListener('load', tryHideSplash);
 
-  // ✅ Extra: se o usuário tocar na tela (iOS bloqueia load às vezes), também remove
-  window.addEventListener('touchstart', () => {
-    if (splash && splash.offsetParent !== null) hideSplash();
-  }, { once: true });
+  // Fallback absoluto: se der qualquer erro, força sumir em até 3s
+  setTimeout(tryHideSplash, 3000);
+
+  // Extra: toque na tela também força sumir (iPhone Safari fix)
+  window.addEventListener('touchstart', tryHideSplash, { once: true });
+
+  // Se o usuário voltar do cache (Safari voltando aba)
+  window.addEventListener('pageshow', e => {
+    if (e.persisted) tryHideSplash();
+  });
 });
 // ===== LS STORE 2026 — Força desbloqueio de splash no Safari iOS (com toque) =====
 window.addEventListener('touchstart', () => {
