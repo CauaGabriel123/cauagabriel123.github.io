@@ -100,12 +100,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.persisted) tryHideSplash();
   });
 });
-window.addEventListener('pageshow', (e) => {
-  if (e.persisted) {
-    const splash = document.getElementById('splash');
-    if (splash) splash.remove();
-  }
-});
 // --- Áudio (lazy init para iOS)
 let audioCtx;
 function getCtx() {
