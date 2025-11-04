@@ -100,20 +100,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.persisted) tryHideSplash();
   });
 });
-// ===== LS STORE 2026 — Força desbloqueio de splash no Safari iOS (com toque) =====
-window.addEventListener('touchstart', () => {
-  const splash = document.getElementById('splash');
-  if (splash && splash.offsetParent !== null) {
-    splash.style.opacity = '0';
-    splash.style.transition = 'opacity 0.6s ease';
-    setTimeout(() => {
-      splash.remove();
-      document.body.style.overflow = 'auto';
-    }, 800);
-  }
-}, { once: true });
-
-// Se o Safari estiver em cache (voltar de outra aba), garante que o splash não volte
 window.addEventListener('pageshow', (e) => {
   if (e.persisted) {
     const splash = document.getElementById('splash');
