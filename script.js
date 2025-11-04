@@ -85,58 +85,25 @@ const footerInsta = document.getElementById('footer-insta');
     hideSplash();
   }
 
-  // Garante execução independente do timing
+  // ⚙️ Garante execução imediata mesmo se o DOM já estiver pronto
   if (document.readyState === 'complete' || document.readyState === 'interactive') {
-    // Se a página já carregou
     setTimeout(tryHideSplash, 800);
   } else {
     document.addEventListener('DOMContentLoaded', tryHideSplash);
     window.addEventListener('load', tryHideSplash);
   }
 
-  // Fallback absoluto — 3s no máximo
+  // ⏱️ Fallback absoluto (3 s)
   setTimeout(tryHideSplash, 3000);
 
-  // Toque na tela (Safari iPhone fix)
+  // 📱 Toque na tela (Safari iOS)
   window.addEventListener('touchstart', tryHideSplash, { once: true });
 
-  // Voltar do cache (Safari aba)
+  // 🔁 Voltar do cache (Safari)
   window.addEventListener('pageshow', e => {
     if (e.persisted) tryHideSplash();
   });
 })();
-  const splash = document.getElementById('splash');
-  if (!splash) return;
-
-  function hideSplash() {
-    splash.style.transition = 'opacity 0.6s ease';
-    splash.style.opacity = '0';
-    setTimeout(() => {
-      splash.style.display = 'none';
-      document.body.style.overflow = 'auto';
-    }, 600);
-  }
-
-  // ✅ Garante que o splash suma mesmo se o load falhar
-  function tryHideSplash() {
-    if (!splash || splash.style.display === 'none') return;
-    hideSplash();
-  }
-
-  // Some assim que tudo carregar
-  window.addEventListener('load', tryHideSplash);
-
-  // Fallback absoluto: se der qualquer erro, força sumir em até 3s
-  setTimeout(tryHideSplash, 3000);
-
-  // Extra: toque na tela também força sumir (iPhone Safari fix)
-  window.addEventListener('touchstart', tryHideSplash, { once: true });
-
-  // Se o usuário voltar do cache (Safari voltando aba)
-  window.addEventListener('pageshow', e => {
-    if (e.persisted) tryHideSplash();
-  });
-});
 // --- Áudio (lazy init para iOS)
 let audioCtx;
 function getCtx() {
