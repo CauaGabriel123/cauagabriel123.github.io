@@ -66,24 +66,32 @@ const footerInsta = document.getElementById('footer-insta');
   });
 });
 
-// ===== LS STORE 2026 — Correção Splash travado no iPhone =====
+// ===== LS STORE 2026 — Splash compatível com iPhone/Safari (versão final 2026-FIX) =====
 document.addEventListener('DOMContentLoaded', () => {
   const splash = document.getElementById('splash');
   if (!splash) return;
 
-  function hideSplash() {
-    splash.classList.add('hidden');
-    setTimeout(() => splash.remove(), 800);
-    document.body.style.overflow = 'auto';
-  }
+  const hideSplash = () => {
+    splash.style.opacity = '0';
+    splash.style.transition = 'opacity 0.6s ease';
+    setTimeout(() => {
+      splash.remove();
+      document.body.style.overflow = 'auto';
+    }, 800);
+  };
 
-  // ✅ 1. Some normalmente quando o site terminar de carregar
+  // ✅ Esconde assim que o site terminar de carregar
   window.addEventListener('load', hideSplash);
 
-  // ✅ 2. Fallback: se o Safari iOS não disparar o evento, força esconder depois de 2,5s
+  // ✅ Fallback: se o load não disparar, força esconder em até 3 segundos
   setTimeout(() => {
-    if (!splash.classList.contains('hidden')) hideSplash();
-  }, 2500);
+    if (splash && splash.offsetParent !== null) hideSplash();
+  }, 3000);
+
+  // ✅ Extra: se o usuário tocar na tela (iOS bloqueia load às vezes), também remove
+  window.addEventListener('touchstart', () => {
+    if (splash && splash.offsetParent !== null) hideSplash();
+  }, { once: true });
 });
 
 // --- Áudio (lazy init para iOS)
