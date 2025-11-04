@@ -341,7 +341,7 @@ function buildCatalogAndRender(data) {
 
 // === Carregamento aprimorado do catálogo (corrigido — ignora falsos negativos do fetch) ===
 (function loadProducts() {
-  const url = 'products_v2.json?v=' + Date.now(); // força sempre nova versão
+  const url = 'https://cauagabriel123.github.io/products_v2.json?v=' + Date.now();
 
   // Carrega catálogo com fallback interno
   fetch(url, { cache: 'no-store' })
