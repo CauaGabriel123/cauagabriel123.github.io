@@ -579,12 +579,34 @@ items = items.map(it => {
 });
 localStorage.setItem('cartItems', JSON.stringify(items));
 
-// Abrir/fechar
-cartBtn && (cartBtn.onclick = () => {
+// ===== LS STORE 2026 — Compatibilidade iPhone (Carrinho lateral) =====
+function openCart() {
+  if (!cart) return;
   cart.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden'; // trava scroll de fundo
   renderCart();
+}
+
+function closeCart() {
+  if (!cart) return;
+  cart.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = 'auto';
+}
+
+// eventos com compatibilidade total (Safari, iPhone, Android, PC)
+if (cartBtn) {
+  ['click', 'pointerdown'].forEach(evt => cartBtn.addEventListener(evt, openCart));
+}
+if (closeCart) {
+  ['click', 'pointerdown'].forEach(evt => closeCart.addEventListener(evt, closeCart));
+}
+
+// fecha se clicar fora do painel
+document.addEventListener('click', (e) => {
+  if (cart && !cart.contains(e.target) && !cartBtn.contains(e.target)) {
+    closeCart();
+  }
 });
-closeCart && (closeCart.onclick = () => cart.setAttribute('aria-hidden', 'true'));
 
 // Utilidades
 function sumQty() {
