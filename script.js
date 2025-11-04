@@ -558,190 +558,120 @@ function showAlert(msg) {
 }
 
 // =============================
-// CARRINHO PRO (com qty + migração) – v14.2.1
+// CARRINHO PRO (com qty + migração) — versão móvel segura (LS STORE 2026)
 // =============================
-const cart = document.getElementById('cart');
-const cartBtn = document.getElementById('cart-btn');
-const cartCount = document.getElementById('cart-count');
-const cartItems = document.getElementById('cart-items');
-const cartTotal = document.getElementById('cart-total');
-const finalTotal = document.getElementById('final-total');
-const feeValue = document.getElementById('fee-value');
-const deliveryFee = document.getElementById('delivery-fee');
-const closeCart = document.getElementById('close-cart');
-const checkout = document.getElementById('checkout');
-
-let items = JSON.parse(localStorage.getItem('cartItems') || '[]');
-
-// 🔁 Migração p/ formato novo (sem quebrar carrinhos antigos)
-items = items.map(it => {
-  if (typeof it.qty !== 'number' || it.qty < 1) return { ...it, qty: 1 };
-  return it;
-});
-localStorage.setItem('cartItems', JSON.stringify(items));
-
-// Abrir/fechar (garantido após o DOM estar pronto)
 document.addEventListener('DOMContentLoaded', () => {
-  const cartEl = document.getElementById('cart');
-  const cartBtnEl = document.getElementById('cart-btn');
-  const closeCartEl = document.getElementById('close-cart');
+  const cart = document.getElementById('cart');
+  const cartBtn = document.getElementById('cart-btn');
+  const cartCount = document.getElementById('cart-count');
+  const cartItems = document.getElementById('cart-items');
+  const cartTotal = document.getElementById('cart-total');
+  const finalTotal = document.getElementById('final-total');
+  const feeValue = document.getElementById('fee-value');
+  const deliveryFee = document.getElementById('delivery-fee');
+  const closeCart = document.getElementById('close-cart');
+  const checkout = document.getElementById('checkout');
 
-  if (cartBtnEl && cartEl) {
-    cartBtnEl.addEventListener('click', () => {
-      cartEl.setAttribute('aria-hidden', 'false');
-      renderCart();
-    });
-  }
+  if (!cart || !cartBtn) return;
 
-  if (closeCartEl && cartEl) {
-    closeCartEl.addEventListener('click', () => {
-      cartEl.setAttribute('aria-hidden', 'true');
-    });
-  }
-});
-// Utilidades
-function sumQty() {
-  return items.reduce((acc, it) => acc + (it.qty || 1), 0);
-}
-function sumTotal() {
-  return items.reduce((acc, it) => acc + (it.price * (it.qty || 1)), 0);
-}
-function updateCartCount() {
-  cartCount.textContent = String(sumQty());
+  let items = JSON.parse(localStorage.getItem('cartItems') || '[]');
+  items = items.map(it => (typeof it.qty !== 'number' || it.qty < 1) ? { ...it, qty: 1 } : it);
   localStorage.setItem('cartItems', JSON.stringify(items));
-}
-function refreshTotalsUI() {
-  const subtotal = sumTotal();
-  cartTotal.textContent = subtotal.toFixed(2).replace('.', ',');
-  finalTotal.textContent = subtotal.toFixed(2).replace('.', ',');
-  feeValue.textContent = '0,00';
-  updateCartCount();
-}
 
-// Render com qty + controles
-function renderCart() {
-  cartItems.innerHTML = '';
-  if (items.length === 0) {
-    cartItems.innerHTML = '<p class="empty">Seu carrinho está vazio 💕</p>';
-    refreshTotalsUI();
-    return;
+  // ✅ Clique para abrir o carrinho
+  cartBtn.addEventListener('click', () => {
+    cart.setAttribute('aria-hidden', 'false');
+    renderCart();
+  });
+
+  // ✅ Clique para fechar o carrinho
+  if (closeCart) {
+    closeCart.addEventListener('click', () => {
+      cart.setAttribute('aria-hidden', 'true');
+    });
   }
 
-  items.forEach((it, i) => {
-    const row = document.createElement('div');
-    row.className = 'row';
-    row.style.display = 'grid';
-    row.style.gridTemplateColumns = '1fr auto auto auto';
-    row.style.gap = '8px';
+  // ===== Funções internas =====
+  function sumQty() {
+    return items.reduce((acc, it) => acc + (it.qty || 1), 0);
+  }
+  function sumTotal() {
+    return items.reduce((acc, it) => acc + (it.price * (it.qty || 1)), 0);
+  }
+  function updateCartCount() {
+    cartCount.textContent = String(sumQty());
+    localStorage.setItem('cartItems', JSON.stringify(items));
+  }
+  function refreshTotalsUI() {
+    const subtotal = sumTotal();
+    cartTotal.textContent = subtotal.toFixed(2).replace('.', ',');
+    finalTotal.textContent = subtotal.toFixed(2).replace('.', ',');
+    feeValue.textContent = '0,00';
+    updateCartCount();
+  }
 
-    const lineTotal = it.price * (it.qty || 1);
-
-    row.innerHTML = `
-      <small>${it.name} (${it.size}/${it.color})</small>
-      <div style="display:flex;align-items:center;gap:6px">
-        <button class="qty-dec" data-i="${i}" style="border:1px solid #eee;background:#fff;border-radius:8px;width:28px;height:28px;cursor:pointer;">−</button>
-        <strong>${it.qty || 1}</strong>
-        <button class="qty-inc" data-i="${i}" style="border:1px solid #eee;background:#fff;border-radius:8px;width:28px;height:28px;cursor:pointer;">+</button>
-      </div>
-      <small>R$ ${(lineTotal).toFixed(2).replace('.', ',')}</small>
-      <button class="rm" data-i="${i}" style="border:0;background:transparent;color:#E96BA8;font-weight:700;cursor:pointer;">✕</button>
-    `;
-    cartItems.appendChild(row);
-  });
-
-  // eventos
-  cartItems.querySelectorAll('.rm').forEach(b => {
-    b.onclick = () => {
-      const idx = parseInt(b.dataset.i, 10);
-      items.splice(idx, 1);
-      localStorage.setItem('cartItems', JSON.stringify(items));
-      renderCart();
+  // Renderiza conteúdo
+  window.renderCart = function() {
+    cartItems.innerHTML = '';
+    if (items.length === 0) {
+      cartItems.innerHTML = '<p class="empty">Seu carrinho está vazio 💕</p>';
       refreshTotalsUI();
-    };
-  });
-  cartItems.querySelectorAll('.qty-dec').forEach(b => {
-    b.onclick = () => {
-      const idx = parseInt(b.dataset.i, 10);
-      items[idx].qty = Math.max(1, (items[idx].qty || 1) - 1);
-      localStorage.setItem('cartItems', JSON.stringify(items));
-      renderCart();
-      refreshTotalsUI();
-    };
-  });
-  cartItems.querySelectorAll('.qty-inc').forEach(b => {
-  b.onclick = () => {
-    const idx = parseInt(b.dataset.i, 10);
-    const it = items[idx];
-    const prod = Object.values(window.catalog || {}).flat().find(p => p.id === it.id);
-    const maxStock = prod?.variations?.[it.color]?.stock || prod?.stock || 5;
-
-    if (it.qty >= maxStock) {
-      showAlert(`⚠️ Estoque máximo atingido: ${maxStock} unidades.`);
       return;
     }
 
-    items[idx].qty = (it.qty || 1) + 1;
-    localStorage.setItem('cartItems', JSON.stringify(items));
-    renderCart();
+    items.forEach((it, i) => {
+      const row = document.createElement('div');
+      row.className = 'row';
+      row.style.display = 'grid';
+      row.style.gridTemplateColumns = '1fr auto auto auto';
+      row.style.gap = '8px';
+
+      const lineTotal = it.price * (it.qty || 1);
+
+      row.innerHTML = `
+        <small>${it.name} (${it.size}/${it.color})</small>
+        <div style="display:flex;align-items:center;gap:6px">
+          <button class="qty-dec" data-i="${i}">−</button>
+          <strong>${it.qty || 1}</strong>
+          <button class="qty-inc" data-i="${i}">+</button>
+        </div>
+        <small>R$ ${(lineTotal).toFixed(2).replace('.', ',')}</small>
+        <button class="rm" data-i="${i}">✕</button>
+      `;
+      cartItems.appendChild(row);
+    });
+
+    // Eventos de controle
+    cartItems.querySelectorAll('.rm').forEach(b => {
+      b.onclick = () => {
+        items.splice(parseInt(b.dataset.i, 10), 1);
+        localStorage.setItem('cartItems', JSON.stringify(items));
+        renderCart();
+        refreshTotalsUI();
+      };
+    });
+    cartItems.querySelectorAll('.qty-dec').forEach(b => {
+      b.onclick = () => {
+        const idx = parseInt(b.dataset.i, 10);
+        items[idx].qty = Math.max(1, (items[idx].qty || 1) - 1);
+        localStorage.setItem('cartItems', JSON.stringify(items));
+        renderCart();
+        refreshTotalsUI();
+      };
+    });
+    cartItems.querySelectorAll('.qty-inc').forEach(b => {
+      b.onclick = () => {
+        const idx = parseInt(b.dataset.i, 10);
+        items[idx].qty = (items[idx].qty || 1) + 1;
+        localStorage.setItem('cartItems', JSON.stringify(items));
+        renderCart();
+        refreshTotalsUI();
+      };
+    });
+
     refreshTotalsUI();
   };
-});
 
-  refreshTotalsUI();
-}
-
-function addToCart(prod, size, color, qty = 1) {
-  // agrupa por (id+size+color)
-  const key = (x) => `${x.id}|${x.name}|${x.size}|${x.color}`;
-  const newLine = { id: prod.id, name: prod.name, size, color, price: prod.price, qty: Math.max(1, qty|0) };
-    // ⚠️ Limita a quantidade conforme estoque do produto selecionado
-  const maxStock = (prod.variations && prod.variations[color])
-    ? prod.variations[color].stock
-    : (prod.stock || 5);
-
-  if (newLine.qty > maxStock) {
-    newLine.qty = maxStock;
-    showAlert(`Limite de ${maxStock} unidades disponíveis no estoque.`);
-  }
-
-  const pos = items.findIndex(it => key(it) === key(newLine));
-  if (pos >= 0) {
-  const maxStock = (prod.variations && prod.variations[color])
-    ? prod.variations[color].stock
-    : (prod.stock || 5);
-
-  const newTotal = items[pos].qty + newLine.qty;
-  if (newTotal > maxStock) {
-    items[pos].qty = maxStock;
-    showAlert(`⚠️ Estoque máximo atingido: ${maxStock} unidades.`);
-  } else {
-    items[pos].qty = newTotal;
-  }
-  } else {
-    items.push(newLine);
-  }
-  localStorage.setItem('cartItems', JSON.stringify(items));
-
-  // efeito e feedback
-  const firstImg = (prod.imgs && prod.imgs[0]) || prod.img || '';
-  if (firstImg) {
-    const btn = document.getElementById('modal-add') || document.getElementById('lsxAddBtn');
-    if (btn) {
-      const rect = btn.getBoundingClientRect();
-      flyToCart(firstImg, rect.x, rect.y);
-    }
-  }
-  cartBtn.classList.add('pulse');
-  setTimeout(() => cartBtn.classList.remove('pulse'), 400);
-
-  renderCart();
-  refreshTotalsUI();
-  const el = document.getElementById('cart-count');
-  if (el) el.textContent = String(sumQty());
-}
-
-// Init carrinho ao carregar
-document.addEventListener('DOMContentLoaded', () => {
   renderCart();
   refreshTotalsUI();
   updateCartCount();
