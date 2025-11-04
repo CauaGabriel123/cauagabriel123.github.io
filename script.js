@@ -580,13 +580,25 @@ items = items.map(it => {
 });
 localStorage.setItem('cartItems', JSON.stringify(items));
 
-// Abrir/fechar
-cartBtn && (cartBtn.onclick = () => {
-  cart.setAttribute('aria-hidden', 'false');
-  renderCart();
-});
-closeCart && (closeCart.onclick = () => cart.setAttribute('aria-hidden', 'true'));
+// Abrir/fechar (garantido após o DOM estar pronto)
+document.addEventListener('DOMContentLoaded', () => {
+  const cartEl = document.getElementById('cart');
+  const cartBtnEl = document.getElementById('cart-btn');
+  const closeCartEl = document.getElementById('close-cart');
 
+  if (cartBtnEl && cartEl) {
+    cartBtnEl.addEventListener('click', () => {
+      cartEl.setAttribute('aria-hidden', 'false');
+      renderCart();
+    });
+  }
+
+  if (closeCartEl && cartEl) {
+    closeCartEl.addEventListener('click', () => {
+      cartEl.setAttribute('aria-hidden', 'true');
+    });
+  }
+});
 // Utilidades
 function sumQty() {
   return items.reduce((acc, it) => acc + (it.qty || 1), 0);
