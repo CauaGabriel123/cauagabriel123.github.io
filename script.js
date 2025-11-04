@@ -67,7 +67,44 @@ const footerInsta = document.getElementById('footer-insta');
 });
 
 // ===== LS STORE 2026 — Splash FIX UNIVERSAL (iPhone, Android, PC) =====
-document.addEventListener('DOMContentLoaded', () => {
+(function initSplash() {
+  const splash = document.getElementById('splash');
+  if (!splash) return;
+
+  function hideSplash() {
+    splash.style.transition = 'opacity 0.6s ease';
+    splash.style.opacity = '0';
+    setTimeout(() => {
+      splash.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }, 600);
+  }
+
+  function tryHideSplash() {
+    if (!splash || splash.style.display === 'none') return;
+    hideSplash();
+  }
+
+  // Garante execução independente do timing
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    // Se a página já carregou
+    setTimeout(tryHideSplash, 800);
+  } else {
+    document.addEventListener('DOMContentLoaded', tryHideSplash);
+    window.addEventListener('load', tryHideSplash);
+  }
+
+  // Fallback absoluto — 3s no máximo
+  setTimeout(tryHideSplash, 3000);
+
+  // Toque na tela (Safari iPhone fix)
+  window.addEventListener('touchstart', tryHideSplash, { once: true });
+
+  // Voltar do cache (Safari aba)
+  window.addEventListener('pageshow', e => {
+    if (e.persisted) tryHideSplash();
+  });
+})();
   const splash = document.getElementById('splash');
   if (!splash) return;
 
