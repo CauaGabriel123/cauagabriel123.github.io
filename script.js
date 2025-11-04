@@ -81,7 +81,11 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // ✅ Esconde assim que o site terminar de carregar
+  if (document.readyState === 'complete') {
+  hideSplash();
+} else {
   window.addEventListener('load', hideSplash);
+}
 
   // ✅ Fallback: se o load não disparar, força esconder em até 3 segundos
   setTimeout(() => {
