@@ -1976,84 +1976,42 @@ body {
   overflow-y: auto !important;
   position: relative !important;
 }
-/* === CARRINHO CENTRAL FIXO (igual modal de login) === */
+/* ===== LS STORE Premium • Carrinho Modal Central ===== */
 .cart {
   position: fixed;
-  inset: 0;
-  display: flex;
+  inset: 0; /* cobre a tela toda */
+  display: none;
   align-items: center;
   justify-content: center;
-  background: rgba(0,0,0,0.55);
-  backdrop-filter: blur(4px);
-  z-index: 999;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .3s ease;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(6px);
+  z-index: 4000;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .cart[aria-hidden="false"] {
-  opacity: 1;
-  pointer-events: auto;
+  display: flex;
 }
 
-/* Janela interna */
 .cart-inner {
-  width: 90%;
+  background: #fff;
+  border-radius: 14px;
+  width: 95%;
   max-width: 420px;
   max-height: 90vh;
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0,0,0,.15);
   overflow-y: auto;
-  animation: cartFadeIn .35s ease;
+  animation: fadeInUp .25s ease-out;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
 }
 
-/* Cabeçalho */
-.cart-header {
-  position: sticky;
-  top: 0;
-  background: linear-gradient(90deg,#f6e9ff,#fff);
-  padding: 18px 20px;
-  border-radius: 16px 16px 0 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.cart-header h3 {
-  font-size: 1.3rem;
-  color: #7a3bfd;
-  margin: 0;
-}
-
-.icon-btn#close-cart {
-  background: #fff;
-  border: 2px solid #f0d8ff;
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
-  font-size: 20px;
-  color: #7a3bfd;
-  cursor: pointer;
-}
-
-/* Rolagem suave só pra dentro */
-.cart-inner::-webkit-scrollbar {
-  width: 6px;
-}
-.cart-inner::-webkit-scrollbar-thumb {
-  background: #d0baff;
-  border-radius: 10px;
-}
-
-/* Animação */
-@keyframes cartFadeIn {
+@keyframes fadeInUp {
   from {
-    transform: translateY(30px);
     opacity: 0;
+    transform: translateY(30px);
   }
   to {
-    transform: translateY(0);
     opacity: 1;
+    transform: translateY(0);
   }
 }
