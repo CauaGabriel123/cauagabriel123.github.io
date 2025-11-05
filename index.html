@@ -149,57 +149,80 @@
   <p>© 2025 LS Store — Moda & Acessórios Femininos 💖</p>
 </footer>
 
-<!-- Carrinho -->
+<!-- Carrinho (Modal Central Premium) -->
 <aside id="cart" class="cart" aria-hidden="true">
-  <div class="cart-header"><h3>Seu Carrinho</h3><button id="close-cart" class="icon-btn">✕</button></div>
-  <div id="cart-items" class="cart-items"></div>
-
-  <div class="client-info">
-    <h4>Finalizar Pedido</h4>
-    <small class="hint">Preencha seus dados para entrega ou retirada.</small>
-
-    <label>Nome completo*<input id="client-name" type="text" required></label>
-    <label>Forma de pagamento*<select id="payment"><option>Pix</option><option>Cartão de crédito</option><option>Cartão de débito</option><option>Dinheiro</option></select></label>
-
-    <div id="cash-section" class="cash" style="display:none;">
-      <p><strong>Precisa de troco?*</strong></p>
-      <label class="inline"><input type="radio" name="cash-change" value="nao"> Não</label>
-      <label class="inline"><input type="radio" name="cash-change" value="sim"> Sim, para R$</label>
-      <input id="cash-amount" inputmode="decimal" type="number" min="0" step="0.01" placeholder="Ex: 100,00" style="display:none;">
+  <div class="cart-inner">
+    <div class="cart-header">
+      <h3>Seu Carrinho</h3>
+      <button id="close-cart" class="icon-btn">✕</button>
     </div>
 
-    <label>Entrega*<select id="delivery-type"><option value="retirada">Retirada</option><option value="entrega">Entrega</option></select></label>
+    <div id="cart-items" class="cart-items"></div>
 
-    <div id="address-fields" class="address" style="display:none;">
-      <label>Rua*<input id="street" type="text"></label>
-      <label>Número*<input id="number" type="text" inputmode="numeric" pattern="[0-9]*"></label>
-      <label>Bairro*<select id="neighborhood">
-        <option value="">Selecione...</option>
-        <option value="Mathias Velho">Mathias Velho</option>
-        <option value="Harmonia">Harmonia</option>
-        <option value="Mato Grande">Mato Grande</option>
-        <option value="São Luís">São Luís</option>
-        <option value="Centro">Centro</option>
-        <option value="Fátima">Fátima</option>
-        <option value="Igara">Igara</option>
-        <option value="Rio Branco">Rio Branco</option>
-        <option value="Industrial">Industrial</option>
-        <option value="Marechal Rondon">Marechal Rondon</option>
-        <option value="Estância Velha">Estância Velha</option>
-        <option value="Guajuviras">Guajuviras</option>
-        <option value="Olaria">Olaria</option>
-        <option value="Outra Cidade">Outra Cidade</option>
-      </select></label>
+    <div class="client-info">
+      <h4>Finalizar Pedido</h4>
+      <small class="hint">Preencha seus dados para entrega ou retirada.</small>
+
+      <label>Nome completo*<input id="client-name" type="text" required></label>
+
+      <label>Forma de pagamento*
+        <select id="payment">
+          <option>Pix</option>
+          <option>Cartão de crédito</option>
+          <option>Cartão de débito</option>
+          <option>Dinheiro</option>
+        </select>
+      </label>
+
+      <div id="cash-section" class="cash" style="display:none;">
+        <p><strong>Precisa de troco?*</strong></p>
+        <label class="inline"><input type="radio" name="cash-change" value="nao"> Não</label>
+        <label class="inline"><input type="radio" name="cash-change" value="sim"> Sim, para R$</label>
+        <input id="cash-amount" inputmode="decimal" type="number" min="0" step="0.01" placeholder="Ex: 100,00" style="display:none;">
+      </div>
+
+      <label>Entrega*
+        <select id="delivery-type">
+          <option value="retirada">Retirada</option>
+          <option value="entrega">Entrega</option>
+        </select>
+      </label>
+
+      <div id="address-fields" class="address" style="display:none;">
+        <label>Rua*<input id="street" type="text"></label>
+        <label>Número*<input id="number" type="text" inputmode="numeric" pattern="[0-9]*"></label>
+        <label>Bairro*
+          <select id="neighborhood">
+            <option value="">Selecione...</option>
+            <option value="Mathias Velho">Mathias Velho</option>
+            <option value="Harmonia">Harmonia</option>
+            <option value="Mato Grande">Mato Grande</option>
+            <option value="São Luís">São Luís</option>
+            <option value="Centro">Centro</option>
+            <option value="Fátima">Fátima</option>
+            <option value="Igara">Igara</option>
+            <option value="Rio Branco">Rio Branco</option>
+            <option value="Industrial">Industrial</option>
+            <option value="Marechal Rondon">Marechal Rondon</option>
+            <option value="Estância Velha">Estância Velha</option>
+            <option value="Guajuviras">Guajuviras</option>
+            <option value="Olaria">Olaria</option>
+            <option value="Outra Cidade">Outra Cidade</option>
+          </select>
+        </label>
+      </div>
+
+      <label>Observações (opcional)
+        <textarea id="order-notes" rows="2" placeholder="Ex: entregar no portão lateral"></textarea>
+      </label>
     </div>
 
-    <label>Observações (opcional)<textarea id="order-notes" rows="2" placeholder="Ex: entregar no portão lateral"></textarea></label>
-  </div>
-
-  <div class="cart-footer">
-    <p>Total produtos: R$ <span id="cart-total">0,00</span></p>
-    <p id="delivery-fee" style="display:none;">Taxa entrega: R$ <span id="fee-value">0,00</span></p>
-    <h3>Total final: R$ <span id="final-total">0,00</span></h3>
-    <button id="checkout" class="checkout">Finalizar Compra (WhatsApp)</button>
+    <div class="cart-footer">
+      <p>Total produtos: R$ <span id="cart-total">0,00</span></p>
+      <p id="delivery-fee" style="display:none;">Taxa entrega: R$ <span id="fee-value">0,00</span></p>
+      <h3>Total final: R$ <span id="final-total">0,00</span></h3>
+      <button id="checkout" class="checkout">Finalizar Compra (WhatsApp)</button>
+    </div>
   </div>
 </aside>
 
