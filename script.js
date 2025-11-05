@@ -1753,25 +1753,3 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 })();
-// ===== LS STORE 2026 — Carrinho Modal Fixado =====
-const cartBackdrop = document.getElementById('cart-backdrop');
-
-if (cart && cartBtn && closeCart && cartBackdrop) {
-  cartBtn.addEventListener('click', () => {
-    cart.classList.add('open');
-    cartBackdrop.classList.add('active');
-    document.body.style.overflow = 'hidden'; // trava rolagem da página
-  });
-
-  closeCart.addEventListener('click', () => {
-    cart.classList.remove('open');
-    cartBackdrop.classList.remove('active');
-    document.body.style.overflow = ''; // libera rolagem
-  });
-
-  cartBackdrop.addEventListener('click', () => {
-    cart.classList.remove('open');
-    cartBackdrop.classList.remove('active');
-    document.body.style.overflow = '';
-  });
-}
