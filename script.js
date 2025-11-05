@@ -66,7 +66,7 @@ const footerInsta = document.getElementById('footer-insta');
   });
 });
 
-// ===== LS STORE 2026 — Splash FIX UNIVERSAL (iPhone, Android, PC) =====
+// ===== LS STORE 2026 — Splash FIX FINAL =====
 (function initSplash() {
   const splash = document.getElementById('splash');
   if (!splash) return;
@@ -80,29 +80,26 @@ const footerInsta = document.getElementById('footer-insta');
     }, 600);
   }
 
-  function tryHideSplash() {
+  // 🔧 Novo método universal (garante execução mesmo se eventos falharem)
+  function ensureHide() {
     if (!splash || splash.style.display === 'none') return;
     hideSplash();
   }
 
-  // ⚙️ Garante execução imediata mesmo se o DOM já estiver pronto
-  if (document.readyState === 'complete' || document.readyState === 'interactive') {
-    setTimeout(tryHideSplash, 800);
-  } else {
-    document.addEventListener('DOMContentLoaded', tryHideSplash);
-    window.addEventListener('load', tryHideSplash);
-  }
+  // Executa quando DOM estiver pronto
+  document.addEventListener('DOMContentLoaded', () => setTimeout(ensureHide, 800));
 
-  // ⏱️ Fallback absoluto (3 s)
-  setTimeout(tryHideSplash, 3000);
+  // Executa ao finalizar carregamento completo
+  window.addEventListener('load', () => setTimeout(ensureHide, 800));
 
-  // 📱 Toque na tela (Safari iOS)
-  window.addEventListener('touchstart', tryHideSplash, { once: true });
+  // Fallback total (3s máximo)
+  setTimeout(ensureHide, 3000);
 
-  // 🔁 Voltar do cache (Safari)
-  window.addEventListener('pageshow', e => {
-    if (e.persisted) tryHideSplash();
-  });
+  // Toque manual (caso Safari bloqueie)
+  window.addEventListener('touchstart', ensureHide, { once: true });
+
+  // Cache (Safari voltando)
+  window.addEventListener('pageshow', e => { if (e.persisted) ensureHide(); });
 })();
 // --- Áudio (lazy init para iOS)
 let audioCtx;
