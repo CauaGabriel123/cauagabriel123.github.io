@@ -66,6 +66,27 @@ const footerInsta = document.getElementById('footer-insta');
   });
 });
 
+// --- Splash (corrigido para travamento)
+window.addEventListener('load', () => {
+  const splash = document.getElementById('splash');
+  if (!splash) return;
+  setTimeout(() => {
+    splash.classList.add('hidden');
+    setTimeout(() => splash.remove(), 800);
+  }, 2000);
+});
+
+// Failsafe extra: garante que o splash desapareça em qualquer cenário
+(function robustSplash(){
+  const kill = () => {
+    const s = document.getElementById('splash');
+    if (s) { s.classList.add('hidden'); setTimeout(()=>s.remove(), 800); }
+  };
+  // backup no DOMContentLoaded e um último timeout independente
+  document.addEventListener('DOMContentLoaded', () => setTimeout(kill, 3500));
+  setTimeout(kill, 5000);
+})();
+
 // --- Áudio (lazy init para iOS)
 let audioCtx;
 function getCtx() {
@@ -558,6 +579,13 @@ items = items.map(it => {
   return it;
 });
 localStorage.setItem('cartItems', JSON.stringify(items));
+
+// Abrir/fechar
+cartBtn && (cartBtn.onclick = () => {
+  cart.setAttribute('aria-hidden', 'false');
+  renderCart();
+});
+closeCart && (closeCart.onclick = () => cart.setAttribute('aria-hidden', 'true'));
 
 // Utilidades
 function sumQty() {
@@ -1718,27 +1746,3 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 })();
-// ==== LS STORE • Carrinho Tela Completa (Upgrade 2026.4) ====
-const cartBtn = document.getElementById('cart-btn');
-const cart = document.getElementById('cart');
-const closeCart = document.getElementById('close-cart');
-
-if (cartBtn && cart && closeCart) {
-  cartBtn.addEventListener('click', () => {
-    document.body.style.overflow = 'hidden'; // trava o site atrás
-    cart.setAttribute('aria-hidden', 'false');
-  });
-
-  closeCart.addEventListener('click', () => {
-    document.body.style.overflow = ''; // libera o scroll do site
-    cart.setAttribute('aria-hidden', 'true');
-  });
-
-  // fechar tocando fora
-  cart.addEventListener('click', (e) => {
-    if (e.target === cart) {
-      document.body.style.overflow = '';
-      cart.setAttribute('aria-hidden', 'true');
-    }
-  });
-}
