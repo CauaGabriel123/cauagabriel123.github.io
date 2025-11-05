@@ -214,30 +214,6 @@ img { max-width:100%; display:block; }
 
 /* ===== LS STORE 2026 — Carrinho estilo MODAL CENTRAL PREMIUM ===== */
 
-/* Fundo escurecido (backdrop) */
-.cart {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(6px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-  z-index: 4000;
-}
-
-/* Quando o carrinho estiver aberto */
-.cart[aria-hidden="false"] {
-  opacity: 1;
-  pointer-events: all;
-}
-
 /* Caixa principal (a aba central branca) */
 .cart-inner {
   background: #fff;
