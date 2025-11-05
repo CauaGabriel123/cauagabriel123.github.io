@@ -580,13 +580,6 @@ items = items.map(it => {
 });
 localStorage.setItem('cartItems', JSON.stringify(items));
 
-// Abrir/fechar
-cartBtn && (cartBtn.onclick = () => {
-  cart.setAttribute('aria-hidden', 'false');
-  renderCart();
-});
-closeCart && (closeCart.onclick = () => cart.setAttribute('aria-hidden', 'true'));
-
 // Utilidades
 function sumQty() {
   return items.reduce((acc, it) => acc + (it.qty || 1), 0);
