@@ -563,6 +563,10 @@ localStorage.setItem('cartItems', JSON.stringify(items));
 cartBtn && (cartBtn.onclick = () => {
   cart.setAttribute('aria-hidden', 'false');
   renderCart();
+  // 🧷 Fixar carrinho central e travar rolagem lateral (mobile safe)
+document.body.style.overflowX = 'hidden'; // impede arrastar pro lado
+cart.style.display = 'flex';              // garante centralização ativa
+cart.scrollTo({ top: 0 });                // começa no topo ao abrir
 });
 closeCart && (closeCart.onclick = () => cart.setAttribute('aria-hidden', 'true'));
 
