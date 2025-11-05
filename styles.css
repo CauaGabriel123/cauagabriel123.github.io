@@ -212,34 +212,78 @@ img { max-width:100%; display:block; }
   padding:12px; font-weight:700; cursor:pointer;
 }
 
-/* Carrinho — FIX LS STORE 2026 */
+/* ===== LS STORE 2026 — Carrinho estilo ABA LATERAL PREMIUM ===== */
 .cart {
   position: fixed;
-  right: 20px;
-  bottom: 20px;
-  background: white;
-  border: 1px solid #eee;
-  border-radius: 16px;
-  box-shadow: 0 16px 40px rgba(0,0,0,.25);
-  display: none;
-  flex-direction: column;
-  z-index: 2500;
-  width: 90%;
+  top: 0;
+  right: 0;
+  width: 100%;
   max-width: 420px;
-  max-height: 90vh;
-  overflow-y: auto;
-  transition: transform .25s ease, opacity .25s ease;
+  height: 100vh;
+  background: #fff;
+  box-shadow: -4px 0 30px rgba(0,0,0,.15);
+  transform: translateX(100%);
+  transition: transform 0.35s ease, opacity 0.35s ease;
+  display: flex;
+  flex-direction: column;
+  z-index: 3000;
+  overflow: hidden;
 }
 
 .cart[aria-hidden="false"] {
-  display: flex;
-  transform: translateY(0);
+  transform: translateX(0);
   opacity: 1;
 }
+
+/* área de rolagem interna do conteúdo */
+.cart-items {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 14px;
+}
+
+/* cabeçalho fixo */
 .cart-header {
-  display:flex; justify-content:space-between;
-  align-items:center; padding:10px 14px;
-  border-bottom:1px solid #f2e6f0;
+  position: sticky;
+  top: 0;
+  background: linear-gradient(90deg, #ffe6f3, #f8e4ff);
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+  border-bottom: 1px solid #f1dfff;
+  box-shadow: 0 2px 10px rgba(0,0,0,.06);
+}
+
+/* botão X fixo e bonito */
+.cart-header button {
+  background: linear-gradient(90deg,#e96ba8,#7a3bfd);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+.cart-header button:hover {
+  transform: scale(1.1);
+}
+
+/* rodapé fixo */
+.cart-footer {
+  background: #fff;
+  border-top: 1px solid #eee;
+  padding: 14px;
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  box-shadow: 0 -2px 10px rgba(0,0,0,.05);
 }
 .cart-items {
   padding:12px 14px; display:flex;
