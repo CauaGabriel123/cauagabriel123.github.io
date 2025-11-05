@@ -1740,10 +1740,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 })();
 // ===== LS STORE 2026 — Carrinho Modal Fixado =====
-const cart = document.getElementById('cart');
 const cartBackdrop = document.getElementById('cart-backdrop');
-const cartBtn = document.getElementById('cart-btn');
-const closeCart = document.getElementById('close-cart');
 
 if (cart && cartBtn && closeCart && cartBackdrop) {
   cartBtn.addEventListener('click', () => {
