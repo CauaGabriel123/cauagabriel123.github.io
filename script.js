@@ -65,10 +65,6 @@ const footerInsta = document.getElementById('footer-insta');
     setTimeout(() => window.open(instaWeb, '_blank', 'noopener'), 700);
   });
 });
-  // backup no DOMContentLoaded e um último timeout independente
-  document.addEventListener('DOMContentLoaded', () => setTimeout(kill, 3500));
-  setTimeout(kill, 5000);
-})();
 
 // --- Áudio (lazy init para iOS)
 let audioCtx;
