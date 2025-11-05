@@ -560,16 +560,30 @@ function showAlert(msg) {
 // =============================
 // CARRINHO PRO (com qty + migração) – v14.2.1
 // =============================
-const cart = document.getElementById('cart');
+// === LS STORE 2026 — Carrinho Modal Premium ===
 const cartBtn = document.getElementById('cart-btn');
-const cartCount = document.getElementById('cart-count');
-const cartItems = document.getElementById('cart-items');
-const cartTotal = document.getElementById('cart-total');
-const finalTotal = document.getElementById('final-total');
-const feeValue = document.getElementById('fee-value');
-const deliveryFee = document.getElementById('delivery-fee');
+const cart = document.getElementById('cart');
+const cartBackdrop = document.getElementById('cart-backdrop');
 const closeCart = document.getElementById('close-cart');
-const checkout = document.getElementById('checkout');
+
+if (cartBtn && cart && cartBackdrop && closeCart) {
+  // abrir carrinho
+  cartBtn.addEventListener('click', () => {
+    cart.classList.add('open');
+    cartBackdrop.classList.add('active');
+    document.body.style.overflow = 'hidden'; // trava rolagem do site
+  });
+
+  // fechar carrinho
+  const closeCartFn = () => {
+    cart.classList.remove('open');
+    cartBackdrop.classList.remove('active');
+    document.body.style.overflow = ''; // libera rolagem
+  };
+
+  closeCart.addEventListener('click', closeCartFn);
+  cartBackdrop.addEventListener('click', closeCartFn);
+}
 
 let items = JSON.parse(localStorage.getItem('cartItems') || '[]');
 
