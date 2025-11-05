@@ -1952,42 +1952,68 @@ body {
   overflow-y: auto !important;
   position: relative !important;
 }
-/* ===== LS STORE Premium • Carrinho Modal Central ===== */
+/* ================================
+   LS STORE 2026.4 — Carrinho Tela Completa
+================================ */
+
 .cart {
   position: fixed;
-  inset: 0; /* cobre a tela toda */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(6px);
   display: none;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(6px);
   z-index: 4000;
-  overflow-x: hidden;
-  overflow-y: auto;
 }
 
 .cart[aria-hidden="false"] {
   display: flex;
 }
 
+/* conteúdo interno fixo e rolável só dentro dele */
 .cart-inner {
   background: #fff;
-  border-radius: 14px;
+  border-radius: 20px;
   width: 95%;
-  max-width: 420px;
+  max-width: 430px;
   max-height: 90vh;
   overflow-y: auto;
-  animation: fadeInUp .25s ease-out;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.2);
+  animation: cartOpen 0.35s ease-out;
 }
 
-@keyframes fadeInUp {
+@keyframes cartOpen {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: scale(0.8);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: scale(1);
+  }
+}
+
+/* remove qualquer scroll lateral da página */
+html, body {
+  overflow-x: hidden !important;
+}
+
+/* modo escuro automático */
+@media (prefers-color-scheme: dark) {
+  .cart-inner {
+    background: #1c1b22;
+    color: #f3f3f3;
+    box-shadow: 0 0 30px rgba(122,59,253,0.25);
+  }
+  .cart-header h3 {
+    color: #e96ba8;
+  }
+  .checkout {
+    background: linear-gradient(45deg, #e96ba8, #7a3bfd);
+    color: #fff;
   }
 }
