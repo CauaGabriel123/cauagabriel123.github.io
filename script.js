@@ -66,41 +66,6 @@ const footerInsta = document.getElementById('footer-insta');
   });
 });
 
-// ===== LS STORE 2026 — Splash FIX FINAL =====
-(function initSplash() {
-  const splash = document.getElementById('splash');
-  if (!splash) return;
-
-  function hideSplash() {
-    splash.style.transition = 'opacity 0.6s ease';
-    splash.style.opacity = '0';
-    setTimeout(() => {
-      splash.style.display = 'none';
-      document.body.style.overflow = 'auto';
-    }, 600);
-  }
-
-  // 🔧 Novo método universal (garante execução mesmo se eventos falharem)
-  function ensureHide() {
-    if (!splash || splash.style.display === 'none') return;
-    hideSplash();
-  }
-
-  // Executa quando DOM estiver pronto
-  document.addEventListener('DOMContentLoaded', () => setTimeout(ensureHide, 800));
-
-  // Executa ao finalizar carregamento completo
-  window.addEventListener('load', () => setTimeout(ensureHide, 800));
-
-  // Fallback total (3s máximo)
-  setTimeout(ensureHide, 3000);
-
-  // Toque manual (caso Safari bloqueie)
-  window.addEventListener('touchstart', ensureHide, { once: true });
-
-  // Cache (Safari voltando)
-  window.addEventListener('pageshow', e => { if (e.persisted) ensureHide(); });
-})();
 // --- Áudio (lazy init para iOS)
 let audioCtx;
 function getCtx() {
