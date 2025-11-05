@@ -250,42 +250,82 @@ img { max-width:100%; display:block; }
   padding:12px; font-weight:700; cursor:pointer;
 }
 
-/* ===== LS STORE 2026 — Carrinho Modal Fixado ===== */
+/* ===== LS STORE 2026 — Carrinho Modal Fixo ===== */
 .cart {
   position: fixed;
   top: 0;
   right: 0;
-  width: 380px;
-  max-width: 90%;
   height: 100vh;
+  width: min(420px, 95%);
   background: #fff;
-  box-shadow: -2px 0 20px rgba(0,0,0,0.25);
-  z-index: 9999;
+  box-shadow: -5px 0 25px rgba(0, 0, 0, 0.3);
+  border-top-left-radius: 18px;
+  border-bottom-left-radius: 18px;
+  z-index: 10002;
   transform: translateX(100%);
   transition: transform 0.35s ease;
-  overflow-y: auto;
-  border-radius: 12px 0 0 12px;
+  display: flex;
+  flex-direction: column;
 }
 
-/* Quando estiver aberto */
 .cart.open {
   transform: translateX(0);
 }
 
-/* Fundo escurecido atrás do carrinho */
 .cart-backdrop {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.5);
-  z-index: 9998;
-  display: none;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 10001;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
 }
 
 .cart-backdrop.active {
-  display: block;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.cart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background: linear-gradient(90deg, #E96BA8, #7A3BFD);
+  color: #fff;
+  border-top-left-radius: 18px;
+}
+
+.cart-header button {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.cart-footer {
+  padding: 16px 20px;
+  border-top: 1px solid #eee;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cart-footer button {
+  background: linear-gradient(90deg, #E96BA8, #7A3BFD);
+  color: #fff;
+  border: 0;
+  border-radius: 12px;
+  padding: 12px 0;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.cart-footer button:active {
+  transform: scale(0.96);
 }
 .cart-items {
   padding:12px 14px; display:flex;
