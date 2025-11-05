@@ -250,19 +250,42 @@ img { max-width:100%; display:block; }
   padding:12px; font-weight:700; cursor:pointer;
 }
 
-/* Carrinho */
+/* ===== LS STORE 2026 — Carrinho Modal Fixado ===== */
 .cart {
-  position:fixed; right:10px; left:10px; bottom:10px;
-  background:white; border:1px solid #eee;
-  border-radius:16px; box-shadow:0 16px 40px rgba(0,0,0,.25);
-  display:none; flex-direction:column; z-index:250;
-  max-height:90vh; overflow:auto;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 380px;
+  max-width: 90%;
+  height: 100vh;
+  background: #fff;
+  box-shadow: -2px 0 20px rgba(0,0,0,0.25);
+  z-index: 9999;
+  transform: translateX(100%);
+  transition: transform 0.35s ease;
+  overflow-y: auto;
+  border-radius: 12px 0 0 12px;
 }
-.cart[aria-hidden="false"]{ display:flex; }
-.cart-header {
-  display:flex; justify-content:space-between;
-  align-items:center; padding:10px 14px;
-  border-bottom:1px solid #f2e6f0;
+
+/* Quando estiver aberto */
+.cart.open {
+  transform: translateX(0);
+}
+
+/* Fundo escurecido atrás do carrinho */
+.cart-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  z-index: 9998;
+  display: none;
+}
+
+.cart-backdrop.active {
+  display: block;
 }
 .cart-items {
   padding:12px 14px; display:flex;
