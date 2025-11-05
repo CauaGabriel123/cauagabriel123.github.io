@@ -1729,3 +1729,27 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 })();
+// ==== LS STORE • Carrinho Tela Completa (Upgrade 2026.4) ====
+const cartBtn = document.getElementById('cart-btn');
+const cart = document.getElementById('cart');
+const closeCart = document.getElementById('close-cart');
+
+if (cartBtn && cart && closeCart) {
+  cartBtn.addEventListener('click', () => {
+    document.body.style.overflow = 'hidden'; // trava o site atrás
+    cart.setAttribute('aria-hidden', 'false');
+  });
+
+  closeCart.addEventListener('click', () => {
+    document.body.style.overflow = ''; // libera o scroll do site
+    cart.setAttribute('aria-hidden', 'true');
+  });
+
+  // fechar tocando fora
+  cart.addEventListener('click', (e) => {
+    if (e.target === cart) {
+      document.body.style.overflow = '';
+      cart.setAttribute('aria-hidden', 'true');
+    }
+  });
+}
