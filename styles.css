@@ -12,6 +12,44 @@ html,body {
 }
 img { max-width:100%; display:block; }
 
+/* Splash */
+#splash {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(145deg,#f7ecff,#ffeaf6);
+  display: flex;
+  flex-direction: column; /* agora o logo fica em cima e o texto embaixo */
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  z-index: 9999;
+  opacity: 1;
+  transition: opacity .6s;
+}
+
+#splash p {
+  margin-top: 16px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #6b3ea8;
+  text-shadow: 0 2px 6px rgba(122,59,253,0.25);
+  background: linear-gradient(90deg,#E96BA8,#7A3BFD);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: fadeIn 1s ease-in-out;
+}
+
+#splash.hidden { opacity:0; pointer-events:none; }
+.splash-card { text-align:center; }
+.splash-logo {
+  display:inline-grid; justify-items:center; gap:2px;
+  background:linear-gradient(160deg,#fde6ff,#efe6ff);
+  padding:16px 22px; border-radius:18px; box-shadow:var(--shadow);
+}
+.splash-logo .ls { font-weight:700; font-size:44px; color:#7A3BFD; line-height:1; }
+.splash-logo .store { font-weight:700; font-size:20px; color:#E96BA8; line-height:1; }
+.splash-card p { margin:8px 0 0; font-weight:600; color:#6b3ea8; }
+
 /* Drawer */
 .drawer { position:fixed; inset:0; display:none; z-index:1500; }
 .drawer[aria-hidden="false"]{ display:block; }
@@ -212,85 +250,19 @@ img { max-width:100%; display:block; }
   padding:12px; font-weight:700; cursor:pointer;
 }
 
-/* ===== LS STORE 2026 — Carrinho estilo MODAL CENTRAL PREMIUM ===== */
-
-/* Caixa principal (a aba central branca) */
-.cart-inner {
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-  width: 92%;
-  max-width: 430px;
-  max-height: 90vh;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  animation: cartShow 0.35s ease forwards;
+/* Carrinho */
+.cart {
+  position:fixed; right:10px; left:10px; bottom:10px;
+  background:white; border:1px solid #eee;
+  border-radius:16px; box-shadow:0 16px 40px rgba(0,0,0,.25);
+  display:none; flex-direction:column; z-index:250;
+  max-height:90vh; overflow:auto;
 }
-
-/* Animação de entrada suave */
-@keyframes cartShow {
-  from { transform: scale(0.94) translateY(25px); opacity: 0; }
-  to   { transform: scale(1) translateY(0);       opacity: 1; }
-}
-
-/* Cabeçalho fixo com o X */
+.cart[aria-hidden="false"]{ display:flex; }
 .cart-header {
-  position: sticky;
-  top: 0;
-  background: linear-gradient(90deg, #ffe6f3, #f8e4ff);
-  z-index: 10;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 14px 18px;
-  border-bottom: 1px solid #f1dfff;
-  box-shadow: 0 2px 10px rgba(0,0,0,.06);
-}
-
-/* Botão X fixo e bonito */
-.cart-header button {
-  background: linear-gradient(90deg, #e96ba8, #7a3bfd);
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  width: 34px;
-  height: 34px;
-  font-size: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
-.cart-header button:hover { transform: scale(1.1); }
-
-/* Conteúdo com rolagem vertical (sem lateral) */
-.cart-items {
-  flex: 1;
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding: 12px 14px;
-  scrollbar-width: thin;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* Rodapé fixo dentro do modal */
-.cart-footer {
-  background: #fff;
-  border-top: 1px solid #eee;
-  padding: 14px;
-  position: sticky;
-  bottom: 0;
-  z-index: 10;
-  box-shadow: 0 -2px 10px rgba(0,0,0,.05);
-}
-
-/* Bloqueia gesto lateral; só rolagem vertical */
-.cart-inner,
-.cart-items {
-  overscroll-behavior-x: none;
-  touch-action: pan-y;
+  display:flex; justify-content:space-between;
+  align-items:center; padding:10px 14px;
+  border-bottom:1px solid #f2e6f0;
 }
 .cart-items {
   padding:12px 14px; display:flex;
@@ -1951,69 +1923,4 @@ body {
 .cart {
   overflow-y: auto !important;
   position: relative !important;
-}
-/* ================================
-   LS STORE 2026.4 — Carrinho Tela Completa
-================================ */
-
-.cart {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0,0,0,0.45);
-  backdrop-filter: blur(6px);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 4000;
-}
-
-.cart[aria-hidden="false"] {
-  display: flex;
-}
-
-/* conteúdo interno fixo e rolável só dentro dele */
-.cart-inner {
-  background: #fff;
-  border-radius: 20px;
-  width: 95%;
-  max-width: 430px;
-  max-height: 90vh;
-  overflow-y: auto;
-  box-shadow: 0 8px 40px rgba(0,0,0,0.2);
-  animation: cartOpen 0.35s ease-out;
-}
-
-@keyframes cartOpen {
-  from {
-    opacity: 0;
-    transform: scale(0.8);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-/* remove qualquer scroll lateral da página */
-html, body {
-  overflow-x: hidden !important;
-}
-
-/* modo escuro automático */
-@media (prefers-color-scheme: dark) {
-  .cart-inner {
-    background: #1c1b22;
-    color: #f3f3f3;
-    box-shadow: 0 0 30px rgba(122,59,253,0.25);
-  }
-  .cart-header h3 {
-    color: #e96ba8;
-  }
-  .checkout {
-    background: linear-gradient(45deg, #e96ba8, #7a3bfd);
-    color: #fff;
-  }
 }
