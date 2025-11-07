@@ -1742,7 +1742,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const banners = [
       { src: 'https://cauagabriel123.github.io/assets/rodape_3.PNG', alt: 'Banner 1 LS Store' },
       { src: 'https://cauagabriel123.github.io/assets/rodape_2.PNG', alt: 'Banner 2 LS Store' },
-      { src: 'https://via.placeholder.com/1200x600.png?text=Banner+3', alt: 'Banner 3 LS Store' },
+      { src: 'https://cauagabriel123.github.io/assets/rodape_4', alt: 'Banner 3 LS Store' },
     ];
 
     // monta os slides e os pontinhos
