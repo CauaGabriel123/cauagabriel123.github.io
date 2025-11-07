@@ -1725,3 +1725,53 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 })();
+
+/* ===== LS STORE — Hero fixo com 3 imagens (substitui produtos) ===== */
+document.addEventListener('DOMContentLoaded', () => {
+  // dá um pequeno delay para garantir que nada sobrescreva depois
+  setTimeout(() => {
+    const slides = document.getElementById('carousel-slides');
+    const dots   = document.getElementById('carousel-dots');
+    if (!slides || !dots) return;
+
+    // LIMPA qualquer conteúdo que o código antigo tenha colocado
+    slides.innerHTML = '';
+    dots.innerHTML = '';
+
+    // TROQUE estes links pelos seus quando tiver
+    const banners = [
+      { src: 'https://via.placeholder.com/1200x600.png?text=Banner+1', alt: 'Banner 1 LS Store' },
+      { src: 'https://via.placeholder.com/1200x600.png?text=Banner+2', alt: 'Banner 2 LS Store' },
+      { src: 'https://via.placeholder.com/1200x600.png?text=Banner+3', alt: 'Banner 3 LS Store' },
+    ];
+
+    // monta os slides e os pontinhos
+    banners.forEach((b, i) => {
+      const wrap = document.createElement('div');
+      wrap.className = 'slide';
+      wrap.innerHTML = `<img src="${b.src}" alt="${b.alt}">`;
+      slides.appendChild(wrap);
+
+      const dot = document.createElement('button');
+      dot.className = 'dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', `Ir para banner ${i+1}`);
+      dot.addEventListener('click', () => goTo(i));
+      dots.appendChild(dot);
+    });
+
+    let index = 0;
+    function goTo(i) {
+      index = i;
+      slides.style.transform = `translateX(-${index * 100}%)`;
+      Array.from(dots.children).forEach((d, k) => d.classList.toggle('active', k === index));
+    }
+
+    // autoplay opcional
+    const AUTOPLAY_MS = 5000; // troque se quiser
+    setInterval(() => goTo((index + 1) % banners.length), AUTOPLAY_MS);
+
+    // inicia no primeiro
+    goTo(0);
+  }, 200); // garante que roda por último
+});
+/* ===== /Hero fixo ===== */
