@@ -1467,6 +1467,71 @@ body {
   animation: pulsePrice 2.8s ease-in-out infinite;
 }
 
+/* ===== LS STORE 2026 — CUPOM DE DESCONTO (Premium) ===== */
+.coupon-box {
+  margin-top: 10px;
+  text-align: center;
+  background: linear-gradient(180deg, #fff, #fff7fb);
+  border: 1px solid rgba(233,107,168,0.15);
+  border-radius: 14px;
+  padding: 12px;
+  box-shadow: 0 4px 14px rgba(233,107,168,0.1);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.coupon-box:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 18px rgba(122,59,253,0.15);
+}
+
+.coupon-box input {
+  padding: 8px 10px;
+  border: 1px solid #f0d8ef;
+  border-radius: 10px;
+  width: 60%;
+  max-width: 220px;
+  font-size: 14px;
+  outline: none;
+  background: #fff;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.coupon-box input:focus {
+  border-color: var(--lilac);
+  box-shadow: 0 0 0 3px rgba(122,59,253,0.15);
+}
+
+.coupon-box button {
+  background: linear-gradient(90deg, var(--pink), var(--lilac));
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-left: 4px;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.coupon-box button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(122,59,253,0.25);
+}
+
+#couponMessage {
+  font-size: 13px;
+  margin-top: 6px;
+  font-weight: 600;
+}
+
+#couponMessage.success {
+  color: #2b7a3f; /* verde sucesso */
+}
+
+#couponMessage.error {
+  color: #d62828; /* vermelho erro */
+}
+
 @keyframes pulsePrice {
   0%, 100% { text-shadow: 0 4px 12px rgba(233,107,168,0.25); }
   50% { text-shadow: 0 4px 18px rgba(233,107,168,0.45); }
