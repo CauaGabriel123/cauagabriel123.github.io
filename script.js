@@ -560,30 +560,16 @@ function showAlert(msg) {
 // =============================
 // CARRINHO PRO (com qty + migração) – v14.2.1
 // =============================
-// === LS STORE 2026 — Carrinho Modal Premium ===
-const cartBtn = document.getElementById('cart-btn');
 const cart = document.getElementById('cart');
-const cartBackdrop = document.getElementById('cart-backdrop');
+const cartBtn = document.getElementById('cart-btn');
+const cartCount = document.getElementById('cart-count');
+const cartItems = document.getElementById('cart-items');
+const cartTotal = document.getElementById('cart-total');
+const finalTotal = document.getElementById('final-total');
+const feeValue = document.getElementById('fee-value');
+const deliveryFee = document.getElementById('delivery-fee');
 const closeCart = document.getElementById('close-cart');
-
-if (cartBtn && cart && cartBackdrop && closeCart) {
-  // abrir carrinho
-  cartBtn.addEventListener('click', () => {
-    cart.classList.add('open');
-    cartBackdrop.classList.add('active');
-    document.body.style.overflow = 'hidden'; // trava rolagem do site
-  });
-
-  // fechar carrinho
-  const closeCartFn = () => {
-    cart.classList.remove('open');
-    cartBackdrop.classList.remove('active');
-    document.body.style.overflow = ''; // libera rolagem
-  };
-
-  closeCart.addEventListener('click', closeCartFn);
-  cartBackdrop.addEventListener('click', closeCartFn);
-}
+const checkout = document.getElementById('checkout');
 
 let items = JSON.parse(localStorage.getItem('cartItems') || '[]');
 
@@ -593,6 +579,13 @@ items = items.map(it => {
   return it;
 });
 localStorage.setItem('cartItems', JSON.stringify(items));
+
+// Abrir/fechar
+cartBtn && (cartBtn.onclick = () => {
+  cart.setAttribute('aria-hidden', 'false');
+  renderCart();
+});
+closeCart && (closeCart.onclick = () => cart.setAttribute('aria-hidden', 'true'));
 
 // Utilidades
 function sumQty() {
@@ -1748,8 +1741,3 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const current = window.LSModal?.current?.product;
     if (current && current.status && current.status.toLowerCase() === 'esgotado') {
-      e.preventDefault();
-      showAlert("🚫 Este produto está esgotado. Não é possível adicioná-lo ao carrinho.");
-    }
-  });
-})();
