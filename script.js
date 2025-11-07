@@ -1653,7 +1653,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const validCoupons = {
       'LS10': 0.10, // 10% de desconto
       'LS20': 0.20, // 20%
-      'PREMIUM25': 0.25, // 25%
+      'LSPRIMEIRACOMPRA': 0.25, // 25%
       'FRETEGRATIS': 0 // cupom sem desconto, só mensagem
     };
 
