@@ -1719,34 +1719,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!target) return;
 
     const current = window.LSModal?.current?.product;
-    if (current && current.status && current.status.toLowerCase() === 'esgotado') {
-    
-    // =============================
-// INICIALIZAÇÃO SEM SPLASH
-// =============================
-
-document.addEventListener('DOMContentLoaded', () => {
-  console.log('🚀 LS STORE iniciada (modo sem splash)');
-  
-  // Garante que o catálogo seja montado e renderizado
-  if (typeof buildCatalogAndRender === 'function' && Object.keys(window.catalog || {}).length === 0) {
-    console.log('🛍️ Recarregando catálogo...');
-    fetch('products_v2.json?v=' + Date.now())
-      .then(r => r.json())
-      .then(d => buildCatalogAndRender(d))
-      .catch(() => buildCatalogAndRender(FALLBACK_PRODUCTS));
-  }
-
-  // Garante que o rodapé seja renderizado mesmo se não tiver produtos ainda
-  setTimeout(() => {
-    const box = document.getElementById('footer-products');
-    if (box && !box.innerHTML.trim() && typeof renderFooterProducts === 'function') {
-      console.warn('⚠️ Rodapé vazio — renderizando fallback');
-      renderFooterProducts(FALLBACK_PRODUCTS);
+        if (current && current.status && current.status.toLowerCase() === 'esgotado') {
+      showAlert("💔 Este produto está esgotado e não pode ser adicionado ao carrinho.");
+      e.preventDefault();
     }
-  }, 2000);
-
-  // Reativa contador do carrinho e efeitos de topo
-  if (typeof refreshTotalsUI === 'function') refreshTotalsUI();
-  if (typeof updateCartCount === 'function') updateCartCount();
-});
+  });
+})();
