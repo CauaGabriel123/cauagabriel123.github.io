@@ -1752,3 +1752,46 @@ body {
 /* Garante que o botão X não role junto com o conteúdo */
 .drawer-inner,
 .cart {
+
+/* ===== Faixa de destaque (acima dos Destaques da Semana) ===== */
+.hero-banners{
+  background: linear-gradient(180deg, #ffffff, #faf4ff);
+  padding: 12px 12px 4px;
+  border-bottom: 1px solid rgba(0,0,0,.05);
+}
+
+.hero-wrap{
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 12px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.hero-item{
+  display: block;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0,0,0,.08);
+  transition: transform .18s ease, box-shadow .18s ease;
+  scroll-snap-align: start;
+  background: #fff;
+}
+
+.hero-item:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,0,0,.12);
+}
+
+.hero-item img{
+  display:block;
+  width:100%;
+  height:150px;
+  object-fit:cover;
+}
+
+@media (min-width:700px){
+  .hero-wrap{ grid-auto-columns: 32%; }
+}
