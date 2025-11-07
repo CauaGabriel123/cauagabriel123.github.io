@@ -66,11 +66,6 @@ const footerInsta = document.getElementById('footer-insta');
   });
 });
 
-  // backup no DOMContentLoaded e um último timeout independente
-  document.addEventListener('DOMContentLoaded', () => setTimeout(kill, 3500));
-  setTimeout(kill, 5000);
-})();
-
 // --- Áudio (lazy init para iOS)
 let audioCtx;
 function getCtx() {
