@@ -1740,8 +1740,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // TROQUE estes links pelos seus quando tiver
     const banners = [
-      { src: 'https://via.placeholder.com/1200x600.png?text=Banner+1', alt: 'Banner 1 LS Store' },
-      { src: 'https://via.placeholder.com/1200x600.png?text=Banner+2', alt: 'Banner 2 LS Store' },
+      { src: 'https://cauagabriel123.github.io/assets/rodape_1.PNG', alt: 'Banner 1 LS Store' },
+      { src: 'https://cauagabriel123.github.io/assets/rodape_2.PNG', alt: 'Banner 2 LS Store' },
       { src: 'https://via.placeholder.com/1200x600.png?text=Banner+3', alt: 'Banner 3 LS Store' },
     ];
 
