@@ -250,82 +250,19 @@ img { max-width:100%; display:block; }
   padding:12px; font-weight:700; cursor:pointer;
 }
 
-/* ===== LS STORE 2026 — Carrinho Modal Fixo ===== */
+/* Carrinho */
 .cart {
-  position: fixed;
-  top: 0;
-  right: 0;
-  height: 100vh;
-  width: min(420px, 95%);
-  background: #fff;
-  box-shadow: -5px 0 25px rgba(0, 0, 0, 0.3);
-  border-top-left-radius: 18px;
-  border-bottom-left-radius: 18px;
-  z-index: 10002;
-  transform: translateX(100%);
-  transition: transform 0.35s ease;
-  display: flex;
-  flex-direction: column;
+  position:fixed; right:10px; left:10px; bottom:10px;
+  background:white; border:1px solid #eee;
+  border-radius:16px; box-shadow:0 16px 40px rgba(0,0,0,.25);
+  display:none; flex-direction:column; z-index:250;
+  max-height:90vh; overflow:auto;
 }
-
-.cart.open {
-  transform: translateX(0);
-}
-
-.cart-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.45);
-  z-index: 10001;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.35s ease;
-}
-
-.cart-backdrop.active {
-  opacity: 1;
-  pointer-events: auto;
-}
-
+.cart[aria-hidden="false"]{ display:flex; }
 .cart-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px 20px;
-  background: linear-gradient(90deg, #E96BA8, #7A3BFD);
-  color: #fff;
-  border-top-left-radius: 18px;
-}
-
-.cart-header button {
-  background: transparent;
-  border: none;
-  color: #fff;
-  font-size: 22px;
-  cursor: pointer;
-}
-
-.cart-footer {
-  padding: 16px 20px;
-  border-top: 1px solid #eee;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.cart-footer button {
-  background: linear-gradient(90deg, #E96BA8, #7A3BFD);
-  color: #fff;
-  border: 0;
-  border-radius: 12px;
-  padding: 12px 0;
-  font-weight: 700;
-  cursor: pointer;
-  transition: transform 0.2s;
-}
-
-.cart-footer button:active {
-  transform: scale(0.96);
+  display:flex; justify-content:space-between;
+  align-items:center; padding:10px 14px;
+  border-bottom:1px solid #f2e6f0;
 }
 .cart-items {
   padding:12px 14px; display:flex;
@@ -1984,6 +1921,3 @@ body {
 /* Garante que o botão X não role junto com o conteúdo */
 .drawer-inner,
 .cart {
-  overflow-y: auto !important;
-  position: relative !important;
-}
