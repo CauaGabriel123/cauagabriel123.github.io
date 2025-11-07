@@ -66,22 +66,6 @@ const footerInsta = document.getElementById('footer-insta');
   });
 });
 
-// --- Splash (corrigido para travamento)
-window.addEventListener('load', () => {
-  const splash = document.getElementById('splash');
-  if (!splash) return;
-  setTimeout(() => {
-    splash.classList.add('hidden');
-    setTimeout(() => splash.remove(), 800);
-  }, 2000);
-});
-
-// Failsafe extra: garante que o splash desapareça em qualquer cenário
-(function robustSplash(){
-  const kill = () => {
-    const s = document.getElementById('splash');
-    if (s) { s.classList.add('hidden'); setTimeout(()=>s.remove(), 800); }
-  };
   // backup no DOMContentLoaded e um último timeout independente
   document.addEventListener('DOMContentLoaded', () => setTimeout(kill, 3500));
   setTimeout(kill, 5000);
