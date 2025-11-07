@@ -1637,6 +1637,52 @@ function bindModalButtons() {
   if (addBtn) addBtn.onclick = () => handleAddOrBuy("add");
   if (buyBtn) buyBtn.onclick = () => handleAddOrBuy("buy");
 }
+// ===== LS STORE 2026 — CUPOM DE DESCONTO (Premium) =====
+document.addEventListener('DOMContentLoaded', () => {
+  const input = document.getElementById('couponInput');
+  const btn = document.getElementById('applyCoupon');
+  const msg = document.getElementById('couponMessage');
+  const priceBox = document.getElementById('lsxPrice');
+
+  if (!input || !btn || !priceBox) return;
+
+  let originalPrice = null;
+
+  btn.addEventListener('click', () => {
+    const code = input.value.trim().toUpperCase();
+    const validCoupons = {
+      'LS10': 0.10, // 10% de desconto
+      'LS20': 0.20, // 20%
+      'PREMIUM25': 0.25, // 25%
+      'FRETEGRATIS': 0 // cupom sem desconto, só mensagem
+    };
+
+    if (!originalPrice) {
+      const num = parseFloat(priceBox.textContent.replace(/[^\d,]/g, '').replace(',', '.'));
+      if (!isNaN(num)) originalPrice = num;
+    }
+
+    if (validCoupons.hasOwnProperty(code)) {
+      const discount = validCoupons[code];
+      if (discount > 0) {
+        const newPrice = originalPrice * (1 - discount);
+        priceBox.innerHTML = `R$ ${newPrice.toFixed(2).replace('.', ',')} <span style="text-decoration:line-through;color:#888;margin-left:8px">R$ ${originalPrice.toFixed(2).replace('.', ',')}</span>`;
+        msg.textContent = `✅ Cupom "${code}" aplicado com sucesso! (${discount * 100}% OFF)`;
+        msg.style.color = '#7A3BFD';
+      } else {
+        msg.textContent = `🚚 Frete grátis aplicado!`;
+        msg.style.color = '#E96BA8';
+      }
+    } else if (code === '') {
+      msg.textContent = '';
+      priceBox.textContent = `R$ ${originalPrice.toFixed(2).replace('.', ',')}`;
+    } else {
+      msg.textContent = '⚠️ Cupom inválido.';
+      msg.style.color = '#E96BA8';
+      priceBox.textContent = `R$ ${originalPrice.toFixed(2).replace('.', ',')}`;
+    }
+  });
+});
 function open(id){
   getProducts().then(list=>{
     const p = list.find(x=>String(x.id)===String(id));
