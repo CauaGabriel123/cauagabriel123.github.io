@@ -862,13 +862,20 @@ checkout.onclick = () => {
   let total = sumTotal();
   if (typeof feeRaw === 'number') total += feeRaw;
 
-  let valorPago = '', troco = '';
+    let valorPago = '', troco = '';
   if (payment === 'Dinheiro') {
-    const trocoOp = [...cashRadios].find(r => r.checked)?.value || 'nao';
+    // 🔧 Corrigido: busca o grupo correto de botões "cash-change"
+    const trocoRadios = document.querySelectorAll('input[name="cash-change"]');
+    const trocoOp = [...trocoRadios].find(r => r.checked)?.value || 'nao';
+    
     if (trocoOp === 'sim' && cashAmount.value) {
       valorPago = parseFloat(cashAmount.value.replace(',', '.')).toFixed(2).replace('.', ',');
       troco = (parseFloat(valorPago.replace(',', '.')) - total).toFixed(2).replace('.', ',');
-    } else troco = 'Não precisa';
+    } else if (trocoOp === 'sim' && !cashAmount.value) {
+      troco = 'Cliente pediu troco, mas não informou o valor.';
+    } else {
+      troco = 'Não precisa';
+    }
   }
 
   const itensTxt = items.map(it => `
