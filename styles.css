@@ -1817,3 +1817,80 @@ body {
 /* Garante que o botão X não role junto com o conteúdo */
 .drawer-inner,
 .cart {
+
+/* ===== LS STORE 2026 — Carrossel Fixo com 3 Imagens ===== */
+#fixed-carousel {
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.06);
+  margin-top: 10px;
+  height: 48vh;
+  min-height: 260px;
+}
+
+#fixed-carousel .slides {
+  display: flex;
+  transition: transform 0.6s ease-in-out;
+}
+
+#fixed-carousel .slide {
+  min-width: 100%;
+  position: relative;
+}
+
+#fixed-carousel .slide img {
+  width: 100%;
+  height: 48vh;
+  object-fit: cover;
+  display: block;
+}
+
+/* Setas */
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.75);
+  color: #7A3BFD;
+  border: none;
+  font-size: 26px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+  z-index: 3;
+}
+.carousel-btn:hover {
+  background: linear-gradient(90deg, #E96BA8, #7A3BFD);
+  color: #fff;
+  transform: translateY(-50%) scale(1.1);
+}
+.carousel-btn.prev { left: 10px; }
+.carousel-btn.next { right: 10px; }
+
+/* Dots */
+#fixed-carousel .dots {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  z-index: 3;
+}
+#fixed-carousel .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.6);
+  transition: all 0.3s ease;
+}
+#fixed-carousel .dot.active {
+  background: #fff;
+  transform: scale(1.3);
+}
