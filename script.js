@@ -1676,8 +1676,31 @@ function bindModalButtons() {
     }, 800); // tempo da animação
   }
 
-  if (addBtn) addBtn.onclick = () => handleAddOrBuy("add");
-  if (buyBtn) buyBtn.onclick = () => handleAddOrBuy("buy");
+  if (addBtn) {
+  addBtn.onclick = () => {
+    const ctx = window.LSModal?.current || null;
+    const prod = ctx?.product || null;
+    if (!prod) return showAlert("Erro ao adicionar: produto não encontrado.");
+
+    // ⚠️ Validação obrigatória antes de adicionar
+    if (!validateSelections(prod)) return;
+
+    handleAddOrBuy("add");
+  };
+}
+
+if (buyBtn) {
+  buyBtn.onclick = () => {
+    const ctx = window.LSModal?.current || null;
+    const prod = ctx?.product || null;
+    if (!prod) return showAlert("Erro ao comprar: produto não encontrado.");
+
+    // ⚠️ Validação obrigatória antes de comprar
+    if (!validateSelections(prod)) return;
+
+    handleAddOrBuy("buy");
+  };
+}
 }
 function open(id){
   getProducts().then(list=>{
