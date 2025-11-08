@@ -832,11 +832,29 @@ ${
 pop.hidden = false;
 pop.classList.add('show');
 
-// Abre o WhatsApp imediatamente (ação do clique do usuário)
-window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(message)}`, '_blank');
+// === Envio garantido no iPhone e Android ===
+const encodedMsg = encodeURIComponent(message);
+const waWeb = `https://wa.me/${WHATSAPP}?text=${encodedMsg}`;
+const waApp = `whatsapp://send?phone=${WHATSAPP}&text=${encodedMsg}`;
 
-// Fecha o popup visual depois
-setTimeout(() => { pop.classList.remove('show'); pop.hidden = true; }, 2500);
+try {
+  // tenta abrir o WhatsApp Web
+  window.location.href = waWeb;
+
+  // fallback: se o navegador bloquear, tenta o app
+  setTimeout(() => {
+    window.location.href = waApp;
+  }, 1000);
+} catch (err) {
+  // última tentativa
+  window.location.href = waApp;
+}
+
+// fecha o popup visual
+setTimeout(() => {
+  pop.classList.remove('show');
+  pop.hidden = true;
+}, 2500);
 };
 
 // =============================
