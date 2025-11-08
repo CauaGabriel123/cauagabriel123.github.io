@@ -1937,3 +1937,50 @@ window.addToCart = function (product, size, color, qty = 1) {
   const discountedProduct = { ...product, price: finalPrice };
   oldAddToCart(discountedProduct, size, color, qty);
 };
+
+// ============================
+// LS STORE 2026 — Carrossel Fixo de 3 Imagens
+// ============================
+const fixedCarousel = document.getElementById('fixed-carousel');
+if (fixedCarousel) {
+  const slides = fixedCarousel.querySelectorAll('.slide');
+  const dotsContainer = fixedCarousel.querySelector('.dots');
+  const prevBtn = fixedCarousel.querySelector('.prev');
+  const nextBtn = fixedCarousel.querySelector('.next');
+  let currentSlide = 0;
+
+  // Cria dots dinamicamente
+  slides.forEach((_, i) => {
+    const dot = document.createElement('div');
+    dot.classList.add('dot');
+    if (i === 0) dot.classList.add('active');
+    dot.addEventListener('click', () => showSlide(i));
+    dotsContainer.appendChild(dot);
+  });
+
+  const dots = fixedCarousel.querySelectorAll('.dot');
+
+  function showSlide(index) {
+    slides.forEach((s, i) => {
+      s.classList.toggle('active', i === index);
+    });
+    dots.forEach((d, i) => {
+      d.classList.toggle('active', i === index);
+    });
+    fixedCarousel.querySelector('.slides').style.transform = `translateX(-${index * 100}%)`;
+    currentSlide = index;
+  }
+
+  prevBtn.addEventListener('click', () => {
+    showSlide((currentSlide - 1 + slides.length) % slides.length);
+  });
+
+  nextBtn.addEventListener('click', () => {
+    showSlide((currentSlide + 1) % slides.length);
+  });
+
+  // Auto play (5 segundos)
+  setInterval(() => {
+    showSlide((currentSlide + 1) % slides.length);
+  }, 5000);
+}
