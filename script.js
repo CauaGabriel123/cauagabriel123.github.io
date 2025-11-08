@@ -1704,7 +1704,7 @@ function fill(p) {
   // Valida botões
   validateButtons(p);
 }
-// 💎 LSX Premium Upgrade — comportamento atualizado dos botões
+// 💎 LSX Premium Upgrade — comportamento atualizado dos botões (corrigido)
 function bindModalButtons() {
   const addBtn = document.getElementById("lsxAddBtn");
   const buyBtn = document.getElementById("lsxBuyBtn");
@@ -1718,14 +1718,26 @@ function bindModalButtons() {
       return;
     }
 
-    const color = ctx.selectedColor || "Única";
-    const size = ctx.selectedSize || "ÚNICO";
+    const color = ctx.selectedColor;
+    const size = ctx.selectedSize;
     const qty = ctx.qty || 1;
 
-    // Adiciona o produto ao carrinho
-    addToCart(prod, size, color, qty);
+    // ⚠️ Se o produto tiver variações, obriga escolher cor e tamanho
+    if (prod.variations && Object.keys(prod.variations).length > 0) {
+      if (!color) {
+        showAlert("Selecione uma cor antes de adicionar 💖");
+        return;
+      }
+      if (!size && prod.variations[color] && prod.variations[color].sizes?.length > 1) {
+        showAlert("Selecione um tamanho 💜");
+        return;
+      }
+    }
 
-    // ✨ Animação: produto voando até o carrinho
+    // Adiciona ao carrinho com cor real selecionada
+    addToCart(prod, size || "ÚNICO", color || "Única", qty);
+
+    // ✨ Animação do produto voando até o carrinho
     const firstImg =
       (prod.imgs && prod.imgs[0]) ||
       (prod.images && prod.images[0]) ||
@@ -1738,49 +1750,44 @@ function bindModalButtons() {
       flyToCart(firstImg, rect.x, rect.y);
     }
 
-    // Espera o voo terminar antes de fechar / abrir carrinho
+    // Fecha modal e abre carrinho (somente no "Comprar")
     setTimeout(() => {
       const modal = document.getElementById("lsxModal");
       if (modal) modal.classList.remove("is-open");
       document.body.classList.remove("lsx-no-scroll");
 
       if (action === "buy") {
-        // Se for "COMPRAR", abre o carrinho direto
         const cart = document.getElementById("cart");
         if (cart) {
           cart.setAttribute("aria-hidden", "false");
           renderCart();
         }
       }
-      // Se for "Adicionar", não abre carrinho nem alerta
-    }, 800); // tempo da animação
+    }, 800);
   }
 
   if (addBtn) {
-  addBtn.onclick = () => {
-    const ctx = window.LSModal?.current || null;
-    const prod = ctx?.product || null;
-    if (!prod) return showAlert("Erro ao adicionar: produto não encontrado.");
+    addBtn.onclick = () => {
+      const ctx = window.LSModal?.current || null;
+      const prod = ctx?.product || null;
+      if (!prod) return showAlert("Erro ao adicionar: produto não encontrado.");
 
-    // ⚠️ Validação obrigatória antes de adicionar
-    if (!validateSelections(prod)) return;
+      // validações obrigatórias
+      if (!validateSelections(prod)) return;
+      handleAddOrBuy("add");
+    };
+  }
 
-    handleAddOrBuy("add");
-  };
-}
+  if (buyBtn) {
+    buyBtn.onclick = () => {
+      const ctx = window.LSModal?.current || null;
+      const prod = ctx?.product || null;
+      if (!prod) return showAlert("Erro ao comprar: produto não encontrado.");
 
-if (buyBtn) {
-  buyBtn.onclick = () => {
-    const ctx = window.LSModal?.current || null;
-    const prod = ctx?.product || null;
-    if (!prod) return showAlert("Erro ao comprar: produto não encontrado.");
-
-    // ⚠️ Validação obrigatória antes de comprar
-    if (!validateSelections(prod)) return;
-
-    handleAddOrBuy("buy");
-  };
-}
+      if (!validateSelections(prod)) return;
+      handleAddOrBuy("buy");
+    };
+  }
 }
 function open(id){
   getProducts().then(list=>{
