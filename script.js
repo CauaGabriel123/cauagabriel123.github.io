@@ -456,6 +456,7 @@ el.querySelectorAll('.card:not(.soldout)').forEach(c => {
     }
   };
 });
+}
 function renderAll() {
   const f = document.getElementById('featured'); if (f) renderGrid(f, featured);
   // Força aplicação visual dos esgotados nos destaques
