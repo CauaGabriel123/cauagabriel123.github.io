@@ -1918,4 +1918,5 @@ window.addToCart = function (product, size, color, qty = 1) {
 
   // Mantém preço atualizado e repassa todos os parâmetros corretamente
   const discountedProduct = { ...product, price: finalPrice };
-  oldAddToCart(discoun
+  oldAddToCart(discountedProduct, size, color, qty);
+};
