@@ -667,25 +667,32 @@ function renderCart() {
   refreshTotalsUI();
 }
 
-// === CORREÇÃO DEFINITIVA: cor obrigatória + exibir certo ===
+// === CORREÇÃO DEFINITIVA (revisada) ===
 function addToCart(prod, size, color, qty = 1) {
-  // 🔒 se o produto tiver variações de cor e o cliente não escolher, bloqueia
-  if (prod.variations && prod.variations.length > 0) {
-    const coresDisponiveis = prod.variations.map(v => v.color?.trim()).filter(Boolean);
-    const temCores = coresDisponiveis.length > 0;
-    if (temCores && (!color || color === "Padrão")) {
-      showAlertLS("Selecione uma cor antes de adicionar ao carrinho 💖", "error");
+  // 🔒 COR obrigatória se o produto tiver variações
+  if (prod.variations && Object.keys(prod.variations).length > 0) {
+    const coresDisponiveis = Object.keys(prod.variations);
+    if (coresDisponiveis.length > 0 && (!color || color === "Padrão")) {
+      showAlert("Selecione uma cor antes de adicionar ao carrinho 💖");
       return;
     }
   }
 
-  // 🔧 garante tamanho válido (cor agora obrigatória acima)
+  // 🔧 tamanho padrão
   size = size || "ÚNICO";
 
-  // agrupa por (id+size+color)
+  // 🛍️ novo item
   const key = (x) => `${x.id}|${x.name}|${x.size}|${x.color}`;
-  const newLine = { id: prod.id, name: prod.name, size, color, price: prod.price, qty: Math.max(1, qty | 0) };
-    // ⚠️ Limita a quantidade conforme estoque do produto selecionado
+  const newLine = { 
+    id: prod.id, 
+    name: prod.name, 
+    size, 
+    color, 
+    price: prod.price, 
+    qty: Math.max(1, qty | 0) 
+  };
+
+  // ⚠️ Limita conforme estoque da cor escolhida
   const maxStock = (prod.variations && prod.variations[color])
     ? prod.variations[color].stock
     : (prod.stock || 5);
@@ -697,23 +704,20 @@ function addToCart(prod, size, color, qty = 1) {
 
   const pos = items.findIndex(it => key(it) === key(newLine));
   if (pos >= 0) {
-  const maxStock = (prod.variations && prod.variations[color])
-    ? prod.variations[color].stock
-    : (prod.stock || 5);
-
-  const newTotal = items[pos].qty + newLine.qty;
-  if (newTotal > maxStock) {
-    items[pos].qty = maxStock;
-    showAlert(`⚠️ Estoque máximo atingido: ${maxStock} unidades.`);
-  } else {
-    items[pos].qty = newTotal;
-  }
+    const newTotal = items[pos].qty + newLine.qty;
+    if (newTotal > maxStock) {
+      items[pos].qty = maxStock;
+      showAlert(`⚠️ Estoque máximo atingido: ${maxStock} unidades.`);
+    } else {
+      items[pos].qty = newTotal;
+    }
   } else {
     items.push(newLine);
   }
+
   localStorage.setItem('cartItems', JSON.stringify(items));
 
-  // efeito e feedback
+  // ✨ animação
   const firstImg = (prod.imgs && prod.imgs[0]) || prod.img || '';
   if (firstImg) {
     const btn = document.getElementById('modal-add') || document.getElementById('lsxAddBtn');
@@ -722,9 +726,9 @@ function addToCart(prod, size, color, qty = 1) {
       flyToCart(firstImg, rect.x, rect.y);
     }
   }
+
   cartBtn.classList.add('pulse');
   setTimeout(() => cartBtn.classList.remove('pulse'), 400);
-
   renderCart();
   refreshTotalsUI();
   const el = document.getElementById('cart-count');
