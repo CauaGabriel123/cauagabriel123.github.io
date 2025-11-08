@@ -442,11 +442,20 @@ function renderGrid(el, arr) {
   }).join('');
 
   // Só permite clique se o produto NÃO estiver esgotado
-  el.querySelectorAll('.card:not(.soldout)').forEach(c => {
-    c.onclick = () => LSModal.open(c.getAttribute('data-id'));
-  });
-}
-
+el.querySelectorAll('.card:not(.soldout)').forEach(c => {
+  c.onclick = () => {
+    const id = c.getAttribute('data-id');
+    // garante que LSModal existe antes de chamar
+    if (window.LSModal && typeof LSModal.open === "function") {
+      LSModal.open(id);
+    } else {
+      setTimeout(() => {
+        if (window.LSModal && typeof LSModal.open === "function") LSModal.open(id);
+        else showAlert("⚠️ O modal ainda está carregando. Tente novamente em 1 segundo.");
+      }, 600);
+    }
+  };
+});
 function renderAll() {
   const f = document.getElementById('featured'); if (f) renderGrid(f, featured);
   // Força aplicação visual dos esgotados nos destaques
