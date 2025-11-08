@@ -758,6 +758,56 @@ const neighborhood = document.getElementById('neighborhood');
 const orderNotes = document.getElementById('order-notes');
 const cashRadios = document.querySelectorAll('input[name="troco"]');
 const cashAmount = document.getElementById('cash-amount');
+// === EXIBIÇÃO DINÂMICA DE CAMPOS DE ENTREGA E TROCO ===
+document.addEventListener('DOMContentLoaded', () => {
+  const paymentSel = document.getElementById('payment');
+  const deliverySel = document.getElementById('delivery-type');
+  const cashSection = document.getElementById('cash-section');
+  const cashAmount = document.getElementById('cash-amount');
+  const addressFields = document.getElementById('address-fields');
+  const cashRadios = document.querySelectorAll('input[name="cash-change"]');
+
+  // --- Função para atualizar exibição dos campos ---
+  function updateVisibility() {
+    // Exibir/ocultar campos de endereço
+    if (deliverySel && deliverySel.value.toLowerCase() === 'entrega') {
+      addressFields.style.display = 'block';
+    } else {
+      addressFields.style.display = 'none';
+    }
+
+    // Exibir/ocultar seção de troco
+    if (paymentSel && paymentSel.value.toLowerCase() === 'dinheiro') {
+      cashSection.style.display = 'block';
+    } else {
+      cashSection.style.display = 'none';
+      cashAmount.style.display = 'none';
+    }
+  }
+
+  // --- Eventos de mudança ---
+  if (paymentSel) {
+    paymentSel.addEventListener('change', updateVisibility);
+  }
+  if (deliverySel) {
+    deliverySel.addEventListener('change', updateVisibility);
+  }
+
+  // --- Mostrar campo de valor de troco quando seleciona "sim" ---
+  cashRadios.forEach(radio => {
+    radio.addEventListener('change', () => {
+      if (radio.value === 'sim' && radio.checked) {
+        cashAmount.style.display = 'inline-block';
+      } else if (radio.value === 'nao' && radio.checked) {
+        cashAmount.style.display = 'none';
+        cashAmount.value = '';
+      }
+    });
+  });
+
+  // --- Estado inicial ---
+  updateVisibility();
+});
 checkout.onclick = () => {
   if (items.length === 0) { showAlert('Seu carrinho está vazio.'); return; }
   if (!nameInput.value.trim()) { showAlert('Por favor, informe seu nome.'); return; }
