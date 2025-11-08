@@ -749,7 +749,14 @@ function refreshFinalTotals() {
   finalTotal.textContent = final.toFixed(2).replace('.', ',');
 }
 refreshTotalsUI();
-
+// 🔧 Correção: conectar campos do formulário
+const nameInput = document.getElementById('client-name');
+const paymentSel = document.getElementById('payment');
+const deliveryType = document.getElementById('delivery-type');
+const neighborhood = document.getElementById('neighborhood');
+const orderNotes = document.getElementById('order-notes');
+const cashRadios = document.querySelectorAll('input[name="troco"]');
+const cashAmount = document.getElementById('cash-amount');
 checkout.onclick = () => {
   if (items.length === 0) { showAlert('Seu carrinho está vazio.'); return; }
   if (!nameInput.value.trim()) { showAlert('Por favor, informe seu nome.'); return; }
