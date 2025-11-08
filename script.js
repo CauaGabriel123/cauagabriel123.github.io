@@ -1697,7 +1697,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.target.dataset.close) modal.hidden = true;
   });
 });
-})(); // <-- fecha a função protectSoldOutProducts (não apaga isso)
 
 // ===== LS STORE • Sistema de Cupons (Produto Individual) =====
 const COUPONS = {
