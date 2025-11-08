@@ -829,11 +829,14 @@ ${
   const url = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(message)}`;
 
   const pop = document.getElementById('popup-overlay');
-  pop.hidden = false;
-  pop.classList.add('show');
+pop.hidden = false;
+pop.classList.add('show');
 
-  setTimeout(() => { window.location.href = url; }, 1000);
-  setTimeout(() => { pop.classList.remove('show'); pop.hidden = true; }, 3500);
+// Abre o WhatsApp imediatamente (ação do clique do usuário)
+window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(message)}`, '_blank');
+
+// Fecha o popup visual depois
+setTimeout(() => { pop.classList.remove('show'); pop.hidden = true; }, 2500);
 };
 
 // =============================
