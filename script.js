@@ -1583,115 +1583,60 @@ function fill(p) {
   validateButtons(p);
 }
 // 💎 LSX Premium Upgrade — comportamento atualizado dos botões
-function handleAddOrBuy(action) {
-  const ctx = window.LSModal?.current || null;
-  const prod = ctx?.product || null;
+function bindModalButtons() {
+  const addBtn = document.getElementById("lsxAddBtn");
+  const buyBtn = document.getElementById("lsxBuyBtn");
 
-  if (!prod) {
-    showAlert("Erro ao adicionar: produto não encontrado.");
-    return;
-  }
+  function handleAddOrBuy(action) {
+    const ctx = window.LSModal?.current || null;
+    const prod = ctx?.product || null;
 
-  const color = ctx.selectedColor || "Única";
-  const size = ctx.selectedSize || "ÚNICO";
-  const qty = ctx.qty || 1;
-
-  // 💖 CAPTURA O DESCONTO DO CUPOM (se houver)
-  const msg = document.getElementById("couponMessage");
-  let finalPrice = prod.price;
-  if (msg && msg.textContent.includes("% OFF")) {
-    const match = msg.textContent.match(/\((\d+)% OFF\)/);
-    if (match) {
-      const desconto = parseFloat(match[1]);
-      finalPrice = prod.price * (1 - desconto / 100);
+    if (!prod) {
+      showAlert("Erro ao adicionar: produto não encontrado.");
+      return;
     }
-  }
 
-  // Cria cópia do produto com preço final atualizado
-  const productWithDiscount = { ...prod, price: finalPrice };
+    const color = ctx.selectedColor || "Única";
+    const size = ctx.selectedSize || "ÚNICO";
+    const qty = ctx.qty || 1;
 
-  // Adiciona o produto ao carrinho
-  addToCart(productWithDiscount, size, color, qty);
+    // Adiciona o produto ao carrinho
+    addToCart(prod, size, color, qty);
 
-  // ✨ Animação visual
-  const firstImg =
-    (prod.imgs && prod.imgs[0]) ||
-    (prod.images && prod.images[0]) ||
-    prod.img ||
-    prod.image ||
-    "";
-  const originBtn = action === "buy" ? buyBtn : addBtn;
-  if (firstImg && originBtn) {
-    const rect = originBtn.getBoundingClientRect();
-    flyToCart(firstImg, rect.x, rect.y);
-  }
+    // ✨ Animação: produto voando até o carrinho
+    const firstImg =
+      (prod.imgs && prod.imgs[0]) ||
+      (prod.images && prod.images[0]) ||
+      prod.img ||
+      prod.image ||
+      "";
+    const originBtn = action === "buy" ? buyBtn : addBtn;
+    if (firstImg && originBtn) {
+      const rect = originBtn.getBoundingClientRect();
+      flyToCart(firstImg, rect.x, rect.y);
+    }
 
-  // Espera o voo terminar antes de fechar / abrir carrinho
-  setTimeout(() => {
-    const modal = document.getElementById("lsxModal");
-    if (modal) modal.classList.remove("is-open");
-    document.body.classList.remove("lsx-no-scroll");
+    // Espera o voo terminar antes de fechar / abrir carrinho
+    setTimeout(() => {
+      const modal = document.getElementById("lsxModal");
+      if (modal) modal.classList.remove("is-open");
+      document.body.classList.remove("lsx-no-scroll");
 
-    if (action === "buy") {
-      // Se for "COMPRAR", abre o carrinho direto
-      const cart = document.getElementById("cart");
-      if (cart) {
-        cart.setAttribute("aria-hidden", "false");
-        renderCart();
+      if (action === "buy") {
+        // Se for "COMPRAR", abre o carrinho direto
+        const cart = document.getElementById("cart");
+        if (cart) {
+          cart.setAttribute("aria-hidden", "false");
+          renderCart();
+        }
       }
-    }
-  }, 800);
-}
+      // Se for "Adicionar", não abre carrinho nem alerta
+    }, 800); // tempo da animação
+  }
 
   if (addBtn) addBtn.onclick = () => handleAddOrBuy("add");
   if (buyBtn) buyBtn.onclick = () => handleAddOrBuy("buy");
 }
-// ===== LS STORE 2026 — CUPOM DE DESCONTO (Premium) =====
-document.addEventListener('DOMContentLoaded', () => {
-  const input = document.getElementById('couponInput');
-  const btn = document.getElementById('applyCoupon');
-  const msg = document.getElementById('couponMessage');
-  const priceBox = document.getElementById('lsxPrice');
-
-  if (!input || !btn || !priceBox) return;
-
-  let originalPrice = null;
-
-  btn.addEventListener('click', () => {
-    const code = input.value.trim().toUpperCase();
-    const validCoupons = {
-      'LS10': 0.10, // 10% de desconto
-      'LS20': 0.20, // 20%
-      'LSPRIMEIRACOMPRA': 0.25, // 25%
-      'FRETEGRATIS': 0 // cupom sem desconto, só mensagem
-    };
-
-    if (!originalPrice) {
-      const num = parseFloat(priceBox.textContent.replace(/[^\d,]/g, '').replace(',', '.'));
-      if (!isNaN(num)) originalPrice = num;
-    }
-
-    if (validCoupons.hasOwnProperty(code)) {
-      const discount = validCoupons[code];
-      if (discount > 0) {
-        const newPrice = originalPrice * (1 - discount);
-        priceBox.innerHTML = `R$ ${newPrice.toFixed(2).replace('.', ',')} <span style="text-decoration:line-through;color:#888;margin-left:8px">R$ ${originalPrice.toFixed(2).replace('.', ',')}</span>`;
-        msg.textContent = `✅ Cupom "${code}" aplicado com sucesso! (${discount * 100}% OFF)`;
-        msg.style.color = '#7A3BFD';
-      } else {
-        msg.textContent = `🚚 Frete grátis aplicado!`;
-        msg.style.color = '#E96BA8';
-      }
-    } else if (code === '') {
-      msg.textContent = '';
-      priceBox.textContent = `R$ ${originalPrice.toFixed(2).replace('.', ',')}`;
-    } else {
-      msg.textContent = '⚠️ Cupom inválido.';
-      msg.style.color = '#E96BA8';
-      priceBox.textContent = `R$ ${originalPrice.toFixed(2).replace('.', ',')}`;
-    }
-  });
-});
 function open(id){
   getProducts().then(list=>{
     const p = list.find(x=>String(x.id)===String(id));
@@ -1780,58 +1725,3 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 })();
-
-/* ===== LS STORE — Hero fixo com 3 imagens (corrigido) ===== */
-document.addEventListener('DOMContentLoaded', () => {
-  // Espera o carregamento completo do DOM e garante que o container existe
-  const tryInitHero = () => {
-    const slides = document.getElementById('carousel-slides');
-    const dots   = document.getElementById('carousel-dots');
-    if (!slides || !dots) {
-      // tenta novamente até encontrar o elemento
-      return setTimeout(tryInitHero, 300);
-    }
-
-    // limpa o que havia antes
-    slides.innerHTML = '';
-    dots.innerHTML = '';
-
-    const banners = [
-      { src: 'https://cauagabriel123.github.io/assets/rodape_3.PNG', alt: 'Banner 1 LS Store' },
-      { src: 'https://cauagabriel123.github.io/assets/rodape_2.PNG', alt: 'Banner 2 LS Store' },
-      { src: 'https://cauagabriel123.github.io/assets/rodape_4.png', alt: 'Banner 3 LS Store' },
-    ];
-
-    // monta slides e pontinhos
-    banners.forEach((b, i) => {
-      const wrap = document.createElement('div');
-      wrap.className = 'slide';
-      wrap.innerHTML = `<img src="${b.src}" alt="${b.alt}" style="width:100%;border-radius:12px;">`;
-      slides.appendChild(wrap);
-
-      const dot = document.createElement('button');
-      dot.className = 'dot' + (i === 0 ? ' active' : '');
-      dot.setAttribute('aria-label', `Ir para banner ${i+1}`);
-      dots.appendChild(dot);
-    });
-
-    let index = 0;
-    function goTo(i) {
-      index = i;
-      slides.style.transform = `translateX(-${index * 100}%)`;
-      Array.from(dots.children).forEach((d, k) => d.classList.toggle('active', k === index));
-    }
-
-    dots.querySelectorAll('.dot').forEach((d, i) => d.onclick = () => goTo(i));
-
-    // autoplay leve
-    const AUTOPLAY_MS = 5000;
-    setInterval(() => goTo((index + 1) % banners.length), AUTOPLAY_MS);
-
-    goTo(0);
-  };
-
-  // inicia o hero
-  tryInitHero();
-});
-/* ===== /Hero fixo corrigido ===== */
