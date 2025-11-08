@@ -1732,23 +1732,27 @@ document.addEventListener("click", e => {
     }
 
     if (COUPONS[code]) {
-  appliedCoupon = code;
-  const discount = COUPONS[code];
-  const originalPrice = parseFloat(priceEl.dataset.originalPrice || priceEl.textContent.replace(/[^\d,]/g, "").replace(",", "."));
-  const newPrice = (originalPrice * (1 - discount)).toFixed(2);
+      appliedCoupon = code;
+      const discount = COUPONS[code];
+      const originalPrice = parseFloat(priceEl.dataset.originalPrice || priceEl.textContent.replace(/[^\d,]/g, "").replace(",", "."));
+      const newPrice = (originalPrice * (1 - discount)).toFixed(2);
 
-  // 🔥 Mostra preço novo + antigo riscado
-  priceEl.innerHTML = `
-    R$ ${newPrice.replace(".", ",")}
-    <span style="text-decoration:line-through;color:#8a7aa5;font-size:14px;margin-left:8px;">
-      R$ ${originalPrice.toFixed(2).replace(".", ",")}
-    </span>
-  `;
+      // 🔥 Mostra preço novo + antigo riscado
+      priceEl.innerHTML = `
+        R$ ${newPrice.replace(".", ",")}
+        <span style="text-decoration:line-through;color:#8a7aa5;font-size:14px;margin-left:8px;">
+          R$ ${originalPrice.toFixed(2).replace(".", ",")}
+        </span>
+      `;
 
-  priceEl.dataset.discountedPrice = newPrice;
-  message.textContent = `✔️ Cupom ${code} aplicado: ${discount * 100}% de desconto!`;
-  message.style.color = "#27ae60";
-}
+      priceEl.dataset.discountedPrice = newPrice;
+      message.textContent = `🏷️ Cupom ${code} aplicado com sucesso!`;
+      message.style.color = "#27ae60";
+    } else {
+      // 💥 ESTA PARTE FALTAVA
+      message.textContent = "❌ Cupom inválido!";
+      message.style.color = "#e91e63";
+    }
   }
 });
 
