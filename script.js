@@ -1781,36 +1781,37 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 })();
 
-/* ===== LS STORE — Hero fixo com 3 imagens (substitui produtos) ===== */
+/* ===== LS STORE — Hero fixo com 3 imagens (corrigido) ===== */
 document.addEventListener('DOMContentLoaded', () => {
-  // dá um pequeno delay para garantir que nada sobrescreva depois
-  setTimeout(() => {
+  // Espera o carregamento completo do DOM e garante que o container existe
+  const tryInitHero = () => {
     const slides = document.getElementById('carousel-slides');
     const dots   = document.getElementById('carousel-dots');
-    if (!slides || !dots) return;
+    if (!slides || !dots) {
+      // tenta novamente até encontrar o elemento
+      return setTimeout(tryInitHero, 300);
+    }
 
-    // LIMPA qualquer conteúdo que o código antigo tenha colocado
+    // limpa o que havia antes
     slides.innerHTML = '';
     dots.innerHTML = '';
 
-    // TROQUE estes links pelos seus quando tiver
     const banners = [
       { src: 'https://cauagabriel123.github.io/assets/rodape_3.PNG', alt: 'Banner 1 LS Store' },
       { src: 'https://cauagabriel123.github.io/assets/rodape_2.PNG', alt: 'Banner 2 LS Store' },
       { src: 'https://cauagabriel123.github.io/assets/rodape_4.png', alt: 'Banner 3 LS Store' },
     ];
 
-    // monta os slides e os pontinhos
+    // monta slides e pontinhos
     banners.forEach((b, i) => {
       const wrap = document.createElement('div');
       wrap.className = 'slide';
-      wrap.innerHTML = `<img src="${b.src}" alt="${b.alt}">`;
+      wrap.innerHTML = `<img src="${b.src}" alt="${b.alt}" style="width:100%;border-radius:12px;">`;
       slides.appendChild(wrap);
 
       const dot = document.createElement('button');
       dot.className = 'dot' + (i === 0 ? ' active' : '');
       dot.setAttribute('aria-label', `Ir para banner ${i+1}`);
-      dot.addEventListener('click', () => goTo(i));
       dots.appendChild(dot);
     });
 
@@ -1821,12 +1822,16 @@ document.addEventListener('DOMContentLoaded', () => {
       Array.from(dots.children).forEach((d, k) => d.classList.toggle('active', k === index));
     }
 
-    // autoplay opcional
-    const AUTOPLAY_MS = 5000; // troque se quiser
+    dots.querySelectorAll('.dot').forEach((d, i) => d.onclick = () => goTo(i));
+
+    // autoplay leve
+    const AUTOPLAY_MS = 5000;
     setInterval(() => goTo((index + 1) % banners.length), AUTOPLAY_MS);
 
-    // inicia no primeiro
     goTo(0);
-  }, 200); // garante que roda por último
+  };
+
+  // inicia o hero
+  tryInitHero();
 });
-/* ===== /Hero fixo ===== */
+/* ===== /Hero fixo corrigido ===== */
