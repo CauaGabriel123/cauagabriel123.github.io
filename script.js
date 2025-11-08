@@ -667,11 +667,20 @@ function renderCart() {
   refreshTotalsUI();
 }
 
-// === CORREÇÃO DO UNDEFINED (cor e tamanho) ===
+// === CORREÇÃO DEFINITIVA: cor obrigatória + exibir certo ===
 function addToCart(prod, size, color, qty = 1) {
-  // 🔧 Evita "undefined" no carrinho
+  // 🔒 se o produto tiver variações de cor e o cliente não escolher, bloqueia
+  if (prod.variations && prod.variations.length > 0) {
+    const coresDisponiveis = prod.variations.map(v => v.color?.trim()).filter(Boolean);
+    const temCores = coresDisponiveis.length > 0;
+    if (temCores && (!color || color === "Padrão")) {
+      showAlertLS("Selecione uma cor antes de adicionar ao carrinho 💖", "error");
+      return;
+    }
+  }
+
+  // 🔧 garante tamanho válido (cor agora obrigatória acima)
   size = size || "ÚNICO";
-  color = color || "Padrão";
 
   // agrupa por (id+size+color)
   const key = (x) => `${x.id}|${x.name}|${x.size}|${x.color}`;
