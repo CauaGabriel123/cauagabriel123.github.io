@@ -667,10 +667,15 @@ function renderCart() {
   refreshTotalsUI();
 }
 
+// === CORREÇÃO DO UNDEFINED (cor e tamanho) ===
 function addToCart(prod, size, color, qty = 1) {
+  // 🔧 Evita "undefined" no carrinho
+  size = size || "ÚNICO";
+  color = color || "Padrão";
+
   // agrupa por (id+size+color)
   const key = (x) => `${x.id}|${x.name}|${x.size}|${x.color}`;
-  const newLine = { id: prod.id, name: prod.name, size, color, price: prod.price, qty: Math.max(1, qty|0) };
+  const newLine = { id: prod.id, name: prod.name, size, color, price: prod.price, qty: Math.max(1, qty | 0) };
     // ⚠️ Limita a quantidade conforme estoque do produto selecionado
   const maxStock = (prod.variations && prod.variations[color])
     ? prod.variations[color].stock
@@ -750,6 +755,18 @@ function refreshFinalTotals() {
   finalTotal.textContent = final.toFixed(2).replace('.', ',');
 }
 refreshTotalsUI();
+// === CORREÇÃO DA TELE (atualiza ao trocar entrega/bairro) ===
+document.addEventListener('DOMContentLoaded', () => {
+  const deliverySel = document.getElementById('delivery-type');
+  const bairroSel = document.getElementById('neighborhood');
+
+  if (deliverySel) {
+    deliverySel.addEventListener('change', refreshFinalTotals);
+  }
+  if (bairroSel) {
+    bairroSel.addEventListener('change', refreshFinalTotals);
+  }
+});
 // 🔧 Correção: conectar campos do formulário
 const nameInput = document.getElementById('client-name');
 const paymentSel = document.getElementById('payment');
