@@ -815,6 +815,7 @@ checkout.onclick = () => {
 ${itensTxt}
 
 💳 *Pagamento:* ${payment}
+${appliedCoupon ? `🏷️ *Cupom:* ${appliedCoupon} (${COUPONS[appliedCoupon] * 100}% off aplicado)` : ''}
 🚚 *Taxa de entrega:* ${taxaTxt}
 💰 *Total final:* R$ ${total.toFixed(2).replace('.', ',')}
 ${
