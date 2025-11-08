@@ -10,7 +10,7 @@
 const { jsPDF } = window.jspdf;
 
 // --- Configurações principais
-const WHATSAPP = '5551989235482';
+const WHATSAPP = '+5551989235482';
 const ADMIN_MODE = new URLSearchParams(location.search).get('admin') === 'true';
 const FEES = {
   "Mathias Velho": 5, "Harmonia": 6, "Mato Grande": 7, "São Luís": 8,
