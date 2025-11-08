@@ -669,6 +669,10 @@ function renderCart() {
 
 // === CORREÇÃO DEFINITIVA (revisada) ===
 function addToCart(prod, size, color, qty = 1) {
+  // 🔧 Corrige valores vazios (evita undefined no carrinho)
+  size = size || "ÚNICO";
+  color = color || "Única";
+
   // 🔒 COR obrigatória se o produto tiver variações
   if (prod.variations && Object.keys(prod.variations).length > 0) {
     const coresDisponiveis = Object.keys(prod.variations);
@@ -677,9 +681,6 @@ function addToCart(prod, size, color, qty = 1) {
       return;
     }
   }
-
-  // 🔧 tamanho padrão
-  size = size || "ÚNICO";
 
   // 🛍️ novo item
   const key = (x) => `${x.id}|${x.name}|${x.size}|${x.color}`;
