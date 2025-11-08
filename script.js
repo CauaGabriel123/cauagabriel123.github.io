@@ -781,6 +781,14 @@ document.addEventListener('DOMContentLoaded', () => {
     bairroSel.addEventListener('change', refreshFinalTotals);
   }
 });
+// 🔧 Correção: conectar campos do formulário
+const nameInput = document.getElementById('client-name');
+const paymentSel = document.getElementById('payment');
+const deliveryType = document.getElementById('delivery-type');
+const neighborhood = document.getElementById('neighborhood');
+const orderNotes = document.getElementById('order-notes');
+const cashRadios = document.querySelectorAll('input[name="troco"]');
+const cashAmount = document.getElementById('cash-amount');
 // === EXIBIÇÃO DINÂMICA DE CAMPOS DE ENTREGA E TROCO ===
 document.addEventListener('DOMContentLoaded', () => {
   const paymentSel = document.getElementById('payment');
@@ -855,7 +863,7 @@ checkout.onclick = () => {
   if (typeof feeRaw === 'number') total += feeRaw;
 
   let valorPago = '', troco = '';
-  if (payment.toLowerCase() === 'dinheiro') {
+  if (payment === 'Dinheiro') {
     const trocoOp = [...cashRadios].find(r => r.checked)?.value || 'nao';
     if (trocoOp === 'sim' && cashAmount.value) {
       valorPago = parseFloat(cashAmount.value.replace(',', '.')).toFixed(2).replace('.', ',');
@@ -1910,5 +1918,4 @@ window.addToCart = function (product, size, color, qty = 1) {
 
   // Mantém preço atualizado e repassa todos os parâmetros corretamente
   const discountedProduct = { ...product, price: finalPrice };
-  oldAddToCart(discountedProduct, size, color, qty);
-};
+  oldAddToCart(discoun
