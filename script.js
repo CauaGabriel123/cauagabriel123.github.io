@@ -1909,12 +1909,14 @@ function setOriginalPriceValue(price) {
 }
 
 const oldAddToCart = window.addToCart;
-window.addToCart = function (product, qty = 1) {
+window.addToCart = function (product, size, color, qty = 1) {
   const priceEl = document.getElementById("lsxPrice");
   let finalPrice = product.price;
   if (priceEl && priceEl.dataset.discountedPrice) {
     finalPrice = parseFloat(priceEl.dataset.discountedPrice);
   }
+
+  // Mantém preço atualizado e repassa todos os parâmetros corretamente
   const discountedProduct = { ...product, price: finalPrice };
-  oldAddToCart(discountedProduct, qty);
+  oldAddToCart(discountedProduct, size, color, qty);
 };
