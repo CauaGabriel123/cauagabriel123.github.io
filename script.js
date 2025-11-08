@@ -1402,49 +1402,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }, 3000); // troca a cada 3 segundos
 });
-// === Suporte a toque (arrastar com o dedo) no carrossel fixo ===
-if (fixedCarousel) {
-  const slidesContainer = fixedCarousel.querySelector('.slides');
-  let startX = 0;
-  let deltaX = 0;
-  let isDragging = false;
-
-  function startTouch(e) {
-    isDragging = true;
-    startX = e.touches ? e.touches[0].clientX : e.clientX;
-    deltaX = 0;
-  }
-
-  function moveTouch(e) {
-    if (!isDragging) return;
-    const x = e.touches ? e.touches[0].clientX : e.clientX;
-    deltaX = x - startX;
-  }
-
-  function endTouch() {
-    if (!isDragging) return;
-    isDragging = false;
-    const threshold = 40; // mínimo de pixels pra trocar
-    if (deltaX > threshold) {
-      // arrastou pra direita → anterior
-      showSlide((currentSlide - 1 + slides.length) % slides.length);
-    } else if (deltaX < -threshold) {
-      // arrastou pra esquerda → próximo
-      showSlide((currentSlide + 1) % slides.length);
-    }
-    deltaX = 0;
-  }
-
-  slidesContainer.addEventListener('touchstart', startTouch, { passive: true });
-  slidesContainer.addEventListener('touchmove', moveTouch, { passive: true });
-  slidesContainer.addEventListener('touchend', endTouch);
-
-  // também funciona com mouse no PC
-  slidesContainer.addEventListener('mousedown', startTouch);
-  slidesContainer.addEventListener('mousemove', moveTouch);
-  slidesContainer.addEventListener('mouseup', endTouch);
-  slidesContainer.addEventListener('mouseleave', () => (isDragging = false));
-}
 /* ===== LS STORE • Product Modal (Isolado) — v14.2.1 (variations + qty) ===== */
 (function () {
   const $  = (sel, ctx=document) => ctx.querySelector(sel);
@@ -1982,10 +1939,11 @@ window.addToCart = function (product, size, color, qty = 1) {
 };
 
 // ============================
-// LS STORE 2026 — Carrossel Fixo de 3 Imagens
+// LS STORE 2026 — Carrossel Fixo de 3 Imagens (com suporte a toque)
 // ============================
 const fixedCarousel = document.getElementById('fixed-carousel');
 if (fixedCarousel) {
+  const slidesContainer = fixedCarousel.querySelector('.slides');
   const slides = fixedCarousel.querySelectorAll('.slide');
   const dotsContainer = fixedCarousel.querySelector('.dots');
   const prevBtn = fixedCarousel.querySelector('.prev');
@@ -2004,20 +1962,15 @@ if (fixedCarousel) {
   const dots = fixedCarousel.querySelectorAll('.dot');
 
   function showSlide(index) {
-    slides.forEach((s, i) => {
-      s.classList.toggle('active', i === index);
-    });
-    dots.forEach((d, i) => {
-      d.classList.toggle('active', i === index);
-    });
-    fixedCarousel.querySelector('.slides').style.transform = `translateX(-${index * 100}%)`;
+    slides.forEach((s, i) => s.classList.toggle('active', i === index));
+    dots.forEach((d, i) => d.classList.toggle('active', i === index));
+    slidesContainer.style.transform = `translateX(-${index * 100}%)`;
     currentSlide = index;
   }
 
   prevBtn.addEventListener('click', () => {
     showSlide((currentSlide - 1 + slides.length) % slides.length);
   });
-
   nextBtn.addEventListener('click', () => {
     showSlide((currentSlide + 1) % slides.length);
   });
@@ -2026,4 +1979,39 @@ if (fixedCarousel) {
   setInterval(() => {
     showSlide((currentSlide + 1) % slides.length);
   }, 5000);
+
+  // === Suporte a toque (arrastar com o dedo) ===
+  let startX = 0;
+  let deltaX = 0;
+  let isDragging = false;
+
+  function startTouch(e) {
+    isDragging = true;
+    startX = e.touches ? e.touches[0].clientX : e.clientX;
+    deltaX = 0;
+  }
+  function moveTouch(e) {
+    if (!isDragging) return;
+    const x = e.touches ? e.touches[0].clientX : e.clientX;
+    deltaX = x - startX;
+  }
+  function endTouch() {
+    if (!isDragging) return;
+    isDragging = false;
+    const threshold = 40; // mínimo de pixels pra trocar
+    if (deltaX > threshold) {
+      showSlide((currentSlide - 1 + slides.length) % slides.length);
+    } else if (deltaX < -threshold) {
+      showSlide((currentSlide + 1) % slides.length);
+    }
+    deltaX = 0;
+  }
+
+  slidesContainer.addEventListener('touchstart', startTouch, { passive: true });
+  slidesContainer.addEventListener('touchmove', moveTouch, { passive: true });
+  slidesContainer.addEventListener('touchend', endTouch);
+  slidesContainer.addEventListener('mousedown', startTouch);
+  slidesContainer.addEventListener('mousemove', moveTouch);
+  slidesContainer.addEventListener('mouseup', endTouch);
+  slidesContainer.addEventListener('mouseleave', () => (isDragging = false));
 }
