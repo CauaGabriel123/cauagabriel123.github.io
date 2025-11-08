@@ -726,7 +726,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // ===== ENTREGA/PAGAMENTO/WHATSAPP (mantido, só usa os novos totais) =====
 function calcFee() {
-  if (deliveryType.value !== 'entrega') return 0;
+  const entrega = deliveryType.value.toLowerCase();
+  if (entrega !== 'entrega') return 0;
   const bairro = neighborhood.value;
   const fee = FEES[bairro];
   return (typeof fee === 'number') ? fee : 0;
@@ -836,8 +837,10 @@ ${
   const url = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(message)}`;
 
   const pop = document.getElementById('popup-overlay');
-pop.hidden = false;
-pop.classList.add('show');
+if (pop) {
+  pop.hidden = false;
+  pop.classList.add('show');
+}
 
 // === Envio garantido no iPhone e Android ===
 const encodedMsg = encodeURIComponent(message);
