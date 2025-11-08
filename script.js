@@ -1558,7 +1558,7 @@ function fill(p) {
 
   // Define dados básicos
   els.title.textContent = p.name;
-  els.price.textContent = currency(p.price);
+  setOriginalPriceValue(p.price);
   els.installments.textContent = calcInstallments(p.price);
   $('#lsxDescription').textContent = p.description || 'Sem descrição disponível.';
 
@@ -1724,4 +1724,67 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
     }
   });
+  // ===== LS STORE • Sistema de Cupons (Produto Individual) =====
+const COUPONS = {
+  "LS10": 0.10,
+  "LS15": 0.15,
+  "LS20": 0.20
+};
+
+let appliedCoupon = null;
+
+// aplicar cupom no modal
+document.addEventListener("click", e => {
+  if (e.target && e.target.id === "applyCoupon") {
+    const input = document.getElementById("couponInput");
+    const message = document.getElementById("couponMessage");
+    const code = input.value.trim().toUpperCase();
+    const priceEl = document.getElementById("lsxPrice");
+    const modal = document.getElementById("lsxModal");
+
+    if (!code) {
+      message.textContent = "Digite um cupom.";
+      message.style.color = "#e74c3c";
+      return;
+    }
+
+    if (COUPONS[code]) {
+      appliedCoupon = code;
+      const discount = COUPONS[code];
+      const originalPrice = parseFloat(priceEl.dataset.originalPrice || priceEl.textContent.replace(/[^\d,]/g, "").replace(",", "."));
+      const newPrice = (originalPrice * (1 - discount)).toFixed(2);
+      priceEl.textContent = `R$ ${newPrice.replace(".", ",")}`;
+      priceEl.dataset.discountedPrice = newPrice;
+      message.textContent = `✔️ Cupom ${code} aplicado: ${discount * 100}% de desconto!`;
+      message.style.color = "#27ae60";
+    } else {
+      appliedCoupon = null;
+      message.textContent = "❌ Cupom inválido.";
+      message.style.color = "#e74c3c";
+    }
+  }
+});
+
+// garantir que o preço original sempre esteja salvo quando abrir o modal
+function setOriginalPriceValue(price) {
+  const el = document.getElementById("lsxPrice");
+  el.dataset.originalPrice = price;
+  el.textContent = `R$ ${parseFloat(price).toFixed(2).replace(".", ",")}`;
+  delete el.dataset.discountedPrice;
+  appliedCoupon = null;
+  const msg = document.getElementById("couponMessage");
+  if (msg) msg.textContent = "";
+}
+
+// interceptar adição ao carrinho
+const oldAddToCart = window.addToCart;
+window.addToCart = function (product, qty = 1) {
+  const priceEl = document.getElementById("lsxPrice");
+  let finalPrice = product.price;
+  if (priceEl && priceEl.dataset.discountedPrice) {
+    finalPrice = parseFloat(priceEl.dataset.discountedPrice);
+  }
+  const discountedProduct = { ...product, price: finalPrice };
+  oldAddToCart(discountedProduct, qty);
+};
 })();
