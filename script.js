@@ -1697,34 +1697,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.target.dataset.close) modal.hidden = true;
   });
 });
-// ===== LS STORE 2026 — Proteção total contra esgotados =====
-(function protectSoldOutProducts() {
-  // Intercepta toda abertura de modal
-  const originalOpen = window.LSModal.open;
-  window.LSModal.open = function(id) {
-    const product = Object.values(window.catalog || {}).flat().find(p => String(p.id) === String(id));
+})(); // <-- fecha a função protectSoldOutProducts (não apaga isso)
 
-    if (product && product.status && product.status.toLowerCase() === 'esgotado') {
-      showAlert("💔 Este produto está esgotado e não pode ser adicionado ao carrinho.");
-      return; // bloqueia a abertura do modal
-    }
-
-    // Caso não esteja esgotado, segue normalmente
-    originalOpen.call(window.LSModal, id);
-  };
-
-  // Garante que o botão de adicionar/comprar no modal também respeite o bloqueio
-  document.addEventListener('click', e => {
-    const target = e.target.closest('#lsxAddBtn, #lsxBuyBtn');
-    if (!target) return;
-
-    const current = window.LSModal?.current?.product;
-        if (current && current.status && current.status.toLowerCase() === 'esgotado') {
-      showAlert("💔 Este produto está esgotado e não pode ser adicionado ao carrinho.");
-      e.preventDefault();
-    }
-  });
-  // ===== LS STORE • Sistema de Cupons (Produto Individual) =====
+// ===== LS STORE • Sistema de Cupons (Produto Individual) =====
 const COUPONS = {
   "LS10": 0.10,
   "LS15": 0.15,
@@ -1733,14 +1708,12 @@ const COUPONS = {
 
 let appliedCoupon = null;
 
-// aplicar cupom no modal
 document.addEventListener("click", e => {
   if (e.target && e.target.id === "applyCoupon") {
     const input = document.getElementById("couponInput");
     const message = document.getElementById("couponMessage");
     const code = input.value.trim().toUpperCase();
     const priceEl = document.getElementById("lsxPrice");
-    const modal = document.getElementById("lsxModal");
 
     if (!code) {
       message.textContent = "Digite um cupom.";
@@ -1765,7 +1738,6 @@ document.addEventListener("click", e => {
   }
 });
 
-// garantir que o preço original sempre esteja salvo quando abrir o modal
 function setOriginalPriceValue(price) {
   const el = document.getElementById("lsxPrice");
   el.dataset.originalPrice = price;
@@ -1776,7 +1748,6 @@ function setOriginalPriceValue(price) {
   if (msg) msg.textContent = "";
 }
 
-// interceptar adição ao carrinho
 const oldAddToCart = window.addToCart;
 window.addToCart = function (product, qty = 1) {
   const priceEl = document.getElementById("lsxPrice");
@@ -1787,4 +1758,3 @@ window.addToCart = function (product, qty = 1) {
   const discountedProduct = { ...product, price: finalPrice };
   oldAddToCart(discountedProduct, qty);
 };
-})();
