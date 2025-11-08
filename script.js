@@ -1402,6 +1402,49 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }, 3000); // troca a cada 3 segundos
 });
+// === Suporte a toque (arrastar com o dedo) no carrossel fixo ===
+if (fixedCarousel) {
+  const slidesContainer = fixedCarousel.querySelector('.slides');
+  let startX = 0;
+  let deltaX = 0;
+  let isDragging = false;
+
+  function startTouch(e) {
+    isDragging = true;
+    startX = e.touches ? e.touches[0].clientX : e.clientX;
+    deltaX = 0;
+  }
+
+  function moveTouch(e) {
+    if (!isDragging) return;
+    const x = e.touches ? e.touches[0].clientX : e.clientX;
+    deltaX = x - startX;
+  }
+
+  function endTouch() {
+    if (!isDragging) return;
+    isDragging = false;
+    const threshold = 40; // mínimo de pixels pra trocar
+    if (deltaX > threshold) {
+      // arrastou pra direita → anterior
+      showSlide((currentSlide - 1 + slides.length) % slides.length);
+    } else if (deltaX < -threshold) {
+      // arrastou pra esquerda → próximo
+      showSlide((currentSlide + 1) % slides.length);
+    }
+    deltaX = 0;
+  }
+
+  slidesContainer.addEventListener('touchstart', startTouch, { passive: true });
+  slidesContainer.addEventListener('touchmove', moveTouch, { passive: true });
+  slidesContainer.addEventListener('touchend', endTouch);
+
+  // também funciona com mouse no PC
+  slidesContainer.addEventListener('mousedown', startTouch);
+  slidesContainer.addEventListener('mousemove', moveTouch);
+  slidesContainer.addEventListener('mouseup', endTouch);
+  slidesContainer.addEventListener('mouseleave', () => (isDragging = false));
+}
 /* ===== LS STORE • Product Modal (Isolado) — v14.2.1 (variations + qty) ===== */
 (function () {
   const $  = (sel, ctx=document) => ctx.querySelector(sel);
