@@ -1583,56 +1583,65 @@ function fill(p) {
   validateButtons(p);
 }
 // 💎 LSX Premium Upgrade — comportamento atualizado dos botões
-function bindModalButtons() {
-  const addBtn = document.getElementById("lsxAddBtn");
-  const buyBtn = document.getElementById("lsxBuyBtn");
+function handleAddOrBuy(action) {
+  const ctx = window.LSModal?.current || null;
+  const prod = ctx?.product || null;
 
-  function handleAddOrBuy(action) {
-    const ctx = window.LSModal?.current || null;
-    const prod = ctx?.product || null;
-
-    if (!prod) {
-      showAlert("Erro ao adicionar: produto não encontrado.");
-      return;
-    }
-
-    const color = ctx.selectedColor || "Única";
-    const size = ctx.selectedSize || "ÚNICO";
-    const qty = ctx.qty || 1;
-
-    // Adiciona o produto ao carrinho
-    addToCart(prod, size, color, qty);
-
-    // ✨ Animação: produto voando até o carrinho
-    const firstImg =
-      (prod.imgs && prod.imgs[0]) ||
-      (prod.images && prod.images[0]) ||
-      prod.img ||
-      prod.image ||
-      "";
-    const originBtn = action === "buy" ? buyBtn : addBtn;
-    if (firstImg && originBtn) {
-      const rect = originBtn.getBoundingClientRect();
-      flyToCart(firstImg, rect.x, rect.y);
-    }
-
-    // Espera o voo terminar antes de fechar / abrir carrinho
-    setTimeout(() => {
-      const modal = document.getElementById("lsxModal");
-      if (modal) modal.classList.remove("is-open");
-      document.body.classList.remove("lsx-no-scroll");
-
-      if (action === "buy") {
-        // Se for "COMPRAR", abre o carrinho direto
-        const cart = document.getElementById("cart");
-        if (cart) {
-          cart.setAttribute("aria-hidden", "false");
-          renderCart();
-        }
-      }
-      // Se for "Adicionar", não abre carrinho nem alerta
-    }, 800); // tempo da animação
+  if (!prod) {
+    showAlert("Erro ao adicionar: produto não encontrado.");
+    return;
   }
+
+  const color = ctx.selectedColor || "Única";
+  const size = ctx.selectedSize || "ÚNICO";
+  const qty = ctx.qty || 1;
+
+  // 💖 CAPTURA O DESCONTO DO CUPOM (se houver)
+  const msg = document.getElementById("couponMessage");
+  let finalPrice = prod.price;
+  if (msg && msg.textContent.includes("% OFF")) {
+    const match = msg.textContent.match(/\((\d+)% OFF\)/);
+    if (match) {
+      const desconto = parseFloat(match[1]);
+      finalPrice = prod.price * (1 - desconto / 100);
+    }
+  }
+
+  // Cria cópia do produto com preço final atualizado
+  const productWithDiscount = { ...prod, price: finalPrice };
+
+  // Adiciona o produto ao carrinho
+  addToCart(productWithDiscount, size, color, qty);
+
+  // ✨ Animação visual
+  const firstImg =
+    (prod.imgs && prod.imgs[0]) ||
+    (prod.images && prod.images[0]) ||
+    prod.img ||
+    prod.image ||
+    "";
+  const originBtn = action === "buy" ? buyBtn : addBtn;
+  if (firstImg && originBtn) {
+    const rect = originBtn.getBoundingClientRect();
+    flyToCart(firstImg, rect.x, rect.y);
+  }
+
+  // Espera o voo terminar antes de fechar / abrir carrinho
+  setTimeout(() => {
+    const modal = document.getElementById("lsxModal");
+    if (modal) modal.classList.remove("is-open");
+    document.body.classList.remove("lsx-no-scroll");
+
+    if (action === "buy") {
+      // Se for "COMPRAR", abre o carrinho direto
+      const cart = document.getElementById("cart");
+      if (cart) {
+        cart.setAttribute("aria-hidden", "false");
+        renderCart();
+      }
+    }
+  }, 800);
+}
 
   if (addBtn) addBtn.onclick = () => handleAddOrBuy("add");
   if (buyBtn) buyBtn.onclick = () => handleAddOrBuy("buy");
