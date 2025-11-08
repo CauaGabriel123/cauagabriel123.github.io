@@ -1736,7 +1736,7 @@ function bindModalButtons() {
     }
 
     // Adiciona ao carrinho com cor real selecionada
-    addToCart(prod, size || "ÚNICO", color || "Única", qty);
+    addToCart(ctx.product, ctx.selectedSize || "ÚNICO", ctx.selectedColor || "Única", ctx.qty || 1);
 
     // ✨ Animação do produto voando até o carrinho
     const firstImg =
