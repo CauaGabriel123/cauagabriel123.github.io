@@ -1938,49 +1938,80 @@ window.addToCart = function (product, size, color, qty = 1) {
   oldAddToCart(discountedProduct, size, color, qty);
 };
 
-// =========================
-// LS STORE 2026 PREMIUM — Novo Carrossel
-// =========================
-const premiumCarousel = document.querySelector(".premium-carousel");
-if (premiumCarousel) {
-  const slides = premiumCarousel.querySelectorAll(".slide");
-  const prevBtn = premiumCarousel.querySelector(".prev");
-  const nextBtn = premiumCarousel.querySelector(".next");
-  const dotsContainer = premiumCarousel.querySelector(".dots");
-  let current = 0;
+// ============================
+// LS STORE 2026 — Carrossel Fixo de 3 Imagens (com suporte a toque)
+// ============================
+const fixedCarousel = document.getElementById('fixed-carousel');
+if (fixedCarousel) {
+  const slidesContainer = fixedCarousel.querySelector('.slides');
+  const slides = fixedCarousel.querySelectorAll('.slide');
+  const dotsContainer = fixedCarousel.querySelector('.dots');
+  const prevBtn = fixedCarousel.querySelector('.prev');
+  const nextBtn = fixedCarousel.querySelector('.next');
+  let currentSlide = 0;
 
+  // Cria dots dinamicamente
   slides.forEach((_, i) => {
-    const dot = document.createElement("button");
-    dot.className = "dot" + (i === 0 ? " active" : "");
-    dot.addEventListener("click", () => showSlide(i));
+    const dot = document.createElement('div');
+    dot.classList.add('dot');
+    if (i === 0) dot.classList.add('active');
+    dot.addEventListener('click', () => showSlide(i));
     dotsContainer.appendChild(dot);
   });
 
-  const dots = dotsContainer.querySelectorAll(".dot");
+  const dots = fixedCarousel.querySelectorAll('.dot');
 
   function showSlide(index) {
-    slides[current].classList.remove("active");
-    dots[current].classList.remove("active");
-    current = (index + slides.length) % slides.length;
-    slides[current].classList.add("active");
-    dots[current].classList.add("active");
+    slides.forEach((s, i) => s.classList.toggle('active', i === index));
+    dots.forEach((d, i) => d.classList.toggle('active', i === index));
+    slidesContainer.style.transform = `translateX(-${index * 100}%)`;
+    currentSlide = index;
   }
 
-  prevBtn.addEventListener("click", () => showSlide(current - 1));
-  nextBtn.addEventListener("click", () => showSlide(current + 1));
+  prevBtn.addEventListener('click', () => {
+    showSlide((currentSlide - 1 + slides.length) % slides.length);
+  });
+  nextBtn.addEventListener('click', () => {
+    showSlide((currentSlide + 1) % slides.length);
+  });
 
-  // Troca automática
-  setInterval(() => showSlide(current + 1), 5000);
+  // Auto play (5 segundos)
+  setInterval(() => {
+    showSlide((currentSlide + 1) % slides.length);
+  }, 5000);
+
+  // === Suporte a toque (arrastar com o dedo) ===
+  let startX = 0;
+  let deltaX = 0;
+  let isDragging = false;
+
+  function startTouch(e) {
+    isDragging = true;
+    startX = e.touches ? e.touches[0].clientX : e.clientX;
+    deltaX = 0;
+  }
+  function moveTouch(e) {
+    if (!isDragging) return;
+    const x = e.touches ? e.touches[0].clientX : e.clientX;
+    deltaX = x - startX;
+  }
+  function endTouch() {
+    if (!isDragging) return;
+    isDragging = false;
+    const threshold = 40; // mínimo de pixels pra trocar
+    if (deltaX > threshold) {
+      showSlide((currentSlide - 1 + slides.length) % slides.length);
+    } else if (deltaX < -threshold) {
+      showSlide((currentSlide + 1) % slides.length);
+    }
+    deltaX = 0;
+  }
+
+  slidesContainer.addEventListener('touchstart', startTouch, { passive: true });
+  slidesContainer.addEventListener('touchmove', moveTouch, { passive: true });
+  slidesContainer.addEventListener('touchend', endTouch);
+  slidesContainer.addEventListener('mousedown', startTouch);
+  slidesContainer.addEventListener('mousemove', moveTouch);
+  slidesContainer.addEventListener('mouseup', endTouch);
+  slidesContainer.addEventListener('mouseleave', () => (isDragging = false));
 }
-
-console.log("✅ Carrossel Premium LS Store 2026 carregado com sucesso!");
-
-// =========================
-// LS STORE 2026 PREMIUM — Destaques da Semana
-// =========================
-window.addEventListener("DOMContentLoaded", () => {
-  const featuredGrid = document.getElementById("featured-products");
-  if (featuredGrid && typeof renderFeatured === "function") {
-    renderFeatured(featuredGrid);
-  }
-});
