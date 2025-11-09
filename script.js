@@ -2015,32 +2015,3 @@ if (fixedCarousel) {
   slidesContainer.addEventListener('mouseup', endTouch);
   slidesContainer.addEventListener('mouseleave', () => (isDragging = false));
 }
-
-// --- Filtro por categoria ao clicar no menu (corrigido LS STORE 2026) ---
-document.querySelectorAll('[data-category]').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const cat = btn.dataset.category?.toLowerCase();
-
-    // Pega o grid principal de produtos
-    const grid = document.querySelector('.products-grid, [data-cat="produtos"]');
-
-    // Limpa o conteúdo antigo
-    if (grid) grid.innerHTML = '';
-
-    // Renderiza apenas a categoria clicada
-    if (catalog[cat] && grid) {
-      renderGrid(grid, catalog[cat]);
-      showSection('produtos'); // garante que vai pra seção certa
-      console.log('✅ Categoria carregada:', cat);
-    } else {
-      console.warn('⚠️ Nenhum produto encontrado para', cat);
-      showAlert(`Nenhum produto encontrado em "${btn.textContent.trim()}"`);
-    }
-
-    // Fecha o menu lateral (drawer)
-    const drawer = document.getElementById('drawer');
-    if (drawer) drawer.setAttribute('aria-hidden', 'true');
-
-    clickSoft(); // som suave LS
-  });
-});
