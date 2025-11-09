@@ -85,29 +85,61 @@
 
 
 <main class="container">
-  <section id="inicio" class="section visible">
-    <!-- =========================
-     LS STORE 2026 — Carrossel Fixo de 3 Imagens
-     ========================= -->
-<div class="carousel large" id="fixed-carousel">
-  <div class="slides">
-    <div class="slide active">
-      <img src="assets/rodape_3.PNG" alt="Banner LS Store 1">
-    </div>
-    <div class="slide">
-      <img src="assets/rodape_2.PNG" alt="Banner LS Store 2">
-    </div>
-    <div class="slide">
-      <img src="assets/rodape_4.png" alt="Banner LS Store 3">
-    </div>
-  </div>
-  <button class="carousel-btn prev" aria-label="Anterior">❮</button>
-  <button class="carousel-btn next" aria-label="Próximo">❯</button>
-  <div class="dots"></div>
-</div>
+ <!-- ========================= -->
+<!-- LS STORE 2026 HOME PREMIUM VIBRANTE -->
+<!-- ========================= -->
+<section id="inicio" class="section visible ls-home-premium">
 
-<h2 class="section-title">Destaques da Semana</h2>
-<div id="featured" class="grid"></div>
+  <!-- Fundo animado -->
+  <div class="ls-bg-animated"></div>
+
+  <!-- Cabeçalho premium -->
+  <header class="ls-header-premium">
+    <div class="header-content">
+      <div class="brand-area">
+        <a href="index.html" class="logo-link">
+          <img src="assets/logo.png" alt="LS Store Logo" class="logo-premium" />
+        </a>
+      </div>
+      <div class="header-buttons">
+        <button id="menu-btn" class="icon-btn">☰</button>
+        <button id="cart-btn" class="cart-btn">
+          🛒 <span id="cart-count">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Carrossel Premium -->
+  <section id="fixed-carousel" class="premium-carousel">
+    <div class="slides">
+      <div class="slide">
+        <img src="https://i.imgur.com/PDdO7Dg.jpg" alt="Banner LS Store 1">
+      </div>
+      <div class="slide">
+        <img src="https://i.imgur.com/vmCjHLP.jpg" alt="Banner LS Store 2">
+      </div>
+      <div class="slide">
+        <img src="https://i.imgur.com/QDoDBjc.jpg" alt="Banner LS Store 3">
+      </div>
+    </div>
+    <button class="carousel-btn prev">❮</button>
+    <button class="carousel-btn next">❯</button>
+    <div class="dots"></div>
+  </section>
+
+  <!-- Destaques -->
+  <section class="ls-destaques">
+    <h2 class="ls-title-gradient">✨ Destaques da Semana ✨</h2>
+    <div class="grid" id="featured-products">
+      <!-- Os produtos serão carregados dinamicamente pelo script.js -->
+    </div>
+  </section>
+
+</section>
+<!-- ========================= -->
+<!-- / LS STORE 2026 HOME PREMIUM -->
+<!-- ========================= -->
 
   <!-- Categorias -->
   <section id="blusas" class="section"><h2 class="section-title">Blusas</h2><div class="grid" data-cat="blusas"></div></section>
