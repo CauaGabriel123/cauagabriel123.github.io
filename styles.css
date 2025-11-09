@@ -2022,3 +2022,35 @@ body {
 .premium-carousel:hover img {
   transform: scale(1.05);
 }
+/* ===============================
+   LS STORE 2026 — Efeitos Premium Home Animada
+   =============================== */
+
+/* Fundo animado da home */
+.ls-home-animated {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(120deg, #ffe4f1, #f3d9ff, #ffe4f1);
+  background-size: 400% 400%;
+  animation: bgMove 10s ease-in-out infinite;
+  border-radius: 20px;
+  padding: 16px;
+}
+@keyframes bgMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Título com brilho LS */
+.section-title.ls-glow {
+  background: linear-gradient(90deg, #E96BA8, #7A3BFD);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 3px 10px rgba(122,59,253,0.3);
+  animation: glowTitle 4s ease-in-out infinite;
+}
+@keyframes glowTitle {
+  0%,100% { text-shadow: 0 3px 10px rgba(233,107,168,0.25); }
+  50% { text-shadow: 0 3px 14px rgba(122,59,253,0.45); }
+}
