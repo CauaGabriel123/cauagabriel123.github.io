@@ -161,10 +161,15 @@ function showSection(id) {
     return;
   }
 
-  // Verifica se a seção tem uma grid (somente as de produtos têm)
+    // Verifica se a seção tem uma grid (somente as de produtos têm)
   const grid = sec?.querySelector('.grid');
-  if (!grid) return; // <- Aqui está o segredo! Contato e Sobre Nós passam direto
+  if (!grid) return; // ⚠️ Substituir por exibição padrão abaixo
 
+  // NOVO: garante que seções simples ("sobre nós", "contato", etc.) também apareçam
+  if (!grid) {
+    sec.classList.add('visible');
+    return;
+  }
   // Normaliza o ID da seção (para comparar com o campo category)
   const categoriaNormalizada = id
     .normalize("NFD")
