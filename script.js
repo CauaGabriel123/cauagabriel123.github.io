@@ -143,40 +143,45 @@ document.querySelectorAll('.drawer-links a[data-section], .footer a[data-section
 });
 
 function showSection(id) {
+  // Oculta todas as seções
   document.querySelectorAll('.section').forEach(s => s.classList.remove('visible'));
+  
+  // Mostra a seção selecionada
   const sec = document.getElementById(id);
   if (sec) sec.classList.add('visible');
   window.scrollTo({ top: 0, behavior: 'smooth' });
 
-  // 🔧 NOVO: recarrega "Início" e categorias automaticamente
+  // Se for a tela inicial, renderiza os destaques
   if (id === 'inicio') {
-    // Recarregar os produtos em destaque ao voltar para a home
     const featured = document.getElementById('featured');
     if (featured && typeof renderFeatured === 'function') {
       featured.innerHTML = '';
       renderFeatured();
     }
-  } else {
-    // Renderiza produtos da categoria correspondente
-    const grid = sec?.querySelector('.grid');
-    if (grid) {
-      const categoriaNormalizada = id
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .toLowerCase();
-
-      const produtos = Object.keys(catalog)
-        .filter(cat =>
-          cat
-            .normalize("NFD")
-            .replace(/[\u0300-\u036f]/g, "")
-            .toLowerCase() === categoriaNormalizada
-        )
-        .flatMap(cat => catalog[cat]);
-
-      renderGrid(grid, produtos || []);
-    }
+    return;
   }
+
+  // Verifica se a seção tem uma grid (somente as de produtos têm)
+  const grid = sec?.querySelector('.grid');
+  if (!grid) return; // <- Aqui está o segredo! Contato e Sobre Nós passam direto
+
+  // Normaliza o ID da seção (para comparar com o campo category)
+  const categoriaNormalizada = id
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
+
+  // Filtra produtos do catálogo
+  const todosProdutos = Object.values(catalog).flat();
+  const produtosCat = todosProdutos.filter(p =>
+    (p.category || "")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase() === categoriaNormalizada
+  );
+
+  // Renderiza apenas se for uma seção de produtos
+  renderGrid(grid, produtosCat);
 }
 // =============================
 // BLOQUEIO DE LETRAS NO CAMPO "NÚMERO" (somente dígitos 0-9)
