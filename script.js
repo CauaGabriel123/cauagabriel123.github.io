@@ -375,11 +375,12 @@ function buildCatalogAndRender(data) {
       document.querySelectorAll('.drawer-links a').forEach(a => a.classList.remove('active'));
       link.classList.add('active');
     });
+        });
+  })
+  .catch(err => {
+    console.error('❌ Erro ao carregar o catálogo:', err);
+    buildCatalogAndRender(FALLBACK_PRODUCTS);
   });
-    .catch(err => {
-      console.error('❌ Erro ao carregar o catálogo:', err);
-      buildCatalogAndRender(FALLBACK_PRODUCTS);
-    });
 })();
 
 function priceHTML(p) {
