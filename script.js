@@ -350,30 +350,32 @@ function buildCatalogAndRender(data) {
       return res.json();
     })
     .then(data => {
-      console.log('✅ Catálogo carregado do arquivo externo:', url);
-      data = data.sort(() => Math.random() - 0.5);
+  console.log('✅ Catálogo carregado do arquivo externo:', url);
+  data = data.sort(() => Math.random() - 0.5);
 
-      try {
-        buildCatalogAndRender(data);
-        console.log('🟢 Renderização iniciada com produtos embaralhados...');
-      } catch (e) {
-        console.error('Erro ao montar catálogo:', e);
-        showAlert('Opa! Tivemos um erro ao montar o catálogo. Recarregue a página em alguns segundos.');
-      }
+  try {
+    buildCatalogAndRender(data);
+    console.log('🟢 Renderização iniciada com produtos embaralhados...');
+  } catch (e) {
+    console.error('Erro ao montar catálogo:', e);
+    showAlert('Opa! Tivemos um erro ao montar o catálogo. Recarregue a página em alguns segundos.');
+  }
 
-      // 🔥 AGORA SIM: ativa os cliques das categorias APÓS o catálogo existir
-      document.querySelectorAll('[data-section]').forEach(link => {
-        link.addEventListener('click', e => {
-          e.preventDefault();
-          const id = link.getAttribute('data-section');
-          showSection(id);
-          const drawer = document.getElementById('drawer');
-          if (drawer) drawer.setAttribute('aria-hidden', 'true');
-          document.querySelectorAll('.drawer-links a').forEach(a => a.classList.remove('active'));
-          link.classList.add('active');
-        });
-      });
-    })
+    // 🔥 ATIVAÇÃO FINAL — categorias e seções após o catálogo carregar
+  document.querySelectorAll('[data-section]').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const id = link.getAttribute('data-section');
+      showSection(id);
+
+      // Fecha o menu lateral ao clicar
+      const drawer = document.getElementById('drawer');
+      if (drawer) drawer.setAttribute('aria-hidden', 'true');
+
+      document.querySelectorAll('.drawer-links a').forEach(a => a.classList.remove('active'));
+      link.classList.add('active');
+    });
+  });
     .catch(err => {
       console.error('❌ Erro ao carregar o catálogo:', err);
       buildCatalogAndRender(FALLBACK_PRODUCTS);
