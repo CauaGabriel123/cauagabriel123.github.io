@@ -209,8 +209,12 @@ function buildCatalogAndRender(data) {
 
   const safeArray = Array.isArray(data) ? data : [];
   safeArray.forEach(p => {
-    const cat = p.category || 'outros';
-
+    const cat = (p.category || 'outros')
+  .toLowerCase()
+  .split('-')
+  .pop()
+  .trim()
+  .replace(/\s|[^a-z0-9]/gi, '');
     // ignora indisponível (mantém sua regra)
     if (p.status && String(p.status).toLowerCase() === 'indisponivel') return;
 
