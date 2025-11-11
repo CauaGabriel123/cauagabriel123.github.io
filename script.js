@@ -50,10 +50,7 @@ const FALLBACK_PRODUCTS = [
 
   { "id": "p20", "name": "Bolsa Rosa Pastel LS", "category": "acessorios", "price": 149.9, "image": "assets/prod-bolsa-rosa.jpg", "description": "Bolsa estruturada tom rosa LS, moderna e prática para o dia a dia.", "status": "disponivel" }
 ];
-if (typeof catalog === "undefined") {
-  console.warn("⚠️ Catálogo não encontrado, carregando fallback...");
-  window.catalog = { };
-}
+
 // --- Links Instagram (app + web)
 const instaDeepLink = `instagram://user?username=${INSTAGRAM_HANDLE.replace('@','')}`;
 const instaWeb = `https://www.instagram.com/${INSTAGRAM_HANDLE.replace('@','')}`;
@@ -136,47 +133,32 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-function showSection(id) {
-  // Oculta todas as seções
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('visible'));
-
-  // Mostra a seção selecionada
-  const sec = document.getElementById(id);
-  if (!sec) return;
-  sec.classList.add('visible');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-
-  // Se for a tela inicial, renderiza os destaques
-  if (id === 'inicio') {
-    const featured = document.getElementById('featured');
-    if (featured && typeof renderFeatured === 'function') {
-      featured.innerHTML = '';
-      renderFeatured();
-    }
-    return;
-  }
-
-  // Se a seção tiver produtos (categoria com .grid)
-  const grid = sec.querySelector('.grid');
-  if (grid) {
-    const categoriaNormalizada = id
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .toLowerCase();
-
-    const todosProdutos = Object.values(catalog).flat();
-    const produtosCat = todosProdutos.filter(p => {
-  const catProduto = (p.category || "")
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase();
-
-  return catProduto.includes(categoriaNormalizada) || categoriaNormalizada.includes(catProduto);
+// --- Navegação entre seções
+document.querySelectorAll('.drawer-links a[data-section], .footer a[data-section]').forEach(a => {
+  a.onclick = e => {
+    e.preventDefault();
+    showSection(a.getAttribute('data-section'));
+    drawer.setAttribute('aria-hidden', 'true');
+  };
 });
-    renderGrid(grid, produtosCat);
-  }
+
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('visible'));
+  const sec = document.getElementById(id);
+  if (sec) sec.classList.add('visible');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+// --- NOVO: link "Sobre Nós" no menu abre a seção correspondente
+(function sobreNosNav(){
+  const link = document.getElementById('sobre-nos-link');
+  if (!link) return;
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    showSection('sobre-nos');
+    drawer.setAttribute('aria-hidden', 'true');
+  });
+})();
 
 // =============================
 // BLOQUEIO DE LETRAS NO CAMPO "NÚMERO" (somente dígitos 0-9)
@@ -227,12 +209,8 @@ function buildCatalogAndRender(data) {
 
   const safeArray = Array.isArray(data) ? data : [];
   safeArray.forEach(p => {
-    const cat = (p.category || 'outros')
-  .toLowerCase()
-  .split('-')
-  .pop()
-  .trim()
-  .replace(/\s|[^a-z0-9]/gi, '');
+    const cat = p.category || 'outros';
+
     // ignora indisponível (mantém sua regra)
     if (p.status && String(p.status).toLowerCase() === 'indisponivel') return;
 
@@ -342,8 +320,9 @@ function buildCatalogAndRender(data) {
 
 // === Carregamento aprimorado do catálogo (corrigido — ignora falsos negativos do fetch) ===
 (function loadProducts() {
-  const url = 'products_v2.json?v=' + Date.now();
+  const url = 'products_v2.json?v=' + Date.now(); // força sempre nova versão
 
+  // Carrega catálogo com fallback interno
   fetch(url, { cache: 'no-store' })
     .then(res => {
       if (!res.ok) throw new Error(`Erro HTTP ${res.status}`);
@@ -351,6 +330,8 @@ function buildCatalogAndRender(data) {
     })
     .then(data => {
   console.log('✅ Catálogo carregado do arquivo externo:', url);
+
+  // 🔀 Embaralhar produtos aleatoriamente antes de renderizar
   data = data.sort(() => Math.random() - 0.5);
 
   try {
@@ -361,26 +342,23 @@ function buildCatalogAndRender(data) {
     showAlert('Opa! Tivemos um erro ao montar o catálogo. Recarregue a página em alguns segundos.');
   }
 
-    // 🔥 ATIVAÇÃO FINAL — categorias e seções após o catálogo carregar
-  document.querySelectorAll('[data-section]').forEach(link => {
-    link.addEventListener('click', e => {
-      e.preventDefault();
-      const id = link.getAttribute('data-section');
-      showSection(id);
-
-      // Fecha o menu lateral ao clicar
-      const drawer = document.getElementById('drawer');
-      if (drawer) drawer.setAttribute('aria-hidden', 'true');
-
-      document.querySelectorAll('.drawer-links a').forEach(a => a.classList.remove('active'));
-      link.classList.add('active');
+  // ✅ Este setTimeout precisa estar DENTRO do .then(data => { ... })
+  setTimeout(() => {
+    const produtos = document.querySelectorAll('.product-item, .card');
+    if (produtos.length > 0) {
+      console.log('🟢 Catálogo carregado com sucesso após verificação.');
+      return;
+    }
+    // Só mostra o alerta se realmente não renderizou nada
+    showAlert('Não foi possível carregar os produtos atualizados. Recarregue a página em alguns segundos.');
+    console.error('❌ Nenhum produto renderizado após verificação.');
+  }, 2500); // 2,5 segundos de espera
+})
+    .catch(err => {
+      console.error('❌ Erro ao carregar o catálogo:', err);
+      // Fallback: usa os produtos locais se der erro no fetch
+      buildCatalogAndRender(FALLBACK_PRODUCTS);
     });
-        });
-  })
-  .catch(err => {
-    console.error('❌ Erro ao carregar o catálogo:', err);
-    buildCatalogAndRender(FALLBACK_PRODUCTS);
-  });
 })();
 
 function priceHTML(p) {
@@ -1959,81 +1937,3 @@ window.addToCart = function (product, size, color, qty = 1) {
   const discountedProduct = { ...product, price: finalPrice };
   oldAddToCart(discountedProduct, size, color, qty);
 };
-
-// ============================
-// LS STORE 2026 — Carrossel Fixo de 3 Imagens (com suporte a toque)
-// ============================
-const fixedCarousel = document.getElementById('fixed-carousel');
-if (fixedCarousel) {
-  const slidesContainer = fixedCarousel.querySelector('.slides');
-  const slides = fixedCarousel.querySelectorAll('.slide');
-  const dotsContainer = fixedCarousel.querySelector('.dots');
-  const prevBtn = fixedCarousel.querySelector('.prev');
-  const nextBtn = fixedCarousel.querySelector('.next');
-  let currentSlide = 0;
-
-  // Cria dots dinamicamente
-  slides.forEach((_, i) => {
-    const dot = document.createElement('div');
-    dot.classList.add('dot');
-    if (i === 0) dot.classList.add('active');
-    dot.addEventListener('click', () => showSlide(i));
-    dotsContainer.appendChild(dot);
-  });
-
-  const dots = fixedCarousel.querySelectorAll('.dot');
-
-  function showSlide(index) {
-    slides.forEach((s, i) => s.classList.toggle('active', i === index));
-    dots.forEach((d, i) => d.classList.toggle('active', i === index));
-    slidesContainer.style.transform = `translateX(-${index * 100}%)`;
-    currentSlide = index;
-  }
-
-  prevBtn.addEventListener('click', () => {
-    showSlide((currentSlide - 1 + slides.length) % slides.length);
-  });
-  nextBtn.addEventListener('click', () => {
-    showSlide((currentSlide + 1) % slides.length);
-  });
-
-  // Auto play (5 segundos)
-  setInterval(() => {
-    showSlide((currentSlide + 1) % slides.length);
-  }, 5000);
-
-  // === Suporte a toque (arrastar com o dedo) ===
-  let startX = 0;
-  let deltaX = 0;
-  let isDragging = false;
-
-  function startTouch(e) {
-    isDragging = true;
-    startX = e.touches ? e.touches[0].clientX : e.clientX;
-    deltaX = 0;
-  }
-  function moveTouch(e) {
-    if (!isDragging) return;
-    const x = e.touches ? e.touches[0].clientX : e.clientX;
-    deltaX = x - startX;
-  }
-  function endTouch() {
-    if (!isDragging) return;
-    isDragging = false;
-    const threshold = 40; // mínimo de pixels pra trocar
-    if (deltaX > threshold) {
-      showSlide((currentSlide - 1 + slides.length) % slides.length);
-    } else if (deltaX < -threshold) {
-      showSlide((currentSlide + 1) % slides.length);
-    }
-    deltaX = 0;
-  }
-
-  slidesContainer.addEventListener('touchstart', startTouch, { passive: true });
-  slidesContainer.addEventListener('touchmove', moveTouch, { passive: true });
-  slidesContainer.addEventListener('touchend', endTouch);
-  slidesContainer.addEventListener('mousedown', startTouch);
-  slidesContainer.addEventListener('mousemove', moveTouch);
-  slidesContainer.addEventListener('mouseup', endTouch);
-  slidesContainer.addEventListener('mouseleave', () => (isDragging = false));
-}
