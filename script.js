@@ -145,7 +145,7 @@ document.querySelectorAll('.drawer-links a[data-section], .footer a[data-section
 function showSection(id) {
   // Oculta todas as seções
   document.querySelectorAll('.section').forEach(s => s.classList.remove('visible'));
-  
+
   // Mostra a seção selecionada
   const sec = document.getElementById(id);
   if (!sec) return;
@@ -162,31 +162,24 @@ function showSection(id) {
     return;
   }
 
-  // 🔧 Se a seção não tiver grid (como "contato", "sobre nós", "pedidos" etc.),
-  // apenas mostra o conteúdo e sai da função
+  // Se a seção tiver produtos (categoria com .grid)
   const grid = sec.querySelector('.grid');
-  if (!grid) {
-    sec.classList.add('visible');
-    return;
-  }
-
-  // Normaliza o ID da seção (para comparar com o campo category)
-  const categoriaNormalizada = id
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase();
-
-  // Filtra produtos do catálogo
-  const todosProdutos = Object.values(catalog).flat();
-  const produtosCat = todosProdutos.filter(p =>
-    (p.category || "")
+  if (grid) {
+    const categoriaNormalizada = id
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "")
-      .toLowerCase() === categoriaNormalizada
-  );
+      .toLowerCase();
 
-  // Renderiza os produtos se for uma categoria
-  renderGrid(grid, produtosCat);
+    const todosProdutos = Object.values(catalog).flat();
+    const produtosCat = todosProdutos.filter(p =>
+      (p.category || "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase() === categoriaNormalizada
+    );
+
+    renderGrid(grid, produtosCat);
+  }
 }
 // =============================
 // BLOQUEIO DE LETRAS NO CAMPO "NÚMERO" (somente dígitos 0-9)
