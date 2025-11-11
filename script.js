@@ -1937,3 +1937,43 @@ window.addToCart = function (product, size, color, qty = 1) {
   const discountedProduct = { ...product, price: finalPrice };
   oldAddToCart(discountedProduct, size, color, qty);
 };
+// === LS STORE — Navegação entre seções do menu (Produtos / Contato / Sobre Nós) ===
+document.addEventListener('DOMContentLoaded', () => {
+  // Qualquer link do drawer que tenha data-section="id-da-secao"
+  document.querySelectorAll('.drawer-links a[data-section]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const sectionId = link.getAttribute('data-section'); // ex: "contato", "sobre-nos", "inicio"
+      
+      // Esconde todas as seções
+      document.querySelectorAll('.section').forEach(sec => sec.classList.remove('visible'));
+      
+      // Mostra a seção alvo
+      const target = document.getElementById(sectionId);
+      if (target) {
+        target.classList.add('visible');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      // Fecha o drawer (menu lateral), se existir
+      const drawer = document.getElementById('drawer');
+      if (drawer) drawer.setAttribute('aria-hidden', 'true');
+    });
+  });
+
+  // Link específico "Sobre Nós" se ele vier sem data-section e tiver ID próprio
+  const sobreNosLink = document.getElementById('sobre-nos-link');
+  if (sobreNosLink) {
+    sobreNosLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      document.querySelectorAll('.section').forEach(sec => sec.classList.remove('visible'));
+      const alvo = document.getElementById('sobre-nos');
+      if (alvo) {
+        alvo.classList.add('visible');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      const drawer = document.getElementById('drawer');
+      if (drawer) drawer.setAttribute('aria-hidden', 'true');
+    });
+  }
+});
