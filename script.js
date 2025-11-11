@@ -2041,17 +2041,21 @@ if (fixedCarousel) {
   slidesContainer.addEventListener('mouseleave', () => (isDragging = false));
 }
 // === Controle de navegação principal (links do menu lateral) ===
-document.querySelectorAll('[data-section]').forEach(link => {
-  link.addEventListener('click', e => {
-    e.preventDefault();
-    const id = link.getAttribute('data-section');
-    showSection(id);
+window.addEventListener('DOMContentLoaded', () => {
 
-    // Fecha o menu no celular
-    document.getElementById('drawer')?.setAttribute('aria-hidden', 'true');
+  document.querySelectorAll('[data-section]').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const id = link.getAttribute('data-section');
+      showSection(id);
 
-    // Atualiza o estado ativo no menu
-    document.querySelectorAll('.drawer-links a').forEach(a => a.classList.remove('active'));
-    link.classList.add('active');
+      // Fecha o menu no celular
+      document.getElementById('drawer')?.setAttribute('aria-hidden', 'true');
+
+      // Atualiza o estado ativo no menu
+      document.querySelectorAll('.drawer-links a').forEach(a => a.classList.remove('active'));
+      link.classList.add('active');
+    });
   });
-});
+
+}); // 👈 fechamento do addEventListener
