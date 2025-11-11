@@ -147,6 +147,21 @@ function showSection(id) {
   const sec = document.getElementById(id);
   if (sec) sec.classList.add('visible');
   window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // 🔧 NOVO: carregar produtos da categoria automaticamente
+  const grid = sec?.querySelector('.grid');
+  if (grid) {
+    const categoriaNormalizada = id
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase();
+
+    const produtos = Object.keys(catalog)
+      .filter(cat => cat.toLowerCase() === categoriaNormalizada)
+      .flatMap(cat => catalog[cat]);
+
+    renderGrid(grid, produtos || []);
+  }
 }
 
 // --- NOVO: link "Sobre Nós" no menu abre a seção correspondente
