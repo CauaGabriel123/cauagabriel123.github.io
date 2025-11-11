@@ -50,7 +50,10 @@ const FALLBACK_PRODUCTS = [
 
   { "id": "p20", "name": "Bolsa Rosa Pastel LS", "category": "acessorios", "price": 149.9, "image": "assets/prod-bolsa-rosa.jpg", "description": "Bolsa estruturada tom rosa LS, moderna e prática para o dia a dia.", "status": "disponivel" }
 ];
-
+if (typeof catalog === "undefined") {
+  console.warn("⚠️ Catálogo não encontrado, carregando fallback...");
+  window.catalog = { };
+}
 // --- Links Instagram (app + web)
 const instaDeepLink = `instagram://user?username=${INSTAGRAM_HANDLE.replace('@','')}`;
 const instaWeb = `https://www.instagram.com/${INSTAGRAM_HANDLE.replace('@','')}`;
@@ -133,15 +136,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// --- Navegação entre seções
-document.querySelectorAll('.drawer-links a[data-section], .footer a[data-section]').forEach(a => {
-  a.onclick = e => {
-    e.preventDefault();
-    showSection(a.getAttribute('data-section'));
-    drawer.setAttribute('aria-hidden', 'true');
-  };
-});
-
 function showSection(id) {
   // Oculta todas as seções
   document.querySelectorAll('.section').forEach(s => s.classList.remove('visible'));
@@ -182,6 +176,8 @@ function showSection(id) {
     renderGrid(grid, produtosCat);
   }
 }
+
+
 // =============================
 // BLOQUEIO DE LETRAS NO CAMPO "NÚMERO" (somente dígitos 0-9)
 // =============================
@@ -346,43 +342,40 @@ function buildCatalogAndRender(data) {
 
 // === Carregamento aprimorado do catálogo (corrigido — ignora falsos negativos do fetch) ===
 (function loadProducts() {
-  const url = 'products_v2.json?v=' + Date.now(); // força sempre nova versão
+  const url = 'products_v2.json?v=' + Date.now();
 
-  // Carrega catálogo com fallback interno
   fetch(url, { cache: 'no-store' })
     .then(res => {
       if (!res.ok) throw new Error(`Erro HTTP ${res.status}`);
       return res.json();
     })
     .then(data => {
-  console.log('✅ Catálogo carregado do arquivo externo:', url);
+      console.log('✅ Catálogo carregado do arquivo externo:', url);
+      data = data.sort(() => Math.random() - 0.5);
 
-  // 🔀 Embaralhar produtos aleatoriamente antes de renderizar
-  data = data.sort(() => Math.random() - 0.5);
+      try {
+        buildCatalogAndRender(data);
+        console.log('🟢 Renderização iniciada com produtos embaralhados...');
+      } catch (e) {
+        console.error('Erro ao montar catálogo:', e);
+        showAlert('Opa! Tivemos um erro ao montar o catálogo. Recarregue a página em alguns segundos.');
+      }
 
-  try {
-    buildCatalogAndRender(data);
-    console.log('🟢 Renderização iniciada com produtos embaralhados...');
-  } catch (e) {
-    console.error('Erro ao montar catálogo:', e);
-    showAlert('Opa! Tivemos um erro ao montar o catálogo. Recarregue a página em alguns segundos.');
-  }
-
-  // ✅ Este setTimeout precisa estar DENTRO do .then(data => { ... })
-  setTimeout(() => {
-    const produtos = document.querySelectorAll('.product-item, .card');
-    if (produtos.length > 0) {
-      console.log('🟢 Catálogo carregado com sucesso após verificação.');
-      return;
-    }
-    // Só mostra o alerta se realmente não renderizou nada
-    showAlert('Não foi possível carregar os produtos atualizados. Recarregue a página em alguns segundos.');
-    console.error('❌ Nenhum produto renderizado após verificação.');
-  }, 2500); // 2,5 segundos de espera
-})
+      // 🔥 AGORA SIM: ativa os cliques das categorias APÓS o catálogo existir
+      document.querySelectorAll('[data-section]').forEach(link => {
+        link.addEventListener('click', e => {
+          e.preventDefault();
+          const id = link.getAttribute('data-section');
+          showSection(id);
+          const drawer = document.getElementById('drawer');
+          if (drawer) drawer.setAttribute('aria-hidden', 'true');
+          document.querySelectorAll('.drawer-links a').forEach(a => a.classList.remove('active'));
+          link.classList.add('active');
+        });
+      });
+    })
     .catch(err => {
       console.error('❌ Erro ao carregar o catálogo:', err);
-      // Fallback: usa os produtos locais se der erro no fetch
       buildCatalogAndRender(FALLBACK_PRODUCTS);
     });
 })();
@@ -2041,22 +2034,3 @@ if (fixedCarousel) {
   slidesContainer.addEventListener('mouseup', endTouch);
   slidesContainer.addEventListener('mouseleave', () => (isDragging = false));
 }
-// === Controle de navegação principal (links do menu lateral) ===
-window.addEventListener('DOMContentLoaded', () => {
-
-  document.querySelectorAll('[data-section]').forEach(link => {
-    link.addEventListener('click', e => {
-      e.preventDefault();
-      const id = link.getAttribute('data-section');
-      showSection(id);
-
-      // Fecha o menu no celular
-      document.getElementById('drawer')?.setAttribute('aria-hidden', 'true');
-
-      // Atualiza o estado ativo no menu
-      document.querySelectorAll('.drawer-links a').forEach(a => a.classList.remove('active'));
-      link.classList.add('active');
-    });
-  });
-
-}); // 👈 fechamento do addEventListener
