@@ -1937,43 +1937,81 @@ window.addToCart = function (product, size, color, qty = 1) {
   const discountedProduct = { ...product, price: finalPrice };
   oldAddToCart(discountedProduct, size, color, qty);
 };
-// === LS STORE — Navegação entre seções do menu (Produtos / Contato / Sobre Nós) ===
-document.addEventListener('DOMContentLoaded', () => {
-  // Qualquer link do drawer que tenha data-section="id-da-secao"
-  document.querySelectorAll('.drawer-links a[data-section]').forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      const sectionId = link.getAttribute('data-section'); // ex: "contato", "sobre-nos", "inicio"
-      
-      // Esconde todas as seções
-      document.querySelectorAll('.section').forEach(sec => sec.classList.remove('visible'));
-      
-      // Mostra a seção alvo
-      const target = document.getElementById(sectionId);
-      if (target) {
-        target.classList.add('visible');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
 
-      // Fecha o drawer (menu lateral), se existir
-      const drawer = document.getElementById('drawer');
-      if (drawer) drawer.setAttribute('aria-hidden', 'true');
-    });
+// ============================
+// LS STORE 2026 — Carrossel Fixo de 3 Imagens (com suporte a toque)
+// ============================
+const fixedCarousel = document.getElementById('fixed-carousel');
+if (fixedCarousel) {
+  const slidesContainer = fixedCarousel.querySelector('.slides');
+  const slides = fixedCarousel.querySelectorAll('.slide');
+  const dotsContainer = fixedCarousel.querySelector('.dots');
+  const prevBtn = fixedCarousel.querySelector('.prev');
+  const nextBtn = fixedCarousel.querySelector('.next');
+  let currentSlide = 0;
+
+  // Cria dots dinamicamente
+  slides.forEach((_, i) => {
+    const dot = document.createElement('div');
+    dot.classList.add('dot');
+    if (i === 0) dot.classList.add('active');
+    dot.addEventListener('click', () => showSlide(i));
+    dotsContainer.appendChild(dot);
   });
 
-  // Link específico "Sobre Nós" se ele vier sem data-section e tiver ID próprio
-  const sobreNosLink = document.getElementById('sobre-nos-link');
-  if (sobreNosLink) {
-    sobreNosLink.addEventListener('click', (e) => {
-      e.preventDefault();
-      document.querySelectorAll('.section').forEach(sec => sec.classList.remove('visible'));
-      const alvo = document.getElementById('sobre-nos');
-      if (alvo) {
-        alvo.classList.add('visible');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-      const drawer = document.getElementById('drawer');
-      if (drawer) drawer.setAttribute('aria-hidden', 'true');
-    });
+  const dots = fixedCarousel.querySelectorAll('.dot');
+
+  function showSlide(index) {
+    slides.forEach((s, i) => s.classList.toggle('active', i === index));
+    dots.forEach((d, i) => d.classList.toggle('active', i === index));
+    slidesContainer.style.transform = `translateX(-${index * 100}%)`;
+    currentSlide = index;
   }
-});
+
+  prevBtn.addEventListener('click', () => {
+    showSlide((currentSlide - 1 + slides.length) % slides.length);
+  });
+  nextBtn.addEventListener('click', () => {
+    showSlide((currentSlide + 1) % slides.length);
+  });
+
+  // Auto play (5 segundos)
+  setInterval(() => {
+    showSlide((currentSlide + 1) % slides.length);
+  }, 5000);
+
+  // === Suporte a toque (arrastar com o dedo) ===
+  let startX = 0;
+  let deltaX = 0;
+  let isDragging = false;
+
+  function startTouch(e) {
+    isDragging = true;
+    startX = e.touches ? e.touches[0].clientX : e.clientX;
+    deltaX = 0;
+  }
+  function moveTouch(e) {
+    if (!isDragging) return;
+    const x = e.touches ? e.touches[0].clientX : e.clientX;
+    deltaX = x - startX;
+  }
+  function endTouch() {
+    if (!isDragging) return;
+    isDragging = false;
+    const threshold = 40; // mínimo de pixels pra trocar
+    if (deltaX > threshold) {
+      showSlide((currentSlide - 1 + slides.length) % slides.length);
+    } else if (deltaX < -threshold) {
+      showSlide((currentSlide + 1) % slides.length);
+    }
+    deltaX = 0;
+  }
+
+  slidesContainer.addEventListener('touchstart', startTouch, { passive: true });
+  slidesContainer.addEventListener('touchmove', moveTouch, { passive: true });
+  slidesContainer.addEventListener('touchend', endTouch);
+  slidesContainer.addEventListener('mousedown', startTouch);
+  slidesContainer.addEventListener('mousemove', moveTouch);
+  slidesContainer.addEventListener('mouseup', endTouch);
+  slidesContainer.addEventListener('mouseleave', () => (isDragging = false));
+}
