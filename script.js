@@ -166,7 +166,12 @@ function showSection(id) {
         .toLowerCase();
 
       const produtos = Object.keys(catalog)
-        .filter(cat => cat.toLowerCase() === categoriaNormalizada)
+        .filter(cat =>
+          cat
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .toLowerCase() === categoriaNormalizada
+        )
         .flatMap(cat => catalog[cat]);
 
       renderGrid(grid, produtos || []);
