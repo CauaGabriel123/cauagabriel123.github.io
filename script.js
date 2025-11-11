@@ -171,13 +171,14 @@ function showSection(id) {
       .toLowerCase();
 
     const todosProdutos = Object.values(catalog).flat();
-    const produtosCat = todosProdutos.filter(p =>
-      (p.category || "")
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .toLowerCase() === categoriaNormalizada
-    );
+    const produtosCat = todosProdutos.filter(p => {
+  const catProduto = (p.category || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
 
+  return catProduto.includes(categoriaNormalizada) || categoriaNormalizada.includes(catProduto);
+});
     renderGrid(grid, produtosCat);
   }
 }
