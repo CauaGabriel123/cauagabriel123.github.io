@@ -162,9 +162,13 @@ function showSection(id) {
     return;
   }
 
-  // Se a seção não tiver grid (como "contato" e "sobre nós"), apenas mostra o conteúdo
+  // 🔧 Se a seção não tiver grid (como "contato", "sobre nós", "pedidos" etc.),
+  // apenas mostra o conteúdo e sai da função
   const grid = sec.querySelector('.grid');
-  if (!grid) return;
+  if (!grid) {
+    sec.classList.add('visible');
+    return;
+  }
 
   // Normaliza o ID da seção (para comparar com o campo category)
   const categoriaNormalizada = id
