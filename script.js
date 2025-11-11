@@ -2015,3 +2015,26 @@ if (fixedCarousel) {
   slidesContainer.addEventListener('mouseup', endTouch);
   slidesContainer.addEventListener('mouseleave', () => (isDragging = false));
 }
+// ==============================
+// 🔧 CONTROLE DE SEÇÕES VISÍVEIS
+// ==============================
+document.querySelectorAll('.drawer-links a[data-section]').forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+
+    // Oculta todas as seções
+    document.querySelectorAll('.section').forEach(sec => sec.classList.remove('visible'));
+
+    // Mostra a seção correspondente
+    const id = link.getAttribute('data-section');
+    const sec = document.getElementById(id);
+    if (sec) {
+      sec.classList.add('visible');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Fecha o menu lateral
+    const drawer = document.getElementById('drawer');
+    if (drawer) drawer.setAttribute('aria-hidden', 'true');
+  });
+});
