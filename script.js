@@ -148,7 +148,8 @@ function showSection(id) {
   
   // Mostra a seção selecionada
   const sec = document.getElementById(id);
-  if (sec) sec.classList.add('visible');
+  if (!sec) return;
+  sec.classList.add('visible');
   window.scrollTo({ top: 0, behavior: 'smooth' });
 
   // Se for a tela inicial, renderiza os destaques
@@ -161,15 +162,10 @@ function showSection(id) {
     return;
   }
 
-    // Verifica se a seção tem uma grid (somente as de produtos têm)
-  const grid = sec?.querySelector('.grid');
-  if (!grid) return; // ⚠️ Substituir por exibição padrão abaixo
+  // Se a seção não tiver grid (como "contato" e "sobre nós"), apenas mostra o conteúdo
+  const grid = sec.querySelector('.grid');
+  if (!grid) return;
 
-  // NOVO: garante que seções simples ("sobre nós", "contato", etc.) também apareçam
-  if (!grid) {
-    sec.classList.add('visible');
-    return;
-  }
   // Normaliza o ID da seção (para comparar com o campo category)
   const categoriaNormalizada = id
     .normalize("NFD")
@@ -185,7 +181,7 @@ function showSection(id) {
       .toLowerCase() === categoriaNormalizada
   );
 
-  // Renderiza apenas se for uma seção de produtos
+  // Renderiza os produtos se for uma categoria
   renderGrid(grid, produtosCat);
 }
 // =============================
