@@ -2016,25 +2016,32 @@ if (fixedCarousel) {
   slidesContainer.addEventListener('mouseleave', () => (isDragging = false));
 }
 // ==============================
-// 🔧 CONTROLE DE SEÇÕES VISÍVEIS
+// 🔧 CONTROLE DE SEÇÕES VISÍVEIS — FIX COMPLETO
 // ==============================
-document.querySelectorAll('.drawer-links a[data-section]').forEach(link => {
-  link.addEventListener('click', e => {
-    e.preventDefault();
+document.addEventListener('DOMContentLoaded', () => {
+  const links = document.querySelectorAll('.drawer-links a[data-section]');
+  const sections = document.querySelectorAll('.section');
+  const drawer = document.getElementById('drawer');
 
-    // Oculta todas as seções
-    document.querySelectorAll('.section').forEach(sec => sec.classList.remove('visible'));
+  links.forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const id = link.getAttribute('data-section');
 
-    // Mostra a seção correspondente
-    const id = link.getAttribute('data-section');
-    const sec = document.getElementById(id);
-    if (sec) {
-      sec.classList.add('visible');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+      // Esconde todas as seções
+      sections.forEach(sec => sec.classList.remove('visible'));
 
-    // Fecha o menu lateral
-    const drawer = document.getElementById('drawer');
-    if (drawer) drawer.setAttribute('aria-hidden', 'true');
+      // Mostra a seção correspondente
+      const target = document.getElementById(id);
+      if (target) {
+        target.classList.add('visible');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        console.warn(`⚠️ Seção não encontrada: ${id}`);
+      }
+
+      // Fecha o drawer após o clique
+      if (drawer) drawer.setAttribute('aria-hidden', 'true');
+    });
   });
 });
