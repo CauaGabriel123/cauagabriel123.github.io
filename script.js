@@ -148,33 +148,31 @@ function showSection(id) {
   if (sec) sec.classList.add('visible');
   window.scrollTo({ top: 0, behavior: 'smooth' });
 
-  // 🔧 NOVO: carregar produtos da categoria automaticamente
-  const grid = sec?.querySelector('.grid');
-  if (grid) {
-    const categoriaNormalizada = id
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .toLowerCase();
+  // 🔧 NOVO: recarrega "Início" e categorias automaticamente
+  if (id === 'inicio') {
+    // Recarregar os produtos em destaque ao voltar para a home
+    const featured = document.getElementById('featured');
+    if (featured && typeof renderFeatured === 'function') {
+      featured.innerHTML = '';
+      renderFeatured();
+    }
+  } else {
+    // Renderiza produtos da categoria correspondente
+    const grid = sec?.querySelector('.grid');
+    if (grid) {
+      const categoriaNormalizada = id
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase();
 
-    const produtos = Object.keys(catalog)
-      .filter(cat => cat.toLowerCase() === categoriaNormalizada)
-      .flatMap(cat => catalog[cat]);
+      const produtos = Object.keys(catalog)
+        .filter(cat => cat.toLowerCase() === categoriaNormalizada)
+        .flatMap(cat => catalog[cat]);
 
-    renderGrid(grid, produtos || []);
+      renderGrid(grid, produtos || []);
+    }
   }
 }
-
-// --- NOVO: link "Sobre Nós" no menu abre a seção correspondente
-(function sobreNosNav(){
-  const link = document.getElementById('sobre-nos-link');
-  if (!link) return;
-  link.addEventListener('click', (e) => {
-    e.preventDefault();
-    showSection('sobre-nos');
-    drawer.setAttribute('aria-hidden', 'true');
-  });
-})();
-
 // =============================
 // BLOQUEIO DE LETRAS NO CAMPO "NÚMERO" (somente dígitos 0-9)
 // =============================
