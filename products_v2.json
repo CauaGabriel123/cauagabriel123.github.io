@@ -118,10 +118,9 @@
     "name": "Regata Luri Romance",
     "category": "blusas",
     "price": 49.99,
-    "images":[ "https://cauagabriel123.github.io/assets/blusa2_.JPG",
-    "https://cauagabriel123.github.io/assets/blusa2_2.JPG",
-    "https://cauagabriel123.github.io/assets/blusa2_3.JPG",
-    "https://cauagabriel123.github.io/assets/blusa2_4.JPG"],
+    "images":[ "https://cauagabriel123.github.io/assets/blusa2.JPG",
+    "https://cauagabriel123.github.io/assets/blusa2.2.JPG",
+    "https://cauagabriel123.github.io/assets/blusa2.3.JPG"],
     "description": "Sutiã em renda delicada sem bojo, ideal para o conforto do dia a dia.",
     "status": "disponivel",
     "sizes": ["M"],
@@ -130,7 +129,7 @@
   {
     "id": "p11",
     "name": "Reparador de sobrancelha",
-    "category": "beleza",
+    "category": "belezas",
     "price": 34.99,
     "images": ["https://cauagabriel123.github.io/assets/beleza2.JPG",
     "https://cauagabriel123.github.io/assets/beleza2.2.JPG",
@@ -143,7 +142,7 @@
   {
     "id": "p12",
     "name": "Água Micelar 15 em 1",
-    "category": "beleza",
+    "category": "belezas",
     "price": 24.99,
     "images": ["https://cauagabriel123.github.io/assets/beleza8.JPG",
     "https://cauagabriel123.github.io/assets/beleza8.2.JPG",
@@ -156,7 +155,7 @@
   {
     "id": "p13",
     "name": "Paleta de Sombra",
-    "category": "beleza",
+    "category": "belezas",
     "price": 24.99,
     "images":[ "https://cauagabriel123.github.io/assets/beleza5.JPG",
     "https://cauagabriel123.github.io/assets/beleza5.2.JPG",
@@ -169,7 +168,7 @@
   {
     "id": "p14",
     "name": "Corretivo Cor 1",
-    "category": "beleza",
+    "category": "belezas",
     "price": 24.99,
     "images":[ "https://cauagabriel123.github.io/assets/beleza12.JPG",
     "https://cauagabriel123.github.io/assets/beleza12.2.JPG"],
@@ -181,7 +180,7 @@
   {
     "id": "p15",
     "name": "Limpador de pincéis Melu",
-    "category": "beleza",
+    "category": "belezas",
     "price": 29.99,
     "images":[ "https://cauagabriel123.github.io/assets/beleza13.JPG"],
     "description": "Batom matte de longa duração, tom rosa LS perfeito para todos os tons de pele.",
@@ -192,7 +191,7 @@
   {
     "id": "p16",
     "name": "Glow Girl",
-    "category": "beleza",
+    "category": "belezas",
     "price": 24.99,
     "images":[ "https://cauagabriel123.github.io/assets/beleza7.JPG",
     "https://cauagabriel123.github.io/assets/beleza7.2.JPG",
@@ -205,7 +204,7 @@
   {
     "id": "p17",
     "name": "Creme Hidratante",
-    "category": "beleza",
+    "category": "belezas",
     "price":24.99,
     "images": ["https://cauagabriel123.github.io/assets/beleza11.JPG",
     "https://cauagabriel123.github.io/assets/beleza11.2.JPG"],
@@ -217,7 +216,7 @@
   {
     "id": "p18",
     "name": "Creme Hidratante",
-    "category": "beleza",
+    "category": "belezas",
     "price": 24.99,
     "images":[ "https://cauagabriel123.github.io/assets/beleza3.JPG",
     "https://cauagabriel123.github.io/assets/beleza3.2.JPG",
@@ -231,21 +230,21 @@
   {
     "id": "p19",
     "name": "Perfume Capilar S/ Álcool",
-    "category": "beleza",
+    "category": "belezas",
     "price": 29.99,
     "images":[ "https://cauagabriel123.github.io/assets/beleza6.JPG",
     "https://cauagabriel123.github.io/assets/beleza6.2.JPG",
     "https://cauagabriel123.github.io/assets/beleza6.3.JPG"
     ],
     "description": "Bolsa estruturada tom rosa LS, moderna e prática para o dia a dia.",
-    "status": "esgotado",
+    "status": "disponivel",
     "sizes": ["60ml"],
     "colors": ["Transparente"]
   },
   {
         "id": "p20",
     "name": "Mousse de Limpeza Facial",
-    "category": "beleza",
+    "category": "belezas",
     "price": 24.99,
     "images": ["https://cauagabriel123.github.io/assets/beleza9.JPG",
     "https://cauagabriel123.github.io/assets/beleza9.2.JPG",
@@ -259,7 +258,7 @@
   {
         "id": "p21",
     "name": "Mousse de higiene Íntima",
-    "category": "beleza",
+    "category": "belezas",
     "price": 24.99,
     "images": ["https://cauagabriel123.github.io/assets/beleza10.JPG",
     "https://cauagabriel123.github.io/assets/beleza10.2.JPG",
@@ -272,7 +271,7 @@
   {
         "id": "p22",
     "name": "Sabonete Íntimo Barbatimão e Flor de Algodão",
-    "category": "beleza",
+    "category": "belezas",
     "price": 14.99,
     "images": ["https://cauagabriel123.github.io/assets/beleza4.JPG",
       "https://cauagabriel123.github.io/assets/beleza4.2.JPG",
@@ -285,7 +284,7 @@
   {
         "id": "p23",
     "name": "Sabonete Íntimo Extrato de 17 ervas",
-    "category": "beleza",
+    "category": "belezas",
     "price": 14.99,
     "images": ["https://cauagabriel123.github.io/assets/beleza1.JPG",
     "https://cauagabriel123.github.io/assets/beleza1.2.JPG",
@@ -298,7 +297,7 @@
   {
         "id": "p24",
     "name": "Creme Hidratante",
-    "category": "beleza",
+    "category": "belezas",
     "price":24.99,
     "images": ["https://cauagabriel123.github.io/assets/beleza14.JPG",
       "https://cauagabriel123.github.io/assets/beleza14.2.JPG"],
@@ -310,7 +309,7 @@
   {
     "id": "p25",
     "name": "Hidratante Corporal BaBaBell",
-    "category": "beleza",
+    "category": "belezas",
     "price": 29.99,
     "images": ["https://cauagabriel123.github.io/assets/beleza15.JPG",
       "https://cauagabriel123.github.io/assets/beleza15.2.JPG"],
@@ -320,9 +319,22 @@
     "colors": ["Branco"]
       },
   {
+    "id": "p26",
+    "name": "Calcinha cagatoria",
+    "category": "intimos",
+    "price": 199.99,
+    "images": ["https://cauagabriel123.github.io/assets/intimo1.3.JPG",
+      "https://cauagabriel123.github.io/assets/intimo1.2.JPG",
+      "https://cauagabriel123.github.io/assets/intimo1.JPG"],
+    "description": "calcinha de coco.",
+    "status": "indisponivel",
+    "sizes": ["M", "G"],
+    "colors": ["Verde", "Azul"]
+      },
+  {
         "id": "p27",
     "name": "Calcinha S/ Costura Romance",
-    "category": "intimas",
+    "category": "intimos",
     "price": 29.99,
     "images":[ "https://cauagabriel123.github.io/assets/intimo4.JPG",
      "https://cauagabriel123.github.io/assets/intimo4.2.JPG",
@@ -335,7 +347,7 @@
   {
         "id": "p28",
     "name": "Conjunto Fio Duplo Romance",
-    "category": "intimas",
+    "category": "intimos",
     "price": 109.99,
     "images":[ "https://cauagabriel123.github.io/assets/intimo8.3.JPG",
      "https://cauagabriel123.github.io/assets/intimo8.JPG",
@@ -348,7 +360,7 @@
   {
         "id": "p29",
     "name": "Calcinha Fio Duplo Romance",
-    "category": "intimas",
+    "category": "intimos",
     "price": 19.99,
     "images": ["https://cauagabriel123.github.io/assets/intimo3.JPG",
      "https://cauagabriel123.github.io/assets/intimo3.2.JPG",
@@ -367,7 +379,7 @@
   {
         "id": "p30",
     "name": "Calcinha Fio Duplo Romance",
-    "category": "intimas",
+    "category": "intimos",
     "price": 19.99,
     "images": ["https://cauagabriel123.github.io/assets/intimo5.JPG",
      "https://cauagabriel123.github.io/assets/intimo5.2.JPG"],
@@ -379,7 +391,7 @@
   {
         "id": "p32",
     "name": "Tanga Short Nebia",
-    "category": "intimas",
+    "category": "intimos",
     "price": 29.99,
     "images": ["https://cauagabriel123.github.io/assets/intimo9.2.JPG",
      "https://cauagabriel123.github.io/assets/intimo9.JPG",
@@ -392,7 +404,7 @@
   {
         "id": "p34",
     "name": "Conjunto Fio duplo Bordado Romance",
-    "category": "intimas",
+    "category": "intimos",
     "price": 99.99,
     "images": ["https://cauagabriel123.github.io/assets/intimo7.3.JPG",
     "https://cauagabriel123.github.io/assets/intimo7.2.JPG",
@@ -405,7 +417,7 @@
   {
         "id": "p35",
     "name": "Conjunto",
-    "category": "intimas",
+    "category": "intimos",
     "price": 25.99,
     "images":[ "https://cauagabriel123.github.io/assets/intimo12.JPG",
     "https://cauagabriel123.github.io/assets/intimo12.2.JPG",
@@ -424,42 +436,27 @@
   {
         "id": "p36",
     "name": "Calcinha Luna",
-    "category": "intimas",
+    "category": "intimos",
     "price": 24.99,
+    "images": ["https://cauagabriel123.github.io/assets/intimo1.3.JPG",
+    "https://cauagabriel123.github.io/assets/intimo1.2.JPG",
+    "https://cauagabriel123.github.io/assets/intimo1.JPG",
+    "https://cauagabriel123.github.io/assets/intimo1igual.JPG",
+    "https://cauagabriel123.github.io/assets/intimo1igual22.JPG",
+    "https://cauagabriel123.github.io/assets/intimo1igual66.JPG",
+    "https://cauagabriel123.github.io/assets/intimo1igual7.JPG",
+    "https://cauagabriel123.github.io/assets/intimo1igual3.JPG",
+    "https://cauagabriel123.github.io/assets/intimo1igual4.JPG",
+    "https://cauagabriel123.github.io/assets/intimo1igual5.JPG"],
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
     "status": "disponivel",
-    "variations": {
-    "Cinza": {
-      "sizes": ["M"],
-      "stock": 1,
-      "image": "https://cauagabriel123.github.io/assets/intimo1_3.JPG",
-      "images": [ "https://cauagabriel123.github.io/assets/intimo1_3.JPG",
-      "https://cauagabriel123.github.io/assets/intimo1.JPG"
-      ]
-    },
-    "Laranja": {
-      "sizes": ["GG"],
-      "stock": 1,
-      "image": "https://cauagabriel123.github.io/assets/intimo1igual66.JPG",
-      "images": ["https://cauagabriel123.github.io/assets/intimo1igual.JPG",
-      "https://cauagabriel123.github.io/assets/intimo1igual22.JPG",
-      "https://cauagabriel123.github.io/assets/intimo1igual7.JPG" 
-      ]
-    },
-    "Azul": {
-      "sizes": ["GG"],
-      "stock": 1,
-      "image": "https://cauagabriel123.github.io/assets/intimo1igual4.JPG",
-      "images": ["https://cauagabriel123.github.io/assets/intimo1igual3.JPG",
-      "https://cauagabriel123.github.io/assets/intimo1igual5.JPG"
-      ]
-      }
-      }
+    "sizes": ["M", "GG"],
+    "colors": ["Cinza", "Laranja", "Azul"]
       },
   {
         "id": "p37",
     "name": "Conjunto Fio Duplo YOLANDA",
-    "category": "intimas",
+    "category": "intimos",
     "price": 109.99,
     "images": ["https://cauagabriel123.github.io/assets/intimo6.JPG",
     "https://cauagabriel123.github.io/assets/intimo6.2.JPG",
@@ -472,7 +469,7 @@
   {
         "id": "p38",
     "name": "Conjunto Plus",
-    "category": "intimas",
+    "category": "intimos",
     "price": 74.99,
     "images": ["https://cauagabriel123.github.io/assets/intimo10igual44.JPG",
     "https://cauagabriel123.github.io/assets/intimo10igual1.JPG",
