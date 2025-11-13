@@ -78,56 +78,76 @@
 
       <li><a href="#" data-section="contato">Contato</a></li>
       <li><a href="#" data-section="minha-conta">Minha conta</a></li>
-      <li><a href="#" data-section="sobre-nos">Sobre Nós</a></li>
+      <li><a href="#" id="sobre-nos-link">Sobre Nós</a></li>
     </ul>
   </div>
 </aside>
 
 
 <main class="container">
-
-  <!-- =========================
-       INÍCIO / HOME
-  ========================== -->
   <section id="inicio" class="section visible">
-    ... SEU CARROSSEL ...
-    ... SEUS DESTAQUES ...
-  </section>
+    <!-- =========================
+     LS STORE 2026 — Carrossel Fixo de 3 Imagens
+     ========================= -->
+<div class="carousel large" id="fixed-carousel">
+  <div class="slides">
+    <div class="slide active">
+      <img src="assets/rodape_3.PNG" alt="Banner LS Store 1">
+    </div>
+    <div class="slide">
+      <img src="assets/rodape_2.PNG" alt="Banner LS Store 2">
+    </div>
+    <div class="slide">
+      <img src="assets/rodape_4.png" alt="Banner LS Store 3">
+    </div>
+  </div>
+  <button class="carousel-btn prev" aria-label="Anterior">❮</button>
+  <button class="carousel-btn next" aria-label="Próximo">❯</button>
+  <div class="dots"></div>
+</div>
 
-  <!-- =========================
-       CATEGORIAS (FORA DO #inicio)
-  ========================== -->
+<h2 class="section-title">Destaques da Semana</h2>
+<div id="featured" class="grid"></div>
+
+  <!-- Categorias -->
   <section id="blusas" class="section"><h2 class="section-title">Blusas</h2><div class="grid" data-cat="blusas"></div></section>
   <section id="croppeds" class="section"><h2 class="section-title">Croppeds</h2><div class="grid" data-cat="croppeds"></div></section>
   <section id="leggings" class="section"><h2 class="section-title">Leggings</h2><div class="grid" data-cat="leggings"></div></section>
   <section id="shorts" class="section"><h2 class="section-title">Shorts</h2><div class="grid" data-cat="shorts"></div></section>
-  ... (resto das categorias)
+  <section id="vestidos" class="section"><h2 class="section-title">Vestidos</h2><div class="grid" data-cat="vestidos"></div></section>
+  <section id="intimos" class="section"><h2 class="section-title">Íntimos</h2><div class="grid" data-cat="intimos"></div></section>
+  <section id="biquinis" class="section"><h2 class="section-title">Biquínis</h2><div class="grid" data-cat="biquinis"></div></section>
+  <section id="pijamas" class="section"><h2 class="section-title">Pijamas</h2><div class="grid" data-cat="pijamas"></div></section>
+  <section id="oculos" class="section"><h2 class="section-title">Óculos</h2><div class="grid" data-cat="oculos"></div></section>
+  <section id="belezas" class="section"><h2 class="section-title">Belezas</h2><div class="grid" data-cat="belezas"></div></section>
+  <section id="meias" class="section"><h2 class="section-title">Meias</h2><div class="grid" data-cat="meias"></div></section>
+  <section id="cuecas" class="section"><h2 class="section-title">Cuecas</h2><div class="grid" data-cat="cuecas"></div></section>
 
-  <!-- =========================
-       CONTATO
-  ========================== -->
+  <!-- Contato -->
   <section id="contato" class="section contato-modern">
     <h2 class="section-title">Contato</h2>
     <div class="contato-card">
-      <p>Instagram e WhatsApp aqui...</p>
+      <div class="contato-info">
+        <p>💌 Instagram: <a id="insta-link" href="#" target="_blank" rel="noopener">@ls_store.fc</a></p>
+        <p>💬 WhatsApp: <a href="https://wa.me/5551989235482" target="_blank" rel="noopener">+55 51 98923-5482</a></p>
+      </div>
     </div>
   </section>
 
-  <!-- =========================
-       MINHA CONTA
-  ========================== -->
+  <!-- Minha conta -->
   <section id="minha-conta" class="section">
     <h2 class="section-title">Minha conta</h2>
+    <div id="account-area" class="account-area"></div>
   </section>
 
-  <!-- =========================
-       SOBRE NÓS
-  ========================== -->
+  <!-- Sobre Nós -->
   <section id="sobre-nos" class="section sobre-nos-modern">
     <h2 class="section-title">Sobre Nós</h2>
-    <p>Texto da loja...</p>
+    <div class="sobre-nos-box">
+      <div class="sobre-nos-icon">💖</div>
+      <p>💕 A LS STORE é uma loja feita com amor pra quem ama moda feminina! Aqui você encontra peças modernas, estilosas e com aquele toque único que só a LS tem. 🚚 Entregamos rapidinho em <strong>toda Canoas!</strong></p>
+    </div>
   </section>
-
 </main>
 
 <footer class="footer">
