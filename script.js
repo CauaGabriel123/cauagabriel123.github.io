@@ -2015,3 +2015,80 @@ if (fixedCarousel) {
   slidesContainer.addEventListener('mouseup', endTouch);
   slidesContainer.addEventListener('mouseleave', () => (isDragging = false));
 }
+// ============================================
+// LS STORE — CUPOM NO CARRINHO (GLOBAL)
+// ============================================
+
+const CART_COUPONS = {
+  "LS10": { type: "percent", value: 0.10 },
+  "LS20": { type: "percent", value: 0.20 },
+  "TELEFREE": { type: "freeship", value: 0 }
+};
+
+let cartAppliedCoupon = null;
+
+function applyCartCoupon() {
+  const input = document.getElementById("cartCouponInput");
+  const message = document.getElementById("cartCouponMessage");
+  const code = input.value.trim().toUpperCase();
+
+  if (!code) {
+    message.textContent = "Digite um cupom.";
+    message.style.color = "#e74c3c";
+    cartAppliedCoupon = null;
+    refreshFinalTotals();
+    return;
+  }
+
+  if (!CART_COUPONS[code]) {
+    message.textContent = "❌ Cupom inválido!";
+    message.style.color = "#e74c3c";
+    cartAppliedCoupon = null;
+    refreshFinalTotals();
+    return;
+  }
+
+  cartAppliedCoupon = code;
+
+  message.textContent = `🏷️ Cupom ${code} aplicado!`;
+  message.style.color = "#27ae60";
+
+  refreshFinalTotals();
+}
+
+// Botão aplicar cupom
+document.addEventListener("click", e => {
+  if (e.target && e.target.id === "applyCartCoupon") {
+    applyCartCoupon();
+  }
+});
+
+// ===============================
+// Ajusta total final com CUPOM
+// ===============================
+const oldRefreshFinalTotals = refreshFinalTotals;
+
+refreshFinalTotals = function () {
+  oldRefreshFinalTotals();
+
+  if (!cartAppliedCoupon) return;
+
+  const coupon = CART_COUPONS[cartAppliedCoupon];
+  const subtotal = sumTotal();
+  let fee = calcFee();
+  let final = subtotal + fee;
+
+  // Tipos de cupom
+  if (coupon.type === "percent") {
+    final = final * (1 - coupon.value);
+  }
+
+  if (coupon.type === "freeship") {
+    fee = 0;
+    document.getElementById("delivery-fee").style.display = "none";
+    document.getElementById("fee-value").textContent = "0,00";
+    final = subtotal;
+  }
+
+  finalTotal.textContent = final.toFixed(2).replace(".", ",");
+};
