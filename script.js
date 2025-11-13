@@ -2015,19 +2015,3 @@ if (fixedCarousel) {
   slidesContainer.addEventListener('mouseup', endTouch);
   slidesContainer.addEventListener('mouseleave', () => (isDragging = false));
 }
-function openSection(sectionId) {
-  // Esconde todas as seções
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('visible'));
-
-  // Mostra só a seção clicada
-  const el = document.getElementById(sectionId);
-  if (el) {
-    el.classList.add('visible');
-
-    // Scroll suave pro topo
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  // Fecha o menu lateral
-  document.getElementById('drawer').setAttribute('aria-hidden', 'true');
-}
