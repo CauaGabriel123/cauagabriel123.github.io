@@ -2015,33 +2015,3 @@ if (fixedCarousel) {
   slidesContainer.addEventListener('mouseup', endTouch);
   slidesContainer.addEventListener('mouseleave', () => (isDragging = false));
 }
-// ==============================
-// 🔧 CONTROLE DE SEÇÕES VISÍVEIS — FIX COMPLETO
-// ==============================
-document.addEventListener('DOMContentLoaded', () => {
-  const links = document.querySelectorAll('.drawer-links a[data-section]');
-  const sections = document.querySelectorAll('.section');
-  const drawer = document.getElementById('drawer');
-
-  links.forEach(link => {
-    link.addEventListener('click', e => {
-      e.preventDefault();
-      const id = link.getAttribute('data-section');
-
-      // Esconde todas as seções
-      sections.forEach(sec => sec.classList.remove('visible'));
-
-      // Mostra a seção correspondente
-      const target = document.getElementById(id);
-      if (target) {
-        target.classList.add('visible');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else {
-        console.warn(`⚠️ Seção não encontrada: ${id}`);
-      }
-
-      // Fecha o drawer após o clique
-      if (drawer) drawer.setAttribute('aria-hidden', 'true');
-    });
-  });
-});
