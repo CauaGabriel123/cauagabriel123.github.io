@@ -1822,5 +1822,4 @@ function open(id){
     document.body.classList.remove('lsx-no-scroll');
   }
 
-  els.root.addEventListener('click',e=>{ if(e.target.dataset.close==='true') close(); });
-  document.addEventListener('keydown',e=>{ if(e.key==='Escape') clo
+  
