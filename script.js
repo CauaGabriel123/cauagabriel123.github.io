@@ -1871,8 +1871,8 @@ document.addEventListener('DOMContentLoaded', () => {
 // ===== LS STORE • Sistema de Cupons (Produto Individual) =====
 const COUPONS = {
   "LS10": 0.10,
-  "LS15": 0.15,
-  "LS20": 0.20
+  "Surisso": 0.15,
+  "BemVinda10": 0.20
 };
 
 let appliedCoupon = null;
