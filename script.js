@@ -1870,9 +1870,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // ===== LS STORE • Sistema de Cupons (Produto Individual) =====
 const COUPONS = {
-  "LS10": 0.10,
-  "Surisso": 0.15,
-  "BemVinda10": 0.20
+  "TELEFREE": 0.10,
+  "bemvinda15": 0.15,
+  "surisso": 0.20
 };
 
 let appliedCoupon = null;
@@ -2020,8 +2020,8 @@ if (fixedCarousel) {
 // ============================================
 
 const CART_COUPONS = {
-  "BemVinda10": { type: "percent", value: 0.10 },
-  "suriçoo": { type: "percent", value: 0.20 },
+  "BemVinda15": { type: "percent", value: 0.10 },
+  "surisso": { type: "percent", value: 0.20 },
   "TELEFREE": { type: "freeship", value: 0 }
 };
 
