@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // --- Navegação entre seções
-document.querySelectorAll('.drawer-links a[data-section], .footer a[data-section]').forEach(a => {
+document.querySelectorAll('#drawer a[data-section], .footer a[data-section]').forEach(a => {
   a.onclick = e => {
     e.preventDefault();
     showSection(a.getAttribute('data-section'));
