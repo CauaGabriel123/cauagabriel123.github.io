@@ -2020,8 +2020,8 @@ if (fixedCarousel) {
 // ============================================
 
 const CART_COUPONS = {
-  "LS10": { type: "percent", value: 0.10 },
-  "LS20": { type: "percent", value: 0.20 },
+  "BemVinda10": { type: "percent", value: 0.10 },
+  "suriçoo": { type: "percent", value: 0.20 },
   "TELEFREE": { type: "freeship", value: 0 }
 };
 
