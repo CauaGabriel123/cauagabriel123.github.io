@@ -147,9 +147,12 @@ img { max-width:100%; display:block; }
 }
 
 /* Seções & Grids */
-.section { display:none; padding:10px 2px; }
-.section.visible { display:block; }
-.section-title { margin:14px 4px 10px; font-size:18px; }
+.section { 
+  display: block;
+  padding: 10px 2px;
+}
+.section.visible { display: block; }
+.section-title { margin: 14px 4px 10px; font-size: 18px; }
 .grid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
 .card {
   background:white; border-radius:14px; overflow:hidden;
