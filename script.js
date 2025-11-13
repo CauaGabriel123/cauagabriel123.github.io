@@ -1822,4 +1822,196 @@ function open(id){
     document.body.classList.remove('lsx-no-scroll');
   }
 
-  
+  els.root.addEventListener('click',e=>{ if(e.target.dataset.close==='true') close(); });
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape') close(); });
+
+  window.LSModal = { open, close };
+  window.LSModal.current = current;
+})();
+// ===== Parcelas Modal LS STORE =====
+document.addEventListener('DOMContentLoaded', () => {
+  const installmentsLink = document.getElementById('lsxInstallments');
+  const modal = document.getElementById('installments-modal');
+  const list = document.getElementById('installments-list');
+
+  if (!installmentsLink) return;
+
+  // abre modal ao clicar no link "12x de R$..."
+  installmentsLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    const priceEl = document.getElementById('lsxPrice');
+    if (!priceEl) return;
+
+    // extrai número do preço
+    const text = priceEl.textContent.replace(/[^\d,]/g, '').replace(',', '.');
+    const price = parseFloat(text);
+    if (isNaN(price)) return;
+
+    // limpa lista
+    list.innerHTML = '';
+
+    // gera parcelas de 2x até 12x
+    for (let i = 2; i <= 12; i++) {
+      const value = (price / i).toFixed(2).replace('.', ',');
+      const li = document.createElement('li');
+      li.textContent = `${i}x de R$ ${value}`;
+      list.appendChild(li);
+    }
+
+    // mostra modal
+    modal.hidden = false;
+  });
+
+  // fecha modal clicando no X ou fora
+  modal.addEventListener('click', (e) => {
+    if (e.target.dataset.close) modal.hidden = true;
+  });
+});
+
+// ===== LS STORE • Sistema de Cupons (Produto Individual) =====
+const COUPONS = {
+  "LS10": 0.10,
+  "LS15": 0.15,
+  "LS20": 0.20
+};
+
+let appliedCoupon = null;
+
+document.addEventListener("click", e => {
+  if (e.target && e.target.id === "applyCoupon") {
+    const input = document.getElementById("couponInput");
+    const message = document.getElementById("couponMessage");
+    const code = input.value.trim().toUpperCase();
+    const priceEl = document.getElementById("lsxPrice");
+
+    if (!code) {
+      message.textContent = "Digite um cupom.";
+      message.style.color = "#e74c3c";
+      return;
+    }
+
+    if (COUPONS[code]) {
+      appliedCoupon = code;
+      const discount = COUPONS[code];
+      const originalPrice = parseFloat(priceEl.dataset.originalPrice || priceEl.textContent.replace(/[^\d,]/g, "").replace(",", "."));
+      const newPrice = (originalPrice * (1 - discount)).toFixed(2);
+
+      // 🔥 Mostra preço novo + antigo riscado
+      priceEl.innerHTML = `
+        R$ ${newPrice.replace(".", ",")}
+        <span style="text-decoration:line-through;color:#8a7aa5;font-size:14px;margin-left:8px;">
+          R$ ${originalPrice.toFixed(2).replace(".", ",")}
+        </span>
+      `;
+
+      priceEl.dataset.discountedPrice = newPrice;
+      message.textContent = `🏷️ Cupom ${code} aplicado com sucesso!`;
+      message.style.color = "#27ae60";
+    } else {
+      // 💥 ESTA PARTE FALTAVA
+      message.textContent = "❌ Cupom inválido!";
+      message.style.color = "#e91e63";
+    }
+  }
+});
+
+function setOriginalPriceValue(price) {
+  const el = document.getElementById("lsxPrice");
+  el.dataset.originalPrice = price;
+  el.textContent = `R$ ${parseFloat(price).toFixed(2).replace(".", ",")}`;
+  delete el.dataset.discountedPrice;
+  appliedCoupon = null;
+  const msg = document.getElementById("couponMessage");
+  if (msg) msg.textContent = "";
+}
+
+const oldAddToCart = window.addToCart;
+window.addToCart = function (product, size, color, qty = 1) {
+  const priceEl = document.getElementById("lsxPrice");
+  let finalPrice = product.price;
+  if (priceEl && priceEl.dataset.discountedPrice) {
+    finalPrice = parseFloat(priceEl.dataset.discountedPrice);
+  }
+
+  // Mantém preço atualizado e repassa todos os parâmetros corretamente
+  const discountedProduct = { ...product, price: finalPrice };
+  oldAddToCart(discountedProduct, size, color, qty);
+};
+
+// ============================
+// LS STORE 2026 — Carrossel Fixo de 3 Imagens (com suporte a toque)
+// ============================
+const fixedCarousel = document.getElementById('fixed-carousel');
+if (fixedCarousel) {
+  const slidesContainer = fixedCarousel.querySelector('.slides');
+  const slides = fixedCarousel.querySelectorAll('.slide');
+  const dotsContainer = fixedCarousel.querySelector('.dots');
+  const prevBtn = fixedCarousel.querySelector('.prev');
+  const nextBtn = fixedCarousel.querySelector('.next');
+  let currentSlide = 0;
+
+  // Cria dots dinamicamente
+  slides.forEach((_, i) => {
+    const dot = document.createElement('div');
+    dot.classList.add('dot');
+    if (i === 0) dot.classList.add('active');
+    dot.addEventListener('click', () => showSlide(i));
+    dotsContainer.appendChild(dot);
+  });
+
+  const dots = fixedCarousel.querySelectorAll('.dot');
+
+  function showSlide(index) {
+    slides.forEach((s, i) => s.classList.toggle('active', i === index));
+    dots.forEach((d, i) => d.classList.toggle('active', i === index));
+    slidesContainer.style.transform = `translateX(-${index * 100}%)`;
+    currentSlide = index;
+  }
+
+  prevBtn.addEventListener('click', () => {
+    showSlide((currentSlide - 1 + slides.length) % slides.length);
+  });
+  nextBtn.addEventListener('click', () => {
+    showSlide((currentSlide + 1) % slides.length);
+  });
+
+  // Auto play (5 segundos)
+  setInterval(() => {
+    showSlide((currentSlide + 1) % slides.length);
+  }, 5000);
+
+  // === Suporte a toque (arrastar com o dedo) ===
+  let startX = 0;
+  let deltaX = 0;
+  let isDragging = false;
+
+  function startTouch(e) {
+    isDragging = true;
+    startX = e.touches ? e.touches[0].clientX : e.clientX;
+    deltaX = 0;
+  }
+  function moveTouch(e) {
+    if (!isDragging) return;
+    const x = e.touches ? e.touches[0].clientX : e.clientX;
+    deltaX = x - startX;
+  }
+  function endTouch() {
+    if (!isDragging) return;
+    isDragging = false;
+    const threshold = 40; // mínimo de pixels pra trocar
+    if (deltaX > threshold) {
+      showSlide((currentSlide - 1 + slides.length) % slides.length);
+    } else if (deltaX < -threshold) {
+      showSlide((currentSlide + 1) % slides.length);
+    }
+    deltaX = 0;
+  }
+
+  slidesContainer.addEventListener('touchstart', startTouch, { passive: true });
+  slidesContainer.addEventListener('touchmove', moveTouch, { passive: true });
+  slidesContainer.addEventListener('touchend', endTouch);
+  slidesContainer.addEventListener('mousedown', startTouch);
+  slidesContainer.addEventListener('mousemove', moveTouch);
+  slidesContainer.addEventListener('mouseup', endTouch);
+  slidesContainer.addEventListener('mouseleave', () => (isDragging = false));
+}
