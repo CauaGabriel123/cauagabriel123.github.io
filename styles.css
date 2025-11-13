@@ -1894,3 +1894,48 @@ body {
   background: #fff;
   transform: scale(1.3);
 }
+
+.cart-coupon-box {
+  padding: 12px;
+  background: #fdf6ff;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  border: 1px solid #f0d9ff;
+}
+
+.cart-coupon-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #7A3BFD;
+}
+
+.cart-coupon-line {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+#cartCouponInput {
+  flex: 1;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  font-size: 15px;
+}
+
+#applyCartCoupon {
+  padding: 10px 14px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(90deg,#E96BA8,#7A3BFD);
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.cart-coupon-message {
+  display: block;
+  margin-top: 6px;
+  font-size: 13px;
+  font-weight: 600;
+}
