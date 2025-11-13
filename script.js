@@ -787,8 +787,9 @@ const paymentSel = document.getElementById('payment');
 const deliveryType = document.getElementById('delivery-type');
 const neighborhood = document.getElementById('neighborhood');
 const orderNotes = document.getElementById('order-notes');
-const cashRadios = document.querySelectorAll('input[name="troco"]');
+const cashRadios = document.querySelectorAll('input[name="cash-change"]'); // ✔ Correto
 const cashAmount = document.getElementById('cash-amount');
+
 // === EXIBIÇÃO DINÂMICA DE CAMPOS DE ENTREGA E TROCO ===
 document.addEventListener('DOMContentLoaded', () => {
   const paymentSel = document.getElementById('payment');
@@ -796,7 +797,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const cashSection = document.getElementById('cash-section');
   const cashAmount = document.getElementById('cash-amount');
   const addressFields = document.getElementById('address-fields');
-  const cashRadios = document.querySelectorAll('input[name="cash-change"]');
+  const cashRadios = document.querySelectorAll('input[name="cash-change"]'); // ✔ Correto
+});
 
   // --- Função para atualizar exibição dos campos ---
   function updateVisibility() {
