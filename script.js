@@ -57,13 +57,13 @@ const instaWeb = `https://www.instagram.com/${INSTAGRAM_HANDLE.replace('@','')}`
 const instaLink = document.getElementById('insta-link');
 const footerInsta = document.getElementById('footer-insta');
 [instaLink, footerInsta].forEach(a => {
-  if (!a) return;
+  if (!a) return; // ← AGORA NÃO QUEBRA MAIS NADA
   a.href = instaWeb;
-  a.addEventListener('click', e => {
+  a.onclick = (e) => {
     e.preventDefault();
     window.location.href = instaDeepLink;
     setTimeout(() => window.open(instaWeb, '_blank', 'noopener'), 700);
-  });
+  };
 });
 
 // --- Áudio (lazy init para iOS)
