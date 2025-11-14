@@ -2015,3 +2015,117 @@ if (fixedCarousel) {
   slidesContainer.addEventListener('mouseup', endTouch);
   slidesContainer.addEventListener('mouseleave', () => (isDragging = false));
 }
+
+// =============================
+// LS STORE — CUPOM NO CARRINHO (2026)
+// =============================
+
+// 🔥 Códigos de cupom
+const CART_COUPONS = {
+  "BEMVINDA10": { type: "percent", value: 0.10 },
+  "TELEFREE":   { type: "frete", value: 0 }
+};
+
+let appliedCartCoupon = null;
+
+// Campo do cupom no carrinho
+function applyCartCoupon() {
+  const input = document.getElementById("cart-coupon-input");
+  const msg = document.getElementById("cart-coupon-message");
+  const code = input.value.trim().toUpperCase();
+
+  if (!code) {
+    msg.textContent = "Digite um cupom.";
+    msg.style.color = "#e91e63";
+    return;
+  }
+
+  if (!CART_COUPONS[code]) {
+    msg.textContent = "❌ Cupom inválido!";
+    msg.style.color = "#e91e63";
+    return;
+  }
+
+  appliedCartCoupon = code;
+  msg.textContent = `Cupom ${code} aplicado com sucesso!`;
+  msg.style.color = "#27ae60";
+
+  renderCart();
+  refreshTotalsUI();
+  refreshFinalTotals();
+}
+
+document.addEventListener("click", (e) => {
+  if (e.target && e.target.id === "applyCartCoupon") {
+    applyCartCoupon();
+  }
+});
+
+
+// === Aplicação de desconto total no carrinho ===
+function getCartDiscount(subtotal) {
+  if (!appliedCartCoupon) return 0;
+
+  const cup = CART_COUPONS[appliedCartCoupon];
+
+  if (cup.type === "percent") {
+    return subtotal * cup.value;
+  }
+
+  return 0;
+}
+
+// === Frete grátis ===
+function getDeliveryFeeWithCoupon(originalFee) {
+  if (!appliedCartCoupon) return originalFee;
+
+  const cup = CART_COUPONS[appliedCartCoupon];
+
+  if (cup.type === "frete") {
+    return 0; // zera o frete
+  }
+
+  return originalFee;
+}
+
+
+// === Atualiza valores finais ===
+const original_refreshFinalTotals = refreshFinalTotals;
+refreshFinalTotals = function () {
+  const subtotal = sumTotal();
+  const feeOriginal = calcFee();
+  const fee = getDeliveryFeeWithCoupon(feeOriginal);
+  const discount = getCartDiscount(subtotal);
+
+  const final = subtotal - discount + fee;
+
+  // aplica no HTML
+  cartTotal.textContent = subtotal.toFixed(2).replace('.', ',');
+  feeValue.textContent = fee.toFixed(2).replace('.', ',');
+  finalTotal.textContent = final.toFixed(2).replace('.', ',');
+
+  updateCartCount();
+};
+
+
+// === Cupom aparece no WhatsApp ===
+const original_checkout = checkout.onclick;
+checkout.onclick = () => {
+
+  // recalcula antes
+  refreshFinalTotals();
+
+  let subtotal = sumTotal();
+  let discount = getCartDiscount(subtotal);
+  let feeOriginal = calcFee();
+  let fee = getDeliveryFeeWithCoupon(feeOriginal);
+  let final = subtotal - discount + fee;
+
+  // adiciona na mensagem de WhatsApp
+  window.appliedCoupon = appliedCartCoupon
+    ? `${appliedCartCoupon} (${discount > 0 ? (discount / subtotal * 100).toFixed(0) + "% off" : "Frete Grátis"})`
+    : null;
+
+  // chama o checkout original
+  original_checkout();
+};
