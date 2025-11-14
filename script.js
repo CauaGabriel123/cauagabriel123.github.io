@@ -1950,9 +1950,9 @@ if (fixedCarousel) {
 // ============================================
 
 const CART_COUPONS = {
-  "BemVinda15": { type: "percent", value: 0.10 },
-  "surisso": { type: "percent", value: 0.20 },
-  "TELEFREE": { type: "freeship", value: 0 }
+  "BEMVINDA10": { type: "percent", value: 0.10 }, // 10% de desconto
+  "TELEFREE": { type: "freeship", value: 0 },     // frete grátis
+  "SURISSO": { type: "percent", value: 0.20 }     // (se quiser manter)
 };
 
 let cartAppliedCoupon = null;
