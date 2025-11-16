@@ -1868,61 +1868,84 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// ===== LS STORE • Sistema de Cupons (Produto Individual) =====
+// ===== CUPONS LS STORE =====
 const COUPONS = {
   "LS10": 0.10,
   "LS15": 0.15,
-  "LS20": 0.20
+  "LS20": 0.20,
+  "TELEFREE": "FREE"
 };
 
 let appliedCoupon = null;
 
+// APLICAÇÃO GLOBAL DE CUPOM (modal + carrinho)
 document.addEventListener("click", e => {
-  if (e.target && (e.target.id === "applyCoupon" || e.target.id === "applyCartCoupon")) {
-    
-    // detecta se veio do modal ou do carrinho
-    const isCart = e.target.id === "applyCartCoupon";
+  if (!e.target || (e.target.id !== "applyCoupon" && e.target.id !== "applyCartCoupon"))
+    return;
 
-    const input = document.getElementById(isCart ? "cartCouponInput" : "couponInput");
-    const message = document.getElementById(isCart ? "cartCouponMessage" : "couponMessage");
-    const priceEl = isCart ? null : document.getElementById("lsxPrice");
+  const isCart = e.target.id === "applyCartCoupon";
 
-    const code = input.value.trim().toUpperCase();
+  const input = document.getElementById(isCart ? "cartCouponInput" : "couponInput");
+  const message = document.getElementById(isCart ? "cartCouponMessage" : "couponMessage");
 
-    if (!code) {
-      message.textContent = "Digite um cupom.";
-      message.style.color = "#e74c3c";
-      return;
-    }
-
-    if (!COUPONS[code]) {
-      message.textContent = "❌ Cupom inválido!";
-      message.style.color = "#e91e63";
-      return;
-    }
-
-    appliedCoupon = code;
-    const discount = COUPONS[code];
-
-    // se for cupom do modal (produto individual)
-    if (!isCart && priceEl) {
-      const originalPrice = parseFloat(
-        priceEl.dataset.originalPrice || priceEl.textContent.replace(/[^\d,]/g, "").replace(",", ".")
-      );
-      const newPrice = (originalPrice * (1 - discount)).toFixed(2);
-
-      priceEl.innerHTML = `
-        R$ ${newPrice.replace(".", ",")}
-        <span style="text-decoration:line-through;color:#8a7aa5;font-size:14px;margin-left:8px;">
-          R$ ${originalPrice.toFixed(2).replace(".", ",")}
-        </span>
-      `;
-      priceEl.dataset.discountedPrice = newPrice;
-    }
-
-    message.textContent = `🏷️ Cupom ${code} aplicado com sucesso!`;
-    message.style.color = "#27ae60";
+  const code = input.value.trim().toUpperCase();
+  if (!code) {
+    message.textContent = "Digite um cupom.";
+    message.style.color = "#e74c3c";
+    return;
   }
+
+  if (!COUPONS[code]) {
+    message.textContent = "❌ Cupom inválido!";
+    message.style.color = "#e91e63";
+    return;
+  }
+
+  appliedCoupon = code;
+  const discount = COUPONS[code];
+
+  // =============================
+  // 🔥 CUPOM DO MODAL (produto individual)
+  // =============================
+  if (!isCart) {
+    const priceEl = document.getElementById("lsxPrice");
+    const originalPrice = parseFloat(
+      priceEl.dataset.originalPrice || priceEl.textContent.replace(/[^\d,]/g, "").replace(",", ".")
+    );
+
+    const newPrice = (originalPrice * (1 - discount)).toFixed(2);
+
+    priceEl.innerHTML = `
+      R$ ${newPrice.replace(".", ",")}
+      <span style="text-decoration:line-through;color:#8a7aa5;font-size:14px;margin-left:8px;">
+        R$ ${originalPrice.toFixed(2).replace(".", ",")}
+      </span>
+    `;
+
+    priceEl.dataset.discountedPrice = newPrice;
+  }
+
+  // =============================
+  // 🔥 CUPOM NO CARRINHO (APLICA NO TOTAL)
+  // =============================
+  if (isCart) {
+    const subtotal = sumTotal();
+
+    // frete grátis
+    if (discount === "FREE") {
+      deliveryFee.style.display = "none";
+      feeValue.textContent = "0,00";
+    }
+
+    // desconto %
+    if (typeof discount === "number") {
+      const newTotal = subtotal * (1 - discount);
+      finalTotal.textContent = newTotal.toFixed(2).replace(".", ",");
+    }
+  }
+
+  message.textContent = `🏷️ Cupom ${code} aplicado!`;
+  message.style.color = "#27ae60";
 });
 
 function setOriginalPriceValue(price) {
