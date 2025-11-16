@@ -1879,10 +1879,15 @@ let appliedCoupon = null;
 
 document.addEventListener("click", e => {
   if (e.target && (e.target.id === "applyCoupon" || e.target.id === "applyCartCoupon")) {
-    const input = document.getElementById("couponInput");
-    const message = document.getElementById("couponMessage");
+    
+    // detecta se veio do modal ou do carrinho
+    const isCart = e.target.id === "applyCartCoupon";
+
+    const input = document.getElementById(isCart ? "cartCouponInput" : "couponInput");
+    const message = document.getElementById(isCart ? "cartCouponMessage" : "couponMessage");
+    const priceEl = isCart ? null : document.getElementById("lsxPrice");
+
     const code = input.value.trim().toUpperCase();
-    const priceEl = document.getElementById("lsxPrice");
 
     if (!code) {
       message.textContent = "Digite um cupom.";
@@ -1890,28 +1895,33 @@ document.addEventListener("click", e => {
       return;
     }
 
-    if (COUPONS[code]) {
-      appliedCoupon = code;
-      const discount = COUPONS[code];
-      const originalPrice = parseFloat(priceEl.dataset.originalPrice || priceEl.textContent.replace(/[^\d,]/g, "").replace(",", "."));
+    if (!COUPONS[code]) {
+      message.textContent = "❌ Cupom inválido!";
+      message.style.color = "#e91e63";
+      return;
+    }
+
+    appliedCoupon = code;
+    const discount = COUPONS[code];
+
+    // se for cupom do modal (produto individual)
+    if (!isCart && priceEl) {
+      const originalPrice = parseFloat(
+        priceEl.dataset.originalPrice || priceEl.textContent.replace(/[^\d,]/g, "").replace(",", ".")
+      );
       const newPrice = (originalPrice * (1 - discount)).toFixed(2);
 
-      // 🔥 Mostra preço novo + antigo riscado
       priceEl.innerHTML = `
         R$ ${newPrice.replace(".", ",")}
         <span style="text-decoration:line-through;color:#8a7aa5;font-size:14px;margin-left:8px;">
           R$ ${originalPrice.toFixed(2).replace(".", ",")}
         </span>
       `;
-
       priceEl.dataset.discountedPrice = newPrice;
-      message.textContent = `🏷️ Cupom ${code} aplicado com sucesso!`;
-      message.style.color = "#27ae60";
-    } else {
-      // 💥 ESTA PARTE FALTAVA
-      message.textContent = "❌ Cupom inválido!";
-      message.style.color = "#e91e63";
     }
+
+    message.textContent = `🏷️ Cupom ${code} aplicado com sucesso!`;
+    message.style.color = "#27ae60";
   }
 });
 
