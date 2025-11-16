@@ -1878,7 +1878,7 @@ const COUPONS = {
 let appliedCoupon = null;
 
 document.addEventListener("click", e => {
-  if (e.target && e.target.id === "applyCoupon") {
+  if (e.target && (e.target.id === "applyCoupon" || e.target.id === "applyCartCoupon")) {
     const input = document.getElementById("couponInput");
     const message = document.getElementById("couponMessage");
     const code = input.value.trim().toUpperCase();
