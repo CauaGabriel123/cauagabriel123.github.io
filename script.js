@@ -1891,13 +1891,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Cupons disponíveis
 const COUPONS = {
-  "LS10": { type: "percent", value: 0.10 },
-  "LS15": { type: "percent", value: 0.15 },
-  "LS20": { type: "percent", value: 0.20 },
-  "BIQUINI10": { type: "category", category: "biquinis", value: 0.10 },
-  "TELEFREE": { type: "frete", value: 0 },
-  "BEMVINDA10": { type: "percent", value: 0.10, minTotal: 99.90 },
-  "OUT2025": { type: "percent", value: 0.25, expires: "2025-10-31" } // exemplo de cupom expirado
+  "BEMVINDA10": { type: "percent", value: 0.10 },
+  "TELEFREE": { type: "frete", value: 0 }
 };
 
 let appliedCoupon = null;
