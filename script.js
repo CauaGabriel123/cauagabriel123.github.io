@@ -1883,84 +1883,101 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// ===== CUPONS LS STORE =====
+// ===== LS STORE • SISTEMA DE CUPONS APRIMORADO =====
+
+// Cupons disponíveis
 const COUPONS = {
-  "LS10": 0.10,
-  "LS15": 0.15,
-  "LS20": 0.20,
-  "TELEFREE": "FREE"
+  "LS10": { type: "percent", value: 0.10 },
+  "LS15": { type: "percent", value: 0.15 },
+  "LS20": { type: "percent", value: 0.20 },
+  "BIQUINI10": { type: "category", category: "biquinis", value: 0.10 },
+  "TELEFREE": { type: "frete", value: 0 },
+  "BEMVINDA10": { type: "percent", value: 0.10, minTotal: 99.90 },
+  "OUT2025": { type: "percent", value: 0.25, expires: "2025-10-31" } // exemplo de cupom expirado
 };
 
 let appliedCoupon = null;
 
-// APLICAÇÃO GLOBAL DE CUPOM (modal + carrinho)
 document.addEventListener("click", e => {
-  if (!e.target || (e.target.id !== "applyCoupon" && e.target.id !== "applyCartCoupon"))
-    return;
+  if (!e.target || (e.target.id !== "applyCoupon" && e.target.id !== "applyCartCoupon")) return;
 
   const isCart = e.target.id === "applyCartCoupon";
-
   const input = document.getElementById(isCart ? "cartCouponInput" : "couponInput");
   const message = document.getElementById(isCart ? "cartCouponMessage" : "couponMessage");
-
+  const button = e.target;
   const code = input.value.trim().toUpperCase();
+
+  // Reseta cor do botão
+  button.style.background = "linear-gradient(45deg, #e96ba8, #7a3bfd)";
+
   if (!code) {
     message.textContent = "Digite um cupom.";
     message.style.color = "#e74c3c";
     return;
   }
 
-  if (!COUPONS[code]) {
+  const coupon = COUPONS[code];
+  if (!coupon) {
     message.textContent = "❌ Cupom inválido!";
     message.style.color = "#e91e63";
     return;
   }
 
-  appliedCoupon = code;
-  const discount = COUPONS[code];
-
-  // =============================
-  // 🔥 CUPOM DO MODAL (produto individual)
-  // =============================
-  if (!isCart) {
-    const priceEl = document.getElementById("lsxPrice");
-    const originalPrice = parseFloat(
-      priceEl.dataset.originalPrice || priceEl.textContent.replace(/[^\d,]/g, "").replace(",", ".")
-    );
-
-    const newPrice = (originalPrice * (1 - discount)).toFixed(2);
-
-    priceEl.innerHTML = `
-      R$ ${newPrice.replace(".", ",")}
-      <span style="text-decoration:line-through;color:#8a7aa5;font-size:14px;margin-left:8px;">
-        R$ ${originalPrice.toFixed(2).replace(".", ",")}
-      </span>
-    `;
-
-    priceEl.dataset.discountedPrice = newPrice;
+  // Verifica validade por data
+  if (coupon.expires && new Date() > new Date(coupon.expires)) {
+    message.textContent = "⚠️ Este cupom expirou.";
+    message.style.color = "#f39c12";
+    return;
   }
 
-  // =============================
-  // 🔥 CUPOM NO CARRINHO (APLICA NO TOTAL)
-  // =============================
-  if (isCart) {
-    const subtotal = sumTotal();
+  // Verifica valor mínimo
+  const subtotal = sumTotal();
+  if (coupon.minTotal && subtotal < coupon.minTotal) {
+    message.textContent = `⚠️ Cupom válido apenas para compras acima de R$ ${coupon.minTotal.toFixed(2).replace('.', ',')}.`;
+    message.style.color = "#f39c12";
+    return;
+  }
 
-    // frete grátis
-    if (discount === "FREE") {
-      deliveryFee.style.display = "none";
-      feeValue.textContent = "0,00";
+  // Verifica cupom de frete grátis
+  if (coupon.type === "frete") {
+    if (deliveryType.value !== "entrega") {
+      message.textContent = "🚫 O cupom TELEFREE só é válido para entregas.";
+      message.style.color = "#e74c3c";
+      return;
     }
 
-    // desconto %
-    if (typeof discount === "number") {
-      const newTotal = subtotal * (1 - discount);
-      finalTotal.textContent = newTotal.toFixed(2).replace(".", ",");
+    appliedCoupon = "TELEFREE";
+    deliveryFee.style.display = "none";
+    feeValue.textContent = "0,00";
+    finalTotal.textContent = subtotal.toFixed(2).replace('.', ',');
+    message.textContent = "🚚 Frete grátis aplicado!";
+    message.style.color = "#27ae60";
+    button.style.background = "linear-gradient(45deg, #27ae60, #2ecc71)";
+    return;
+  }
+
+  // Cupom por categoria (exemplo: BIQUINI10)
+  if (coupon.type === "category") {
+    const items = JSON.parse(localStorage.getItem("cart")) || [];
+    const hasCategory = items.some(i => (i.category || "").toLowerCase() === coupon.category);
+    if (!hasCategory) {
+      message.textContent = `⚠️ Cupom válido apenas para ${coupon.category}.`;
+      message.style.color = "#f39c12";
+      return;
     }
   }
 
-  message.textContent = `🏷️ Cupom ${code} aplicado!`;
-  message.style.color = "#27ae60";
+  // Cupom percentual (desconto geral)
+  if (coupon.type === "percent") {
+    const discount = coupon.value;
+    const newTotal = subtotal * (1 - discount);
+    appliedCoupon = code;
+
+    finalTotal.textContent = newTotal.toFixed(2).replace('.', ',');
+    message.textContent = `🏷️ Cupom ${code} aplicado (${discount * 100}% OFF)`;
+    message.style.color = "#27ae60";
+    button.style.background = "linear-gradient(45deg, #27ae60, #2ecc71)";
+  }
 });
 
 function setOriginalPriceValue(price) {
