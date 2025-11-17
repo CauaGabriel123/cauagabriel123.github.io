@@ -26,6 +26,9 @@ img { max-width:100%; display:block; }
   animation:slide .25s ease; display:flex;
   flex-direction:column; overflow-y:auto;
   -webkit-overflow-scrolling:touch;
+  
+  overflow-x: hidden !important;   /* ⬅ ADICIONA ESTA LINHA */
+  touch-action: pan-y !important;  /* ⬅ E ESTA (trava o swipe lateral) */
 }
 @keyframes slide { from{transform:translateX(-30px);opacity:.6} to{transform:translateX(0);opacity:1} }
 .drawer-header {
@@ -1817,6 +1820,8 @@ body {
 /* Garante que o botão X não role junto com o conteúdo */
 .drawer-inner,
 .cart {
+  overflow-x: hidden !important;
+}
 
 /* ===== LS STORE 2026 — Carrossel Fixo com 3 Imagens ===== */
 #fixed-carousel {
