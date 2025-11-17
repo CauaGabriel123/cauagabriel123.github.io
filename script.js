@@ -1983,8 +1983,9 @@ document.addEventListener("click", e => {
     showRemoveCouponButton();
     message.style.color = "#27ae60";
     button.style.background = "linear-gradient(45deg, #27ae60, #2ecc71)";
-    
-    // ============================
+    }
+});
+// ============================
 // BOTÃO "REMOVER CUPOM"
 // ============================
 
@@ -2018,8 +2019,6 @@ if (removeCartCouponBtn) {
 function showRemoveCouponButton() {
   if (removeCartCouponBtn) removeCartCouponBtn.style.display = "block";
   }
-});
-
 function setOriginalPriceValue(price) {
   const el = document.getElementById("lsxPrice");
   el.dataset.originalPrice = price;
