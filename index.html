@@ -271,60 +271,65 @@ window.addEventListener('DOMContentLoaded', () => {
     </header>
 
     <section class="lsx-modal__content">
+
+      <!-- GALERIA -->
       <div class="lsx-gallery">
         <div class="lsx-gallery__stage">
-          <img id="lsxImageMain" alt="" />
+          <img id="lsxImageMain" alt="">
           <button class="lsx-gallery__zoom" type="button" id="lsxZoomBtn">⤢</button>
         </div>
         <div class="lsx-gallery__thumbs" id="lsxThumbs"></div>
       </div>
 
+      <!-- INFO -->
       <div class="lsx-info">
 
-  <!-- PREÇO -->
-  <div class="lsx-price">
-  <div class="price-box">
-      <span class="old-price" id="lsxOldPrice"></span>
-      <span class="new-price" id="lsxNewPrice"></span>
-      <a class="lsx-price__installments" id="lsxInstallments" href="#payments"></a>
-  </div>
-</div>
+        <!-- PREÇO -->
+        <div class="lsx-price">
+          <div class="price-box">
+            <span class="old-price" id="lsxOldPrice"></span>
+            <span class="new-price" id="lsxNewPrice"></span>
+            <a class="lsx-price__installments" id="lsxInstallments" href="#payments"></a>
+          </div>
+        </div>
 
-  <!-- CORES -->
-  <div class="lsx-colors" id="lsxColors"></div>
+        <!-- CORES -->
+        <div class="lsx-colors" id="lsxColors"></div>
 
-  <!-- TAMANHOS -->
-  <div class="lsx-sizes" id="lsxSizes"></div>
+        <!-- TAMANHOS -->
+        <div class="lsx-sizes" id="lsxSizes"></div>
 
-  <!-- ESTOQUE -->
-  <div class="lsx-stock" id="lsxStock"></div>
+        <!-- ESTOQUE -->
+        <div class="lsx-stock" id="lsxStock"></div>
 
-  <!-- BOTÕES -->
-  <div class="lsx-cta">
-    <button class="lsx-btn lsx-btn--primary" id="lsxBuyBtn">COMPRAR</button>
-    <button class="lsx-btn lsx-btn--ghost" id="lsxAddBtn" type="button">Adicionar ao carrinho</button>
-  </div>
+        <!-- BOTÕES -->
+        <div class="lsx-cta">
+          <button class="lsx-btn lsx-btn--primary" id="lsxBuyBtn">COMPRAR</button>
+          <button class="lsx-btn lsx-btn--ghost" id="lsxAddBtn">Adicionar ao carrinho</button>
+        </div>
 
-  <!-- ENTREGA -->
-  <details class="lsx-details">
-    <summary>Entrega & retirada</summary>
-    <div class="lsx-details__body">
-      <ul>
-        <li>Motoboy (mesmo dia em área atendida)</li>
-        <li>Retirada na loja / ponto combinado</li>
-      </ul>
-    </div>
-  </details>
+        <!-- ENTREGA -->
+        <details class="lsx-details">
+          <summary>Entrega & retirada</summary>
+          <div class="lsx-details__body">
+            <ul>
+              <li>Motoboy (mesmo dia em área atendida)</li>
+              <li>Retirada na loja / ponto combinado</li>
+            </ul>
+          </div>
+        </details>
 
-  <!-- DESCRIÇÃO -->
-  <details class="lsx-details" id="lsxDescriptionBox">
-    <summary>Descrição</summary>
-    <div class="lsx-details__body" id="lsxDescription"></div>
-  </details>
+        <!-- DESCRIÇÃO -->
+        <details class="lsx-details" id="lsxDescriptionBox">
+          <summary>Descrição</summary>
+          <div class="lsx-details__body" id="lsxDescription"></div>
+        </details>
 
-</div>
-    </section>
-  </div>
+      </div> <!-- fecha .lsx-info -->
+
+    </section> <!-- fecha .lsx-modal__content -->
+
+  </div> <!-- fecha .lsx-modal__dialog -->
 </div>
 <!-- ===== /LS STORE • Product Modal ===== -->
 <!-- ===== LS STORE • Firebase Login / Cadastro ===== -->
