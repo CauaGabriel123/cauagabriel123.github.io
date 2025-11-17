@@ -1939,3 +1939,33 @@ body {
   font-size: 13px;
   font-weight: 600;
 }
+.price-box {
+  margin: 5px 0 20px 0;
+}
+
+.old-price {
+  font-size: 18px;
+  color: #b4b4b4;
+  text-decoration: line-through;
+  display: none;
+}
+
+.new-price {
+  font-size: 32px;
+  font-weight: 700;
+  background: linear-gradient(90deg, #E96BA8, #7A3BFD);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: block;
+}
+
+.price-box.promo .new-price::after {
+  content: " 🔥";
+}
+
+.lsx-price__installments {
+  display: block;
+  margin-top: 6px;
+  text-decoration: underline;
+  font-size: 14px;
+}
