@@ -1955,6 +1955,7 @@ document.addEventListener("click", e => {
     feeValue.textContent = "0,00";
     finalTotal.textContent = subtotal.toFixed(2).replace('.', ',');
     message.textContent = "🚚 Frete grátis aplicado!";
+    showRemoveCouponButton();
     message.style.color = "#27ae60";
     button.style.background = "linear-gradient(45deg, #27ae60, #2ecc71)";
     return;
@@ -1979,6 +1980,7 @@ document.addEventListener("click", e => {
 
     finalTotal.textContent = newTotal.toFixed(2).replace('.', ',');
     message.textContent = `🏷️ Cupom ${code} aplicado (${discount * 100}% OFF)`;
+    showRemoveCouponButton();
     message.style.color = "#27ae60";
     button.style.background = "linear-gradient(45deg, #27ae60, #2ecc71)";
     
