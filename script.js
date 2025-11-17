@@ -753,13 +753,28 @@ function calcFee() {
 }
 function refreshFinalTotals() {
   const produtos = sumTotal();
+
+  // 🔥 Se cupom TELEFREE estiver ativo → frete sempre zero
+  if (appliedCoupon === "TELEFREE") {
+    deliveryFee.style.display = "none";
+    feeValue.textContent = "0,00";
+
+    const final = produtos; // sem taxa!
+    finalTotal.textContent = final.toFixed(2).replace('.', ',');
+
+    return; // impede que o frete volte
+  }
+
+  // 🔥 Caso NÃO seja TELEFREE → cálculo normal
   const fee = calcFee();
 
   if (deliveryType.value === 'entrega') {
     deliveryFee.style.display = 'block';
     const bairro = neighborhood.value;
     const val = FEES[bairro];
-    feeValue.textContent = (typeof val === 'number' ? val : 0).toFixed(2).replace('.', ',');
+    feeValue.textContent = (typeof val === 'number' ? val : 0)
+      .toFixed(2)
+      .replace('.', ',');
   } else {
     deliveryFee.style.display = 'none';
     feeValue.textContent = '0,00';
