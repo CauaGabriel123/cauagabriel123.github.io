@@ -4,6 +4,7 @@
     "name": "Pijama Virginia",
     "category": "pijamas",
     "price": 44.99,
+    "promoPrice": 32.99,
     "images":[ "https://cauagabriel123.github.io/assets/pijama1.JPG",
       "https://cauagabriel123.github.io/assets/pijama1.2.JPG",
       "https://cauagabriel123.github.io/assets/pijama1.3.JPG"],
