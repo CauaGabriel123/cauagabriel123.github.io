@@ -1981,6 +1981,40 @@ document.addEventListener("click", e => {
     message.textContent = `🏷️ Cupom ${code} aplicado (${discount * 100}% OFF)`;
     message.style.color = "#27ae60";
     button.style.background = "linear-gradient(45deg, #27ae60, #2ecc71)";
+    
+    // ============================
+// BOTÃO "REMOVER CUPOM"
+// ============================
+
+const removeCartCouponBtn = document.getElementById("removeCartCoupon");
+
+function removeCoupon() {
+  appliedCoupon = null;
+
+  // Reseta texto
+  const msg = document.getElementById("cartCouponMessage");
+  if (msg) msg.textContent = "";
+
+  // Reseta input
+  const input = document.getElementById("cartCouponInput");
+  if (input) input.value = "";
+
+  // Esconde botão
+  removeCartCouponBtn.style.display = "none";
+
+  // Recalcula tudo (volta frete normal)
+  refreshTotalsUI();
+  refreshFinalTotals();
+}
+
+// Evento do botão
+if (removeCartCouponBtn) {
+  removeCartCouponBtn.addEventListener("click", removeCoupon);
+}
+
+// Mostrar botão quando cupom for aplicado
+function showRemoveCouponButton() {
+  if (removeCartCouponBtn) removeCartCouponBtn.style.display = "block";
   }
 });
 
