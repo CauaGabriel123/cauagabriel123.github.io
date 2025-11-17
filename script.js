@@ -875,7 +875,11 @@ checkout.onclick = () => {
   const obs = orderNotes.value.trim() || 'Nenhuma';
   const feeRaw = entrega === 'entrega' ? FEES[bairro] || 'consultar' : 0;
   let total = sumTotal();
-  if (typeof feeRaw === 'number') total += feeRaw;
+
+// Se o cupom TELEFREE estiver ativo → não soma frete!
+if (appliedCoupon !== "TELEFREE" && typeof feeRaw === "number") {
+  total += feeRaw;
+}
 
     let valorPago = '', troco = '';
 if (payment === 'Dinheiro') {
@@ -1958,7 +1962,7 @@ document.addEventListener("click", e => {
 
   // Cupom por categoria (exemplo: BIQUINI10)
   if (coupon.type === "category") {
-    const items = JSON.parse(localStorage.getItem("cart")) || [];
+    const items = JSON.parse(localStorage.getItem("cartItems")) || [];
     const hasCategory = items.some(i => (i.category || "").toLowerCase() === coupon.category);
     if (!hasCategory) {
       message.textContent = `⚠️ Cupom válido apenas para ${coupon.category}.`;
