@@ -1717,8 +1717,28 @@ function fill(p) {
 
   // Define dados básicos
   els.title.textContent = p.name;
-  setOriginalPriceValue(p.price);
-  els.installments.textContent = calcInstallments(p.price);
+  // 🔥 LS STORE – Preço promocional inteligente (Black Friday)
+const priceBox = document.getElementById("lsxPrice");
+const installments = document.getElementById("lsxInstallments");
+const fmt = (n) => n.toFixed(2).replace(".", ",");
+
+// Limpa o campo pra garantir que não herda estilos antigos
+priceBox.innerHTML = "";
+priceBox.className = "price-box";
+
+// Se o produto tiver promoPrice, mostra "De/Por"
+if (p.promoPrice && Number(p.promoPrice) < Number(p.price)) {
+  priceBox.classList.add("promo");
+  priceBox.innerHTML = `
+    <span class="old-price">De: R$ ${fmt(p.price)}</span>
+    <span class="new-price">Por: R$ ${fmt(p.promoPrice)}</span>
+  `;
+  installments.textContent = `12x de R$ ${fmt(p.promoPrice / 12)}`;
+} else {
+  // Normal
+  priceBox.innerHTML = `<span class="new-price">R$ ${fmt(p.price)}</span>`;
+  installments.textContent = `12x de R$ ${fmt(p.price / 12)}`;
+}
   $('#lsxDescription').textContent = p.description || 'Sem descrição disponível.';
 
   // Inicializa galeria padrão (sem cor selecionada)
