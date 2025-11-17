@@ -2049,19 +2049,6 @@ function setOriginalPriceValue(price) {
   if (msg) msg.textContent = "";
 }
 
-const oldAddToCart = window.addToCart;
-window.addToCart = function (product, size, color, qty = 1) {
-  const priceEl = document.getElementById("lsxPrice");
-  let finalPrice = product.price;
-  if (priceEl && priceEl.dataset.discountedPrice) {
-    finalPrice = parseFloat(priceEl.dataset.discountedPrice);
-  }
-
-  // Mantém preço atualizado e repassa todos os parâmetros corretamente
-  const discountedProduct = { ...product, price: finalPrice };
-  oldAddToCart(discountedProduct, size, color, qty);
-};
-
 // ============================
 // LS STORE 2026 — Carrossel Fixo de 3 Imagens (com suporte a toque)
 // ============================
