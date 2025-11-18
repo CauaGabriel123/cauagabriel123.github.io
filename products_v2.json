@@ -226,7 +226,8 @@
     "description": "Hidratante corporal com fragrância suave e textura leve.",
     "status": "esgotado",
     "sizes": ["200ml"],
-    "colors": ["Transparente"]
+    "colors": ["Transparente"],
+    "stock": 1
   },
   {
     "id": "p18",
@@ -280,7 +281,7 @@
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
     "status": "disponivel",
     "sizes": ["200ml"],
-    "colors": ["Transparente"]
+    "colors": ["Transparente"],
     "stock": 1
   },
   {
