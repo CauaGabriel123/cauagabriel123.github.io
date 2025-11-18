@@ -10,7 +10,8 @@
     "description": "Pijama Virgínia composto por cropped estampado super fofo e short soltinho verde. Tecido leve, macio e fresquinho, ideal para noites confortáveis e cheias de estilo. Modelo confortável e soltinho. Tecido leve e agradável na pele. Estampa charmosa no cropped. Perfeito para quem busca conforto sem perder a beleza! 💚✨",
     "status": "disponivel",
     "sizes": ["GG"],
-    "colors": ["Verde"]
+    "colors": ["Verde"],
+    "stock": 1
   },
   {
     "id": "p2",
