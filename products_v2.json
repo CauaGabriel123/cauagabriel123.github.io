@@ -24,7 +24,8 @@
     "description": "Pijama super fofinho e confortável, com estampa do Stitch no cropped e shortinho soltinho roxo! 💜💙 Tecido leve, fresquinho e perfeito para noites de conforto com muito estilo.",
     "status": "disponivel",
     "sizes": ["GG"],
-    "colors": ["Rosa"]
+    "colors": ["Rosa"],
+    "stock": 1
   },
   {
     "id": "p3",
@@ -36,7 +37,8 @@
     "description": "Longo com tom rosa suave, tecido leve e fenda discreta. Conforto e elegância.",
     "status": "disponivel",
     "sizes": ["M"],
-    "colors": ["Azul"]
+    "colors": ["Azul"],
+    "stock": 1
   },
   {
     "id": "p4",
@@ -49,7 +51,8 @@
     "description": "Camiseta básica em algodão macio, ideal para compor looks casuais.",
     "status": "disponivel",
     "sizes": ["Único"],
-    "colors": ["Branco, Preto e Cinza"]
+    "colors": ["Branco, Preto e Cinza"],
+    "stock": 1
   },
   {
     "id": "p5",
@@ -62,7 +65,8 @@
     "description": "Blusa cropped canelada com gola redonda e modelagem confortável.",
     "status": "disponivel",
     "sizes": ["Único"],
-    "colors": ["Branco"]
+    "colors": ["Branco"],
+    "stock": 1
   },
   {
     "id": "p6",
@@ -75,7 +79,8 @@
     "description": "Blusa ombro a ombro com tecido suave e elegante para qualquer ocasião.",
     "status": "disponivel",
     "sizes": ["M", "G"],
-    "colors": ["Preto"]
+    "colors": ["Preto"],
+    "stock": 1
   },
   {
     "id": "p7",
@@ -88,7 +93,8 @@
     "description": "Jeans clássico de cintura alta e corte reto. Modela e valoriza o corpo.",
     "status": "disponivel",
     "sizes": ["G"],
-    "colors": ["Azul"]
+    "colors": ["Azul"],
+    "stock": 1
   },
   {
     "id": "p8",
@@ -99,7 +105,8 @@
     "description": "Pantalona moderna com tecido fluido e cintura elástica confortável.",
     "status": "esgotado",
     "sizes": ["GG"],
-    "colors": ["Preto"]
+    "colors": ["Preto"],
+    "stock": 1
   },
   {
     "id": "p9",
@@ -112,7 +119,8 @@
     "description": "Conjunto delicado de renda com modelagem confortável e toque suave.",
     "status": "disponivel",
     "sizes": ["G"],
-    "colors": ["Preto"]
+    "colors": ["Preto"],
+    "stock": 1
   },
   {
     "id": "p10",
@@ -125,7 +133,8 @@
     "description": "Sutiã em renda delicada sem bojo, ideal para o conforto do dia a dia.",
     "status": "disponivel",
     "sizes": ["M"],
-    "colors": ["Lilás"]
+    "colors": ["Lilás"],
+    "stock": 1
   },
   {
     "id": "p11",
@@ -137,7 +146,8 @@
     "description": "Reparador de sobrancelha portátil com luz embutida, perfeito para definir sobrancelhas com precisão. Remove fios sem dor, não irrita a pele e já vem com bateria incluída. Ideal para levar na bolsa e usar a qualquer momento! ✨",
     "status": "disponivel",
     "sizes": ["Único"],
-    "colors": ["Único"]
+    "colors": ["Único"],
+    "stock": 1
   },
   {
     "id": "p12",
@@ -149,7 +159,8 @@
     "description": "Água Micelar Mary Life 15 em 1, com colágeno e pantenol. Demaquila, limpa, hidrata e acalma a pele, ideal para face, olhos e lábios. Perfeita para todos os tipos de pele! 💖",
     "status": "disponivel",
     "sizes": ["260ml"],
-    "colors": ["Transparente"]
+    "colors": ["Transparente"],
+    "stock": 2
   },
   {
     "id": "p13",
@@ -161,7 +172,8 @@
     "description": "✨ Paleta de Sombras Bobbi Rara ✨ Paleta com tons neutros e cintilantes, ideal para makes do dia a dia ou mais marcadas. Pigmentação ótima e cores versáteis para todos os estilos! 💖",
     "status": "disponivel",
     "sizes": ["Único"],
-    "colors": ["Único"]
+    "colors": ["Único"],
+    "stock": 1
   },
   {
     "id": "p14",
@@ -174,7 +186,8 @@
     "description": "Corretivo Líquido Color Love – Máxima Cobertura (4g). Corrige imperfeições com alta performance! O Corretivo Líquido Color Love oferece máxima cobertura, textura suave e acabamento uniforme, ideal para disfarçar olheiras, manchas e marcas na pele. Fórmula leve, fácil de espalhar e com ótima fixação para um resultado impecável o dia todo.",
     "status": "disponivel",
     "sizes": ["4g"],
-    "colors": ["01"]
+    "colors": ["01"],
+    "stock": 2
   },
   {
     "id": "p15",
@@ -186,7 +199,8 @@
     "description": "Prático, eficiente e com secagem rápida! O Spray Limpador de Pincéis Melu remove resíduos de maquiagem com facilidade, deixando as cerdas limpas e prontas para uso. Ideal para manter seus pincéis higienizados no dia a dia, sem danificar as fibras.",
     "status": "disponivel",
     "sizes": ["100ml"],
-    "colors": ["Transparente"]
+    "colors": ["Transparente"],
+    "stock": 1
   },
   {
     "id": "p16",
@@ -199,7 +213,8 @@
     "description": "Pele cheirosa, macia e com brilho radiante! O Hidratante Mix Glow Girl possui textura cremosa, fragrância doce de tutti frutti e toque aveludado. Hidrata profundamente, deixa a pele perfumada por horas e ainda proporciona aquele glow delicado que realça o corpo.",
     "status": "disponivel",
     "sizes": ["320ml"],
-    "colors": ["Rosa"]
+    "colors": ["Rosa"],
+    "stock": 1
   },
   {
     "id": "p17",
@@ -224,7 +239,8 @@
     "description": "Apiderm. Com fragrância doce e marcante de morango, essa loção oferece hidratação profunda graças à manteiga de cacau. Deixa a pele macia, perfumada e com toque suave por horas. Ideal para cuidados diários e para quem ama cheirinho doce.",
     "status": "disponivel",
     "sizes": ["180ml"],
-    "colors": ["Branco"]
+    "colors": ["Branco"],
+    "stock": 1
   },
   {
         "id": "p20",
@@ -238,7 +254,8 @@
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
     "status": "disponivel",
     "sizes": ["150ml"],
-    "colors": ["Transparente"]
+    "colors": ["Transparente"],
+    "stock": 1
     },
   {
         "id": "p21",
@@ -250,7 +267,8 @@
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
     "status": "disponivel",
     "sizes": ["150ml"],
-    "colors": ["Transparente"]
+    "colors": ["Transparente"],
+    "stock": 2
   },
   {
         "id": "p22",
@@ -263,6 +281,7 @@
     "status": "disponivel",
     "sizes": ["200ml"],
     "colors": ["Transparente"]
+    "stock": 1
   },
   {
         "id": "p23",
@@ -274,7 +293,8 @@
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
     "status": "disponivel",
     "sizes": ["M", "G"],
-    "colors": ["Verde", "Azul"]
+    "colors": ["Verde", "Azul"],
+    "stock": 1
       },
   {
         "id": "p24",
@@ -299,7 +319,8 @@
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
     "status": "disponivel",
     "sizes": ["200g"],
-    "colors": ["Branco"]
+    "colors": ["Branco"],
+    "stock": 1
       },
   {
         "id": "p27",
@@ -312,7 +333,8 @@
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
     "status": "disponivel",
     "sizes": ["M"],
-    "colors": ["Preto"]
+    "colors": ["Preto"],
+    "stock": 1
       },
   {
         "id": "p28",
@@ -325,7 +347,8 @@
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
     "status": "disponivel",
     "sizes": ["G"],
-    "colors": ["Bege"]
+    "colors": ["Bege"],
+    "stock": 1
       },
   {
         "id": "p29",
@@ -339,7 +362,8 @@
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
     "status": "disponivel",
     "sizes": ["P", "M"],
-    "colors": ["Rosa", "Bege"]
+    "colors": ["Rosa", "Bege"],
+    "stock": 1
       },
   {
         "id": "p30",
@@ -351,7 +375,8 @@
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
     "status": "disponivel",
     "sizes": ["G"],
-    "colors": ["Rosa"]
+    "colors": ["Rosa"],
+    "stock": 1
       },
   {
         "id": "p32",
@@ -364,7 +389,8 @@
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
     "status": "disponivel",
     "sizes": ["GG"],
-    "colors": ["Preto"]
+    "colors": ["Preto"],
+    "stock": 1
       },
   {
         "id": "p34",
@@ -377,7 +403,8 @@
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
     "status": "disponivel",
     "sizes": ["G"],
-    "colors": ["Verde"]
+    "colors": ["Verde"],
+    "stock": 1
       },
   {
         "id": "p35",
@@ -394,7 +421,8 @@
     "description": " Conjunto super delicado, com bojo estruturado, renda elegante e calcinha confortável. Modelinho feminino e sofisticado, perfeito pra quem gosta de lingerie bonita, moderna e com ótimo caimento. Disponível nas cores: Branco, Azul e Bordô. 💙🤍🍷",
     "status": "disponivel",
     "sizes": ["GG"],
-    "colors": ["Branco", "Bordo", "Azul"]
+    "colors": ["Branco", "Bordo", "Azul"],
+    "stock": 3
       },
   {
         "id": "p36",
@@ -413,7 +441,8 @@
     "description": " Calcinha Luna com lateral de strass, detalhe de pérolas e modelagem super confortável. Peça delicada, moderna e com acabamento lindo — ideal pra quem ama um toque de charme no dia a dia. Disponível nas cores: Cinza, Rosa Salmão e Azul Escuro. ✨💙💗🩶",
     "status": "disponivel",
     "sizes": ["GG"],
-    "colors": ["Rose", "Azul"]
+    "colors": ["Rose", "Azul"],
+    "stock": 2
       },
   {
         "id": "p37",
@@ -426,7 +455,8 @@
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
     "status": "disponivel",
     "sizes": ["M"],
-    "colors": ["Roxo"]
+    "colors": ["Roxo"],
+    "stock": 1
       },
   {
         "id": "p38",
@@ -446,7 +476,8 @@
     "description": " Conjunto plus super confortável e elegante, com renda delicada e sustentação perfeita. Veste muito bem, realça o corpo e garante aquele toque de sensualidade com conforto. Disponível nas cores: Vermelho, Bordô e Rosê. 💖✨",
     "status": "disponivel",
     "sizes": ["52"],
-    "colors": ["Vermelho", "Bordo", "Rose"]
+    "colors": ["Vermelho", "Bordo", "Rose"],
+    "stock": 3
   },
 {
 "id": "p39",
@@ -460,7 +491,8 @@
     "description": "Pantalona moderna com tecido fluido e cintura elástica confortável.",
     "status": "disponivel",
     "sizes": ["G"],
-    "colors": ["Azul", "Preto"]
+    "colors": ["Azul", "Preto"],
+    "stock": 1
     },
   {
         "id": "p40",
@@ -472,7 +504,8 @@
     "description": " Top faixa canelado, confortável, firme e super versátil. Ideal para usar sozinho ou por baixo de camisas e jaquetas. Peça prática, estilosa e que combina com tudo! 🖤",
     "status": "disponivel",
     "sizes": ["M"],
-    "colors": ["Detalhe Rosa"]
+    "colors": ["Detalhe Rosa"],
+    "stock": 1
     },
   {
         "id": "p41",
@@ -485,7 +518,8 @@
     "description": " Cropped canelado com caimento perfeito, super confortável e moderno. Possui detalhe frontal Mariah Collection que deixa a peça ainda mais estilosa. Ideal para looks casuais e cheios de charme! 🤎",
     "status": "disponivel",
     "sizes": ["M"],
-    "colors": ["Bege"]
+    "colors": ["Bege"],
+    "stock": 1
     },
   {
         "id": "p42",
@@ -498,7 +532,8 @@
     "description": " Short cirrê com brilho lindo, cintura alta e caimento perfeito. Tecido confortável, moderno e com detalhe Mariah Collection que deixa a peça ainda mais estilosa. Perfeito pra looks ousados e cheios de presença! 🖤✨",
     "status": "disponivel",
     "sizes": ["GG"],
-    "colors": ["Preto"]
+    "colors": ["Preto"],
+    "stock": 2
     },
   {
         "id": "p43",
@@ -511,7 +546,8 @@
     "description": " Cropped básico premium com tecido macio, modelagem moderna e detalhe frontal Mariah Collection. Versátil, confortável e perfeito para montar looks estilosos no dia a dia. Um clássico que combina com tudo! 🖤",
     "status": "disponivel",
     "sizes": ["M"],
-    "colors": ["Preto"]
+    "colors": ["Preto"],
+    "stock": 1
     },
   {
         "id": "p44",
@@ -524,7 +560,8 @@
     "description": " Cropped branco básico premium, com tecido leve e caimento perfeito. Possui detalhe frontal Mariah que deixa a peça moderna e estilosa. Versátil, confortável e combina com tudo! 🤍",
     "status": "disponivel",
     "sizes": ["M"],
-    "colors": ["Branco"]
+    "colors": ["Branco"],
+    "stock": 1
     },
   {
         "id": "p45",
@@ -540,7 +577,8 @@
     "description": "Camisetão super confortável, tecido leve e modelo soltinho. Destaque para a estampa Mariah New Collection, que deixa o look moderno e estiloso. Perfeito para usar com shorts, tênis e montar aquele visual despojado! 💛",
     "status": "disponivel",
     "sizes": ["M", "GG"],
-    "colors": ["Amarelo"]
+    "colors": ["Amarelo"],
+    "stock": 2
     },
   {
         "id": "p46",
@@ -553,7 +591,8 @@
     "description": " Blusa com estampa exclusiva MRH, tecido leve e super confortável. Modelo moderno, com gola V e caimento perfeito para looks estilosos no dia a dia. Linda, diferente e cheia de personalidade! 💚",
     "status": "disponivel",
     "sizes": ["G"],
-    "colors": ["Verde"]
+    "colors": ["Verde"],
+    "stock": 1
     },
   {
         "id": "p47",
@@ -565,7 +604,8 @@
     "description": " Cropped em poliamida, com brilho leve e toque super macio. Modelo confortável, moderno e com detalhe frontal Mariah Collection que deixa a peça ainda mais estilosa. Perfeito pra looks elegantes e cheios de presença! ✨",
     "status": "disponivel",
     "sizes": ["M"],
-    "colors": ["Dourado"]
+    "colors": ["Dourado"],
+    "stock": 1
     },
   {
         "id": "p49",
@@ -578,7 +618,8 @@
     "description": " Cropped canelado com decote quadrado super elegante e detalhe frontal MRH. Tecido confortável, moderno e perfeito para montar looks estilosos no dia a dia. Simples, lindo e cheio de charme! 🤍",
     "status": "disponivel",
     "sizes": ["M"],
-    "colors": ["Cinza"]
+    "colors": ["Cinza"],
+    "stock": 1
     },
   {
         "id": "p50",
@@ -590,7 +631,8 @@
     "description": " Blusa canelada no rosa vibrante, com gola V, caimento lindo e detalhe ondulado na barra. Tecido confortável e modelagem que valoriza o corpo. Perfeita pra montar looks estilosos no dia a dia! 💖",
     "status": "esgotado",
     "sizes": ["M"],
-    "colors": ["Rosa"]
+    "colors": ["Rosa"],
+    "stock": 1
     },
   {
         "id": "p51",
@@ -603,7 +645,8 @@
     "description": " Short canelado super confortável, com bolsos laterais e cintura alta que veste perfeitamente. Tecido macio, moderno e ideal para montar looks casuais cheios de estilo. Básico, prático e lindo! 🤍",
     "status": "esgotado",
     "sizes": ["GG"],
-    "colors": ["OFF White"]
+    "colors": ["OFF White"],
+    "stock": 1
     },
   {
         "id": "p52",
@@ -616,7 +659,8 @@
     "description": " Short estampado Mariah, com tecido leve, confortável e cintura com elástico para melhor ajuste. Estampa moderna e estilosa, perfeita para montar looks lindos no dia a dia. Conforto e estilo em uma peça só! 🤎",
     "status": "disponivel",
     "sizes": ["G"],
-    "colors": ["Marrom"]
+    "colors": ["Marrom"],
+    "stock": 1
     },
   {
         "id": "p53",
@@ -629,7 +673,8 @@
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
     "status": "disponivel",
     "sizes": ["M"],
-    "colors": ["Azul"]
+    "colors": ["Azul"],
+    "stock": 1
     },
   {
         "id": "p54",
@@ -643,7 +688,8 @@
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
     "status": "disponivel",
     "sizes": ["Unico"],
-    "colors": ["Preto"]
+    "colors": ["Preto"],
+    "stock": 1
     },
   {
         "id": "p55",
@@ -657,7 +703,8 @@
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
     "status": "disponivel",
     "sizes": ["G"],
-    "colors": ["Preto"]
+    "colors": ["Preto"],
+    "stock": 1
     },
   {
         "id": "p56",
@@ -671,7 +718,8 @@
     "description": " Biquíni Mariah preto super elegante, com bojo estruturado e detalhe de corrente dourada que deixa a peça ainda mais sofisticada. Tecido de alta qualidade, conforto e modelagem que valoriza o corpo. Um biquíni moderno, estiloso e perfeito pra arrasar onde for! 🖤✨",
     "status": "disponivel",
     "sizes": ["M"],
-    "colors": ["Preto"]
+    "colors": ["Preto"],
+    "stock": 1
     },
   {
         "id": "p57",
@@ -684,6 +732,7 @@
     "description": " Biquíni Mariah super estiloso, com combinação de cores vibrantes e bojo estruturado que valoriza o corpo. A calcinha tem modelagem confortável e acabamento de qualidade, garantindo um visual moderno e cheio de vida. Perfeito pra arrasar na praia ou piscina! 💜✨💙",
     "status": "esgotado",
     "sizes": ["GG"],
-    "colors": ["Roxo e Azul"]
+    "colors": ["Roxo e Azul"],
+    "stock": 2
     }
     ]
