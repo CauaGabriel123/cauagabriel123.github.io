@@ -208,7 +208,7 @@
     "images": ["https://cauagabriel123.github.io/assets/creme_hidratante_orquidea.JPG",
     "https://cauagabriel123.github.io/assets/creme_hidratante_orquidea2.JPG"],
     "description": "Hidratante corporal com fragrância suave e textura leve.",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["200ml"],
     "colors": ["Transparente"]
   },
@@ -284,7 +284,7 @@
       "https://cauagabriel123.github.io/assets/beleza3.2.JPG",
       "https://cauagabriel123.github.io/assets/beleza3.3.JPG"],
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["190ml"],
     "colors": ["Branco"]
       },
@@ -411,8 +411,8 @@
     "https://cauagabriel123.github.io/assets/calcinha_luna_azul3.JPG"],
     "description": " Calcinha Luna com lateral de strass, detalhe de pérolas e modelagem super confortável. Peça delicada, moderna e com acabamento lindo — ideal pra quem ama um toque de charme no dia a dia. Disponível nas cores: Cinza, Rosa Salmão e Azul Escuro. ✨💙💗🩶",
     "status": "disponivel",
-    "sizes": ["M", "GG"],
-    "colors": ["Cinza", "Rose", "Azul"]
+    "sizes": ["GG"],
+    "colors": ["Rose", "Azul"]
       },
   {
         "id": "p37",
@@ -587,7 +587,7 @@
     "images": ["https://cauagabriel123.github.io/assets/blusa_canelada_mariah.JPG",
     "https://cauagabriel123.github.io/assets/blusa_canelada_mariah2.JPG"],
     "description": " Blusa canelada no rosa vibrante, com gola V, caimento lindo e detalhe ondulado na barra. Tecido confortável e modelagem que valoriza o corpo. Perfeita pra montar looks estilosos no dia a dia! 💖",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["M"],
     "colors": ["Rosa"]
     },
@@ -600,7 +600,7 @@
     "https://cauagabriel123.github.io/assets/short_canelado2.JPG",
     "https://cauagabriel123.github.io/assets/short_canelado3.JPG"],
     "description": " Short canelado super confortável, com bolsos laterais e cintura alta que veste perfeitamente. Tecido macio, moderno e ideal para montar looks casuais cheios de estilo. Básico, prático e lindo! 🤍",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["GG"],
     "colors": ["OFF White"]
     },
@@ -681,7 +681,7 @@
     "https://cauagabriel123.github.io/assets/biquini2cores2.JPG",
     "https://cauagabriel123.github.io/assets/biquini2cores3.JPG"],
     "description": " Biquíni Mariah super estiloso, com combinação de cores vibrantes e bojo estruturado que valoriza o corpo. A calcinha tem modelagem confortável e acabamento de qualidade, garantindo um visual moderno e cheio de vida. Perfeito pra arrasar na praia ou piscina! 💜✨💙",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["GG"],
     "colors": ["Roxo e Azul"]
     }
