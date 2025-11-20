@@ -738,11 +738,9 @@
     "name": "Kit Sìage",
     "category": "eudora",
     "price": 129.90,
-    "images": ["https://cauagabriel123.github.io/assets/biquini2cores.JPG",
-    "https://cauagabriel123.github.io/assets/biquini2cores2.JPG",
-    "https://cauagabriel123.github.io/assets/biquini2cores3.JPG"],
+    "images": [""],
     "description": "O combo perfeito pra fortalecer os fios e ajudar no crescimento saudável! Com prebiótico + biotina, a linha promete até 3 cm em 2 meses, reduz a quebra e deixa o cabelo mais macio e brilhoso. 🟣 Shampoo – limpa sem ressecar 🟣 Condicionador – desembaraça e hidrata 🟣 Máscara – tratamento profundo antiqueda Ideal pra quem está no projeto cabelo longo! ✨",
-    "status": "disponível",
+    "status": "disponivel",
     "sizes": ["KIT"],
     "colors": ["Branco"],
     "stock": 1
