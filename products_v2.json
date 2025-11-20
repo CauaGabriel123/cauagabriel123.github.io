@@ -759,6 +759,18 @@
   },
   {
     "id": "p60",
+    "name": "Shampoo Eudora Siàge",
+    "category": "eudora",
+    "price": 39.90,
+    "images":[ ""],
+    "description": "...",
+    "status": "disponivel",
+    "sizes": ["250ml"],
+    "colors": ["Branco"],
+    "stock": 1
+  },
+  {
+    "id": "p61",
     "name": "Máscara Eudora Siàge",
     "category": "eudora",
     "price": 52.90,
@@ -768,5 +780,3 @@
     "sizes": ["250g"],
     "colors": ["Branco"],
     "stock": 1
-  },
-  ]
