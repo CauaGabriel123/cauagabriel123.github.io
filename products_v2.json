@@ -945,4 +945,17 @@
     "stock": 1
     },
     {
+    "id": "p74",
+    "name": "Kit Maçã do Amor",
+    "category": "sexyshop",
+    "price": 24.99,
+    "images":["https://cauagabriel123.github.io/assets/pijama_hellokittyy.JPG",
+    "https://cauagabriel123.github.io/assets/pijama_hellokittyy2.JPG"],
+    "description":"",
+    "status": "disponivel",
+    "sizes": ["40ml"],
+    "colors": ["Vermelho"],
+    "stock": 1
+    }
+    ]
     
