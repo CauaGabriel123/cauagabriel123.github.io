@@ -878,5 +878,71 @@
     "sizes": ["GG"],
     "colors": ["Vermelho"],
     "stock": 1
-    }
-    ]
+    },
+    {
+    "id": "p69",
+    "name": "Perfume de Calcinha",
+    "category": "sexyshop",
+    "price": 17.99,
+    "images":["https://cauagabriel123.github.io/assets/pijama_hellokittyy.JPG",
+    "https://cauagabriel123.github.io/assets/pijama_hellokittyy2.JPG"],
+    "description":"",
+    "status": "disponivel",
+    "sizes": ["40ml"],
+    "colors": ["Vermelho"],
+    "stock": 1
+    },
+    {
+    "id": "p70",
+    "name": "Kit Uva",
+    "category": "sexyshop",
+    "price": 24.99,
+    "images":["https://cauagabriel123.github.io/assets/pijama_hellokittyy.JPG",
+    "https://cauagabriel123.github.io/assets/pijama_hellokittyy2.JPG"],
+    "description":"",
+    "status": "disponivel",
+    "sizes": ["200ml"],
+    "colors": ["Roxo"],
+    "stock": 1
+    },
+    {
+    "id": "p71",
+    "name": "Sabonete Líquido Uva",
+    "category": "sexyshop",
+    "price": 14.99,
+    "images":["https://cauagabriel123.github.io/assets/pijama_hellokittyy.JPG",
+    "https://cauagabriel123.github.io/assets/pijama_hellokittyy2.JPG"],
+    "description":"",
+    "status": "disponivel",
+    "sizes": ["200ml"],
+    "colors": ["Roxo"],
+    "stock": 1
+    },
+    {
+    "id": "p72",
+    "name": "Sexy Balls",
+    "category": "sexyshop",
+    "price": 9.99,
+    "images":["https://cauagabriel123.github.io/assets/pijama_hellokittyy.JPG",
+    "https://cauagabriel123.github.io/assets/pijama_hellokittyy2.JPG"],
+    "description":"",
+    "status": "disponivel",
+    "sizes": ["Único"],
+    "colors": ["Roxo", "Amarelo"],
+    "stock": 1
+    },
+    {
+    "id": "p73",
+    "name": "Gel Adstringente Lacradinha",
+    "category": "sexyshop",
+    "price": 24.99,
+    "images":["https://cauagabriel123.github.io/assets/pijama_hellokittyy.JPG",
+    "https://cauagabriel123.github.io/assets/pijama_hellokittyy2.JPG"],
+    "description":"",
+    "status": "disponivel",
+    "sizes": ["15g"],
+    "colors": ["Rosa"],
+    "stock": 1
+    },
+    {
+    
