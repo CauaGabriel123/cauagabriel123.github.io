@@ -758,4 +758,15 @@
     "stock": 1
   },
   {
-    
+    "id": "p60",
+    "name": "Máscara Eudora Siàge”,
+    “category": "eudora",
+    "price": 52.90,
+    "images":[ ""],
+    "description": "Tratamento profundo para quem quer fios fortes, longos e resistentes! A Máscara Siàge Acelera o Crescimento age diretamente na fibra capilar, reduzindo a quebra e fortalecendo o cabelo desde a raiz até as pontas. Com prebiótico + biotina e tecnologia Affine 4D, ela acelera o crescimento saudável, hidrata profundamente e deixa o cabelo extremamente macio e brilhoso. ✨💇‍♀️ ✔ Reduz a quebra ✔ Crescimento até 3 cm em 2 meses ✔ Hidratação intensa sem pesar ✔ Cheiro maravilhoso”,
+    "status": "disponivel",
+    "sizes": ["250g"],
+    "colors": ["Branco"],
+    "stock": 1
+  },
+  {
