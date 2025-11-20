@@ -780,5 +780,89 @@
     "sizes": ["250g"],
     "colors": ["Branco"],
     "stock": 1
+    },
+    {
+    "id": "p62",
+    "name": "Body Spray Eudora Diva Esplêndida",
+    "category": "eudora",
+    "price": 41.99,
+    "images":[ ""],
+    "description": "...",
+    "status": "disponivel",
+    "sizes": ["100ml"],
+    "colors": ["Transparente"],
+    "stock": 1
+    },
+    {
+    "id": "p63",
+    "name": "Eudora Diva Absoluta",
+    "category": "eudora",
+    "price": 89.90,
+    "images":[ ""],
+    "description": "...",
+    "status": "disponivel",
+    "sizes": ["100ml"],
+    "colors": ["Transparente"],
+    "stock": 1
+    },
+    {
+    "id": "p64",
+    "name": "Sabonete Eudora Instance",
+    "category": "eudora",
+    "price": 32.99,
+    "images":[ ""],
+    "description": "....",
+    "status": "disponivel",
+    "sizes": ["80g"],
+    "colors": ["Rosa"],
+    "stock": 1
+    },
+    {
+    "id": "p65",
+    "name": "Pijama Virgínia",
+    "category": "pijamas",
+    "price": 44.99,
+    "images":[ ""],
+    "description": "...",
+    "status": "disponivel",
+    "sizes": ["G"],
+    "colors": ["Rosa"],
+    "stock": 1
+    },
+    {
+    "id": "p66",
+    "name": "Pijama Hello Kitty",
+    "category": "pijamas",
+    "price": 44.99,
+    "images":[ ""],
+    "description": "....",
+    "status": "disponivel",
+    "sizes": ["G"],
+    "colors": ["Rosa C/ Branco"],
+    "stock": 1
+    },
+    {
+    "id": "p67",
+    "name": "Pijama Virgínia",
+    "category": "pijamas",
+    "price": 44.99,
+    "images":[ ""],
+    "description": "...",
+    "status": "disponivel",
+    "sizes": ["GG"],
+    "colors": ["Rosa"],
+    "stock": 1
+    },
+    {
+    "id": "p68",
+    "name": "Pijama Hello Kitty",
+    "category": "pijamas",
+    "price": 44.99,
+    "images":[ ""],
+    "description": "...",
+    "status": "disponivel",
+    "sizes": ["GG"],
+    "colors": ["Vermelho"],
+    "stock": 1
     }
     ]
