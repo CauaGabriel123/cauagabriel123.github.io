@@ -260,59 +260,93 @@ window.addEventListener('DOMContentLoaded', () => {
   }, 1500);
 });
 </script>
-<!-- SPLASH CARTÃO ELEGANTE -->
+<!-- SPLASH MINIMALISTA PREMIUM ROSÉ -->
 <div id="splash">
-  <div class="card">
-    <img src="https://cauagabriel123.github.io/assets/logo-ls-storee.png" class="logo">
-    <h2>LS STORE</h2>
+  <div class="splash-box">
+    <img src="https://cauagabriel123.github.io/assets/logo-ls-storee.png" class="splash-logo">
+
+    <h1 class="splash-title">LS STORE</h1>
+    <p class="splash-sub">Moda feminina</p>
   </div>
 </div>
 
 <style>
+  /* Fundo rosinha suave */
   #splash {
     position: fixed;
     inset: 0;
-    background: #f9f3ff;
+    background: linear-gradient(160deg, #fff7fc, #ffeefd);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 999999;
-    animation: fade 0.8s ease forwards;
-    animation-delay: 2.2s;
+    animation: fadeOut 0.7s ease forwards;
+    animation-delay: 2s;
   }
 
-  .card {
-    background: white;
-    padding: 24px 32px;
-    border-radius: 18px;
-    box-shadow: 0 4px 22px rgba(0,0,0,0.08);
+  .splash-box {
     text-align: center;
-    animation: up 0.5s ease;
+    animation: fadeIn 0.7s ease;
   }
 
-  .logo {
-    width: 120px;
-    margin-bottom: 10px;
+  /* Logo com sombra leve */
+  .splash-logo {
+    width: 160px;
+    margin-bottom: 14px;
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.15));
   }
 
-  h2 {
-    font-size: 20px;
-    color: #5a3b81;
-    font-weight: 700;
+  /* Título com efeito mais elegante */
+  .splash-title {
+    font-size: 28px;
+    font-weight: 800;
+    color: #5e3f92;
+    letter-spacing: 1px;
+
+    /* sombra suave */
+    text-shadow: 
+      0 2px 4px rgba(0,0,0,0.15),
+      0 0 20px rgba(255,255,255,0.9);
+      
+    /* efeito aparecendo suave */
+    animation: slideUp 0.9s ease;
   }
 
-  @keyframes up {
-    from {opacity:0; transform: translateY(20px);}
-    to   {opacity:1; transform: translateY(0);}
+  /* Subtítulo com suavidade */
+  .splash-sub {
+    font-size: 16px;
+    color: #7d6a8f;
+    opacity: 0;
+    animation: fadeText 1s ease forwards;
+    animation-delay: 0.4s;
+
+    text-shadow: 0 2px 4px rgba(0,0,0,0.12);
   }
 
-  @keyframes fade {
-    to {opacity:0; visibility:hidden;}
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.92); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeText {
+    to { opacity: 1; }
+  }
+
+  @keyframes fadeOut {
+    to { opacity: 0; visibility: hidden; }
   }
 </style>
 
 <script>
-setTimeout(()=>document.getElementById("splash").remove(), 2600);
+setTimeout(() => {
+  const splash = document.getElementById("splash");
+  if (splash) splash.remove();
+}, 2500);
 </script>
 <button id="backToTop" class="back-to-top" aria-label="Voltar ao topo">↑</button>
 <!-- ===== LS STORE • Product Modal (Isolado) ===== -->
