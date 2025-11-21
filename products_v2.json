@@ -197,7 +197,7 @@
     "images":[ "https://cauagabriel123.github.io/assets/limpador_de_pinceis_melu.JPG",
      "https://cauagabriel123.github.io/assets/limpador_de_pinceis_melu2.JPG"],
     "description": "Prático, eficiente e com secagem rápida! O Spray Limpador de Pincéis Melu remove resíduos de maquiagem com facilidade, deixando as cerdas limpas e prontas para uso. Ideal para manter seus pincéis higienizados no dia a dia, sem danificar as fibras.",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["100ml"],
     "colors": ["Transparente"],
     "stock": 1
@@ -238,7 +238,7 @@
     "https://cauagabriel123.github.io/assets/creme_hidratante_apiderm2.JPG"
     ],
     "description": "Apiderm. Com fragrância doce e marcante de morango, essa loção oferece hidratação profunda graças à manteiga de cacau. Deixa a pele macia, perfumada e com toque suave por horas. Ideal para cuidados diários e para quem ama cheirinho doce.",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["180ml"],
     "colors": ["Branco"],
     "stock": 1
@@ -253,7 +253,7 @@
     "https://cauagabriel123.github.io/assets/mousse_de_limpeza_facial3.JPG"
     ],
     "description": "✨ Mousse de Limpeza Facial – Morango (150ml) ✨ Deixe sua pele ainda mais bonita com esse mousse de limpeza super cheiroso! Ele possui textura suave, espuma cremosa e extrato de morango, ajudando a limpar profundamente sem ressecar. Ideal para remover impurezas do dia a dia e deixar a pele macia, hidratada e com um cheirinho delicioso de morango. Perfeito para todos os tipos de pele 💖🍓",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["150ml"],
     "colors": ["Transparente"],
     "stock": 1
@@ -431,20 +431,14 @@
     "name": "Calcinha Luna",
     "category": "intimos",
     "price": 19.99,
-    "images": ["https://cauagabriel123.github.io/assets/calcinha_luna_vermelho.JPG",
-      "https://cauagabriel123.github.io/assets/calcinha_luna_vermelho2.JPG",
-      "https://cauagabriel123.github.io/assets/calcinha_luna_vermelho3.JPG",
-    "https://cauagabriel123.github.io/assets/calcinha_luna_rose.JPG",
-    "https://cauagabriel123.github.io/assets/calcinha_luna_rose2.JPG",
-    "https://cauagabriel123.github.io/assets/calcinha_luna_rose3.JPG",
-    "https://cauagabriel123.github.io/assets/calcinha_luna_azul.JPG",
+    "images": ["https://cauagabriel123.github.io/assets/calcinha_luna_azul.JPG",
     "https://cauagabriel123.github.io/assets/calcinha_luna_azul2.JPG",
     "https://cauagabriel123.github.io/assets/calcinha_luna_azul3.JPG"],
     "description": " Calcinha Luna com lateral de strass, detalhe de pérolas e modelagem super confortável. Peça delicada, moderna e com acabamento lindo — ideal pra quem ama um toque de charme no dia a dia. Disponível nas cores: Cinza, Rosa Salmão e Azul Escuro. ✨💙💗🩶",
     "status": "disponivel",
     "sizes": ["GG"],
-    "colors": ["Vermelho", "Rose", "Azul"],
-    "stock": 2
+    "colors": ["Azul"],
+    "stock": 1
       },
   {
         "id": "p37",
@@ -687,7 +681,7 @@
     "https://cauagabriel123.github.io/assets/oculos1.3.JPG",
     "https://cauagabriel123.github.io/assets/oculos1.4.JPG"],
     "description": "Óculos Feminino Preto – Detalhe Dourado. Modelo estiloso, moderno e com detalhe lateral dourado. Lentes escuras que trazem charme e proteção no dia a dia. Acompanha caixa.",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["Unico"],
     "colors": ["Preto"],
     "stock": 1
@@ -702,7 +696,7 @@
     "https://cauagabriel123.github.io/assets/biquini_mariah2.JPG",
     "https://cauagabriel123.github.io/assets/biquini_mariah3.JPG"],
     "description": "Biquíni Mariah – Preto. Modelo elegante e básico, com top cortininha e calcinha que valoriza o corpo. Tecido macio, confortável e com detalhe dourado da marca.",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["G"],
     "colors": ["Preto"],
     "stock": 1
@@ -888,7 +882,7 @@
     "price": 24.99,
     "images":["https://cauagabriel123.github.io/assets/kit_uva.JPG"],
     "description":"Combo perfeito pra cuidar e apimentar! ✔️ Sabonete Íntimo Uva (200ml) – pH equilibrado, fragrância deliciosa e sensação de frescor o dia todo. ✔️ Sexy Balls Triple Shock – óleo corporal em cápsulas para massagem com sensação intensa! ⚡💕 Um kit completo pra deixar o cuidado íntimo + o momento especial ainda melhor! 😍💜",
-    "status": "disponivel",
+    "status": "indisponivel",
     "sizes": ["200ml"],
     "colors": ["Roxo"],
     "stock": 1
@@ -912,7 +906,7 @@
     "price": 9.99,
     "images":["https://cauagabriel123.github.io/assets/sexy_balls.JPG"],
     "description":"Óleo corporal em cápsulas, perfeito para massagem e momentos especiais. Disponível nas versões Triple Shock e Sexy & Selvagem. Aromas marcantes, toque suave e sensação intensa! 😍🔥",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["Único"],
     "colors": ["Roxo", "Amarelo"],
     "stock": 1
@@ -936,7 +930,7 @@
     "price": 24.99,
     "images":["https://cauagabriel123.github.io/assets/kit_maca.JPG"],
     "description":"Combo sensual completo pra deixar a noite ainda melhor! ✔️ Perfume de Calcinha – Maçã do Amor (40ml): fragrância doce, marcante e super sedutora 🍎✨ ✔️ Sexy Balls – Sexy & Selvagem: cápsulas de óleo corporal para massagem, com sensação intensa e aroma irresistível 😍🔥 Perfeito pra quem quer cuidar, perfumar e surpreender!",
-    "status": "disponivel",
+    "status": "indisponivel",
     "sizes": ["40ml"],
     "colors": ["Vermelho"],
     "stock": 1
