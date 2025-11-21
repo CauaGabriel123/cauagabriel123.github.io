@@ -260,28 +260,28 @@ window.addEventListener('DOMContentLoaded', () => {
   }, 1500);
 });
 </script>
-<!-- SPLASH MINIMALISTA PREMIUM ROSA SUAVE -->
+<!-- SPLASH MINIMALISTA COM LOGO DESTACADA -->
 <div id="splash">
   <div class="splash-box">
     <img src="https://cauagabriel123.github.io/assets/logo-ls-storee.png" class="splash-logo">
 
-    <!-- TEXTO PRINCIPAL (AGORA APENAS “Moda feminina”) -->
+    <!-- LETREIRO REDUZIDO -->
     <h1 class="splash-title">Moda feminina</h1>
   </div>
 </div>
 
 <style>
-  /* Fundo rosa suave */
+  /* Fundo rosa delicado */
   #splash {
     position: fixed;
     inset: 0;
-    background: linear-gradient(160deg, #ffe6f3, #ffd7ee);
+    background: linear-gradient(160deg, #ffdff0, #ffd3ec);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 999999;
     animation: fadeOut 0.7s ease forwards;
-    animation-delay: 2s;
+    animation-delay: 2.1s;
   }
 
   .splash-box {
@@ -289,29 +289,29 @@ window.addEventListener('DOMContentLoaded', () => {
     animation: fadeIn 0.7s ease;
   }
 
-  /* Logo com sombra leve */
+  /* LOGO MAIOR */
   .splash-logo {
-    width: 160px;
-    margin-bottom: 18px;
-    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.10));
+    width: 200px; /* Aumentei */
+    margin-bottom: 20px;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.12));
   }
 
-  /* Agora “Moda feminina” é o elemento principal */
+  /* LETREIRO MENOR E COM COR LINDA */
   .splash-title {
-    font-size: 28px; /* mesmo tamanho do LS STORE anterior */
-    font-weight: 800;
-    color: #7a4ba0; /* lilás elegante */
-    letter-spacing: 1px;
+    font-size: 22px; /* diminuído */
+    font-weight: 700;
+    color: #9b72c9; /* nova cor lilás suave */
+    letter-spacing: 0.5px;
 
     text-shadow:
-      0 2px 4px rgba(0,0,0,0.15),
-      0 0 12px rgba(255,255,255,0.7);
+      0 1px 3px rgba(0,0,0,0.15),
+      0 0 10px rgba(255,255,255,0.7);
 
     animation: slideUp 0.9s ease;
   }
 
   @keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.92); }
+    from { opacity: 0; transform: scale(0.94); }
     to   { opacity: 1; transform: scale(1); }
   }
 
@@ -329,7 +329,7 @@ window.addEventListener('DOMContentLoaded', () => {
 setTimeout(() => {
   const splash = document.getElementById("splash");
   if (splash) splash.remove();
-}, 2500);
+}, 2600);
 </script>
 <button id="backToTop" class="back-to-top" aria-label="Voltar ao topo">↑</button>
 <!-- ===== LS STORE • Product Modal (Isolado) ===== -->
