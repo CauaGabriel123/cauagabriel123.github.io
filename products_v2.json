@@ -8,7 +8,7 @@
       "https://cauagabriel123.github.io/assets/pijiama_viriginia2.JPG",
       "https://cauagabriel123.github.io/assets/pijiama_viriginia3.JPG"],
     "description": "Pijama Virgínia composto por cropped estampado super fofo e short soltinho verde. Tecido leve, macio e fresquinho, ideal para noites confortáveis e cheias de estilo. Modelo confortável e soltinho. Tecido leve e agradável na pele. Estampa charmosa no cropped. Perfeito para quem busca conforto sem perder a beleza! 💚✨",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["GG"],
     "colors": ["Verde"],
     "stock": 1
@@ -531,7 +531,7 @@
     "https://cauagabriel123.github.io/assets/short_cirrê2.JPG",
     "https://cauagabriel123.github.io/assets/short_cirrê3.JPG"],
     "description": " Short cirrê com brilho lindo, cintura alta e caimento perfeito. Tecido confortável, moderno e com detalhe Mariah Collection que deixa a peça ainda mais estilosa. Perfeito pra looks ousados e cheios de presença! 🖤✨",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["GG"],
     "colors": ["Preto"],
     "stock": 1
@@ -577,9 +577,9 @@
     "https://cauagabriel123.github.io/assets/blusa3igual3.JPG"],
     "description": "Camisetão super confortável, tecido leve e modelo soltinho. Destaque para a estampa Mariah New Collection, que deixa o look moderno e estiloso. Perfeito para usar com shorts, tênis e montar aquele visual despojado! 💛",
     "status": "disponivel",
-    "sizes": ["M", "GG"],
+    "sizes": ["M"],
     "colors": ["Amarelo"],
-    "stock": 2
+    "stock": 1
     },
   {
         "id": "p46",
@@ -864,22 +864,9 @@
     "https://cauagabriel123.github.io/assets/pijama_virginiaa3.JPG",
     "https://cauagabriel123.github.io/assets/pijama_virginiaa4.JPG"],
     "description": "Conjunto super confortável e cheio de charme! Cropped leve e shortinho soltinho com estampa de unicórnio, arco-íris e estrelas. Tecido macio, fresquinho e perfeito pra dormir estilosa e confortável! 💖🌈",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["GG"],
     "colors": ["Rosa"],
-    "stock": 1
-    },
-    {
-    "id": "p68",
-    "name": "Pijama Hello Kitty",
-    "category": "pijamas",
-    "price": 44.99,
-    "images":["https://cauagabriel123.github.io/assets/pijama_hellokittyy.JPG",
-    "https://cauagabriel123.github.io/assets/pijama_hellokittyy2.JPG"],
-    "description": "Conjunto super confortável e fofíssimo! Blusinha ampla com estampa da Hello Kitty e shortinho soltinho todo estampado. Tecido leve, fresquinho e perfeito para noites mais confortáveis e estilosas! 💗🍉",
-    "status": "disponivel",
-    "sizes": ["GG"],
-    "colors": ["Vermelho"],
     "stock": 1
     },
     {
