@@ -260,75 +260,171 @@ window.addEventListener('DOMContentLoaded', () => {
   }, 1500);
 });
 </script>
-<!-- SPLASH MINIMALISTA PREMIUM FINAL -->
+<!-- SPLASH LS STORE FINAL -->
 <div id="splash">
   <div class="splash-box">
-    <img src="https://cauagabriel123.github.io/assets/logo-ls-storee.png" class="splash-logo">
-
-    <h1 class="splash-title">Moda feminina</h1>
+    <div class="splash-card">
+      <div class="splash-logo-wrap">
+        <img src="https://cauagabriel123.github.io/assets/logo-ls-storee.png" class="splash-logo" alt="LS Store">
+      </div>
+      <h1 class="splash-title">Moda feminina</h1>
+    </div>
   </div>
 </div>
 
 <style>
+  /* Fonte para o texto */
   @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
 
-  /* Fundo rosa mais vivo */
+  /* Container geral do splash */
   #splash {
     position: fixed;
     inset: 0;
-    background: linear-gradient(160deg, #ffcae3, #ffb3d8);
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 0 20px;
     z-index: 999999;
-    animation: fadeOut 0.7s ease forwards;
-    animation-delay: 2.1s;
+    background: linear-gradient(160deg, #ffcade, #ffb3d8);
+    overflow: hidden;
+    animation: splashFadeOut 0.7s ease forwards;
+    animation-delay: 2.3s;
+  }
+
+  /* Manchas suaves de fundo (bem discretas) */
+  #splash::before,
+  #splash::after {
+    content: "";
+    position: absolute;
+    border-radius: 999px;
+    filter: blur(40px);
+    opacity: 0.18;
+    pointer-events: none;
+  }
+
+  #splash::before {
+    width: 260px;
+    height: 260px;
+    background: #ff9ad0;
+    top: -40px;
+    left: -40px;
+  }
+
+  #splash::after {
+    width: 280px;
+    height: 280px;
+    background: #c78bff;
+    bottom: -60px;
+    right: -30px;
   }
 
   .splash-box {
+    position: relative;
     text-align: center;
-    animation: fadeIn 0.7s ease;
+    animation: splashIn 0.7s ease;
+  }
+
+  /* Cartão vidro fosco atrás da logo + texto */
+  .splash-card {
+    position: relative;
+    padding: 26px 34px 22px;
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.12); /* vidro bem transparente */
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.12);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+  }
+
+  /* Logo com brilho passando */
+  .splash-logo-wrap {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    border-radius: 18px;
+    padding: 8px;
   }
 
   .splash-logo {
     width: 200px;
-    margin-bottom: 20px;
-    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.12));
+    display: block;
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.16));
+    transform: translateY(6px);
+    animation: logoLift 0.8s ease forwards;
   }
 
-  /* COR DA FRASE AJUSTADA AQUI ↓↓↓↓↓ */
+  /* Brilho horizontal passando na logo */
+  .splash-logo-wrap::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -160%;
+    width: 80%;
+    height: 100%;
+    background: linear-gradient(
+      120deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.85) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    transform: skewX(-20deg);
+    animation: shine 1.8s ease-in-out 0.6s forwards;
+    pointer-events: none;
+  }
+
+  /* Texto "Moda feminina" com degradê lilás → rosa */
   .splash-title {
+    margin-top: 12px;
     font-family: 'Montserrat', sans-serif;
     font-size: 22px;
     font-weight: 600;
-    color: #5f3a86;  /* NOVA COR MAIS FORTE E BONITA */
-    letter-spacing: 0.6px;
+    letter-spacing: 0.7px;
+
+    background: linear-gradient(90deg, #5f3a86, #d56bb6);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+
     text-shadow:
-      0 1px 3px rgba(0,0,0,0.15),
-      0 0 10px rgba(255,255,255,0.6);
-    animation: slideUp 0.9s ease;
+      0 1px 3px rgba(0, 0, 0, 0.15),
+      0 0 10px rgba(255, 255, 255, 0.6);
+
+    animation: titleUp 0.8s ease 0.15s forwards;
+    opacity: 0;
   }
 
-  @keyframes fadeIn {
+  /* Animações */
+  @keyframes splashIn {
     from { opacity: 0; transform: scale(0.94); }
     to   { opacity: 1; transform: scale(1); }
   }
 
-  @keyframes slideUp {
-    from { opacity: 0; transform: translateY(12px); }
+  @keyframes logoLift {
+    from { transform: translateY(10px); }
+    to   { transform: translateY(0); }
+  }
+
+  @keyframes titleUp {
+    from { opacity: 0; transform: translateY(10px); }
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  @keyframes fadeOut {
+  @keyframes shine {
+    from { left: -160%; }
+    to   { left: 160%; }
+  }
+
+  @keyframes splashFadeOut {
     to { opacity: 0; visibility: hidden; }
   }
 </style>
 
 <script>
-setTimeout(() => {
-  const splash = document.getElementById("splash");
-  if (splash) splash.remove();
-}, 2600);
+  // Remove o splash depois de aparecer
+  setTimeout(() => {
+    const splash = document.getElementById("splash");
+    if (splash) splash.remove();
+  }, 2700);
 </script>
 <button id="backToTop" class="back-to-top" aria-label="Voltar ao topo">↑</button>
 <!-- ===== LS STORE • Product Modal (Isolado) ===== -->
