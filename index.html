@@ -260,23 +260,23 @@ window.addEventListener('DOMContentLoaded', () => {
   }, 1500);
 });
 </script>
-<!-- SPLASH LS STORE FINAL -->
+<!-- SPLASH LS STORE FINAL (SEM CAIXA) -->
 <div id="splash">
   <div class="splash-box">
-    <div class="splash-card">
-      <div class="splash-logo-wrap">
-        <img src="https://cauagabriel123.github.io/assets/logo-ls-storee.png" class="splash-logo" alt="LS Store">
-      </div>
-      <h1 class="splash-title">Moda feminina</h1>
+
+    <div class="splash-logo-wrap">
+      <img src="https://cauagabriel123.github.io/assets/logo-ls-storee.png" class="splash-logo" alt="LS Store">
     </div>
+
+    <h1 class="splash-title">Moda feminina</h1>
+
   </div>
 </div>
 
 <style>
-  /* Fonte para o texto */
   @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
 
-  /* Container geral do splash */
+  /* Container principal */
   #splash {
     position: fixed;
     inset: 0;
@@ -291,7 +291,7 @@ window.addEventListener('DOMContentLoaded', () => {
     animation-delay: 2.3s;
   }
 
-  /* Manchas suaves de fundo (bem discretas) */
+  /* Manchas suaves */
   #splash::before,
   #splash::after {
     content: "";
@@ -299,7 +299,6 @@ window.addEventListener('DOMContentLoaded', () => {
     border-radius: 999px;
     filter: blur(40px);
     opacity: 0.18;
-    pointer-events: none;
   }
 
   #splash::before {
@@ -319,21 +318,8 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   .splash-box {
-    position: relative;
     text-align: center;
     animation: splashIn 0.7s ease;
-  }
-
-  /* Cartão vidro fosco atrás da logo + texto */
-  .splash-card {
-    position: relative;
-    padding: 26px 34px 22px;
-    border-radius: 22px;
-    background: rgba(255, 255, 255, 0.12); /* vidro bem transparente */
-    border: 1px solid rgba(255, 255, 255, 0.35);
-    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.12);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
   }
 
   /* Logo com brilho passando */
@@ -341,8 +327,7 @@ window.addEventListener('DOMContentLoaded', () => {
     position: relative;
     display: inline-block;
     overflow: hidden;
-    border-radius: 18px;
-    padding: 8px;
+    padding: 0;
   }
 
   .splash-logo {
@@ -353,7 +338,6 @@ window.addEventListener('DOMContentLoaded', () => {
     animation: logoLift 0.8s ease forwards;
   }
 
-  /* Brilho horizontal passando na logo */
   .splash-logo-wrap::before {
     content: "";
     position: absolute;
@@ -372,17 +356,15 @@ window.addEventListener('DOMContentLoaded', () => {
     pointer-events: none;
   }
 
-  /* Texto "Moda feminina" com degradê lilás → rosa */
+  /* Texto com degradê lilás → rosa */
   .splash-title {
     margin-top: 12px;
     font-family: 'Montserrat', sans-serif;
     font-size: 22px;
     font-weight: 600;
-    letter-spacing: 0.7px;
 
     background: linear-gradient(90deg, #5f3a86, #d56bb6);
     -webkit-background-clip: text;
-    background-clip: text;
     color: transparent;
 
     text-shadow:
@@ -393,7 +375,6 @@ window.addEventListener('DOMContentLoaded', () => {
     opacity: 0;
   }
 
-  /* Animações */
   @keyframes splashIn {
     from { opacity: 0; transform: scale(0.94); }
     to   { opacity: 1; transform: scale(1); }
@@ -420,11 +401,10 @@ window.addEventListener('DOMContentLoaded', () => {
 </style>
 
 <script>
-  // Remove o splash depois de aparecer
-  setTimeout(() => {
-    const splash = document.getElementById("splash");
-    if (splash) splash.remove();
-  }, 2700);
+setTimeout(() => {
+  const splash = document.getElementById("splash");
+  if (splash) splash.remove();
+}, 2700);
 </script>
 <button id="backToTop" class="back-to-top" aria-label="Voltar ao topo">↑</button>
 <!-- ===== LS STORE • Product Modal (Isolado) ===== -->
