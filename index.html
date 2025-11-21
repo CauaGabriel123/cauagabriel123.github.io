@@ -265,8 +265,8 @@ window.addEventListener('DOMContentLoaded', () => {
   <div class="splash-box">
     <img src="https://cauagabriel123.github.io/assets/logo-ls-storee.png" class="splash-logo">
 
-    <h1 class="splash-title">LS STORE</h1>
-    <p class="splash-sub">Moda feminina</p>
+    <!-- TEXTO PRINCIPAL (AGORA APENAS “Moda feminina”) -->
+    <h1 class="splash-title">Moda feminina</h1>
   </div>
 </div>
 
@@ -289,16 +289,16 @@ window.addEventListener('DOMContentLoaded', () => {
     animation: fadeIn 0.7s ease;
   }
 
-  /* Logo com sombra elegante */
+  /* Logo com sombra leve */
   .splash-logo {
     width: 160px;
-    margin-bottom: 14px;
-    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.12));
+    margin-bottom: 18px;
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.10));
   }
 
-  /* TEXTO NOVO — em lilás elegante combinando com a logo */
+  /* Agora “Moda feminina” é o elemento principal */
   .splash-title {
-    font-size: 28px;
+    font-size: 28px; /* mesmo tamanho do LS STORE anterior */
     font-weight: 800;
     color: #7a4ba0; /* lilás elegante */
     letter-spacing: 1px;
@@ -306,17 +306,8 @@ window.addEventListener('DOMContentLoaded', () => {
     text-shadow:
       0 2px 4px rgba(0,0,0,0.15),
       0 0 12px rgba(255,255,255,0.7);
-      
-    animation: slideUp 0.9s ease;
-  }
 
-  .splash-sub {
-    font-size: 16px;
-    color: #946ea8; /* lilás rosado suave */
-    opacity: 0;
-    animation: fadeText 1s ease forwards;
-    animation-delay: 0.4s;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.08);
+    animation: slideUp 0.9s ease;
   }
 
   @keyframes fadeIn {
@@ -327,10 +318,6 @@ window.addEventListener('DOMContentLoaded', () => {
   @keyframes slideUp {
     from { opacity: 0; transform: translateY(12px); }
     to   { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes fadeText {
-    to { opacity: 1; }
   }
 
   @keyframes fadeOut {
