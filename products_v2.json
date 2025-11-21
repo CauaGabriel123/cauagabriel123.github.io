@@ -528,10 +528,10 @@
     "https://cauagabriel123.github.io/assets/short_cirrê2.JPG",
     "https://cauagabriel123.github.io/assets/short_cirrê3.JPG"],
     "description": " Short cirrê com brilho lindo, cintura alta e caimento perfeito. Tecido confortável, moderno e com detalhe Mariah Collection que deixa a peça ainda mais estilosa. Perfeito pra looks ousados e cheios de presença! 🖤✨",
-    "status": "esgotado",
+    "status": "disponivel",
     "sizes": ["GG"],
     "colors": ["Preto"],
-    "stock": 2
+    "stock": 1
     },
   {
         "id": "p43",
@@ -669,7 +669,7 @@
     "https://cauagabriel123.github.io/assets/blusa4.2.JPG",
     "https://cauagabriel123.github.io/assets/blusa4.3.JPG"],
     "description": "Blusa Mariah gola \"U\". Modelo básico e super confortável, com caimento leve e detalhe frontal da marca. Ideal para o dia a dia, trazendo estilo e praticidade.",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["M"],
     "colors": ["Azul"],
     "stock": 1
