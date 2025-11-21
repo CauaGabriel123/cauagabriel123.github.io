@@ -260,15 +260,12 @@ window.addEventListener('DOMContentLoaded', () => {
   }, 1500);
 });
 </script>
-<!-- SPLASH PROFISSIONAL LS STORE -->
+<!-- SPLASH MINIMALISTA PREMIUM -->
 <div id="splash">
   <div class="splash-box">
-    <img src="https://cauagabriel123.github.io/assets/logo-ls-storee.png" class="splash-logo" />
-    
-    <div class="splash-text">
-      <h1>Bem-vinda à LS STORE ✨</h1>
-      <p>Moda feminina com atitude 💖</p>
-    </div>
+    <img src="https://cauagabriel123.github.io/assets/logo-ls-storee.png" class="splash-logo">
+    <h1 class="splash-title">LS STORE</h1>
+    <p class="splash-sub">Moda feminina</p>
   </div>
 </div>
 
@@ -276,60 +273,44 @@ window.addEventListener('DOMContentLoaded', () => {
   #splash {
     position: fixed;
     inset: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle at center, #f6d8ff, #dda6ff, #c78bff, #ffb3e0);
+    background: #ffffff;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 0 20px;
-    z-index: 1000000;
+    z-index: 999999;
     animation: fadeOut 0.8s ease forwards;
-    animation-delay: 2.2s;
+    animation-delay: 1.9s;
   }
 
   .splash-box {
     text-align: center;
-    animation: pop 0.6s ease;
-    max-width: 90%;
+    animation: fadeIn 0.6s ease;
   }
 
   .splash-logo {
-    width: 170px;
-    margin-bottom: 20px;
-    filter: drop-shadow(0 0 20px rgba(255,255,255,0.8));
+    width: 160px;
+    margin-bottom: 12px;
   }
 
-  .splash-text h1 {
-    font-size: 28px;
-    font-weight: 800;
-    color: white;
-    margin-bottom: 10px;
-    text-shadow: 0 0 15px rgba(255,255,255,0.9);
+  .splash-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: #5e3f92;
   }
 
-  .splash-text p {
-    font-size: 18px;
-    color: white;
-    opacity: 0.95;
-    text-shadow: 0 0 10px rgba(255,255,255,0.8);
+  .splash-sub {
+    font-size: 15px;
+    color: #888;
   }
 
-  @keyframes pop {
-    from { transform: scale(0.75); opacity: 0; }
-    to   { transform: scale(1); opacity: 1; }
-  }
-
-  @keyframes fadeOut {
-    to { opacity: 0; visibility: hidden; }
-  }
+  @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
+  @keyframes fadeOut { to {opacity:0; visibility:hidden;} }
 </style>
 
 <script>
-  setTimeout(() => {
-    const splash = document.getElementById("splash");
-    if (splash) splash.remove();
-  }, 2700);
+setTimeout(() => {
+  document.getElementById("splash").remove();
+}, 2300);
 </script>
 <button id="backToTop" class="back-to-top" aria-label="Voltar ao topo">↑</button>
 <!-- ===== LS STORE • Product Modal (Isolado) ===== -->
