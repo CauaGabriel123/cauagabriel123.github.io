@@ -260,12 +260,11 @@ window.addEventListener('DOMContentLoaded', () => {
   }, 1500);
 });
 </script>
-<!-- SPLASH MINIMALISTA PREMIUM -->
+<!-- SPLASH ROSÉ ELEGANTE -->
 <div id="splash">
   <div class="splash-box">
     <img src="https://cauagabriel123.github.io/assets/logo-ls-storee.png" class="splash-logo">
-    <h1 class="splash-title">LS STORE</h1>
-    <p class="splash-sub">Moda feminina</p>
+    <p class="splash-brand">LS STORE</p>
   </div>
 </div>
 
@@ -273,44 +272,40 @@ window.addEventListener('DOMContentLoaded', () => {
   #splash {
     position: fixed;
     inset: 0;
-    background: #ffffff;
+    background: linear-gradient(160deg, #fff5fa, #f7e8ff);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 999999;
     animation: fadeOut 0.8s ease forwards;
-    animation-delay: 1.9s;
+    animation-delay: 2s;
   }
 
-  .splash-box {
-    text-align: center;
-    animation: fadeIn 0.6s ease;
-  }
+  .splash-box { text-align: center; animation: soft 0.6s ease; }
 
   .splash-logo {
-    width: 160px;
-    margin-bottom: 12px;
+    width: 150px;
+    margin-bottom: 14px;
   }
 
-  .splash-title {
-    font-size: 26px;
-    font-weight: 700;
-    color: #5e3f92;
+  .splash-brand {
+    font-size: 22px;
+    font-weight: 600;
+    color: #6d4e8b;
   }
 
-  .splash-sub {
-    font-size: 15px;
-    color: #888;
+  @keyframes soft {
+    from { opacity:0; transform: translateY(10px); }
+    to   { opacity:1; transform: translateY(0); }
   }
 
-  @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
-  @keyframes fadeOut { to {opacity:0; visibility:hidden;} }
+  @keyframes fadeOut {
+    to { opacity:0; visibility:hidden; }
+  }
 </style>
 
 <script>
-setTimeout(() => {
-  document.getElementById("splash").remove();
-}, 2300);
+setTimeout(()=>document.getElementById("splash").remove(), 2500);
 </script>
 <button id="backToTop" class="back-to-top" aria-label="Voltar ao topo">↑</button>
 <!-- ===== LS STORE • Product Modal (Isolado) ===== -->
