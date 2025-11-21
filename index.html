@@ -260,18 +260,20 @@ window.addEventListener('DOMContentLoaded', () => {
   }, 1500);
 });
 </script>
-<!-- SPLASH MINIMALISTA COM LOGO DESTACADA -->
+<!-- SPLASH MINIMALISTA PREMIUM FINAL -->
 <div id="splash">
   <div class="splash-box">
     <img src="https://cauagabriel123.github.io/assets/logo-ls-storee.png" class="splash-logo">
 
-    <!-- LETREIRO REDUZIDO -->
     <h1 class="splash-title">Moda feminina</h1>
   </div>
 </div>
 
 <style>
-  /* Fundo rosa delicado */
+  /* Fonte Montserrat */
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
+
+  /* Fundo rosa suave */
   #splash {
     position: fixed;
     inset: 0;
@@ -289,23 +291,24 @@ window.addEventListener('DOMContentLoaded', () => {
     animation: fadeIn 0.7s ease;
   }
 
-  /* LOGO MAIOR */
+  /* Logo maior com sombra leve */
   .splash-logo {
-    width: 200px; /* Aumentei */
+    width: 200px;
     margin-bottom: 20px;
     filter: drop-shadow(0 4px 12px rgba(0,0,0,0.12));
   }
 
-  /* LETREIRO MENOR E COM COR LINDA */
+  /* Letreiro com nova fonte + cor perfeita */
   .splash-title {
-    font-size: 22px; /* diminuído */
-    font-weight: 700;
-    color: #9b72c9; /* nova cor lilás suave */
-    letter-spacing: 0.5px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: #7a4ba0; /* lilás premium */
+    letter-spacing: 0.6px;
 
     text-shadow:
       0 1px 3px rgba(0,0,0,0.15),
-      0 0 10px rgba(255,255,255,0.7);
+      0 0 10px rgba(255,255,255,0.6);
 
     animation: slideUp 0.9s ease;
   }
