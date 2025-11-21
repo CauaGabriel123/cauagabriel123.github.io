@@ -260,11 +260,11 @@ window.addEventListener('DOMContentLoaded', () => {
   }, 1500);
 });
 </script>
-<!-- SPLASH ROSÉ ELEGANTE -->
+<!-- SPLASH CARTÃO ELEGANTE -->
 <div id="splash">
-  <div class="splash-box">
-    <img src="https://cauagabriel123.github.io/assets/logo-ls-storee.png" class="splash-logo">
-    <p class="splash-brand">LS STORE</p>
+  <div class="card">
+    <img src="https://cauagabriel123.github.io/assets/logo-ls-storee.png" class="logo">
+    <h2>LS STORE</h2>
   </div>
 </div>
 
@@ -272,40 +272,47 @@ window.addEventListener('DOMContentLoaded', () => {
   #splash {
     position: fixed;
     inset: 0;
-    background: linear-gradient(160deg, #fff5fa, #f7e8ff);
+    background: #f9f3ff;
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 999999;
-    animation: fadeOut 0.8s ease forwards;
-    animation-delay: 2s;
+    animation: fade 0.8s ease forwards;
+    animation-delay: 2.2s;
   }
 
-  .splash-box { text-align: center; animation: soft 0.6s ease; }
-
-  .splash-logo {
-    width: 150px;
-    margin-bottom: 14px;
+  .card {
+    background: white;
+    padding: 24px 32px;
+    border-radius: 18px;
+    box-shadow: 0 4px 22px rgba(0,0,0,0.08);
+    text-align: center;
+    animation: up 0.5s ease;
   }
 
-  .splash-brand {
-    font-size: 22px;
-    font-weight: 600;
-    color: #6d4e8b;
+  .logo {
+    width: 120px;
+    margin-bottom: 10px;
   }
 
-  @keyframes soft {
-    from { opacity:0; transform: translateY(10px); }
-    to   { opacity:1; transform: translateY(0); }
+  h2 {
+    font-size: 20px;
+    color: #5a3b81;
+    font-weight: 700;
   }
 
-  @keyframes fadeOut {
-    to { opacity:0; visibility:hidden; }
+  @keyframes up {
+    from {opacity:0; transform: translateY(20px);}
+    to   {opacity:1; transform: translateY(0);}
+  }
+
+  @keyframes fade {
+    to {opacity:0; visibility:hidden;}
   }
 </style>
 
 <script>
-setTimeout(()=>document.getElementById("splash").remove(), 2500);
+setTimeout(()=>document.getElementById("splash").remove(), 2600);
 </script>
 <button id="backToTop" class="back-to-top" aria-label="Voltar ao topo">↑</button>
 <!-- ===== LS STORE • Product Modal (Isolado) ===== -->
