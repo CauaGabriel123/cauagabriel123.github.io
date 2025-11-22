@@ -882,7 +882,7 @@
     "price": 24.99,
     "images":["https://cauagabriel123.github.io/assets/kit_uva.JPG"],
     "description":"Combo perfeito pra cuidar e apimentar! ✔️ Sabonete Íntimo Uva (200ml) – pH equilibrado, fragrância deliciosa e sensação de frescor o dia todo. ✔️ Sexy Balls Triple Shock – óleo corporal em cápsulas para massagem com sensação intensa! ⚡💕 Um kit completo pra deixar o cuidado íntimo + o momento especial ainda melhor! 😍💜",
-    "status": "indisponivel",
+    "status": "esgotado",
     "sizes": ["200ml"],
     "colors": ["Roxo"],
     "stock": 1
@@ -930,7 +930,7 @@
     "price": 24.99,
     "images":["https://cauagabriel123.github.io/assets/kit_maca.JPG"],
     "description":"Combo sensual completo pra deixar a noite ainda melhor! ✔️ Perfume de Calcinha – Maçã do Amor (40ml): fragrância doce, marcante e super sedutora 🍎✨ ✔️ Sexy Balls – Sexy & Selvagem: cápsulas de óleo corporal para massagem, com sensação intensa e aroma irresistível 😍🔥 Perfeito pra quem quer cuidar, perfumar e surpreender!",
-    "status": "indisponivel",
+    "status": "esgotado",
     "sizes": ["40ml"],
     "colors": ["Vermelho"],
     "stock": 1
