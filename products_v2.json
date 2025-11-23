@@ -934,6 +934,102 @@
     "sizes": ["40ml"],
     "colors": ["Vermelho"],
     "stock": 1
+    },
+    {
+    "id": "p75",
+    "name": "Firmador Bum! Bum!",
+    "category": "belezas",
+    "price": 19.99,
+    "images":[""],
+    "description": "Conjunto super fofinho da Hello Kitty, com regatinha leve e shortinho soltinho estampado. Tecido confortável, fresquinho e perfeito pra dormir com muito estilo e charme! 💗📸",
+    "status": "disponivel",
+    "sizes": ["150g"],
+    "colors": ["Rosa"],
+    "stock": 1
+    },
+    {
+    "id": "p76",
+    "name": "Protetor Térmico 10 em 1",
+    "category": "belezas",
+    "price": 24.99,
+    "images":[""],
+    "description": "Conjunto super confortável e cheio de charme! Cropped leve e shortinho soltinho com estampa de unicórnio, arco-íris e estrelas. Tecido macio, fresquinho e perfeito pra dormir estilosa e confortável! 💖🌈",
+    "status": "disponivel",
+    "sizes": ["200ml"],
+    "colors": ["Roxo"],
+    "stock": 1
+    },
+    {
+    "id": "p77",
+    "name": "Body Splash Pink Black",
+    "category": "belezas",
+    "price": 24.99,
+    "images":["https://cauagabriel123.github.io/assets/perfume_calcinha.JPG"],
+    "description":"Fragrância doce, marcante e super sedutora! Ideal para deixar a calcinha perfumada, delicada e com um cheirinho irresistível o dia todo. Feminino, suave e de longa duração ✨❤️",
+    "status": "disponivel",
+    "sizes": ["200ml"],
+    "colors": ["Transparente"],
+    "stock": 1
+    },
+    {
+    "id": "p78",
+    "name": "Spray Capilar Banho Brilhante",
+    "category": "belezas",
+    "price": 24.99,
+    "images":["https://cauagabriel123.github.io/assets/kit_uva.JPG"],
+    "description":"Combo perfeito pra cuidar e apimentar! ✔️ Sabonete Íntimo Uva (200ml) – pH equilibrado, fragrância deliciosa e sensação de frescor o dia todo. ✔️ Sexy Balls Triple Shock – óleo corporal em cápsulas para massagem com sensação intensa! ⚡💕 Um kit completo pra deixar o cuidado íntimo + o momento especial ainda melhor! 😍💜",
+    "status": "disponivel",
+    "sizes": ["200ml"],
+    "colors": ["Transparente"],
+    "stock": 1
+    },
+    {
+    "id": "p79",
+    "name": "Kit Facil Skin Care",
+    "category": "belezas",
+    "price": 49.99,
+    "images":["https://cauagabriel123.github.io/assets/sabonete_uva.JPG"],
+    "description":"Sabonete íntimo com fragrância deliciosa de uva, fórmula suave, pH equilibrado e ácido lático para cuidar da região íntima com segurança e frescor. Deixa aquela sensação de limpeza e bem-estar o dia todo! 💜✨",
+    "status": "disponivel",
+    "sizes": ["Único"],
+    "colors": ["Azul"],
+    "stock": 1
+    },
+    {
+    "id": "p80",
+    "name": "Esfoliante de Melancia",
+    "category": "belezas",
+    "price": 24.99,
+    "images":["https://cauagabriel123.github.io/assets/sexy_balls.JPG"],
+    "description":"Óleo corporal em cápsulas, perfeito para massagem e momentos especiais. Disponível nas versões Triple Shock e Sexy & Selvagem. Aromas marcantes, toque suave e sensação intensa! 😍🔥",
+    "status": "disponivel",
+    "sizes": ["300g"],
+    "colors": ["Roxo"],
+    "stock": 1
+    },
+    {
+    "id": "p81",
+    "name": "Esfoliante de Morango",
+    "category": "belezas",
+    "price": 24.99,
+    "images":["https://cauagabriel123.github.io/assets/gel.JPG"],
+    "description":"O queridinho da linha sensual! O Lacradinha é um gel adstringente feminino que oferece sensação de firmeza e intensifica o momento a dois. Embalagem discreta, efeito rápido e qualidade garantida! 💗",
+    "status": "disponivel",
+    "sizes": ["300g"],
+    "colors": ["Roxo"],
+    "stock": 1
+    },
+    {
+    "id": "p82",
+    "name": "Óleo Reparador de Rícino",
+    "category": "belezas",
+    "price": 24.99,
+    "images":["https://cauagabriel123.github.io/assets/kit_maca.JPG"],
+    "description":"Combo sensual completo pra deixar a noite ainda melhor! ✔️ Perfume de Calcinha – Maçã do Amor (40ml): fragrância doce, marcante e super sedutora 🍎✨ ✔️ Sexy Balls – Sexy & Selvagem: cápsulas de óleo corporal para massagem, com sensação intensa e aroma irresistível 😍🔥 Perfeito pra quem quer cuidar, perfumar e surpreender!",
+    "status": "disponivel",
+    "sizes": ["60ml"],
+    "colors": ["Transparente"],
+    "stock": 1
     }
     ]
     
