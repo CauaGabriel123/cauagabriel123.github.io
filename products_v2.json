@@ -1034,6 +1034,131 @@
     "sizes": ["60ml"],
     "colors": ["Transparente"],
     "stock": 1
-    }
-    ]
+    },
+    {
+    "id": "p83",
+    "name": "Biquíni Rosa Pink",
+    "category": "biquinis",
+    "price": 161.99,
+    "images":[""],
+    "description":"",
+    "status": "disponivel",
+    "sizes": ["GG"],
+    "colors": ["Rosa"],
+    "stock": 1
+    },
+    {
+    "id": "p84",
+    "name": "Camiseta Mariah Branca",
+    "category": "blusas",
+    "price": 81.99,
+    "images":[""],
+    "description":"",
+    "status": "disponivel",
+    "sizes": ["GG"],
+    "colors": ["Branco"],
+    "stock": 1
+    },
+    {
+    "id": "p85",
+    "name": "Cropped Mariah Estampado",
+    "category": "croppeds",
+    "price": 106.99,
+    "images":[""],
+    "description":"",
+    "status": "disponivel",
+    "sizes": ["M"],
+    "colors": ["Branco e Preto"],
+    "stock": 1
+    },
+    {
+    "id": "p86",
+    "name": "Óculos Preto",
+    "category": "oculos",
+    "price": 69.99,
+    "images":[""],
+    "description":"",
+    "status": "disponivel",
+    "sizes": ["Único"],
+    "colors": ["Preto"],
+    "stock": 1
+    },
+    {
+    "id": "p87",
+    "name": "Shorts Mariah Pink Canelado",
+    "category": "shorts",
+    "price": 101.99,
+    "images":[""],
+    "description":"",
+    "status": "disponivel",
+    "sizes": ["GG"],
+    "colors": ["Rosa"],
+    "stock": 1
+    },
+    {
+    "id": "p81",
+    "name": "Esfoliante de Morango",
+    "category": "belezas",
+    "price": 24.99,
+    "images":["https://cauagabriel123.github.io/assets/morango.JPG",
+    "https://cauagabriel123.github.io/assets/morango2.JPG"],
+    "description":"Esfoliante corporal super cheiroso, com textura suave que remove células mortas e deixa a pele lisinha, macia e renovada. Tem aquele perfume doce de morango que fixa na pele e deixa o banho ainda mais gostoso! 💗🍓✨",
+    "status": "disponivel",
+    "sizes": ["300g"],
+    "colors": ["Roxo"],
+    "stock": 1
+    },
+    {
+    "id": "p81",
+    "name": "Esfoliante de Morango",
+    "category": "belezas",
+    "price": 24.99,
+    "images":["https://cauagabriel123.github.io/assets/morango.JPG",
+    "https://cauagabriel123.github.io/assets/morango2.JPG"],
+    "description":"Esfoliante corporal super cheiroso, com textura suave que remove células mortas e deixa a pele lisinha, macia e renovada. Tem aquele perfume doce de morango que fixa na pele e deixa o banho ainda mais gostoso! 💗🍓✨",
+    "status": "disponivel",
+    "sizes": ["300g"],
+    "colors": ["Roxo"],
+    "stock": 1
+    },
+    {
+    "id": "p81",
+    "name": "Esfoliante de Morango",
+    "category": "belezas",
+    "price": 24.99,
+    "images":["https://cauagabriel123.github.io/assets/morango.JPG",
+    "https://cauagabriel123.github.io/assets/morango2.JPG"],
+    "description":"Esfoliante corporal super cheiroso, com textura suave que remove células mortas e deixa a pele lisinha, macia e renovada. Tem aquele perfume doce de morango que fixa na pele e deixa o banho ainda mais gostoso! 💗🍓✨",
+    "status": "disponivel",
+    "sizes": ["300g"],
+    "colors": ["Roxo"],
+    "stock": 1
+    },
+    {
+    "id": "p81",
+    "name": "Esfoliante de Morango",
+    "category": "belezas",
+    "price": 24.99,
+    "images":["https://cauagabriel123.github.io/assets/morango.JPG",
+    "https://cauagabriel123.github.io/assets/morango2.JPG"],
+    "description":"Esfoliante corporal super cheiroso, com textura suave que remove células mortas e deixa a pele lisinha, macia e renovada. Tem aquele perfume doce de morango que fixa na pele e deixa o banho ainda mais gostoso! 💗🍓✨",
+    "status": "disponivel",
+    "sizes": ["300g"],
+    "colors": ["Roxo"],
+    "stock": 1
+    },
+    {
+    "id": "p81",
+    "name": "Esfoliante de Morango",
+    "category": "belezas",
+    "price": 24.99,
+    "images":["https://cauagabriel123.github.io/assets/morango.JPG",
+    "https://cauagabriel123.github.io/assets/morango2.JPG"],
+    "description":"Esfoliante corporal super cheiroso, com textura suave que remove células mortas e deixa a pele lisinha, macia e renovada. Tem aquele perfume doce de morango que fixa na pele e deixa o banho ainda mais gostoso! 💗🍓✨",
+    "status": "disponivel",
+    "sizes": ["300g"],
+    "colors": ["Roxo"],
+    "stock": 1
+    },
+    {
     
