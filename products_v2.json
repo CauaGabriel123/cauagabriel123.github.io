@@ -1108,16 +1108,15 @@
     "stock": 1
     },
     {
-    "id": "p81",
-    "name": "Esfoliante de Morango",
-    "category": "belezas",
-    "price": 24.99,
-    "images":["https://cauagabriel123.github.io/assets/morango.JPG",
-    "https://cauagabriel123.github.io/assets/morango2.JPG"],
-    "description":"Esfoliante corporal super cheiroso, com textura suave que remove células mortas e deixa a pele lisinha, macia e renovada. Tem aquele perfume doce de morango que fixa na pele e deixa o banho ainda mais gostoso! 💗🍓✨",
+    "id": "p89",
+    "name": "Vestido Short Saia Estampado",
+    "category": "vestidos",
+    "price": 99.99,
+    "images":[""],
+    "description":"",
     "status": "disponivel",
-    "sizes": ["300g"],
-    "colors": ["Roxo"],
+    "sizes": ["M"],
+    "colors": ["Preto e Branco"],
     "stock": 1
     },
     {
