@@ -35,7 +35,7 @@
     "images":[ "https://cauagabriel123.github.io/assets/pijama3.JPG",
       "https://cauagabriel123.github.io/assets/pijama3.2.JPG"],
     "description": "Longo com tom rosa suave, tecido leve e fenda discreta. Conforto e elegância.",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["M"],
     "colors": ["Azul"],
     "stock": 1
@@ -49,7 +49,7 @@
     "https://cauagabriel123.github.io/assets/meia1.2.JPG",
     "https://cauagabriel123.github.io/assets/meia1.3.JPG" ],
     "description": "Camiseta básica em algodão macio, ideal para compor looks casuais.",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["Único"],
     "colors": ["Branco, Preto e Cinza"],
     "stock": 1
@@ -63,7 +63,7 @@
     "https://cauagabriel123.github.io/assets/meia2.2.JPG",
     "https://cauagabriel123.github.io/assets/meia2.3.JPG"],
     "description": "Blusa cropped canelada com gola redonda e modelagem confortável.",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["Único"],
     "colors": ["Branco"],
     "stock": 1
@@ -77,7 +77,7 @@
     "https://cauagabriel123.github.io/assets/legging1.2.JPG",
     "https://cauagabriel123.github.io/assets/legging1.3.JPG"],
     "description": "Blusa ombro a ombro com tecido suave e elegante para qualquer ocasião.",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["M", "G"],
     "colors": ["Preto"],
     "stock": 1
@@ -91,7 +91,7 @@
     "https://cauagabriel123.github.io/assets/legging2.2.JPG",
     "https://cauagabriel123.github.io/assets/legging2.3.JPG"],
     "description": "Jeans clássico de cintura alta e corte reto. Modela e valoriza o corpo.",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["G"],
     "colors": ["Azul"],
     "stock": 1
@@ -117,7 +117,7 @@
     "https://cauagabriel123.github.io/assets/blusa1.2.JPG",
     "https://cauagabriel123.github.io/assets/blusa1.3.JPG"],
     "description": "Conjunto delicado de renda com modelagem confortável e toque suave.",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["G"],
     "colors": ["Preto"],
     "stock": 1
@@ -131,7 +131,7 @@
     "https://cauagabriel123.github.io/assets/blusa2.2.JPG",
     "https://cauagabriel123.github.io/assets/blusa2.3.JPG"],
     "description": "Sutiã em renda delicada sem bojo, ideal para o conforto do dia a dia.",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["M"],
     "colors": ["Lilás"],
     "stock": 1
@@ -333,7 +333,7 @@
      "https://cauagabriel123.github.io/assets/intimo4.2.JPG",
     "https://cauagabriel123.github.io/assets/intimo4.3.JPG"],
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["M"],
     "colors": ["Preto"],
     "stock": 1
@@ -347,7 +347,7 @@
      "https://cauagabriel123.github.io/assets/intimo8.JPG",
      "https://cauagabriel123.github.io/assets/intimo8.2.JPG"],
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["G"],
     "colors": ["Bege"],
     "stock": 1
@@ -362,7 +362,7 @@
        "https://cauagabriel123.github.io/assets/calcinha_fio_duplo_bege.JPG",
        "https://cauagabriel123.github.io/assets/calcinha_fio_duplo_bege2.JPG"],
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["P", "M"],
     "colors": ["Rosa", "Bege"],
     "stock": 1
@@ -375,7 +375,7 @@
     "images": ["https://cauagabriel123.github.io/assets/calcinha_fio_duplo.JPG",
      "https://cauagabriel123.github.io/assets/calcinha_fio_duplo2.JPG"],
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["G"],
     "colors": ["Rosa"],
     "stock": 1
@@ -389,7 +389,7 @@
      "https://cauagabriel123.github.io/assets/intimo9.JPG",
        "https://cauagabriel123.github.io/assets/intimo9.3.JPG"],
     "description": "Tanga Short Romance. Confortável, leve e com acabamento em renda nas pernas. Modelo shortinho que não marca, ideal para o dia a dia e para quem busca mais segurança e delicadeza ao mesmo tempo.",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["GG"],
     "colors": ["Preto"],
     "stock": 1
@@ -403,7 +403,7 @@
     "https://cauagabriel123.github.io/assets/intimo7.2.JPG",
      "https://cauagabriel123.github.io/assets/intimo7.JPG"],
     "description": "Vestido leve e muito grosso com estampa floral e caimento fluido, perfeito para dias ensolarados.",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["G"],
     "colors": ["Verde"],
     "stock": 1
@@ -449,7 +449,7 @@
     "https://cauagabriel123.github.io/assets/intimo6.2.JPG",
     "https://cauagabriel123.github.io/assets/intimo6.3.JPG"],
     "description": "Conjunto Fio Duplo Romance – Yolanda. Conjunto confortável e modela super bem! Top com ajuste perfeito e calcinha fio duplo com leve franzido, garantindo charme e caimento bonito no corpo. Tecido macio e de ótima elasticidade.",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["M"],
     "colors": ["Roxo"],
     "stock": 1
@@ -827,7 +827,7 @@
     "https://cauagabriel123.github.io/assets/pijama_virginia3.JPG",
     "https://cauagabriel123.github.io/assets/pijama_virginia4.JPG"],
     "description": "Pijama super fofo com estampa divertida, cropped leve e shortinho em animal print. Tecido macio, confortável e perfeito para dormir estilosa! 🐆💗",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["G"],
     "colors": ["Rosa"],
     "stock": 1
@@ -843,7 +843,7 @@
     "https://cauagabriel123.github.io/assets/pijama_hellokitty4.JPG",
     "https://cauagabriel123.github.io/assets/pijama_hellokitty5.JPG"],
     "description": "Conjunto super fofinho da Hello Kitty, com regatinha leve e shortinho soltinho estampado. Tecido confortável, fresquinho e perfeito pra dormir com muito estilo e charme! 💗📸",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["G"],
     "colors": ["Rosa C/ Branco"],
     "stock": 1
@@ -858,7 +858,7 @@
     "https://cauagabriel123.github.io/assets/pijama_virginiaa3.JPG",
     "https://cauagabriel123.github.io/assets/pijama_virginiaa4.JPG"],
     "description": "Conjunto super confortável e cheio de charme! Cropped leve e shortinho soltinho com estampa de unicórnio, arco-íris e estrelas. Tecido macio, fresquinho e perfeito pra dormir estilosa e confortável! 💖🌈",
-    "status": "esgotado",
+    "status": "disponivel",
     "sizes": ["GG"],
     "colors": ["Rosa"],
     "stock": 1
