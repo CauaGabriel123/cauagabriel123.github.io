@@ -266,7 +266,7 @@
     "images": ["https://cauagabriel123.github.io/assets/mousse_de_higiene_intima.JPG",
     "https://cauagabriel123.github.io/assets/mousse_de_higiene_intima2.JPG"],
     "description": "Mousse de Higiene Íntima – 150ml. Limpeza suave e frescor imediato, com Aloe Vera, Barbatimão e Aroeira. Fórmula hidratante, sem sulfatos e sem parabenos. Dermatologicamente e ginecologicamente testado.",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["150ml"],
     "colors": ["Transparente"],
     "stock": 2
@@ -319,7 +319,7 @@
     "images": ["https://cauagabriel123.github.io/assets/hidratante_corporal_bababbel.JPG",
       "https://cauagabriel123.github.io/assets/hidratante_corporal_bababbel2.JPG"],
     "description": "Hidratante Corporal BaBaBell – Tutti Frutti 200g. Hidratante super cheiroso com aroma de chiclete! Deixa a pele macia, hidratada, protegida e com toque aveludado. Contém vitamina E.",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["200g"],
     "colors": ["Branco"],
     "stock": 1
@@ -472,8 +472,8 @@
     "description": " Conjunto plus super confortável e elegante, com renda delicada e sustentação perfeita. Veste muito bem, realça o corpo e garante aquele toque de sensualidade com conforto. Disponível nas cores: Vermelho, Bordô e Rosê. 💖✨",
     "status": "disponivel",
     "sizes": ["52"],
-    "colors": ["Vermelho", "Bordo", "Rose"],
-    "stock": 3
+    "colors": ["Bordo", "Rose"],
+    "stock": 2
   },
 {
 "id": "p39",
@@ -511,7 +511,7 @@
     "https://cauagabriel123.github.io/assets/cropped_canelado_marrom_mariah2.JPG",
     "https://cauagabriel123.github.io/assets/cropped_canelado_marrom_mariah3.JPG"],
     "description": " Cropped canelado com caimento perfeito, super confortável e moderno. Possui detalhe frontal Mariah Collection que deixa a peça ainda mais estilosa. Ideal para looks casuais e cheios de charme! 🤎",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["M"],
     "colors": ["Bege"],
     "stock": 1
@@ -539,7 +539,7 @@
     "https://cauagabriel123.github.io/assets/cropped_golau2.JPG",
     "https://cauagabriel123.github.io/assets/cropped_golau3.JPG"],
     "description": " Cropped básico premium com tecido macio, modelagem moderna e detalhe frontal Mariah Collection. Versátil, confortável e perfeito para montar looks estilosos no dia a dia. Um clássico que combina com tudo! 🖤",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["M"],
     "colors": ["Preto"],
     "stock": 1
@@ -597,7 +597,7 @@
     "images": ["https://cauagabriel123.github.io/assets/cropped_poliamida.JPG",
     "https://cauagabriel123.github.io/assets/cropped_poliamida2.JPG"],
     "description": " Cropped em poliamida, com brilho leve e toque super macio. Modelo confortável, moderno e com detalhe frontal Mariah Collection que deixa a peça ainda mais estilosa. Perfeito pra looks elegantes e cheios de presença! ✨",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["M"],
     "colors": ["Dourado"],
     "stock": 1
@@ -652,7 +652,7 @@
     "https://cauagabriel123.github.io/assets/short_mariah_personalizado2.JPG",
     "https://cauagabriel123.github.io/assets/short_mariah_personalizado3.JPG"],
     "description": " Short estampado Mariah, com tecido leve, confortável e cintura com elástico para melhor ajuste. Estampa moderna e estilosa, perfeita para montar looks lindos no dia a dia. Conforto e estilo em uma peça só! 🤎",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["G"],
     "colors": ["Marrom"],
     "stock": 1
@@ -738,7 +738,7 @@
     "images": ["https://cauagabriel123.github.io/assets/kit_eudora2.JPG",
     "https://cauagabriel123.github.io/assets/kit_eudora.JPG"],
     "description": "O combo perfeito pra fortalecer os fios e ajudar no crescimento saudável! Com prebiótico + biotina, a linha promete até 3 cm em 2 meses, reduz a quebra e deixa o cabelo mais macio e brilhoso. 🟣 Shampoo – limpa sem ressecar 🟣 Condicionador – desembaraça e hidrata 🟣 Máscara – tratamento profundo antiqueda Ideal pra quem está no projeto cabelo longo! ✨",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["KIT"],
     "colors": ["Branco"],
     "stock": 1
@@ -750,7 +750,7 @@
     "price": 39.90,
     "images":["https://cauagabriel123.github.io/assets/condicionador.JPG"],
     "description": "O complemento perfeito para quem quer cabelos mais fortes, longos e cheios de vida! O Condicionador Siàge Acelera o Crescimento hidrata profundamente sem pesar, fortalece os fios e potencializa o crescimento saudável com a combinação poderosa de prebiótico + biotina. Ele deixa o cabelo mais macio, alinhado e resistente à quebra — ideal para quem está no projeto cabelo grande! ✨💇‍♀️ ✔ Até 3 cm de crescimento em 2 meses ✔ Desembaraço fácil ✔ Brilho e força desde a raiz",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["200ml"],
     "colors": ["Branco"],
     "stock": 1
@@ -762,7 +762,7 @@
     "price": 39.90,
     "images":["https://cauagabriel123.github.io/assets/shampoo.JPG"],
     "description": "Para quem quer fios mais fortes, longos e com crescimento acelerado! O Siàge Acelera o Crescimento combina prebiótico + biotina para estimular o couro cabeludo e entregar resultados reais: até 3 cm de crescimento em 2 meses. Ele limpa sem ressecar, fortalece os fios desde a raiz e ajuda a reduzir a queda por quebra. Perfeito pra quem está no projeto cabelo longo! ✨💇‍♀️ ✔ Nova fórmula ✔ Sem sal ✔ Linha profissional",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["250ml"],
     "colors": ["Branco"],
     "stock": 1
@@ -774,7 +774,7 @@
     "price": 52.90,
     "images":["https://cauagabriel123.github.io/assets/mascara.JPG"],
     "description": "Tratamento profundo para quem quer fios fortes, longos e resistentes! A Máscara Siàge Acelera o Crescimento age diretamente na fibra capilar, reduzindo a quebra e fortalecendo o cabelo desde a raiz até as pontas. Com prebiótico + biotina e tecnologia Affine 4D, ela acelera o crescimento saudável, hidrata profundamente e deixa o cabelo extremamente macio e brilhoso. ✨💇‍♀️ ✔ Reduz a quebra ✔ Crescimento até 3 cm em 2 meses ✔ Hidratação intensa sem pesar ✔ Cheiro maravilhoso",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["250g"],
     "colors": ["Branco"],
     "stock": 1
@@ -860,7 +860,7 @@
     "description": "Conjunto super confortável e cheio de charme! Cropped leve e shortinho soltinho com estampa de unicórnio, arco-íris e estrelas. Tecido macio, fresquinho e perfeito pra dormir estilosa e confortável! 💖🌈",
     "status": "disponivel",
     "sizes": ["GG"],
-    "colors": ["Rosa"],
+    "colors": ["Roxo"],
     "stock": 1
     },
     {
@@ -870,7 +870,7 @@
     "price": 17.99,
     "images":["https://cauagabriel123.github.io/assets/perfume_calcinha.JPG"],
     "description":"Fragrância doce, marcante e super sedutora! Ideal para deixar a calcinha perfumada, delicada e com um cheirinho irresistível o dia todo. Feminino, suave e de longa duração ✨❤️",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["40ml"],
     "colors": ["Vermelho"],
     "stock": 1
@@ -956,7 +956,7 @@
     "images":["https://cauagabriel123.github.io/assets/protetor_termico.JPG",
     "https://cauagabriel123.github.io/assets/protetor_termico2.JPG"],
     "description": "Protege do calor, reduz frizz, dá brilho e ajuda a reparar os fios. Ideal para usar antes da prancha ou secador.",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["200ml"],
     "colors": ["Roxo"],
     "stock": 1
@@ -968,7 +968,7 @@
     "price": 24.99,
     "images":["https://cauagabriel123.github.io/assets/bodysplash.JPG"],
     "description": "Cheiro marcante, moderno e super feminino! O Pink Black deixa aquela fragrância deliciosa que fixa por horas, ideal pra usar no dia a dia, antes de sair ou até pra retocar e ficar ainda mais cheirosa.",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["200ml"],
     "colors": ["Transparente"],
     "stock": 1
@@ -981,7 +981,7 @@
     "images":["https://cauagabriel123.github.io/assets/spray.JPG",
     "https://cauagabriel123.github.io/assets/spray2.JPG"],
     "description":"Perfeito pra deixar o cabelo com efeito gloss, super brilhoso e hidratado! Ele sela a cutícula, reduz o volume, alinha os fios e diminui o frizz — tudo isso sem formol. Ideal para todos os tipos de cabelo, dá aquele acabamento de salão em segundos. Brilho intenso, cheiro maravilhoso e fios muito mais macios! ✨💁‍♀️",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["200ml"],
     "colors": ["Transparente"],
     "stock": 1
@@ -993,7 +993,7 @@
     "price": 49.99,
     "images":["https://cauagabriel123.github.io/assets/kit_facial.JPG"],
     "description":"Rotina completa com 4 produtos para limpar, hidratar, esfoliar e controlar a oleosidade. Deixa a pele macia, sequinha e bem cuidada todos os dias! 💛✨",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["Único"],
     "colors": ["Azul"],
     "stock": 1
@@ -1005,7 +1005,7 @@
     "price": 24.99,
     "images":["https://cauagabriel123.github.io/assets/melancia.JPG"],
     "description":"Esfoliante corporal super cheiroso que remove células mortas, deixa a pele macia e renovada. Textura deliciosa e fragrância doce de melancia que fica na pele! Perfeito para usar no banho e deixar a pele lisinha e hidratada. 💗✨",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["300g"],
     "colors": ["Roxo"],
     "stock": 1
@@ -1051,11 +1051,11 @@
     },
     {
     "id": "p84",
-    "name": "Camiseta Mariah Branca",
+    "name": "Blusa Mariah Branca",
     "category": "blusas",
     "price": 81.99,
     "images":["https://cauagabriel123.github.io/assets/camiseta_mariah.JPG"],
-    "description":"Camiseta Mariah branca, básica e estilosa, com detalhe frontal que dá um charme a mais no look. Tecido confortável, macio e ótimo para usar no dia a dia! 🤍",
+    "description":"Blusa Mariah branca, básica e estilosa, com detalhe frontal que dá um charme a mais no look. Tecido confortável, macio e ótimo para usar no dia a dia! 🤍",
     "status": "disponivel",
     "sizes": ["GG"],
     "colors": ["Branco"],
@@ -1070,7 +1070,7 @@
     "https://cauagabriel123.github.io/assets/cropped_estampado2.JPG",
     "https://cauagabriel123.github.io/assets/cropped_estampado3.JPG"],
     "description":"Cropped Mariah super estiloso, com estampa moderna e tecido confortável que veste muito bem. Modelo justinho, perfeito para compor looks casuais ou mais produzidos! 🤍🖤",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["M"],
     "colors": ["Branco e Preto"],
     "stock": 1
@@ -1085,7 +1085,7 @@
     "https://cauagabriel123.github.io/assets/oculos3.JPG",
     "https://cauagabriel123.github.io/assets/oculos4.JPG"],
     "description":"Óculos super estiloso, modelo quadrado com acabamento fosco e detalhe lateral dourado. Lente escura, moderna e perfeita pra complementar qualquer look! 😎🖤",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["Único"],
     "colors": ["Preto"],
     "stock": 1
@@ -1105,12 +1105,12 @@
     },
     {
     "id": "p88",
-    "name": "Camiseta Mariah Estampada",
+    "name": "Blusa Mariah Estampada",
     "category": "blusas",
     "price": 99.99,
     "images":["https://cauagabriel123.github.io/assets/camiseta.JPG",
     "https://cauagabriel123.github.io/assets/camiseta2.JPG"],
-    "description":"Camiseta Mariah com estampa total super estilosa, moderna e perfeita pra deixar qualquer look mais marcante. Tecido confortável, macio e com caimento ótimo! 🤍🖤",
+    "description":"Blusa Mariah com estampa total super estilosa, moderna e perfeita pra deixar qualquer look mais marcante. Tecido confortável, macio e com caimento ótimo! 🤍🖤",
     "status": "disponivel",
     "sizes": ["G"],
     "colors": ["Branco e Preto"],
@@ -1125,7 +1125,7 @@
     "https://cauagabriel123.github.io/assets/vestido2.JPG",
     "https://cauagabriel123.github.io/assets/vestido3.JPG"],
     "description":"Vestido short saia super estiloso, com estampa cheia de personalidade e modelagem tomara que caia. Possui short embutido, trazendo conforto, segurança e um caimento perfeito! 🤍🖤",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["M"],
     "colors": ["Preto e Branco"],
     "stock": 1
