@@ -1,16 +1,16 @@
 [
   {
     "id": "p1",
-    "name": "Pijama Virginia",
+    "name": "Pijama infantil",
     "category": "pijamas",
-    "price": 29.99,
+    "price": 44.99,
     "images":[ "https://cauagabriel123.github.io/assets/pijiama_viriginia.JPG",
       "https://cauagabriel123.github.io/assets/pijiama_viriginia2.JPG",
       "https://cauagabriel123.github.io/assets/pijiama_viriginia3.JPG"],
-    "description": "Pijama Virgínia composto por cropped estampado super fofo e short soltinho verde. Tecido leve, macio e fresquinho, ideal para noites confortáveis e cheias de estilo. Modelo confortável e soltinho. Tecido leve e agradável na pele. Estampa charmosa no cropped. Perfeito para quem busca conforto sem perder a beleza! 💚✨",
-    "status": "esgotado",
-    "sizes": ["GG"],
-    "colors": ["Verde"],
+    "description": "Conjunto infantil tamanho 4 a 6 anos, confeccionado em tecido leve e confortável. Possui diversas estampas lindas e divertidas, ideal para o dia a dia e momentos de descanso. 💕",
+    "status": "disponivel",
+    "sizes": ["4 a 6 Anos"],
+    "colors": ["Bob Esponja", "Minions", Stitch", "Snoopy", "Minnie", "Frajola", "Os Flintstones", "Ló", "Tom e Jerry"],
     "stock": 1
   },
   {
@@ -29,16 +29,16 @@
   },
   {
     "id": "p3",
-    "name": "Pijama Rebeca Romance",
-    "category": "pijamas",
-    "price": 79.99,
+    "name": "Calcinha Luna C/ Stress",
+    "category": "intimos",
+    "price": 24.99,
     "images":[ "https://cauagabriel123.github.io/assets/pijama3.JPG",
       "https://cauagabriel123.github.io/assets/pijama3.2.JPG"],
-    "description": "Longo com tom rosa suave, tecido leve e fenda discreta. Conforto e elegância.",
-    "status": "esgotado",
-    "sizes": ["M"],
-    "colors": ["Azul"],
-    "stock": 1
+    "description": "Calcinha feminina confeccionada em tecido macio e confortável, com detalhe delicado nas laterais. Ideal para o uso diário, garantindo conforto e ótimo caimento. 💕",
+    "status": "disponivel",
+    "sizes": ["P","M", "GG"],
+    "colors": ["Roxa", "Nude", "Vermelho"],
+    "stock": 3
   },
   {
     "id": "p4",
