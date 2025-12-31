@@ -62,7 +62,7 @@
   {
     "id": "p5",
     "name": "Chinelo Duarte",
-    "category": "meias",
+    "category": "chinelo",
     "price": 19.99,
     "images": ["https://cauagabriel123.github.io/assets/chinelo_1.jpg",
     "https://cauagabriel123.github.io/assets/chinelo_2.jpg"],
@@ -88,7 +88,7 @@
   {
     "id": "p7",
     "name": "Chinelo Duarte",
-    "category": "meias",
+    "category": "chinelo",
     "price": 19.99,
     "images": ["https://cauagabriel123.github.io/assets/chinelo_3.jpg"],
     "description": "Chinelo Duarte. Leve e confortável, ideal para o dia a dia. Possui solado macio e tiras confortáveis, garantindo praticidade e bem-estar em todos os momentos.",
@@ -100,7 +100,7 @@
   {
     "id": "p8",
     "name": "Chinelo Duarte",
-    "category": "meias",
+    "category": "chinelo",
     "price": 19.99,
     "images":[ "https://cauagabriel123.github.io/assets/chinelo_4.jpg",
     "https://cauagabriel123.github.io/assets/chinelo_5.jpg",
