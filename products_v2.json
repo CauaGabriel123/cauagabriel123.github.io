@@ -519,13 +519,13 @@
     "images":["https://cauagabriel123.github.io/assets/camiseta.JPG",
     "https://cauagabriel123.github.io/assets/camiseta2.JPG"],
     "description":"Blusa Mariah com estampa total super estilosa, moderna e perfeita pra deixar qualquer look mais marcante. Tecido confortável, macio e com caimento ótimo! 🤍🖤",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["G"],
     "colors": ["Branco e Preto"],
     "stock": 1
     },
     {
-    "id": "p81",
+    "id": "p89",
     "name": "Esfoliante de Morango",
     "category": "indisponivel",
     "price": 24.99,
@@ -538,7 +538,7 @@
     "stock": 1
     },
     {
-    "id": "p81",
+    "id": "p90",
     "name": "Esfoliante de Morango",
     "category": "indisponivel",
     "price": 24.99,
@@ -551,7 +551,7 @@
     "stock": 1
     },
     {
-    "id": "p81",
+    "id": "p91",
     "name": "Esfoliante de Morango",
     "category": "indisponivel",
     "price": 24.99,
