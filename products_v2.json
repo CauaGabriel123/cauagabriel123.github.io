@@ -270,21 +270,6 @@
     "stock": 2
   },
 {
-"id": "p39",
-    "name": "Cueca Box Somellos",
-    "category": "cuecas",
-    "price": 24.99,
-    "images":[ "https://cauagabriel123.github.io/assets/cueca2.JPG",
-    "https://cauagabriel123.github.io/assets/cueca2.2.JPG",
-    "https://cauagabriel123.github.io/assets/cueca2.3.JPG",
-    "https://cauagabriel123.github.io/assets/cueca2.4.JPG"],
-    "description": "Cueca Box Somellos. Modelo box super confortável, com ótimo caimento e tecido macio. Ideal para o dia a dia, garantindo liberdade e bem-estar.",
-    "status": "disponivel",
-    "sizes": ["G"],
-    "colors": ["Azul", "Preto"],
-    "stock": 1
-    },
-  {
         "id": "p40",
     "name": "Top Faixa Mariah",
     "category": "croppeds",
@@ -357,44 +342,6 @@
     "stock": 1
     },
   {
-    "id": "p62",
-    "name": "Body Spray Eudora Diva Esplêndida",
-    "category": "eudora",
-    "price": 41.99,
-    "images":["https://cauagabriel123.github.io/assets/body_splash.JPG",
-      "https://cauagabriel123.github.io/assets/body_splash2.JPG"],
-    "description": "Cheiro marcante, fresco e super feminino! O Body Spray Diva Esplêndida deixa a pele perfumada o dia inteiro, com aquele toque doce e elegante que conquista geral. Ideal para usar depois do banho, no dia a dia ou levar na bolsa e reaplicar quando quiser! ✨💗 ✔ Aroma suave e sofisticado ✔ Sensação de frescor por horas ✔ Perfeito para quem ama estar sempre cheirosa",
-    "status": "disponivel",
-    "sizes": ["100ml"],
-    "colors": ["Transparente"],
-    "stock": 1
-    },
-    {
-    "id": "p63",
-    "name": "Eudora Diva Absoluta",
-    "category": "eudora",
-    "price": 89.90,
-    "images":["https://cauagabriel123.github.io/assets/diva_absoluta.JPG"],
-    "description": "Uma fragrância poderosa, marcante e elegante — feita pra quem gosta de deixar presença por onde passa! O Diva Absoluta entrega um perfume sofisticado, com fixação incrível e aquele toque sensual que só a linha Diva tem. Ideal para usar no dia a dia ou em ocasiões especiais. Um verdadeiro luxo na sua penteadeira! 💜",
-    "status": "disponivel",
-    "sizes": ["100ml"],
-    "colors": ["Transparente"],
-    "stock": 1
-    },
-    {
-    "id": "p64",
-    "name": "Sabonete Eudora Instance",
-    "category": "eudora",
-    "price": 32.99,
-    "images":["https://cauagabriel123.github.io/assets/sabonete.JPG",
-      "https://cauagabriel123.github.io/assets/sabonete2.JPG"],
-    "description": "Uma fragrância deliciosa que combina o doce da cereja com o toque cremoso das amêndoas! O kit vem com sabonetes vegetais super cheirosos, que deixam a pele macia, hidratada e perfumada por muito mais tempo. Ideal para quem ama aquele banho cheiroso e relaxante! 🌸🛁 💖 Produto vegano 🌿 Base 100% vegetal 💦 Perfume marcante e duradouro",
-    "status": "disponivel",
-    "sizes": ["80g"],
-    "colors": ["Rosa"],
-    "stock": 1
-    },
-    {
     "id": "p67",
     "name": "Pijama Virgínia",
     "category": "pijamas",
@@ -407,30 +354,6 @@
     "status": "disponivel",
     "sizes": ["GG"],
     "colors": ["Roxo"],
-    "stock": 1
-    },
-    {
-    "id": "p71",
-    "name": "Sabonete Líquido Uva",
-    "category": "sexyshop",
-    "price": 14.99,
-    "images":["https://cauagabriel123.github.io/assets/sabonete_uva.JPG"],
-    "description":"Sabonete íntimo com fragrância deliciosa de uva, fórmula suave, pH equilibrado e ácido lático para cuidar da região íntima com segurança e frescor. Deixa aquela sensação de limpeza e bem-estar o dia todo! 💜✨",
-    "status": "disponivel",
-    "sizes": ["200ml"],
-    "colors": ["Roxo"],
-    "stock": 1
-    },
-    {
-    "id": "p73",
-    "name": "Gel Adstringente Lacradinha",
-    "category": "sexyshop",
-    "price": 24.99,
-    "images":["https://cauagabriel123.github.io/assets/gel.JPG"],
-    "description":"O queridinho da linha sensual! O Lacradinha é um gel adstringente feminino que oferece sensação de firmeza e intensifica o momento a dois. Embalagem discreta, efeito rápido e qualidade garantida! 💗",
-    "status": "disponivel",
-    "sizes": ["15g"],
-    "colors": ["Rosa"],
     "stock": 1
     },
     {
@@ -525,43 +448,3 @@
     "stock": 1
     },
     {
-    "id": "p89",
-    "name": "Esfoliante de Morango",
-    "category": "indisponivel",
-    "price": 24.99,
-    "images":["https://cauagabriel123.github.io/assets/morango.JPG",
-    "https://cauagabriel123.github.io/assets/morango2.JPG"],
-    "description":"Esfoliante corporal super cheiroso, com textura suave que remove células mortas e deixa a pele lisinha, macia e renovada. Tem aquele perfume doce de morango que fixa na pele e deixa o banho ainda mais gostoso! 💗🍓✨",
-    "status": "disponivel",
-    "sizes": ["300g"],
-    "colors": ["Roxo"],
-    "stock": 1
-    },
-    {
-    "id": "p90",
-    "name": "Esfoliante de Morango",
-    "category": "indisponivel",
-    "price": 24.99,
-    "images":["https://cauagabriel123.github.io/assets/morango.JPG",
-    "https://cauagabriel123.github.io/assets/morango2.JPG"],
-    "description":"Esfoliante corporal super cheiroso, com textura suave que remove células mortas e deixa a pele lisinha, macia e renovada. Tem aquele perfume doce de morango que fixa na pele e deixa o banho ainda mais gostoso! 💗🍓✨",
-    "status": "disponivel",
-    "sizes": ["300g"],
-    "colors": ["Roxo"],
-    "stock": 1
-    },
-    {
-    "id": "p91",
-    "name": "Esfoliante de Morango",
-    "category": "indisponivel",
-    "price": 24.99,
-    "images":["https://cauagabriel123.github.io/assets/morango.JPG",
-    "https://cauagabriel123.github.io/assets/morango2.JPG"],
-    "description":"Esfoliante corporal super cheiroso, com textura suave que remove células mortas e deixa a pele lisinha, macia e renovada. Tem aquele perfume doce de morango que fixa na pele e deixa o banho ainda mais gostoso! 💗🍓✨",
-    "status": "disponivel",
-    "sizes": ["300g"],
-    "colors": ["Roxo"],
-    "stock": 1
-    }
-    ]
-    
