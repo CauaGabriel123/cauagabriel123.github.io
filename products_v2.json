@@ -422,7 +422,7 @@
     },
     {
  
-    "id": "p87",
+    "id": "p85",
     "name": "Shorts Mariah Pink Canelado",
     "category": "shorts",
     "price": 101.99,
@@ -435,7 +435,72 @@
     "stock": 1
     },
     {
-    "id": "p88",
+      "id": "p86",
+    "name": "Calcinha Strass",
+    "category": "intimos",
+    "price": 24.99,
+    "images":["https://cauagabriel123.github.io/assets/short.JPG",
+    "https://cauagabriel123.github.io/assets/short2.JPG"],
+    "description":"Calcinha em renda delicada, com detalhe em strass que valoriza a peça e traz um toque moderno. Confortável, com ótimo caimento e acabamento de qualidade, perfeita para o dia a dia ou momentos especiais.",
+    "status": "disponivel",
+    "sizes": ["G", "GG"],
+    "colors": ["Vermelho", "Branco", "Preto", "Lilás"],
+    "stock": 5
+    },
+    {
+      "id": "p87",
+    "name": "Vestido Longo",
+    "category": "vestidos",
+    "price": 99.99,
+    "images":["https://cauagabriel123.github.io/assets/short.JPG",
+    "https://cauagabriel123.github.io/assets/short2.JPG"],
+    "description":"Vestido longo com recorte frontal e amarração no busto, que valoriza o corpo e traz um visual moderno e feminino. Modelo leve, confortável e com ótimo caimento, ideal para usar tanto de dia quanto à noite. Tamanho único, veste bem diferentes silhuetas. ",
+    "status": "disponivel",
+    "sizes": ["Único"],
+    "colors": ["Azul"],
+    "stock": 1
+    },
+    {
+      "id": "p88",
+    "name": "Vestido Tomara Que Caia",
+    "category": "vestidos",
+    "price": 49.99,
+    "images":["https://cauagabriel123.github.io/assets/short.JPG",
+    "https://cauagabriel123.github.io/assets/short2.JPG"],
+    "description":"Vestido tomara que caia com efeito franzido, que valoriza as curvas e garante um visual moderno e elegante. Modelo ajustado, confortável e com ótimo caimento, ideal para ocasiões especiais ou looks noturnos.",
+    "status": "disponivel",
+    "sizes": ["M"],
+    "colors": ["Preto"],
+    "stock": 1
+    },
+    {
+      "id": "p89",
+    "name": "Biquíni C/ Detalhe Argola",
+    "category": "biquinis",
+    "price": 59.99,
+    "images":["https://cauagabriel123.github.io/assets/short.JPG",
+    "https://cauagabriel123.github.io/assets/short2.JPG"],
+    "description":"Biquíni com top estruturado e detalhe em argola central, que valoriza o busto e traz um visual moderno. Calcinha com ótimo caimento, confortável e estilosa. Modelo ideal para aproveitar praia ou piscina com muito estilo.",
+    "status": "disponivel",
+    "sizes": ["Único"],
+    "colors": ["Vermelho"],
+    "stock": 1
+    },
+    {
+      "id": "p90",
+    "name": "Óculos Mariah",
+    "category": "oculos",
+    "price": 69.99,
+    "images":["https://cauagabriel123.github.io/assets/short.JPG",
+    "https://cauagabriel123.github.io/assets/short2.JPG"],
+    "description":"Óculos Mariah",
+    "status": "disponivel",
+    "sizes": ["Único"],
+    "colors": ["Branco"],
+    "stock": 1
+    },
+    {
+    "id": "p91",
     "name": "Blusa Mariah Estampada",
     "category": "blusas",
     "price": 99.99,
