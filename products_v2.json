@@ -147,7 +147,7 @@
     "images": ["https://cauagabriel123.github.io/assets/agua_micelar15em1.JPG",
     "https://cauagabriel123.github.io/assets/agua_micelar15em12.JPG"],
     "description": "Água Micelar Mary Life 15 em 1, com colágeno e pantenol. Demaquila, limpa, hidrata e acalma a pele, ideal para face, olhos e lábios. Perfeita para todos os tipos de pele! 💖",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["260ml"],
     "colors": ["Transparente"],
     "stock": 2
@@ -321,7 +321,7 @@
     "https://cauagabriel123.github.io/assets/cropped_canelado_mariah2.JPG",
     "https://cauagabriel123.github.io/assets/cropped_canelado_mariah3.JPG"],
     "description": " Cropped canelado com decote quadrado super elegante e detalhe frontal MRH. Tecido confortável, moderno e perfeito para montar looks estilosos no dia a dia. Simples, lindo e cheio de charme! 🤍",
-    "status": "disponivel",
+    "status": "esgotado",
     "sizes": ["M"],
     "colors": ["Cinza"],
     "stock": 1
@@ -330,7 +330,7 @@
         "id": "p56",
     "name": "Biquini Textura Mariah",
     "category": "biquinis",
-    "price": 149.99,
+    "price": 99.99,
     "images": ["https://cauagabriel123.github.io/assets/biquini_textura1.JPG",
     "https://cauagabriel123.github.io/assets/biquini_textura.JPG",
     "https://cauagabriel123.github.io/assets/biquini_textura2.JPG",
